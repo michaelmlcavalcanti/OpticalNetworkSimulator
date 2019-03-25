@@ -67,14 +67,7 @@ public:
      * @return Weak pointer of GA algorithm.
      */
     GA* GetGA() const;
-
-private:
     
-    /**
-     * 
-     * @brief Genetic algorithm of this simulation.
-     */
-    std::shared_ptr<GA> gaAlgorithm;
     /**
      * @brief Runs the simulation for the selected population of the GA.
      */
@@ -88,6 +81,13 @@ private:
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul();
+private:
+    /**
+     * 
+     * @brief Genetic algorithm of this simulation.
+     */
+    std::shared_ptr<GA> gaAlgorithm;
+    
 };
 
 #endif /* GA_SINGLEOBJECTIVE_H */
