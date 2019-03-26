@@ -45,6 +45,8 @@ public:
      * @brief Runs a simulation with specified parameters.
      */
     virtual void Run() override;
+    
+    void RunBase() override;
     /**
      * @brief Load parameters to the simulation from the terminal.
      */

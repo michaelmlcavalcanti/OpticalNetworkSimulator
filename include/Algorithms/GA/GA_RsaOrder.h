@@ -14,21 +14,15 @@
 #ifndef GA_RSAORDER_H
 #define GA_RSAORDER_H
 
-#include <vector>
-#include <memory>
-#include <cassert>
-#include <random>
-#include <algorithm>
-
-#include "GA.h"
-#include "IndividualBool.h"
+#include "GA_SO.h"
 
 class SimulationType;
+class IndividualBool;
 
 /**
  * @brief GA algorithm applied for RSA order.
  */
-class GA_RsaOrder : public GA {
+class GA_RsaOrder : public GA_SO {
 
 public:
     /**

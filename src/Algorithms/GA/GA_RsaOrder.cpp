@@ -20,7 +20,7 @@
 #include "../../../include/GeneralClasses/Def.h"
 
 GA_RsaOrder::GA_RsaOrder(SimulationType* simul)
-:GA(simul), numNodes(0) {
+:GA_SO(simul), numNodes(0) {
     
 }
 
@@ -29,7 +29,7 @@ GA_RsaOrder::~GA_RsaOrder() {
 }
 
 void GA_RsaOrder::Initialize() {
-    GA::Initialize();
+    GA_SO::Initialize();
     this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
     this->boolDistribution = std::uniform_int_distribution<int>(0, 1);
 }

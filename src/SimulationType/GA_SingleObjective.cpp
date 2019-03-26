@@ -37,21 +37,25 @@ void GA_SingleObjective::Run() {
     
     this->gaAlgorithm->InitializePopulation();
     this->GetInputOutput()->PrintProgressBar(0, numGenerations);
-    this->RunSelectPop();
+    this->gaAlgorithm->RunSelectPop();
     this->gaAlgorithm->KeepInitialPopulation();
     
     for(unsigned int a = 1; a <= numGenerations; a++){
         this->gaAlgorithm->SetActualGeneration(a);
         this->gaAlgorithm->CreateNewPopulation();
-        this->RunTotalPop();
+        this->gaAlgorithm->RunTotalPop();
         
         if(a == numGenerations)
-            this->CheckMinSimul();
+            this->gaAlgorithm->CheckMinSimul();
         this->gaAlgorithm->SelectPopulation();
         this->gaAlgorithm->SaveIndividuals();
         std::cout << this->gaAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numGenerations);
     }
+}
+
+void GA_SingleObjective::RunBase() {
+    SimulationType::Run();
 }
 
 void GA_SingleObjective::Load() {
@@ -83,45 +87,4 @@ void GA_SingleObjective::Help() {
 
 GA* GA_SingleObjective::GetGA() const {
     return this->gaAlgorithm.get();
-}
-
-void GA_SingleObjective::RunSelectPop() {
-    
-    for(auto it: this->gaAlgorithm->selectedPopulation){
-        this->gaAlgorithm->ApplyIndividual(it.get());
-        SimulationType::Run();
-        this->gaAlgorithm->SetIndParameters(it.get());
-        this->GetData()->Initialize();
-    }
-    this->gaAlgorithm->SetSelectedPopFitness();
-}
-
-void GA_SingleObjective::RunTotalPop() {
-    unsigned int maxNumSimulPerInd = this->gaAlgorithm->GetMaxNumSimulation();
-
-    for(auto it: this->gaAlgorithm->totalPopulation){
-        
-        if(it->GetCount() < maxNumSimulPerInd){
-            this->gaAlgorithm->ApplyIndividual(it.get());
-            SimulationType::Run();
-            this->gaAlgorithm->SetIndParameters(it.get());
-        }
-        this->GetData()->Initialize();
-    }
-    this->gaAlgorithm->SetTotalPopFitness();
-}
-
-void GA_SingleObjective::CheckMinSimul() {
-    unsigned int maxNumSimulPerInd = this->gaAlgorithm->GetMaxNumSimulation();
-    
-    for(auto it: this->gaAlgorithm->totalPopulation){
-        
-        while(it->GetCount() < maxNumSimulPerInd){
-            this->gaAlgorithm->ApplyIndividual(it.get());
-            SimulationType::Run();
-            this->gaAlgorithm->SetIndParameters(it.get());
-            this->GetData()->Initialize();
-        }
-    }
-    this->gaAlgorithm->SetTotalPopFitness();
 }

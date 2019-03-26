@@ -90,6 +90,7 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/Algorithms/GA/GA_SO.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -146,6 +147,7 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/Algorithms/GA/GA_SO.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
@@ -273,6 +275,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_SO.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
@@ -365,6 +369,8 @@
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_SO.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -557,6 +563,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_SO.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/Individual.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualBool.h"
@@ -649,6 +657,8 @@
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_SO.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/Individual.cpp" ex="false" tool="1" flavor2="0">
       </item>

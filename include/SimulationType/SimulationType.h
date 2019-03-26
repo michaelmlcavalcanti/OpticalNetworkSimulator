@@ -50,6 +50,8 @@ public:
      * @brief Runs a simulation with specified parameters.
      */
     virtual void Run();
+    
+    virtual void RunBase() = 0;
     /**
      * @brief Load parameters to the simulation from the terminal.
      */

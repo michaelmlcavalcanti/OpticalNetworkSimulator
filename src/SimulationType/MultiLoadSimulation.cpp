@@ -47,6 +47,10 @@ void MultiLoadSimulation::Run() {
     this->GetInputOutput()->PrintProgressBar(numLoadPoints, numLoadPoints);
 }
 
+void MultiLoadSimulation::RunBase() {
+    SimulationType::Run();
+}
+
 void MultiLoadSimulation::Load() {
     SimulationType::Load();
 }

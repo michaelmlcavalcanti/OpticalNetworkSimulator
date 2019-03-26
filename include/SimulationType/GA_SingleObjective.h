@@ -42,6 +42,8 @@ public:
      * @brief Runs the genetic algorithm simulation for a fixed load point.
      */
     void Run() override;
+    
+    void RunBase() override;
     /**
      * @brief Load simulation inputs from the terminal.
      */
@@ -67,20 +69,6 @@ public:
      * @return Weak pointer of GA algorithm.
      */
     GA* GetGA() const;
-    
-    /**
-     * @brief Runs the simulation for the selected population of the GA.
-     */
-    void RunSelectPop();
-    /**
-     * @brief @brief Runs the simulation for the total population of the GA.
-     */
-    void RunTotalPop();
-    /**
-     * @brief Check and run the simulation if there is any individual, of total
-     * population, with less simulation than the minimum required.
-     */
-    void CheckMinSimul();
 private:
     /**
      * 
