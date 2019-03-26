@@ -56,7 +56,7 @@ void ResourceAlloc::Load() {
         case OrderSaRouting:
             this->resourceAllocOrder.assign(numNodes*numNodes, true);
             break;
-        case GaOrder:
+        case MixedOrder:
             this->resourceAllocOrder.resize(numNodes*numNodes);
             this->SetResourceAllocOrder();
             break;

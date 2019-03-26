@@ -122,14 +122,17 @@ enum NetworkOption {
 enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
-    GaOrder,
+    MixedOrder,
     FirstOrderRSA = OrderRoutingSa,
-    LastOrderRSA = GaOrder
+    LastOrderRSA = MixedOrder
 };
 
-enum GACoreOrder{
+enum GAOption{
     GAOptionDisabled,
-    GAOptionEnabled
+    GaRsaOrder,
+    GaCoreOrder,
+    FirstGaOption = GaRsaOrder,
+    LastGaOption = GaCoreOrder
 };
 
 enum TransponderOption {
@@ -299,9 +302,11 @@ public:
     
     void SetTransponderOption(TransponderOption transponderOption);
     
-    std::string GetGAOption() const;
+    GAOption GetGAOption() const;
+    
+    std::string GetGAOptionName() const;
 
-    void SetGAOption(GACoreOrder coreOrder);
+    void SetGAOption(GAOption coreOrder);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -342,7 +347,7 @@ private:
     
     RsaOrder orderRSA;
     
-    GACoreOrder coreOrder;
+    GAOption GaOption;
     
     TransponderOption transponderOption;
     
@@ -402,8 +407,8 @@ private:
      * @brief Map that keeps the GA options 
      * and the name of each one (Enabled and Disabled).
      */
-    static const boost::unordered_map<GACoreOrder,
-    std::string> mapGACoreOrder;
+    static const boost::unordered_map<GAOption,
+    std::string> mapGaOption;
 };
 
 #endif /* OPTIONS_H */

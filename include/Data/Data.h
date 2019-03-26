@@ -16,7 +16,7 @@
 
 class SimulationType;
 class Call;
-class GA;
+class GA_SO;
 
 #include <vector>
 #include <ostream>
@@ -145,12 +145,12 @@ private:
      */
     void SavePBvLoad(std::ostream& ostream);
     
-    void SaveBestWorstIndividuals(GA* ga, std::ostream& logOfstream, 
+    void SaveBestWorstIndividuals(GA_SO* ga, std::ostream& logOfstream, 
     std::ostream& bestInds, std::ostream& worstInds);
     
-    void SaveBestIndividual(GA* ga, std::ostream& bestInd);
+    void SaveBestIndividual(GA_SO* ga, std::ostream& bestInd);
     
-    void SaveInitPopulation(GA* ga, std::ostream& initPop);
+    void SaveInitPopulation(GA_SO* ga, std::ostream& initPop);
     
 private:
     /**

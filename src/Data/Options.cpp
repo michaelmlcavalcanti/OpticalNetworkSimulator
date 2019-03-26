@@ -75,12 +75,13 @@ const boost::unordered_map<RsaOrder,  std::string>
 Options::mapOrderRSA = boost::assign::map_list_of
     (OrderRoutingSa, "Routing-SA")
     (OrderSaRouting, "SA-Routing")
-    (GaOrder, "GA order");
+    (MixedOrder, "Mixed order");
 
-const boost::unordered_map<GACoreOrder, std::string>
-Options::mapGACoreOrder = boost::assign::map_list_of
-    (GAOptionDisabled, "Disabled")
-    (GAOptionEnabled, "Enabled");
+const boost::unordered_map<GAOption, std::string>
+Options::mapGaOption = boost::assign::map_list_of
+    (GAOptionDisabled, "GA Disabled")
+    (GaRsaOrder, "GA RSA Order")
+    (GaCoreOrder, "GA Core Order");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -103,7 +104,7 @@ const Options* options) {
             << std::endl;
     ostream << "RSA Order: " << options->GetOrderRsaName()
             << std::endl;
-    ostream << "GA: " << options->GetGAOption()
+    ostream << "GA: " << options->GetGAOptionName()
             << std::endl;
     
     return ostream;
@@ -115,7 +116,7 @@ routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
-coreOrder(GAOptionDisabled), transponderOption(TransOptionDisabled) {
+GaOption(GAOptionDisabled), transponderOption(TransOptionDisabled) {
     
 }
 
@@ -207,6 +208,14 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetOrderRSA((RsaOrder) auxInt);
     
+    std::cout << "GA Option" << std::endl;
+    for(GAOption a = FirstGaOption; a <= LastGaOption; a = GAOption(a+1)){
+        std::cout << a << "-" << this->mapGaOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the GA Option: ";
+    std::cin >> auxInt;
+    this->SetGAOption((GAOption) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -233,6 +242,8 @@ void Options::LoadFile() {
     this->SetNetworkOption((NetworkOption) auxInt);
     auxIfstream >> auxInt;
     this->SetOrderRSA((RsaOrder) auxInt);
+    auxIfstream >> auxInt;
+    this->SetGAOption((GAOption) auxInt);
 }
 
 void Options::Save() {
@@ -374,10 +385,14 @@ void Options::SetOrderRSA(RsaOrder orderRSA) {
     this->orderRSA = orderRSA;
 }
 
-std::string Options::GetGAOption() const {
-    return this->mapGACoreOrder.at(this->coreOrder);
+GAOption Options::GetGAOption() const {
+    return this->GaOption;
 }
 
-void Options::SetGAOption(GACoreOrder coreOrder) {
-    this->coreOrder = coreOrder;
+std::string Options::GetGAOptionName() const {
+    return this->mapGaOption.at(this->GaOption);
+}
+
+void Options::SetGAOption(GAOption coreOrder) {
+    this->GaOption = coreOrder;
 }

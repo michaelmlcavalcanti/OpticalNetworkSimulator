@@ -123,21 +123,6 @@ public:
     void SetActualGeneration(unsigned int actualGeneration);
     
     /**
-     * @brief Apply the gene of a specified individual in the network.
-     * @param ind Individual pointer.
-     */
-    virtual void ApplyIndividual(Individual* ind) = 0;
-    /**
-     * @brief Set the individual parameters found by the simulation.
-     * @param ind Specified individual.
-     */
-    virtual void SetIndParameters(Individual* ind) = 0;
-    
-    virtual void SetSelectedPopFitness() = 0;
-    
-    virtual void SetTotalPopFitness() = 0;
-    
-    /**
      * @brief Runs the simulation for the selected population of the GA.
      */
     virtual void RunSelectPop() = 0;
