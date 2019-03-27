@@ -16,6 +16,12 @@
 
 std::default_random_engine GA::random_generator(Def::randomDevice());
 
+std::ostream& operator<<(std::ostream& ostream, const GA* ga) {
+    ostream << "Generation: " << ga->actualGeneration << std::endl;
+            
+    return ostream;
+}
+
 GA::GA(SimulationType* simul)
 :simul(simul), numberIndividuals(50), numberGenerations(100), 
 probCrossover(0.5), probMutation(0.1), actualGeneration(0), 

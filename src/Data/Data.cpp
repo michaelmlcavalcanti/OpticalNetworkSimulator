@@ -26,6 +26,7 @@
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
     ostream << "Simulation time:" << data->GetSimulTime() 
+            << "  Real simul time: " << data->GetRealSimulTime()
             << "  Number of requests:" << data->GetNumberReq() << std::endl;
     
     ostream << "Load point:" << data->simulType->GetParameters()->
@@ -44,7 +45,8 @@ const Data* data) {
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
-numHopsPerRoute(0), netOccupancy(0), simulTime(0), actualIndex(0) {
+numHopsPerRoute(0), netOccupancy(0), simulTime(0), realSimulTime(0), 
+actualIndex(0) {
     
 }
 
@@ -63,6 +65,7 @@ void Data::Initialize() {
     this->numHopsPerRoute.assign(size, 0.0);
     this->netOccupancy.assign(size, 0.0);
     this->simulTime.assign(size, 0.0);
+    this->realSimulTime.assign(size, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
@@ -210,6 +213,14 @@ TIME Data::GetSimulTime() const {
 void Data::SetSimulTime(const TIME simulTime) {
     assert(simulTime > 0);
     this->simulTime.at(this->actualIndex) = simulTime;
+}
+
+TIME Data::GetRealSimulTime() const {
+    return this->realSimulTime.at(this->actualIndex);
+}
+
+void Data::SetRealSimulTime(const TIME simulTime) {
+    this->realSimulTime.at(this->actualIndex) = simulTime;
 }
 
 unsigned int Data::GetActualIndex() const {

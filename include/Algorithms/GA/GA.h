@@ -21,6 +21,7 @@ class SimulationType;
 #include <cassert>
 #include <random>
 #include <algorithm>
+#include <iostream>
 
 #include "Individual.h"
 
@@ -30,6 +31,8 @@ class SimulationType;
  * to all specific genetic algorithms.
  */
 class GA {
+    
+    friend std::ostream& operator<<(std::ostream& ostream, const GA* ga);
 
 public:
     /**

@@ -23,6 +23,15 @@ IndividualBool::IndividualBool(GA_RsaOrder* ga)
     }
 }
 
+IndividualBool::IndividualBool(GA_RsaOrder* ga, bool gene)
+:Individual(ga), ga(ga), genes(0), blockProb(0.0) {
+    const unsigned int numNodes = this->ga->GetNumNodes();
+    
+    for(unsigned int a = 0; a < numNodes*numNodes; a++){
+        this->genes.push_back(gene);
+    }
+}
+
 IndividualBool::IndividualBool(
 const std::shared_ptr<const IndividualBool>& orig)
 :Individual(orig), ga(orig->ga), genes(orig->genes), blockProb(0.0) {

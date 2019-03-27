@@ -19,6 +19,7 @@
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Event.h"
+#include "../../include/Data/Data.h"
 
 std::default_random_engine CallGenerator::random_generator(0);
 
@@ -63,6 +64,7 @@ void CallGenerator::Initialize() {
 void CallGenerator::Finalize() {
     this->SetRealSimulationTime(((TIME) std::clock() / CLOCKS_PER_SEC) -
     this->GetRealSimulationTime());
+    this->data->SetRealSimulTime(this->GetRealSimulationTime());
     
     while(!this->queueEvents.empty()){
         this->queueEvents.pop();

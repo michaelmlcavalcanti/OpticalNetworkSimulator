@@ -134,6 +134,10 @@ public:
     
     void SetSimulTime(const TIME simulTime);
     
+    TIME GetRealSimulTime() const;
+    
+    void SetRealSimulTime(const TIME simulTime);
+    
     unsigned int GetActualIndex() const;
 
     void SetActualIndex(unsigned int actualIndex);
@@ -199,6 +203,8 @@ private:
      * @brief Vector that contain the simulation time of each load point.
      */
     std::vector<TIME> simulTime;
+    
+    std::vector<TIME> realSimulTime;
     /**
      * @brief Index of the actual simulation. This is referred to multiload
      * simulation, to indicate the position of the vector to update the data.

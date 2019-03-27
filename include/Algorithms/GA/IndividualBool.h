@@ -33,6 +33,8 @@ public:
      * @param ga GA_RsaOrder pointer that owns this individual.
      */
     IndividualBool(GA_RsaOrder* ga);
+    
+    IndividualBool(GA_RsaOrder* ga, bool gene);
     /**
      * @brief Copy constructor for this individual.
      * @param orig Original individual to be copied.

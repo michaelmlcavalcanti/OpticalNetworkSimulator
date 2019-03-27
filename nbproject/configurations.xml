@@ -49,6 +49,7 @@
           <itemPath>include/Algorithms/GA/GA.h</itemPath>
           <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA_SO.h</itemPath>
           <itemPath>include/Algorithms/GA/Individual.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
         </logicalFolder>
@@ -90,7 +91,8 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/Algorithms/GA/GA_SO.h</itemPath>
+      <itemPath>include/Algorithms/GA/GA_MO.h</itemPath>
+      <itemPath>include/Algorithms/GA/GA_NumInterRoutesMSCL.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -147,6 +149,8 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/Algorithms/GA/GA_MO.cpp</itemPath>
+      <itemPath>src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp</itemPath>
       <itemPath>src/Algorithms/GA/GA_SO.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -270,6 +274,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_MO.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
             tool="3"
@@ -367,6 +378,13 @@
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_MO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -558,6 +576,13 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_MO.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
             tool="3"
@@ -655,6 +680,13 @@
       <item path="src/Algorithms/GA/GA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GACoreOrder.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_MO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>

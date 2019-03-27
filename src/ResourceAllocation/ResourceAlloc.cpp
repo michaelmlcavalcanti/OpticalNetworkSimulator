@@ -25,7 +25,7 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
-allRoutes(0), interRoutes(0), resourceAllocOrder(0) {
+allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0) {
     
 }
 

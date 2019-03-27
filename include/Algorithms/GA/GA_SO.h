@@ -14,10 +14,7 @@
 #ifndef GA_SO_H
 #define GA_SO_H
 
-class SimulationType;
-
 #include "GA.h"
-
 
 /**
  * @brief Generic genetic algorithm class for single objective. This class 

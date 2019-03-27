@@ -38,8 +38,19 @@ void GA_RsaOrder::InitializePopulation() {
     assert(this->selectedPopulation.empty() && this->totalPopulation.empty());
     
     for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++){
-        this->selectedPopulation.push_back(std::make_shared
+        
+        if(a == 0){
+            this->selectedPopulation.push_back(std::make_shared
+                                               <IndividualBool>(this, false));
+        }
+        else if(a == 1){
+            this->selectedPopulation.push_back(std::make_shared
+                                               <IndividualBool>(this, true));
+        }
+        else{
+            this->selectedPopulation.push_back(std::make_shared
                                            <IndividualBool>(this));
+        }
     }
 }
 
