@@ -18,6 +18,11 @@ class SimulationType;
 
 #include "GA.h"
 
+
+/**
+ * @brief Generic genetic algorithm class for single objective. This class 
+ * contains all generic functions for this type of GA.
+ */
 class GA_SO : public GA {
     /**
      * @brief Struct to compare two individuals, based on their fitness.
@@ -113,10 +118,18 @@ public:
     
     virtual void SetTotalPopFitness() = 0;
     
+    /**
+     * @brief Runs the simulation for the selected population of the GA.
+     */
     void RunSelectPop() override;
-
+    /**
+     * @brief @brief Runs the simulation for the total population of the GA.
+     */
     void RunTotalPop() override;
-
+    /**
+     * @brief Check and run the simulation if there is any individual, of total
+     * population, with less simulation than the minimum required.
+     */
     void CheckMinSimul() override;
 
 private:

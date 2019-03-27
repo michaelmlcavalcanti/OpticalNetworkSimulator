@@ -22,8 +22,8 @@ class GA;
 
 /**
  * @brief Derived class from SimulationType.
- * This type pf simulation runs a genetic algorithm for a single load point,
- * for a single objective(fitness).
+ * This type of simulation runs a genetic algorithm, single or multiple 
+ * objectives, for a specified load point.
  */
 class GA_SingleObjective : public SimulationType {
 
@@ -42,7 +42,9 @@ public:
      * @brief Runs the genetic algorithm simulation for a fixed load point.
      */
     void Run() override;
-    
+    /**
+     * @brief Function used to call the Run base SimulationType class function.
+     */
     void RunBase() override;
     /**
      * @brief Load simulation inputs from the terminal.

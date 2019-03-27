@@ -116,7 +116,7 @@ enum NetworkOption {
 };
 
 /**
- * @brief Choose the resource allocation choice order, R-SA, SA-R or GA found 
+ * @brief Numerate the resource allocation choice order, R-SA, SA-R or GA found 
  * order.
  */
 enum RsaOrder {
@@ -127,6 +127,9 @@ enum RsaOrder {
     LastOrderRSA = MixedOrder
 };
 
+/**
+ * @brief Numerate the Genetic Algorithm options.
+ */
 enum GAOption{
     GAOptionDisabled,
     GaRsaOrder,
@@ -134,6 +137,7 @@ enum GAOption{
     FirstGaOption = GaRsaOrder,
     LastGaOption = GaCoreOrder
 };
+
 
 enum TransponderOption {
     TransOptionDisabled,
@@ -344,9 +348,13 @@ private:
      * @brief Network option selected. WDM or EON.
      */
     NetworkOption networkOption;
-    
+    /**
+     * @brief Resource allocation order option.
+     */
     RsaOrder orderRSA;
-    
+    /**
+     * @brief Genetic algorithm option.
+     */
     GAOption GaOption;
     
     TransponderOption transponderOption;
@@ -394,21 +402,27 @@ private:
      */
     static const boost::unordered_map<PhysicalLayerOption,
     std::string> mapPhyLayerOption;
-    
+    /**
+     * @brief Map that keeps the network options and the
+     * name of each one.
+     */
     static const boost::unordered_map<NetworkOption,
     std::string> mapNetworkOption;
-    
+    /**
+     * @brief Map that keeps the resource allocation order
+     * and the name of each one.
+     */
     static const boost::unordered_map<RsaOrder,
     std::string> mapOrderRSA;
-    
-    static const boost::unordered_map<TransponderOption,
-    std::string> mapTransponderOption;
     /**
      * @brief Map that keeps the GA options 
      * and the name of each one (Enabled and Disabled).
      */
     static const boost::unordered_map<GAOption,
     std::string> mapGaOption;
+    
+    static const boost::unordered_map<TransponderOption,
+    std::string> mapTransponderOption;
 };
 
 #endif /* OPTIONS_H */

@@ -28,6 +28,7 @@ class ResourceAlloc;
 #include <memory>
 #include <random>
 #include <queue>
+#include <ctime>
 
 #include "Event.h"
 
@@ -154,6 +155,10 @@ public:
      * @param rsaAlgorithm ResourceAlloc pointer.
      */
     void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
+    
+    TIME GetRealSimulationTime() const;
+
+    void SetRealSimulationTime(TIME realSimullationTime);
 
 private:
     /**
@@ -214,6 +219,8 @@ private:
      * @brief Actual simulation time.
      */
     TIME simulationTime;
+    
+    TIME realSimulationTime;
     /**
      * @brief List with the Event objects ordered based on those times.
      */

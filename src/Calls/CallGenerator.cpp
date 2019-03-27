@@ -57,9 +57,13 @@ void CallGenerator::Initialize() {
     this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
     (this->networkLoad);
+    this->SetRealSimulationTime((TIME) std::clock() / CLOCKS_PER_SEC);
 }
 
 void CallGenerator::Finalize() {
+    this->SetRealSimulationTime(((TIME) std::clock() / CLOCKS_PER_SEC) -
+    this->GetRealSimulationTime());
+    
     while(!this->queueEvents.empty()){
         this->queueEvents.pop();
     }
@@ -154,4 +158,13 @@ ResourceAlloc* CallGenerator::GetResourceAlloc() const {
 
 void CallGenerator::SetResourceAlloc(ResourceAlloc* rsaAlgorithm) {
     this->resourceAlloc = rsaAlgorithm;
+}
+
+TIME CallGenerator::GetRealSimulationTime() const {
+    return realSimulationTime;
+}
+
+void CallGenerator::SetRealSimulationTime(TIME realSimullationTime) {
+    assert(realSimullationTime > 0.0);
+    this->realSimulationTime = realSimullationTime;
 }

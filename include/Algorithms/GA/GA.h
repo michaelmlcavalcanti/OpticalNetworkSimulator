@@ -25,13 +25,11 @@ class SimulationType;
 #include "Individual.h"
 
 /**
- * @brief Generic genetic algorithm class for single objective. 
- * This class contain the similar parameters, such as number of generations,
- * number of individuals, etc, to all specific genetic algorithms.
+ * @brief Generic genetic algorithm class. This class contain the similar 
+ * parameters, such as number of generations, number of individuals, etc, 
+ * to all specific genetic algorithms.
  */
 class GA {
-    
-private:
 
 public:
     /**

@@ -50,7 +50,9 @@ public:
      * @brief Runs a simulation with specified parameters.
      */
     virtual void Run();
-    
+    /**
+     * @brief Function used to call the Run base SimulationType class function.
+     */
     virtual void RunBase() = 0;
     /**
      * @brief Load parameters to the simulation from the terminal.
