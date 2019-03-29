@@ -40,9 +40,14 @@ class GA_SO : public GA {
     const GA_SO* ga);
     
 public:
-    
+    /**
+     * @brief Default constructor of a GA_SO algorithm.
+     * @param simul Simulation that own this algorithm.
+     */
     GA_SO(SimulationType* simul);
-    
+    /**
+     * @brief Default destructor of a GA_SO algorithm.
+     */
     virtual ~GA_SO();
     
     /**
@@ -59,11 +64,21 @@ public:
      * population.
      */
     virtual void CreateNewPopulation() = 0;
-    
+    /**
+     * @brief Keeps the selected population in the initial population container.
+     */
     void KeepInitialPopulation() override;
-
+    /**
+     * @brief Selects the best population among the total population generated
+     * by crossover and mutation. The selection is made first, selecting a 
+     * specified number of best individuals, and for last, choosing randomly
+     * the rest of the selected population.
+     */
     void SelectPopulation() override;
-
+    /**
+     * @brief Function that saves the best and the worst individuals in their
+     * respective containers.
+     */
     void SaveIndividuals() override;
 
     /**
@@ -110,9 +125,15 @@ public:
      * @return Chosen individual.
      */
     Individual* RouletteIndividual();
-    
+    /**
+     * @brief Sets the fitness of all individuals in the selected population
+     * container.
+     */
     virtual void SetSelectedPopFitness() = 0;
-    
+    /**
+     * @brief Sets the fitness of all individuals in the total population
+     * container.
+     */
     virtual void SetTotalPopFitness() = 0;
     
     /**

@@ -15,6 +15,7 @@
 #include "../../../include/GeneralClasses/Def.h"
 
 std::default_random_engine GA::random_generator(Def::randomDevice());
+//std::default_random_engine GA::random_generator(0);
 
 std::ostream& operator<<(std::ostream& ostream, const GA* ga) {
     ostream << "Generation: " << ga->actualGeneration << std::endl;
@@ -70,5 +71,6 @@ unsigned int GA::GetActualGeneration() const {
 }
 
 void GA::SetActualGeneration(unsigned int actualGeneration) {
+    assert(actualGeneration >= 0);
     this->actualGeneration = actualGeneration;
 }

@@ -126,6 +126,7 @@ void GA_RsaOrder::SetTotalPopFitness() {
 
 void GA_RsaOrder::Crossover() {
     assert(this->selectedPopulation.size() == this->GetNumberIndividuals());
+    assert(this->totalPopulation.empty());
     IndividualBool *auxInd1, *auxInd2;
     
     while(this->totalPopulation.size() < this->GetNumberIndividuals()){

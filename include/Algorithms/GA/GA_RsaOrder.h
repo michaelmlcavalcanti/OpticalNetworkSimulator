@@ -81,9 +81,15 @@ public:
      * @param ind Specified individual.
      */
     void SetIndParameters(Individual* ind) override;
-
+    /**
+     * @brief Sets the fitness of all individuals in the selected population
+     * container.
+     */
     void SetSelectedPopFitness() override;
-    
+    /**
+     * @brief Sets the fitness of all individuals in the total population
+     * container.
+     */
     void SetTotalPopFitness() override;
 
 private:

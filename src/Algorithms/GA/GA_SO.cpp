@@ -114,16 +114,16 @@ Individual* GA_SO::GetIniIndividual(unsigned int index) {
 
 Individual* GA_SO::RouletteIndividual() {
     double auxDouble = 0.0;
-    unsigned int index;
+    unsigned int index = 0;
     
-    this->fitnessDistribution = std::uniform_real_distribution<double>(0, 
+    this->fitnessDistribution = std::uniform_real_distribution<double>(0.0, 
                                 this->sumFitness);
-    double fitness = this->fitnessDistribution(random_generator);
+    double fitness = this->fitnessDistribution(this->random_generator);
     
     for(index = 0; index < this->selectedPopulation.size(); index++){
         auxDouble += this->selectedPopulation.at(index)->GetFitness();
         
-        if(auxDouble > fitness)
+        if(auxDouble >= fitness)
             break;
     }
     

@@ -11,6 +11,8 @@
  * Created on March 8, 2019, 9:45 AM
  */
 
+#include <cassert>
+
 #include "../../../include/Algorithms/GA/Individual.h"
 #include "../../../include/Algorithms/GA/IndividualBool.h"
 
@@ -39,6 +41,7 @@ double Individual::GetFitness() const {
 }
 
 void Individual::SetFitness(double fitness) {
+    assert(fitness > 0.0);
     this->fitness = fitness;
 }
 
@@ -47,5 +50,6 @@ unsigned int Individual::GetCount() const {
 }
 
 void Individual::SetCount(unsigned int count) {
+    assert(count > 0);
     this->count = count;
 }

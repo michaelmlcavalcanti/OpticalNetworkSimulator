@@ -61,6 +61,7 @@ double IndividualBool::GetBlockProb() const {
 
 void IndividualBool::SetBlockProb(double blockProb) {
     assert(this->GetCount() < this->ga->GetMaxNumSimulation());
+    assert(blockProb >= 0.0);
     this->SetCount(this->GetCount()+1);
     
     if(this->GetCount() == 1)

@@ -48,6 +48,8 @@
           <itemPath>include/Algorithms/GA/CoreOrderIndividual.h</itemPath>
           <itemPath>include/Algorithms/GA/GA.h</itemPath>
           <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA_MO.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA_NumInterRoutesMSCL.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_SO.h</itemPath>
           <itemPath>include/Algorithms/GA/Individual.h</itemPath>
@@ -91,8 +93,6 @@
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/Algorithms/GA/GA_MO.h</itemPath>
-      <itemPath>include/Algorithms/GA/GA_NumInterRoutesMSCL.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -107,7 +107,10 @@
           <itemPath>src/Algorithms/GA/CoreOrderIndividual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA_MO.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA_SO.cpp</itemPath>
           <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
         </logicalFolder>
@@ -149,9 +152,6 @@
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
-      <itemPath>src/Algorithms/GA/GA_MO.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp</itemPath>
-      <itemPath>src/Algorithms/GA/GA_SO.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
