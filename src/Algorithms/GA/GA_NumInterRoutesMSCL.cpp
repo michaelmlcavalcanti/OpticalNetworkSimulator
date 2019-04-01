@@ -75,6 +75,48 @@ void GA_NumInterRoutesMSCL::SetNumNodes(unsigned int numNodes) {
 }
 
 void GA_NumInterRoutesMSCL::Crossover() {
+    assert(this->totalPopulation.empty());
+    assert(this->GetNumIndParetoFronts() == this->GetNumberIndividuals());
+    std::shared_ptr<IndividualNumRoutesMSCL> auxInd1, auxInd2;
+    std::vector<std::shared_ptr<IndividualNumRoutesMSCL>> auxVecTotalPop;
+    
+    //Put all individual in the Pareto fronts to an auxiliary vector.
+    for(auto it1: this->paretoFronts){
+        for(auto it2: it1){
+            auxVecTotalPop.push_back(
+            std::dynamic_pointer_cast<IndividualNumRoutesMSCL>(it2));
+        }
+    }
+    
+    //Shuffle the auxiliary vector.
+    std::shuffle(auxVecTotalPop.begin(), auxVecTotalPop.end(), 
+                 this->random_generator);
+    
+    while(!auxVecTotalPop.empty()){
+        auxInd1 = auxVecTotalPop.back();
+        auxVecTotalPop.pop_back();
+        auxInd2 = auxVecTotalPop.back();
+        auxVecTotalPop.pop_back();
+        
+        this->GenerateNewIndividuals(auxInd1.get(), auxInd2.get());
+    }
+}
+
+void GA_NumInterRoutesMSCL::GenerateNewIndividuals(
+const IndividualNumRoutesMSCL* const ind1, 
+const IndividualNumRoutesMSCL* const ind2) {
+    
+    this->UniformCrossover(ind1, ind2);
+}
+
+void GA_NumInterRoutesMSCL::UniformCrossover(const IndividualNumRoutesMSCL* 
+const ind1, const IndividualNumRoutesMSCL* const ind2) {
+    std::shared_ptr<IndividualNumRoutesMSCL> newInd1 = 
+    std::make_shared<IndividualNumRoutesMSCL>(this);
+    std::shared_ptr<IndividualNumRoutesMSCL> newInd2 = 
+    std::make_shared<IndividualNumRoutesMSCL>(this);
+    double auxProb;
+    
     
 }
 

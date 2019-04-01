@@ -24,6 +24,9 @@ public:
     
     IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga);
     
+    IndividualNumRoutesMSCL(const std::shared_ptr
+                            <const IndividualNumRoutesMSCL>& orig);
+
     virtual ~IndividualNumRoutesMSCL();
     
     

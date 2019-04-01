@@ -49,7 +49,7 @@ void GA_RsaOrder::InitializePopulation() {
         }
         else{
             this->selectedPopulation.push_back(std::make_shared
-                                           <IndividualBool>(this));
+                                               <IndividualBool>(this));
         }
     }
 }

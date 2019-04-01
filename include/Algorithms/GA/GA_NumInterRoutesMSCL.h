@@ -49,12 +49,9 @@ public:
      * @param ind Specified individual.
      */
     void SetIndParameters(Individual* ind) override;
-    
-    
 private:
     
     void Crossover();
-    
     /**
      * @brief Function to generate two new individuals of two specified 
      * parents.
@@ -117,7 +114,7 @@ private:
     
     std::vector<unsigned int> vecNumMaxInterRoutes;
     
-    std::uniform_int_distribution<int> numInterRoutesDistribution;
+    std::uniform_int_distribution<unsigned int> numInterRoutesDistribution;
 };
 
 #endif /* GA_NUMINTERROUTESMSCL_H */

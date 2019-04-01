@@ -54,6 +54,7 @@ public:
     
     void CheckMinSimul() override;
 
+    unsigned int GetNumIndParetoFronts() const;
 private:
     /**
      * @brief Container of individuals, representing the initial population.

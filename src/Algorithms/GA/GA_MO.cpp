@@ -11,8 +11,6 @@
  * Created on March 27, 2019, 3:28 PM
  */
 
-#include <vector>
-
 #include "../../../include/Algorithms/GA/GA_MO.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Data/Data.h"
@@ -79,4 +77,14 @@ void GA_MO::CheckMinSimul() {
             this->GetSimul()->GetData()->Initialize();
         }
     }
+}
+
+unsigned int GA_MO::GetNumIndParetoFronts() const {
+    unsigned int numInd = 0;
+    
+    for(auto it: this->paretoFronts){
+        numInd += it.size();
+    }
+
+    return numInd;
 }

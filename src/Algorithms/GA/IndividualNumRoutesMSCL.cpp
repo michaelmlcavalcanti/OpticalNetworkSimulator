@@ -15,9 +15,16 @@
 #include "../../../include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
 
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga)
-:Individual(ga), ga(ga) {
+:Individual(ga), ga(ga), blockProb(0.0), simulTime(0.0), genes(0) {
     const unsigned int numNodes = this->ga->GetNumNodes();
     
+    
+}
+
+IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(
+const std::shared_ptr<const IndividualNumRoutesMSCL>& orig)
+:Individual(orig), ga(orig->ga), blockProb(0.0), simulTime(0.0), 
+genes(orig->genes) {
     
 }
 
