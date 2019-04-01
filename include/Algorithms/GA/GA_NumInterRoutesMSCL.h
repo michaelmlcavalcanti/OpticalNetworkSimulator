@@ -14,6 +14,8 @@
 #ifndef GA_NUMINTERROUTESMSCL_H
 #define GA_NUMINTERROUTESMSCL_H
 
+class IndividualNumRoutesMSCL;
+
 #include "GA_MO.h"
 
 class GA_NumInterRoutesMSCL : public GA_MO {
@@ -23,22 +25,32 @@ public:
     
     virtual ~GA_NumInterRoutesMSCL();
     
-    
+
     void Initialize() override;
     
     void InitializePopulation() override;
 
     void CreateNewPopulation() override;
     
+    /**
+     * @brief Gets the number of nodes of the network.
+     * @return Number of nodes.
+     */
+    unsigned int GetNumNodes() const;
+    /**
+     * @brief Sets the number of nodes of the network.
+     * @param numNodes Number of nodes.
+     */
+    void SetNumNodes(unsigned int numNodes);
     
     void ApplyIndividual(Individual* ind) override;
-    
+    /**
+     * @brief Set the individual parameters found by the simulation.
+     * @param ind Specified individual.
+     */
     void SetIndParameters(Individual* ind) override;
-
     
-    unsigned int GetNumNodes() const;
-
-    void SetNumNodes(unsigned int numNodes);
+    
 private:
     
     void Crossover();
@@ -49,8 +61,8 @@ private:
      * @param ind1 First parent.
      * @param ind2 Second parent.
      */
-    void GenerateNewIndividuals(const Individual* const ind1,
-                                const Individual* const ind2);
+    void GenerateNewIndividuals(const IndividualNumRoutesMSCL* const ind1,
+                                const IndividualNumRoutesMSCL* const ind2);
     /**
      * @brief One point crossover, in which two parents generate two new
      * individuals. A index of the genes is selected. One new individual will
@@ -60,8 +72,8 @@ private:
      * @param ind1 First parent.
      * @param ind2 Second parent.
      */
-    void OnePointCrossover(const Individual* const ind1,
-                           const Individual* const ind2);
+    void OnePointCrossover(const IndividualNumRoutesMSCL* const ind1,
+                           const IndividualNumRoutesMSCL* const ind2);
     /**
      * @brief Two point crossover, in which two parents generate two new
      * individuals. Two index of the genes is selected. One new individual will
@@ -71,8 +83,8 @@ private:
      * @param ind1 First parent.
      * @param ind2 Second parent.
      */
-    void TwoPointCrossover(const Individual* const ind1,
-                           const Individual* const ind2);
+    void TwoPointCrossover(const IndividualNumRoutesMSCL* const ind1,
+                           const IndividualNumRoutesMSCL* const ind2);
     /**
      * @brief Uniform crossover, in which two parents generate two new
      * individuals. the crossover is done by gene, in which the first new
@@ -82,8 +94,8 @@ private:
      * @param ind1 First parent.
      * @param ind2 Second parent.
      */
-    void UniformCrossover(const Individual* const ind1,
-                          const Individual* const ind2);
+    void UniformCrossover(const IndividualNumRoutesMSCL* const ind1,
+                          const IndividualNumRoutesMSCL* const ind2);
     /**
      * @brief Apply the mutation in all the new individuals created by the 
      * crossover process. After that, this function add the possible parents,
@@ -96,7 +108,7 @@ private:
      * individual has the mutation probability to be generated randomly.
      * @param ind Specified individual.
      */
-    void MutateIndividual(Individual* const ind);
+    void MutateIndividual(IndividualNumRoutesMSCL* const ind);
 private:
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.

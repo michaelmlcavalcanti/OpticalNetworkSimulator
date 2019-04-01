@@ -15,6 +15,7 @@
 
 #include "../../../include/Algorithms/GA/Individual.h"
 #include "../../../include/Algorithms/GA/IndividualBool.h"
+#include "../../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
 
 std::ostream& operator<<(std::ostream& ostream, Individual* ind){
     ostream << ind->GetMainParameter();

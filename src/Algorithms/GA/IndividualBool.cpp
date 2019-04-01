@@ -72,3 +72,7 @@ void IndividualBool::SetBlockProb(double blockProb) {
 double IndividualBool::GetMainParameter() {
     return this->GetBlockProb();
 }
+
+double IndividualBool::GetSecondParameter() {
+    return this->GetMainParameter();
+}

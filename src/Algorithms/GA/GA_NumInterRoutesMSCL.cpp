@@ -17,6 +17,8 @@
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Data/Data.h"
+#include "../../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
 
 GA_NumInterRoutesMSCL::GA_NumInterRoutesMSCL(SimulationType* simul)
 :GA_MO(simul), numNodes(0), vecNumMaxInterRoutes(0) {
@@ -55,7 +57,11 @@ void GA_NumInterRoutesMSCL::SetIndParameters(Individual* ind) {
     double blockProb = this->GetSimul()->GetData()->GetPbReq();
     TIME simulTime = this->GetSimul()->GetData()->GetRealSimulTime();
     
+    IndividualNumRoutesMSCL* auxInd = dynamic_cast<IndividualNumRoutesMSCL*>
+                                      (ind);
     
+    auxInd->SetBlockProb(blockProb);
+    auxInd->SetSimulTime(simulTime);
 }
 
 unsigned int GA_NumInterRoutesMSCL::GetNumNodes() const {
@@ -69,7 +75,7 @@ void GA_NumInterRoutesMSCL::SetNumNodes(unsigned int numNodes) {
 }
 
 void GA_NumInterRoutesMSCL::Crossover() {
-
+    
 }
 
 void GA_NumInterRoutesMSCL::Mutation() {

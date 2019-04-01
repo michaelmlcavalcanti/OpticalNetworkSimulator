@@ -69,7 +69,8 @@ public:
      * @return Main parameter.
      */
     virtual double GetMainParameter() = 0;
-
+    
+    virtual double GetSecondParameter() = 0;
 private:
     /**
      * @brief Generic GA that owns this individual.

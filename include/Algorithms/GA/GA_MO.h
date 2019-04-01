@@ -23,6 +23,7 @@ public:
     
     virtual ~GA_MO();
     
+    
     void Initialize() override;
 
     virtual void InitializePopulation() = 0;

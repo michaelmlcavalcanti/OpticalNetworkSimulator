@@ -44,7 +44,7 @@ public:
      * @brief Default destructor of a GA algorithm.
      */
     virtual ~GA();
-
+    
     /**
      * @brief Initialize the GA algorithm with the probability distribution.
      */

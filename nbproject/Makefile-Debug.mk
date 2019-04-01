@@ -45,6 +45,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/GA/GA_SO.o \
 	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
+	${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
@@ -146,6 +147,11 @@ ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o: src/Algorithms/GA/IndividualBoo
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o src/Algorithms/GA/IndividualBool.cpp
+
+${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o: src/Algorithms/GA/IndividualNumRoutesMSCL.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o src/Algorithms/GA/IndividualNumRoutesMSCL.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
