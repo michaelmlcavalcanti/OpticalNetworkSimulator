@@ -31,10 +31,10 @@ void GA_MO::Initialize() {
 
 bool GA_MO::IndividualDominated::operator()(const std::shared_ptr<Individual>& 
 indA, const std::shared_ptr<Individual>& indB) const {
-    return ((indA->GetMainParameter() < indB->GetMainParameter() &&
-            indA->GetSecondParameter() <= indB->GetSecondParameter()) ||
-            (indA->GetMainParameter() <= indB->GetMainParameter() &&
-            indA->GetSecondParameter() < indB->GetSecondParameter()));
+    return ((indA->GetMainParameter() > indB->GetMainParameter() &&
+            indA->GetSecondParameter() >= indB->GetSecondParameter()) ||
+            (indA->GetMainParameter() >= indB->GetMainParameter() &&
+            indA->GetSecondParameter() > indB->GetSecondParameter()));
 }
 
 bool GA_MO::OrderIndividuals::operator()(const std::shared_ptr<Individual>& 
@@ -49,10 +49,59 @@ void GA_MO::KeepInitialPopulation() {
 
 void GA_MO::SelectPopulation() {
     assert(this->paretoFronts.empty());
+    std::vector<std::shared_ptr<Individual>> vecDominated(0);
+    std::vector<std::shared_ptr<Individual>> auxFront(0);
+    std::shared_ptr<Individual> auxInd;
+    unsigned int numInd = this->GetNumberIndividuals();
+    std::vector<unsigned int> dominatedIndexes(0);
     
-    //while(this->GetNumIndParetoFronts() < this->GetNumberIndividuals()){
+    while(this->GetNumIndParetoFronts() < numInd){
         
-    //}
+        //Return the indexes of the dominated solutions.
+        for(unsigned int a = 0; a < this->totalPopulation.size(); a++){
+            auxInd = this->totalPopulation.at(a);
+            
+            for(auto it: this->totalPopulation){
+            
+                if(IndividualDominated()(auxInd, it) && auxInd != it){
+                    dominatedIndexes.push_back(a);
+                    break;
+                }
+            }
+        }
+        
+        //Put the dominated solutions in a auxiliary vector and keeps the 
+        //non-dominated solutions in the totalPopulation vector.
+        while(!dominatedIndexes.empty()){
+            auxInd = this->totalPopulation.at(dominatedIndexes.back());
+            vecDominated.push_back(auxInd);
+            this->totalPopulation.erase(this->totalPopulation.begin() + 
+            dominatedIndexes.back());
+            dominatedIndexes.pop_back();
+        }
+        
+        std::shuffle(this->totalPopulation.begin(), 
+                     this->totalPopulation.end(), this->random_generator);
+        
+        //Fill an auxiliary vector with the right amount of 
+        //non-dominated solutions.
+        while(!this->totalPopulation.empty() && 
+        (this->GetNumIndParetoFronts() < numInd)){
+            auxFront.push_back(this->totalPopulation.back());
+            this->totalPopulation.pop_back();
+        }
+        
+        //Add the Pareto front to the vector of fronts, in ascending order.
+        std::make_heap(auxFront.begin(), auxFront.end(), OrderIndividuals());
+        this->paretoFronts.push_back(auxFront);
+        this->totalPopulation.insert(this->totalPopulation.end(),
+        vecDominated.begin(), vecDominated.end());
+        vecDominated.clear();
+        auxFront.clear();
+    }
+    
+    this->totalPopulation.clear();
+    assert(this->GetNumIndParetoFronts() == numInd);
 }
 
 void GA_MO::SaveIndividuals() {

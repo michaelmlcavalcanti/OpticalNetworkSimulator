@@ -30,6 +30,7 @@ public:
     };
     
     struct OrderIndividuals{
+        
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
     };
