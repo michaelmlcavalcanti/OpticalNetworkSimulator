@@ -43,6 +43,15 @@ public:
      */
     void SetNumNodes(unsigned int numNodes);
     
+    unsigned int GetMaxNumInterRoutes(unsigned int orN, unsigned int deN, 
+                                      unsigned int pos);
+    
+    unsigned int GetNumRoutes(unsigned int orN, unsigned int deN);
+    
+    unsigned int CreateGene(unsigned int orN, unsigned int deN, 
+                            unsigned int pos);
+    
+    
     void ApplyIndividual(Individual* ind) override;
     /**
      * @brief Set the individual parameters found by the simulation.
@@ -112,7 +121,7 @@ private:
      */
     unsigned int numNodes;
     
-    std::vector<unsigned int> vecNumMaxInterRoutes;
+    std::vector<std::vector<unsigned int>> vecNumMaxInterRoutes;
     
     std::uniform_int_distribution<unsigned int> numInterRoutesDistribution;
 };

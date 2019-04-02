@@ -38,6 +38,15 @@ public:
 
     void SetSimulTime(TIME simulTime);
     
+    std::vector<std::vector<unsigned int> > GetGenes() const;
+    
+    unsigned int GetGene(unsigned int orN, unsigned int deN, unsigned int pos) 
+    const;
+
+    void SetGenes(std::vector<std::vector<unsigned int> > genes);
+
+    void SetGene(unsigned int orN, unsigned int deN, unsigned int pos, 
+                 unsigned int gene);
     
     double GetMainParameter() override;
 
@@ -51,7 +60,7 @@ private:
     
     TIME simulTime;
     
-    std::vector<unsigned int> genes;
+    std::vector<std::vector<unsigned int>> genes;
 };
 
 #endif /* INDIVIDUALNUMROUTESMSCL_H */

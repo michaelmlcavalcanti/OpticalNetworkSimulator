@@ -23,6 +23,16 @@ public:
     
     virtual ~GA_MO();
     
+    struct IndividualDominated{
+        
+        bool operator()(const std::shared_ptr<Individual>& indA,
+                        const std::shared_ptr<Individual>& indB) const;
+    };
+    
+    struct OrderIndividuals{
+        bool operator()(const std::shared_ptr<Individual>& indA,
+                        const std::shared_ptr<Individual>& indB) const;
+    };
     
     void Initialize() override;
 

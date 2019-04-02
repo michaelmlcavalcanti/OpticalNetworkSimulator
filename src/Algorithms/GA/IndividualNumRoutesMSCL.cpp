@@ -17,8 +17,21 @@
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga)
 :Individual(ga), ga(ga), blockProb(0.0), simulTime(0.0), genes(0) {
     const unsigned int numNodes = this->ga->GetNumNodes();
+    unsigned int numRoutes;
     
-    
+    //Creation of genes
+    this->genes.resize(numNodes*numNodes);
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            numRoutes = this->ga->GetNumRoutes(orN, deN);
+            this->genes.at(orN*numNodes+deN).resize(numRoutes);
+            
+            for(unsigned int pos = 0; pos < numRoutes; pos++){
+                this->genes.at(orN*numNodes+deN).at(pos) = 
+                this->ga->CreateGene(orN, deN, pos);
+            }
+        }
+    }
 }
 
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(
@@ -57,6 +70,26 @@ void IndividualNumRoutesMSCL::SetSimulTime(TIME simulTime) {
     if(this->GetCount() == 1)
         this->simulTime = simulTime;
     this->simulTime = (this->simulTime + simulTime) / 2.0;
+}
+
+std::vector<std::vector<unsigned int> > IndividualNumRoutesMSCL::GetGenes() 
+const {
+    return genes;
+}
+
+unsigned int IndividualNumRoutesMSCL::GetGene(unsigned int orN, 
+unsigned int deN, unsigned int pos) const {
+    return this->genes.at(orN*this->ga->GetNumNodes()+deN).at(pos);
+}
+
+void IndividualNumRoutesMSCL::SetGenes(std::vector<std::vector<unsigned int> > 
+genes) {
+    this->genes = genes;
+}
+
+void IndividualNumRoutesMSCL::SetGene(unsigned int orN, unsigned int deN, 
+unsigned int pos, unsigned int gene) {
+    this->genes.at(orN*this->ga->GetNumNodes()+deN).at(pos) = gene;
 }
 
 double IndividualNumRoutesMSCL::GetMainParameter() {

@@ -29,12 +29,30 @@ void GA_MO::Initialize() {
     GA::Initialize();
 }
 
+bool GA_MO::IndividualDominated::operator()(const std::shared_ptr<Individual>& 
+indA, const std::shared_ptr<Individual>& indB) const {
+    return ((indA->GetMainParameter() < indB->GetMainParameter() &&
+            indA->GetSecondParameter() <= indB->GetSecondParameter()) ||
+            (indA->GetMainParameter() <= indB->GetMainParameter() &&
+            indA->GetSecondParameter() < indB->GetSecondParameter()));
+}
+
+bool GA_MO::OrderIndividuals::operator()(const std::shared_ptr<Individual>& 
+indA, const std::shared_ptr<Individual>& indB) const {
+    
+    return indA->GetMainParameter() > indB->GetMainParameter();
+}
+
 void GA_MO::KeepInitialPopulation() {
     this->initialPopulation = this->paretoFronts.front();
 }
 
 void GA_MO::SelectPopulation() {
+    assert(this->paretoFronts.empty());
     
+    //while(this->GetNumIndParetoFronts() < this->GetNumberIndividuals()){
+        
+    //}
 }
 
 void GA_MO::SaveIndividuals() {
