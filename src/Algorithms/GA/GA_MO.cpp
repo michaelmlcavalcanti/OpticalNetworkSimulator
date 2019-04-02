@@ -40,7 +40,7 @@ indA, const std::shared_ptr<Individual>& indB) const {
 bool GA_MO::OrderIndividuals::operator()(const std::shared_ptr<Individual>& 
 indA, const std::shared_ptr<Individual>& indB) const {
     
-    return indA->GetMainParameter() > indB->GetMainParameter();
+    return indA->GetMainParameter() < indB->GetMainParameter();
 }
 
 void GA_MO::KeepInitialPopulation() {

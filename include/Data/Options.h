@@ -134,8 +134,9 @@ enum GAOption{
     GAOptionDisabled,
     GaRsaOrder,
     GaCoreOrder,
+    GaNumRoutesCheckMSCL,
     FirstGaOption = GaRsaOrder,
-    LastGaOption = GaCoreOrder
+    LastGaOption = GaNumRoutesCheckMSCL
 };
 
 

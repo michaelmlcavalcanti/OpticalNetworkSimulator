@@ -30,8 +30,8 @@ GA_NumInterRoutesMSCL::~GA_NumInterRoutesMSCL() {
 void GA_NumInterRoutesMSCL::Initialize() {
     GA_MO::Initialize();
     this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
-    
-    //Create vecNumMaxInterRoutes
+    this->vecNumMaxInterRoutes = this->GetSimul()->GetResourceAlloc()
+        ->GetNumInterRoutesToCheck();
 }
 
 void GA_NumInterRoutesMSCL::InitializePopulation() {
@@ -50,7 +50,10 @@ void GA_NumInterRoutesMSCL::CreateNewPopulation() {
 }
 
 void GA_NumInterRoutesMSCL::ApplyIndividual(Individual* ind) {
-    
+    IndividualNumRoutesMSCL* auxInd = dynamic_cast<IndividualNumRoutesMSCL*>
+                                      (ind);
+    this->GetSimul()->GetResourceAlloc()
+        ->SetNumInterRoutesToCheck(auxInd->GetGenes());
 }
 
 void GA_NumInterRoutesMSCL::SetIndParameters(Individual* ind) {
@@ -79,7 +82,8 @@ unsigned int deN, unsigned int pos) {
     return this->vecNumMaxInterRoutes.at(orN*this->numNodes+deN).at(pos);
 }
 
-unsigned int GA_NumInterRoutesMSCL::GetNumRoutes(unsigned int orN, unsigned int deN) {
+unsigned int GA_NumInterRoutesMSCL::GetNumRoutes(unsigned int orN, 
+unsigned int deN) {
     return this->vecNumMaxInterRoutes.at(orN*this->numNodes+deN).size();
 }
 

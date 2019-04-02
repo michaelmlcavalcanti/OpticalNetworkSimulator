@@ -441,3 +441,30 @@ void ResourceAlloc::SetInterferingRoutes2() {
         }
     }
 }
+
+std::vector<std::vector<unsigned int> > 
+ResourceAlloc::GetNumInterRoutesToCheck() {
+    return numInterRoutesToCheck;
+}
+
+void ResourceAlloc::SetNumInterRoutesToCheck() {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int numRoutes;
+    this->numInterRoutesToCheck.resize(this->interRoutes.size());
+    
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            numRoutes = this->interRoutes.at(orN*numNodes+deN).size();
+            
+            for(unsigned int pos = 0; pos < numRoutes; pos++){
+                this->numInterRoutesToCheck.at(orN*numNodes+deN).push_back(
+                this->interRoutes.at(orN*numNodes+deN).at(pos).size());
+            }
+        }
+    }
+}
+
+void ResourceAlloc::SetNumInterRoutesToCheck(std::vector<
+std::vector<unsigned int>> numInterRoutesToCheck) {
+    this->numInterRoutesToCheck = numInterRoutesToCheck;
+}

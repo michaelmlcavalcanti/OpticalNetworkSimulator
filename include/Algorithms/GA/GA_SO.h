@@ -141,7 +141,7 @@ public:
      */
     void RunSelectPop() override;
     /**
-     * @brief @brief Runs the simulation for the total population of the GA.
+     * @brief Runs the simulation for the total population of the GA.
      */
     void RunTotalPop() override;
     /**
@@ -149,7 +149,6 @@ public:
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul() override;
-
 private:
     /**
      * @brief Number of best individuals the process of selection will choose.

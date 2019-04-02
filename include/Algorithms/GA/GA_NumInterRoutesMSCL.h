@@ -18,18 +18,34 @@ class IndividualNumRoutesMSCL;
 
 #include "GA_MO.h"
 
+/**
+ * @brief GA algorithm applied for the number of interfering routes to check
+ * in the MSCL spectral allocation algorithm.
+ */
 class GA_NumInterRoutesMSCL : public GA_MO {
 public:
-    
+    /**
+     * @brief Default constructor for GA of number of interfering routes.
+     * @param simul SimulationType that owns this GA.
+     */
     GA_NumInterRoutesMSCL(SimulationType* simul);
-    
+    /**
+     * @brief Default destructor for GA of number of interfering routes.
+     */
     virtual ~GA_NumInterRoutesMSCL();
     
 
     void Initialize() override;
-    
+    /**
+     * @brief Function to create the initial population in the selected 
+     * population container. This GA create individuals of the type
+     * IndividualNumRoutesMSCL class.
+     */
     void InitializePopulation() override;
-
+    /**
+     * @brief Call the functions of crossover and mutation for create a new
+     * population.
+     */
     void CreateNewPopulation() override;
     
     /**
@@ -42,16 +58,39 @@ public:
      * @param numNodes Number of nodes.
      */
     void SetNumNodes(unsigned int numNodes);
-    
+    /**
+     * @brief Gets the maximum number of interfering routes for a specified node
+     * pair and for a specified route of this pair.
+     * @param orN Source node index.
+     * @param deN Destination node index.
+     * @param pos Route index.
+     * @return Total number of interfering routes of this route.
+     */
     unsigned int GetMaxNumInterRoutes(unsigned int orN, unsigned int deN, 
                                       unsigned int pos);
-    
+    /**
+     * @brief Gets the number of routes for a specified source-destination node
+     * pair.
+     * @param orN Source node index.
+     * @param deN Destination node index.
+     * @return Total number routes.
+     */
     unsigned int GetNumRoutes(unsigned int orN, unsigned int deN);
-    
+    /**
+     * @brief 
+     * @param orN
+     * @param deN
+     * @param pos
+     * @return 
+     */
     unsigned int CreateGene(unsigned int orN, unsigned int deN, 
                             unsigned int pos);
     
-    
+    /**
+     * @brief Apply the genes of a specified individual in the network.
+     * Apply the number of interfering routes to check by MSCL.
+     * @param ind Specified individual.
+     */
     void ApplyIndividual(Individual* ind) override;
     /**
      * @brief Set the individual parameters found by the simulation.
@@ -59,7 +98,10 @@ public:
      */
     void SetIndParameters(Individual* ind) override;
 private:
-    
+    /**
+     * @brief Function to create new individuals by crossover.
+     * Uses each individual only one time to generate new ones.
+     */
     void Crossover();
     /**
      * @brief Function to generate two new individuals of two specified 

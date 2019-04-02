@@ -192,6 +192,13 @@ public:
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
     
     void SetResourceAllocOrder();
+    
+    std::vector<std::vector<unsigned int>> GetNumInterRoutesToCheck();
+    
+    void SetNumInterRoutesToCheck();
+    
+    void SetNumInterRoutesToCheck(std::vector<std::vector<unsigned int>> 
+    numInterRoutesToCheck);
 
 private:
     /**
@@ -235,6 +242,6 @@ private:
     
     std::vector<bool> resourceAllocOrder;
     
-    std::vector<unsigned int> numInterRoutesToCheck;
+    std::vector<std::vector<unsigned int>> numInterRoutesToCheck;
 };
 #endif /* RESOURCEALLOC_H */

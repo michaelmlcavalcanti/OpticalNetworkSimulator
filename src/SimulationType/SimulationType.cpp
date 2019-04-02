@@ -90,8 +90,10 @@ void SimulationType::AdditionalSettings() {
     if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
         
-        if(this->resourceAlloc->CheckInterRouting())
+        if(this->resourceAlloc->CheckInterRouting()){
             this->resourceAlloc->SetInterferingRoutes();
+            this->resourceAlloc->SetNumInterRoutesToCheck();
+        }
     }
 }
 

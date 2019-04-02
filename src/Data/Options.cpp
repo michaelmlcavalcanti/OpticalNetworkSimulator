@@ -81,7 +81,8 @@ const boost::unordered_map<GAOption, std::string>
 Options::mapGaOption = boost::assign::map_list_of
     (GAOptionDisabled, "GA Disabled")
     (GaRsaOrder, "GA RSA Order")
-    (GaCoreOrder, "GA Core Order");
+    (GaCoreOrder, "GA Core Order")
+    (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
