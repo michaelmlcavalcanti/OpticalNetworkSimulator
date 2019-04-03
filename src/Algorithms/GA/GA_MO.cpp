@@ -52,8 +52,8 @@ void GA_MO::SelectPopulation() {
     std::vector<std::shared_ptr<Individual>> vecDominated(0);
     std::vector<std::shared_ptr<Individual>> auxFront(0);
     std::shared_ptr<Individual> auxInd;
-    unsigned int numInd = this->GetNumberIndividuals();
     std::vector<unsigned int> dominatedIndexes(0);
+    unsigned int numInd = this->GetNumberIndividuals();
     
     while(this->GetNumIndParetoFronts() < numInd){
         

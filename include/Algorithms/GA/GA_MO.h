@@ -22,19 +22,41 @@
  */
 class GA_MO : public GA {
 public:
-    
+    /**
+     * @brief Default constructor of the GA multiobjective.
+     * @param simul SimulationType that owns this GA.
+     */
     GA_MO(SimulationType* simul);
-    
+    /**
+     * @brief Default destructor of the GA multiobjective.
+     */
     virtual ~GA_MO();
     
+    /**
+     * @brief Structure for determinate if an individual is dominated by other.
+     */
     struct IndividualDominated{
-        
+        /**
+         * @brief Operator to check if an individual is dominated by the other.
+         * @param indA First individual.
+         * @param indB Second individual.
+         * @return True if individual indA is dominated by individual indB. 
+         */
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
     };
-    
+    /**
+     * @brief Structure to compare two individuals, based on their first 
+     * parameter.
+     */
     struct OrderIndividuals{
-        
+        /**
+         * @brief Operator to compare two individuals.
+         * @param indA First individual.
+         * @param indB Second individual.
+         * @return True if individual indA first parameter is less than 
+         * individual indB first parameter.
+         */
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
     };

@@ -464,7 +464,7 @@ void ResourceAlloc::SetNumInterRoutesToCheck() {
     }
 }
 
-void ResourceAlloc::SetNumInterRoutesToCheck(std::vector<
-std::vector<unsigned int>> numInterRoutesToCheck) {
+void ResourceAlloc::SetNumInterRoutesToCheck(
+std::vector<std::vector<unsigned int>> numInterRoutesToCheck) {
     this->numInterRoutesToCheck = numInterRoutesToCheck;
 }

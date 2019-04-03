@@ -33,7 +33,6 @@ class SimulationType;
 class GA {
     
     friend std::ostream& operator<<(std::ostream& ostream, const GA* ga);
-
 public:
     /**
      * @brief Default constructor of a GA algorithm.
@@ -165,13 +164,11 @@ private:
      * @brief Number of maximum simulation each individual will do.
      */
     const unsigned int maxNumSimulation;
-    
     /**
      * @brief Probability distribution used in this GA algorithm for crossover
      * and mutation.
      */
     std::uniform_real_distribution<double> probDistribution;
-    
 public:
     /**
      * @brief Random generator.

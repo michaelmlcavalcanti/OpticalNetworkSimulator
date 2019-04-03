@@ -23,7 +23,6 @@ class IndividualBool;
  * @brief GA algorithm applied for RSA order.
  */
 class GA_RsaOrder : public GA_SO {
-
 public:
     /**
      * @brief Default constructor for GA RSA order.
@@ -91,7 +90,6 @@ public:
      * container.
      */
     void SetTotalPopFitness() override;
-
 private:
     /**
      * @brief Function to create new individuals by crossover.
@@ -152,7 +150,6 @@ private:
      * @param ind Specified individual.
      */
     void MutateIndividual(IndividualBool* const ind);
-    
 private:
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.

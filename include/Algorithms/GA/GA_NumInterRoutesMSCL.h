@@ -34,7 +34,12 @@ public:
      */
     virtual ~GA_NumInterRoutesMSCL();
     
-
+    /**
+     * @brief Initialize the base class, set the number of nodes, that will
+     * require to construct the vector of genes, and set the container, with
+     * the maximum number of interfering routes, per node pair, too check in 
+     * the MSCL spectrum allocation.
+     */
     void Initialize() override;
     /**
      * @brief Function to create the initial population in the selected 
@@ -162,9 +167,14 @@ private:
      * @brief Number of nodes in the network, used to construct the gene vector.
      */
     unsigned int numNodes;
-    
+    /**
+     * @brief Container with the maximum number of interfering routes, per 
+     * node pair and routes of this pair, the MSCL will check.
+     */
     std::vector<std::vector<unsigned int>> vecNumMaxInterRoutes;
-    
+    /**
+     * @brief Probability distribution used in this GA.
+     */
     std::uniform_int_distribution<unsigned int> numInterRoutesDistribution;
 };
 

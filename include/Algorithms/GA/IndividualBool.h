@@ -26,7 +26,6 @@ class GA_RsaOrder;
  * @brief Specific individual for RSA order, composed by boolean genes.
  */
 class IndividualBool : public Individual {
-
 public:
     /**
      * @brief Default constructor for this specified individual.
@@ -83,12 +82,14 @@ public:
      */
     void SetBlockProb(double blockProb);
     /**
-     * @brief Gets the main parameter of this individual, in this case the
-     * blocking probability.
-     * @return Blocking probability.
+     * @brief Gets the main parameter of this individual.
+     * @return First parameter.
      */
     double GetMainParameter() override;
-    
+    /**
+     * @brief Gets the second parameter of this individual.
+     * @return Second parameter.
+     */
     double GetSecondParameter() override;
 private:
     /**

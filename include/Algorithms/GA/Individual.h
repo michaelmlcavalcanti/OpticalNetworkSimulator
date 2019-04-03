@@ -25,7 +25,6 @@ class Individual {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     Individual* ind);
-
 public:
     /**
      * @brief Default constructor of a generic individual.
@@ -65,11 +64,16 @@ public:
     /**
      * @brief Return the main parameter of this individual. This function was
      * made because for some types of GA, the fitness don't correspond to the
-     * main parameter of the individual, as blocking probability. Pure virtual.
+     * main parameter of the individual, as blocking probability.
      * @return Main parameter.
      */
     virtual double GetMainParameter() = 0;
-    
+    /**
+     * @brief Return the second parameter of this individual. This function was
+     * made because for some types of GA, the fitness don't correspond to the
+     * main parameter of the individual, as blocking probability.
+     * @return Second parameter.
+     */
     virtual double GetSecondParameter() = 0;
 private:
     /**
