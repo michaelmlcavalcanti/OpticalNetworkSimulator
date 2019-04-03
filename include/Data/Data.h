@@ -17,6 +17,7 @@
 class SimulationType;
 class Call;
 class GA_SO;
+class GA_MO;
 
 #include <vector>
 #include <ostream>
@@ -149,6 +150,9 @@ private:
      */
     void SavePBvLoad(std::ostream& ostream);
     
+    void SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
+    std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd);
+    
     void SaveBestWorstIndividuals(GA_SO* ga, std::ostream& logOfstream, 
     std::ostream& bestInds, std::ostream& worstInds);
     
@@ -156,6 +160,10 @@ private:
     
     void SaveInitPopulation(GA_SO* ga, std::ostream& initPop);
     
+    void SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds);
+    
+    void SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream, 
+    std::ostream& bestInds);
 private:
     /**
      * @brief A pointer to the simulation this object belong

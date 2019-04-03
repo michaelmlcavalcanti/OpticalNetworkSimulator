@@ -18,11 +18,12 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
-#include "../../include/Algorithms/GA/GA_RsaOrder.h"
+#include "../../include/Data/Options.h"
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
 :SimulationType(simulIndex) {
-    //Create the GA based in the options(Future).
+    assert(this->GetOptions()->GetGAOption() != GaOptionDisabled);
+    
     this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
 }
 

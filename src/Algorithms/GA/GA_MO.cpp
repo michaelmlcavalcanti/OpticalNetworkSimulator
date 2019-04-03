@@ -45,6 +45,8 @@ indA, const std::shared_ptr<Individual>& indB) const {
 
 void GA_MO::KeepInitialPopulation() {
     this->initialPopulation = this->paretoFronts.front();
+    std::make_heap(this->initialPopulation.begin(), 
+                   this->initialPopulation.end(), OrderIndividuals());
 }
 
 void GA_MO::SelectPopulation() {
@@ -154,4 +156,24 @@ unsigned int GA_MO::GetNumIndParetoFronts() const {
     }
 
     return numInd;
+}
+
+std::vector<Individual*> GA_MO::GetParetoFront() const {
+    std::vector<Individual*> auxVecInd(0);
+    
+    for(auto it: this->paretoFronts.at(this->GetActualGeneration()-1)){
+        auxVecInd.push_back(it.get());
+    }
+    
+    return auxVecInd;
+}
+
+std::vector<Individual*> GA_MO::GetIniPopulation() const {
+    std::vector<Individual*> auxVecInd(0);
+    
+    for(auto it: this->initialPopulation){
+        auxVecInd.push_back(it.get());
+    }
+    
+    return auxVecInd;
 }

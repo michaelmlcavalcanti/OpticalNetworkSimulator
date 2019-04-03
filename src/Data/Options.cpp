@@ -79,7 +79,7 @@ Options::mapOrderRSA = boost::assign::map_list_of
 
 const boost::unordered_map<GAOption, std::string>
 Options::mapGaOption = boost::assign::map_list_of
-    (GAOptionDisabled, "GA Disabled")
+    (GaOptionDisabled, "GA Disabled")
     (GaRsaOrder, "GA RSA Order")
     (GaCoreOrder, "GA Core Order")
     (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check");
@@ -117,7 +117,7 @@ routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
-GaOption(GAOptionDisabled), transponderOption(TransOptionDisabled) {
+GaOption(GaOptionDisabled), transponderOption(TransOptionDisabled) {
     
 }
 
@@ -396,4 +396,25 @@ std::string Options::GetGAOptionName() const {
 
 void Options::SetGAOption(GAOption coreOrder) {
     this->GaOption = coreOrder;
+}
+
+bool Options::IsGA_SO() const {
+    
+    switch(this->GetGAOption()){
+        case GaRsaOrder:
+        case GaCoreOrder:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool Options::IsGA_MO() const {
+    
+    switch(this->GetGAOption()){
+        case GaNumRoutesCheckMSCL:
+            return true;
+        default:
+            return false;
+    }
 }

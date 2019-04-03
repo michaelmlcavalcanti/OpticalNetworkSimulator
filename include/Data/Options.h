@@ -130,8 +130,8 @@ enum RsaOrder {
 /**
  * @brief Numerate the Genetic Algorithm options.
  */
-enum GAOption{
-    GAOptionDisabled,
+enum GAOption {
+    GaOptionDisabled,
     GaRsaOrder,
     GaCoreOrder,
     GaNumRoutesCheckMSCL,
@@ -305,13 +305,17 @@ public:
 
     void SetOrderRSA(RsaOrder orderRSA);
     
-    void SetTransponderOption(TransponderOption transponderOption);
-    
     GAOption GetGAOption() const;
     
     std::string GetGAOptionName() const;
 
     void SetGAOption(GAOption coreOrder);
+    
+    bool IsGA_SO() const;
+    
+    bool IsGA_MO() const;
+    
+    void SetTransponderOption(TransponderOption transponderOption);
 private:
     /**
      * @brief A pointer to the simulation this object belong.

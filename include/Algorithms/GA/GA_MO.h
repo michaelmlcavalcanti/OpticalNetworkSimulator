@@ -109,11 +109,16 @@ public:
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul() override;
+    
     /**
      * @brief Gets the number of individuals in the Pareto fronts.
      * @return 
      */
     unsigned int GetNumIndParetoFronts() const;
+    
+    std::vector<Individual*> GetParetoFront() const;
+    
+    std::vector<Individual*> GetIniPopulation() const;
 private:
     /**
      * @brief Container of individuals, representing the initial population.

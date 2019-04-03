@@ -16,11 +16,13 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Parameters.h"
+#include "../../include/Data/Options.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/SimulationType/GA_SingleObjective.h"
 #include "../../include/Algorithms/GA/GA.h"
 #include "../../include/Algorithms/GA/GA_SO.h"
+#include "../../include/Algorithms/GA/GA_MO.h"
 #include "../../include/Algorithms/GA/IndividualBool.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
@@ -124,13 +126,10 @@ void Data::SaveGaFiles() {
     std::ofstream& worstInds = this->simulType->GetInputOutput()
                                  ->GetWorstIndividualsFile();
     
-    //Make function to check the cast for each possible GA SimulationType
-    GA_SO* ga = dynamic_cast<GA_SO*>( dynamic_cast<GA_SingleObjective*>
-                                      (this->simulType)->GetGA() );
-    
-    this->SaveBestWorstIndividuals(ga, logOfstream, bestInds, worstInds);
-    this->SaveBestIndividual(ga, bestInd);
-    this->SaveInitPopulation(ga, initPop);
+    if(this->simulType->GetOptions()->IsGA_SO())
+        this->SaveGaSoFiles(logOfstream, initPop, bestInds, worstInds, bestInd);
+    else if(this->simulType->GetOptions()->IsGA_MO())
+        this->SaveGaMoFiles(logOfstream, bestInds);
 }
 
 void Data::SetNumberReq(double numReq) {
@@ -237,6 +236,16 @@ void Data::SavePBvLoad(std::ostream& ostream) {
                    this->GetNumberReq() << std::endl;
 }
 
+void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
+std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {
+    GA_SO* ga = dynamic_cast<GA_SO*>( dynamic_cast<GA_SingleObjective*>
+                                      (this->simulType)->GetGA() );
+    
+    this->SaveBestWorstIndividuals(ga, logOfstream, bestInds, worstInds);
+    this->SaveBestIndividual(ga, bestInd);
+    this->SaveInitPopulation(ga, initPop);
+}
+
 void Data::SaveBestWorstIndividuals(GA_SO* ga, std::ostream& logOfstream, 
 std::ostream& bestInds, std::ostream& worstInds) {
     unsigned int numGen = ga->GetNumberGenerations();
@@ -269,5 +278,34 @@ void Data::SaveInitPopulation(GA_SO* ga, std::ostream& initPop) {
     for(unsigned int a = 0; a < numIniPop; a++){
         initPop << 0 << "\t" << ga->GetIniIndividual(a)->GetMainParameter()
                 << std::endl;
+    }
+}
+
+void Data::SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds) {
+    GA_MO* ga = dynamic_cast<GA_MO*>( dynamic_cast<GA_SingleObjective*>
+                                      (this->simulType)->GetGA() );
+    
+    this->SaveParetoFronts(ga, logOfstream, bestInds);
+}
+
+void Data::SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream, 
+std::ostream& bestInds) {
+    std::vector<Individual*> auxVecInd(0);
+    unsigned int numGen = ga->GetNumberGenerations();
+    
+    for(unsigned int a = 0; a <= numGen; a++){
+        ga->SetActualGeneration(a);
+        logOfstream << ga << std::endl;
+        
+        if(a != 0)
+            auxVecInd = ga->GetParetoFront();
+        else
+            auxVecInd = ga->GetIniPopulation();
+        
+        for(auto it: auxVecInd){
+            bestInds << it->GetMainParameter() << "\t" 
+                     << it->GetSecondParameter() << std::endl;
+        }
+        bestInds << std::endl;
     }
 }
