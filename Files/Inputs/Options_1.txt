@@ -10,7 +10,6 @@
 0
 0
 
-
 1-Topology
     0 - Invalid
     1 - NSFNet
@@ -52,5 +51,9 @@
 9-RSA Order
     0 - Routing-SA
     1 - SA-Routing
-    2 - Ga order
-10
+    2 - Mixed order
+10-GA Option
+    0 - GA Disabled
+    1 - GA RSA Order
+    2 - GA Core Order
+    3 - GA Number of Interfering Routes Check

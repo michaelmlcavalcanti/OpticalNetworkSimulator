@@ -7,12 +7,11 @@
 10000
 500
 
-
-#Number of slots per fiber
-#Number of cores per link
-#Deactivation time
-#Minimum load
-#Maximum load
-#Number of points
-#Maximum number  of requisitions
-#Maximum  number of blocked requests
+1-Number of slots per fiber
+2-Number of cores per link
+3-Deactivation time
+4-Minimum load
+5-Maximum load
+6-Number of points
+7-Maximum number  of requisitions
+8-Maximum  number of blocked requests

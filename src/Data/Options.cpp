@@ -394,7 +394,7 @@ std::string Options::GetGAOptionName() const {
     return this->mapGaOption.at(this->GaOption);
 }
 
-void Options::SetGAOption(GAOption coreOrder) {
+void Options::SetGAOption(GAOption gaOption) {
     this->GaOption = coreOrder;
 }
 

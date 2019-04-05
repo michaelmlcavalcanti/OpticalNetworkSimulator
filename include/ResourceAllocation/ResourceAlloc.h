@@ -168,6 +168,8 @@ public:
      */
     bool CheckResourceAllocOrder(Call* call);
     
+    bool CheckInterRouting();
+    
     /**
      * @brief Get the SimulationType object that owns this object.
      * @return SimulationType object.

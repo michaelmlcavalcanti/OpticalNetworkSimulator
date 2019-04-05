@@ -185,6 +185,17 @@ public:
     void Save();
     
     /**
+     * @brief Check if the GA option is single objective.
+     * @return True if the GA option is SO.
+     */
+    bool IsGA_SO() const;
+    /**
+     * @brief Check if the GA option is multiobjective.
+     * @return True if the GA option is MO.
+     */
+    bool IsGA_MO() const;
+    
+    /**
      * @brief Returns the topology choice.
      * @return Topology option.
      */
@@ -292,28 +303,51 @@ public:
      * @param phyLayerOption Physical layer option.
      */
     void SetPhyLayerOption(PhysicalLayerOption phyLayerOption);
-    
+    /**
+     * @brief Gets the network option (WDM or EON).
+     * @return Network option.
+     */
     NetworkOption GetNetworkOption() const;
-    
+    /**
+     * @brief Gets the network option name.
+     * @return Network option name.
+     */
     std::string GetNetworkOptionName() const;
-
+    /**
+     * @brief Set the network option.
+     * @param networkOption Network option.
+     */
     void SetNetworkOption(NetworkOption networkOption);
-    
+    /**
+     * @brief Gets the resource allocation order.
+     * @return RSA order.
+     */
     RsaOrder GetOrderRSA() const;
-    
+    /**
+     * @brief Gets the resource allocation order name.
+     * @return RSA order name.
+     */
     std::string GetOrderRsaName() const;
-
+    /**
+     * @brief Sets the resource allocation order.
+     * @param orderRSA RSA order.
+     */
     void SetOrderRSA(RsaOrder orderRSA);
-    
+    /**
+     * @brief Get the type of GA specified.
+     * @return GA option.
+     */
     GAOption GetGAOption() const;
-    
+    /**
+     * @brief Gets the GA option name.
+     * @return GA option.
+     */
     std::string GetGAOptionName() const;
-
-    void SetGAOption(GAOption coreOrder);
-    
-    bool IsGA_SO() const;
-    
-    bool IsGA_MO() const;
+    /**
+     * @brief Sets the type of GA.
+     * @param gaOption GA option.
+     */
+    void SetGAOption(GAOption gaOption);
     
     void SetTransponderOption(TransponderOption transponderOption);
 private:
