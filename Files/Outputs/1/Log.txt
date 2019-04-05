@@ -17,32 +17,32 @@ Mu: 1
 Minimum load point(erlang): 120
 Maximum load point(erlang): 220
 Number of points: 6
-Total number of requisitions: 1e+06
+Total number of requisitions: 10000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
 DATA
-Simulation time:8338.27  Real simul time: 6.24947  Number of requests:1e+06
-Load point:120  PbReq:5.2e-05  PbSlots:-nan  HopsMed:2.14313  NetOcc:9.87349e+06
+Simulation time:82.9647  Real simul time: 0.115536  Number of requests:10000
+Load point:120  PbReq:0  PbSlots:-nan  HopsMed:2.1307  NetOcc:97637
 
 
-Simulation time:7140.55  Real simul time: 5.62927  Number of requests:1e+06
-Load point:140  PbReq:0.000282  PbSlots:-nan  HopsMed:2.14777  NetOcc:9.88602e+06
+Simulation time:70.9124  Real simul time: 0.099231  Number of requests:10000
+Load point:140  PbReq:0.0002  PbSlots:-nan  HopsMed:2.15583  NetOcc:99184
 
 
-Simulation time:6239.12  Real simul time: 5.23143  Number of requests:1e+06
-Load point:160  PbReq:0.001504  PbSlots:-nan  HopsMed:2.15432  NetOcc:9.94511e+06
+Simulation time:62.2879  Real simul time: 0.060248  Number of requests:10000
+Load point:160  PbReq:0.0015  PbSlots:-nan  HopsMed:2.15924  NetOcc:99975
 
 
-Simulation time:5564.99  Real simul time: 5.0347  Number of requests:1e+06
-Load point:180  PbReq:0.00493  PbSlots:-nan  HopsMed:2.16227  NetOcc:9.91825e+06
+Simulation time:55.2468  Real simul time: 0.055435  Number of requests:10000
+Load point:180  PbReq:0.005  PbSlots:-nan  HopsMed:2.16231  NetOcc:99792
 
 
-Simulation time:5001.92  Real simul time: 5.14553  Number of requests:1e+06
-Load point:200  PbReq:0.011923  PbSlots:-nan  HopsMed:2.16656  NetOcc:9.81622e+06
+Simulation time:50.2877  Real simul time: 0.053545  Number of requests:10000
+Load point:200  PbReq:0.0092  PbSlots:-nan  HopsMed:2.16108  NetOcc:98054
 
 
-Simulation time:4538.23  Real simul time: 5.51827  Number of requests:1e+06
-Load point:220  PbReq:0.021834  PbSlots:-nan  HopsMed:2.17078  NetOcc:9.6145e+06
+Simulation time:45.732  Real simul time: 0.051709  Number of requests:10000
+Load point:220  PbReq:0.0174  PbSlots:-nan  HopsMed:2.16986  NetOcc:96284
 
 

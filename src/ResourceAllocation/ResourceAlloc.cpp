@@ -90,10 +90,7 @@ void ResourceAlloc::ResourAlloc(Call* call) {
     switch(this->resourAllocOption){
         case ResourAllocRSA:
             call->SetModulation(FixedModulation);
-            if(!this->CheckResourceAllocOrder(call))
-                this->RSA(call);
-            else
-                this->SAR(call);
+            this->RSA(call);
             break;
         case ResourAllocRMSA:
             this->RMSA(call);
@@ -107,6 +104,14 @@ void ResourceAlloc::ResourAlloc(Call* call) {
 }
 
 void ResourceAlloc::RSA(Call* call) {
+    
+    if(!this->CheckResourceAllocOrder(call))
+        this->RoutingSpec(call);
+    else
+        this->SpecRouting(call);
+}
+
+void ResourceAlloc::RoutingSpec(Call* call) {
     this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
     
@@ -135,17 +140,14 @@ void ResourceAlloc::RMSA(Call* call) {
                               mod = TypeModulation(mod-1)){
         call->SetModulation(mod);
         
-        if(!this->CheckResourceAllocOrder(call))
-            this->RSA(call);
-        else
-            this->SAR(call);
+        this->RSA(call);
         
         if(call->GetStatus() == Accepted)
             break;
     }
 }
 
-void ResourceAlloc::SAR(Call* call) {
+void ResourceAlloc::SpecRouting(Call* call) {
     this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
     

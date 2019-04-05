@@ -59,11 +59,25 @@ public:
      */
     void ResourAlloc(Call* call);
     /**
+     * @brief Function to apply resource allocation without modulation 
+     * variation. The RSA order will be determined by the vector 
+     * resourceAllocOrder.
+     * @param call Call request that the function will try to allocate.
+     */
+    void RSA(Call* call);
+    /**
      * @brief Function for routing then spectral allocation for a specified 
      * call. For each route in the set of routes, try the spectral allocation.
      * @param call Call request that the function will try to allocate.
      */
-    void RSA(Call* call);
+    void RoutingSpec(Call* call);
+    /**
+     * @brief Function for spectral allocation then routing for a specified 
+     * call. Try the first possible set of slots in each possible route. If
+     * not possible, try the second set of slots, and so on.
+     * @param call Call request that the function will try to allocate.
+     */
+    void SpecRouting(Call* call);
     /**
      * @brief Function for modulation, then routing and then spectral 
      * allocation for a specified call. For each modulation, try the RSA
@@ -71,13 +85,6 @@ public:
      * @param call Call request that the function will try to allocate.
      */
     void RMSA(Call* call);
-    /**
-     * @brief Function for spectral allocation then routing for a specified 
-     * call. Try the first possible set of slots in each possible route. If
-     * not possible, try the second set of slots, and so on.
-     * @param call Call request that the function will try to allocate.
-     */
-    void SAR(Call* call);
     
     /**
      * @brief Function to input one route to the container of all routes for a 
@@ -97,14 +104,6 @@ public:
      */
     void SetRoutes(unsigned int orN, unsigned int deN, 
                    std::vector<std::shared_ptr<Route>> routes);
-    
-    /**
-     * @brief Set interfering routes for all routes in the network
-     */
-    void SetInterferingRoutes();
-    
-    void SetInterferingRoutes2();
-    
     /**
      * @brief Function that add a route in the container of all routes 
      * for a specified node pair.
@@ -148,8 +147,13 @@ public:
      * @brief Runs the offline routing for all node pairs in the network.
      */
     void RoutingOffline();
+    /**
+     * @brief Set interfering routes for all routes in the network
+     */
+    void SetInterferingRoutes();
     
-    bool CheckInterRouting();
+    void SetInterferingRoutes2();
+    
     /**
      * @brief Check if the call request OSNR is acceptable.
      * @param call Call request to evaluate the OSNR.
