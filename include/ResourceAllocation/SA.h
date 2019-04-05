@@ -47,6 +47,8 @@ public:
      * @param call Call request.
      */
     void SpecAllocation(Call* call);
+    
+    std::vector<unsigned int> SpecAllocation(unsigned int lastSlot);
     /**
      * @brief Function to apply random spectral allocation to a call request.
      * This SA randomly select between the available slots.
@@ -81,12 +83,16 @@ public:
      * @return Vector with all possible slots for allocation.
      */
     std::vector<unsigned int> RandomSlots(Call* call);
+    
+    std::vector<unsigned int> RandomSlots(unsigned int lastSlot);
     /**
      * @brief Function that find all possible slots for SA, based on FF order.
      * @param call Call request.
      * @return Vector with all possible slots for allocation.
      */
     std::vector<unsigned int> FirstFitSlots(Call* call);
+    
+    std::vector<unsigned int> FirstFitSlots(unsigned int lastSlot);
     
     /**
      * @brief Gets the topology in which this SA is done.

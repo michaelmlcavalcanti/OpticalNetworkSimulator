@@ -72,6 +72,8 @@ public:
      */
     GA* GetGA() const;
 private:
+    void CreateGA();
+private:
     /**
      * 
      * @brief Genetic algorithm of this simulation.

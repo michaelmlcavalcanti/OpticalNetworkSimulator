@@ -43,9 +43,9 @@ void Kernel::Run() {
 void Kernel::CreateSimulations() {
     
     for(unsigned int a = 1; a <= this->numberSimulations; ++a){
-        if(a == 1)
-            simulations.push_back(std::make_shared<GA_SingleObjective>(a));
-        else
+        //if(a == 1)
+        //    simulations.push_back(std::make_shared<GA_SingleObjective>(a));
+        //else
             simulations.push_back(std::make_shared<MultiLoadSimulation>(a));
     }
 }

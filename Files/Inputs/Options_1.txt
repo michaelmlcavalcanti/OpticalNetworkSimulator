@@ -11,46 +11,46 @@
 0
 
 
-#Topology
+1-Topology
     0 - Invalid
     1 - NSFNet
     2 - Ring
     3 - Toroidal
     4 - Germany
     5 - Italy
-#Routing algorithm
+2-Routing algorithm
     0 - Invalid
     1 - DJK
     2 - YEN
     3 - BSR
-#Spectral allocation algorithm
+3-Spectral allocation algorithm
     0 - Invalid
     1 - Random
     2 - FF
     3 - MSCL
-#Link cost type
+4-Link cost type
     0 - Invalid
     1 - MinHops
     2 - MinLegnth
     3 - MinLength Normalized
-#Traffic option
+5-Traffic option
     0 - Invalid
     1 - 100-200-400
     2 - 50-120-300
     3 - 10-40-100-200-400
-#Resource Allocation Option
+6-Resource Allocation Option
     0 - Invalid
     1 - RSA
     2 - RMSA
-#Physical Layer Option
+7-Physical Layer Option
     0 - Disabled
     1 - Enabled
-#Network Option
+8-Network Option
     0 - Invalid
     1 - WDM
     2 - EON
-#RSA Order
+9-RSA Order
     0 - Routing-SA
     1 - SA-Routing
     2 - Ga order
-#
+10

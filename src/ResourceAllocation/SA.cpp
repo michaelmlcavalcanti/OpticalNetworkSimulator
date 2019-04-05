@@ -17,6 +17,7 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/GeneralClasses/Def.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
 :resourceAlloc(rsa), specAllOption(option), topology(topology) {
@@ -43,10 +44,26 @@ void SA::SpecAllocation(Call* call) {
     }
 }
 
+std::vector<unsigned int> SA::SpecAllocation(unsigned int lastSlot) {
+    std::vector<unsigned int> vec(0);
+    
+    switch(this->specAllOption){
+        case SpecAllRandom:
+            return this->RandomSlots(lastSlot);
+        case SpecAllFF:
+        case SpecAllMSCL:
+            return this->FirstFitSlots(lastSlot);
+        default:
+            std::cerr << "Invalid spectrum allocation option" << std::endl;
+            return vec;
+    }
+}
+
 void SA::Random(Call* call) {
     std::vector<unsigned int> vecSlots(0);
     
     vecSlots = this->FirstFitSlots(call);
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
     
     call->SetFirstSlot(vecSlots.back());
     call->SetLastSlot(vecSlots.back() + call->GetNumberSlots() - 1);
@@ -71,11 +88,11 @@ void SA::MSCL(Call* call) {
     std::cout << "Function not implemented" << std::endl;
 }
 
-Topology* SA::GetTopology(){
+Topology* SA::GetTopology() {
     return topology;
 }
 
-int SA::CalcNumFormAloc(int L, bool* Disp,int tam){ 
+int SA::CalcNumFormAloc(int L, bool* Disp,int tam) { 
 //L indica a largura da requisicao e Disp o vetor de disponibilidade
 /*
 	int sum = 0, si, se; //si eh o slot inicial da alocacao, que vai de 0 ate SE-L
@@ -117,7 +134,15 @@ std::vector<unsigned int> SA::RandomSlots(Call* call) {
     std::vector<unsigned int> vecSlots(0);
     vecSlots = this->FirstFitSlots(call);
     
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::randomDevice);
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
+    
+    return vecSlots;
+}
+
+std::vector<unsigned int> SA::RandomSlots(unsigned int lastSlot) {
+    std::vector<unsigned int> vecSlots = this->FirstFitSlots(lastSlot);
+    
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
     
     return vecSlots;
 }
@@ -125,8 +150,7 @@ std::vector<unsigned int> SA::RandomSlots(Call* call) {
 std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     Route* route = call->GetRoute();
     unsigned int numSlotsReq = call->GetNumberSlots();
-    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
-                                 numSlotsReq;
+    unsigned int maxSlotIndex = this->topology->GetNumSlots() - numSlotsReq;
     std::vector<unsigned int> slots(0);
     
     for(unsigned int a = 0; a <= maxSlotIndex; a++){
@@ -136,4 +160,14 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     }
     
     return slots;
+}
+
+std::vector<unsigned int> SA::FirstFitSlots(unsigned int lastSlot) {
+    //unsigned int numSlots = this->resourceAlloc->GetTopology()->GetNumSlots();
+    std::vector<unsigned int> vecSlots(0);
+    
+    for(unsigned int a = 0; a <= lastSlot; a++)
+        vecSlots.push_back(a);
+    
+    return vecSlots;
 }

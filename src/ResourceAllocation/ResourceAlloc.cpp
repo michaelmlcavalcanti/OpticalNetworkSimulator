@@ -148,23 +148,28 @@ void ResourceAlloc::RMSA(Call* call) {
 void ResourceAlloc::SAR(Call* call) {
     this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
+    
     bool allocFound = false;
-    
-    unsigned int size = this->topology->GetNumSlots() - call->GetNumberSlots();
+    unsigned int lastPossibleSlot = this->topology->GetNumSlots() - 
+                                    call->GetNumberSlots();
     unsigned int numRoutes = call->GetNumRoutes();
+    std::vector<unsigned int> possibleSlots(0);
+    possibleSlots = this->specAlloc->SpecAllocation(lastPossibleSlot);
+    unsigned int auxSlot;
     
-    for(unsigned int a = 0; a <= size; a++){
-    
+    for(unsigned int a = 0; a < possibleSlots.size(); a++){
+        auxSlot = possibleSlots.at(a);
+        
         for(unsigned int b = 0; b < numRoutes; b++){
             call->SetRoute(call->GetRoute(b));
             
             if(!this->CheckOSNR(call))
                 continue;
-        
-            if(this->topology->CheckSlotsDisp(call->GetRoute(), a, a + 
-               call->GetNumberSlots() - 1)){
-                call->SetFirstSlot(a);
-                call->SetLastSlot(a + call->GetNumberSlots() - 1);
+            
+            if(this->topology->CheckSlotsDisp(call->GetRoute(), auxSlot, 
+            auxSlot + call->GetNumberSlots() - 1)){
+                call->SetFirstSlot(auxSlot);
+                call->SetLastSlot(auxSlot + call->GetNumberSlots() - 1);
                 call->ClearTrialRoutes();
                 call->SetStatus(Accepted);
                 allocFound = true;

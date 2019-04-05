@@ -41,6 +41,8 @@ public:
     static double Max_Double;
 
     static std::random_device randomDevice;
+    
+    static std::default_random_engine pseudoRandomDevice;
 private:
 
 };
