@@ -63,7 +63,7 @@ void SA::Random(Call* call) {
     std::vector<unsigned int> vecSlots(0);
     
     vecSlots = this->FirstFitSlots(call);
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
     
     call->SetFirstSlot(vecSlots.back());
     call->SetLastSlot(vecSlots.back() + call->GetNumberSlots() - 1);
@@ -76,12 +76,13 @@ void SA::FirstFit(Call* call) {
                                  numSlotsReq;
     
     for(unsigned int slot = 0; slot <= maxSlotIndex; slot++){
+        
         if(this->topology->CheckSlotsDisp(route, slot, slot + numSlotsReq - 1)){
             call->SetFirstSlot(slot);
             call->SetLastSlot(slot + numSlotsReq - 1);
+            break;
         }
     }
-
 }
 
 void SA::MSCL(Call* call) {
@@ -134,7 +135,7 @@ std::vector<unsigned int> SA::RandomSlots(Call* call) {
     std::vector<unsigned int> vecSlots(0);
     vecSlots = this->FirstFitSlots(call);
     
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
     
     return vecSlots;
 }
@@ -142,7 +143,7 @@ std::vector<unsigned int> SA::RandomSlots(Call* call) {
 std::vector<unsigned int> SA::RandomSlots(unsigned int lastSlot) {
     std::vector<unsigned int> vecSlots = this->FirstFitSlots(lastSlot);
     
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomDevice);
+    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
     
     return vecSlots;
 }

@@ -395,7 +395,7 @@ std::string Options::GetGAOptionName() const {
 }
 
 void Options::SetGAOption(GAOption gaOption) {
-    this->GaOption = coreOrder;
+    this->GaOption = gaOption;
 }
 
 bool Options::IsGA_SO() const {

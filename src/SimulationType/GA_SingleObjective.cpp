@@ -23,7 +23,7 @@
 
 GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
 :SimulationType(simulIndex) {
-    assert(this->GetOptions()->GetGAOption() != GaOptionDisabled);
+    
 }
 
 GA_SingleObjective::~GA_SingleObjective() {
@@ -92,12 +92,15 @@ GA* GA_SingleObjective::GetGA() const {
 }
 
 void GA_SingleObjective::CreateGA() {
+    assert(this->GetOptions()->GetGAOption() != GaOptionDisabled);
     
     switch(this->GetOptions()->GetGAOption()){
         case GaRsaOrder:
             this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
+            break;
         case GaNumRoutesCheckMSCL:
             this->gaAlgorithm = std::make_shared<GA_NumInterRoutesMSCL>(this);
+            break;
         default:
             std::cerr << "Invalid GA option" << std::endl;
     }

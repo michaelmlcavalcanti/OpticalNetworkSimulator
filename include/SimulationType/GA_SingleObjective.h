@@ -26,7 +26,6 @@ class GA;
  * objectives, for a specified load point.
  */
 class GA_SingleObjective : public SimulationType {
-
 public:
     /**
      * @brief Standard constructor for a GA_SingleObjective object.
@@ -72,6 +71,9 @@ public:
      */
     GA* GetGA() const;
 private:
+    /**
+     * @brief Function to create the GA algorithm, based on the option chosen.
+     */
     void CreateGA();
 private:
     /**
@@ -79,7 +81,6 @@ private:
      * @brief Genetic algorithm of this simulation.
      */
     std::shared_ptr<GA> gaAlgorithm;
-    
 };
 
 #endif /* GA_SINGLEOBJECTIVE_H */

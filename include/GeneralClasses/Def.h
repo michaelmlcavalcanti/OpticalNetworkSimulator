@@ -15,9 +15,9 @@
 #define DEF_H
 
 #include <random>
+#include <limits>
 
 class Def {
-
 public:
     /**
      * @brief Define the minimum integer value
@@ -27,9 +27,13 @@ public:
      * @brief Define the maximum integer value
      */
     static int Max_Int;
-    
+    /**
+     * @brief Define the maximum unsigned integer value.
+     */
     static unsigned int Max_UnInt;
-    
+    /**
+     * @brief Define the minimum unsigned integer value.
+     */
     static unsigned int Min_UnInt;
     /**
      * @brief Define the minimum double value
@@ -39,12 +43,18 @@ public:
      * @brief Define the maximum double value
      */
     static double Max_Double;
-
+    /**
+     * @brief Random device used in the engines to generate real random values.
+     */
     static std::random_device randomDevice;
-    
-    static std::default_random_engine pseudoRandomDevice;
-private:
-
+    /**
+     * @brief Pseudo random engine.
+     */
+    static std::default_random_engine pseudoRandomEngine;
+    /**
+     * @brief Random engine.
+     */
+    static std::default_random_engine randomEngine;
 };
 
 #endif /* DEF_H */
