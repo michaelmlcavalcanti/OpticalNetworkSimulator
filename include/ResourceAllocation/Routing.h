@@ -25,29 +25,27 @@ class Topology;
 #include "../../include/Structure/Node.h"
 
 /**
+ * @brief Structure to compare the routes cost.
+ * Used to organize the priority queue used in the k-shortest path 
+ * algorithms.
+ */
+struct RouteCompare{
+    /**
+ * @brief Compare the cost of two routes.
+ * @param routeA Route to be compared with.
+ * @param routeB Route to compare.
+ * @return true if the cost of routeA is larger than routeB.
+ * False otherwise.
+ */
+    bool operator()(const std::shared_ptr<Route>& routeA,
+                    const std::shared_ptr<Route>& routeB);
+};
+
+/**
  * @brief Routing class, responsible for find the routes among all node pairs
  * or the route(s) for a specified node pair.
  */
 class Routing {
-
-private:
-    /**
-     * @brief Structure to compare the routes cost.
-     * Used to organize the priority queue used in the k-shortest path 
-     * algorithms.
-     */
-    struct RouteCompare{
-        /**
-         * @brief Compare the cost of two routes.
-         * @param routeA Route to be compared with.
-         * @param routeB Route to compare.
-         * @return true if the cost of routeA is larger than routeB.
-         * False otherwise.
-         */
-        bool operator()(const std::shared_ptr<Route> routeA,
-                        const std::shared_ptr<Route> routeB);
-    };
-
 public:
     /**
      * @brief Standard constructor for a Routing object.

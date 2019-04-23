@@ -19,8 +19,8 @@
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Calls/Call.h"
 
-bool Routing::RouteCompare::operator()(const std::shared_ptr<Route> routeA, 
-                                       const std::shared_ptr<Route> routeB) {
+bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA, 
+                                       const std::shared_ptr<Route>& routeB) {
     
     return (routeA->GetCost() > routeB->GetCost());
 }

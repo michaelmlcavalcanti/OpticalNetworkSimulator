@@ -252,10 +252,10 @@ void ResourceAlloc::RoutingOffline() {
 }
 
 bool ResourceAlloc::CheckInterRouting() {
-    switch(this->resourAllocOption){
+    
+    switch(this->GetSimulType()->GetOptions()->GetSpecAllOption()){
         case SpecAllMSCL:
             return true;
-            break;
         default:
             return false;
     }
@@ -319,6 +319,22 @@ std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori,
 int des, int pos) {
     return this->interRoutes.at(ori*(this->topology->GetNumNodes()) + des)
            .at(pos);
+}
+
+std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(
+unsigned int orNode, unsigned int deNode, Route* route){
+    std::vector<std::shared_ptr<Route>> routes = this->GetRoutes(orNode, 
+                                                                 deNode);
+    unsigned int numRoutes = routes.size();
+    
+    for(unsigned int pos = 0; pos < numRoutes; pos++){
+        
+        if(route == routes.at(pos).get())
+            return this->GetInterRoutes(orNode, deNode, pos);
+    }
+    
+    routes.clear();
+    return routes;
 }
 
 void ResourceAlloc::SetInterferingRoutes() {
@@ -419,7 +435,7 @@ void ResourceAlloc::SetInterferingRoutes2() {
                         if(interRoute == nullptr || interRoute == routeAux)
                             continue;
                         
-                        for(unsigned int f = 0; f < interRoute->GetNumHops(); 
+                        for(unsigned int f = 0; f < interRoute->GetNumHops();
                         f++){
                             interLink = interRoute->GetLink(f);
                             
@@ -445,6 +461,15 @@ void ResourceAlloc::SetInterferingRoutes2() {
                     }
                 }
             }
+        }
+    }
+    
+    for(unsigned int a = 0; a < this->interRoutes.size(); a++){
+        for(unsigned int b = 0; b < this->interRoutes.at(a).size(); b++){
+            std::make_heap(this->interRoutes.at(a).at(b).begin(), 
+                           this->interRoutes.at(a).at(b).end(), RouteCompare());
+            std::reverse(this->interRoutes.at(a).at(b).begin(), 
+                         this->interRoutes.at(a).at(b).end());
         }
     }
 }

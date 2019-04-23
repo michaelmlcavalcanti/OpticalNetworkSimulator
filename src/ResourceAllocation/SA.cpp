@@ -18,6 +18,7 @@
 #include "../../include/Structure/Topology.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/Structure/Node.h"
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
 :resourceAlloc(rsa), specAllOption(option), topology(topology) {
@@ -51,7 +52,6 @@ std::vector<unsigned int> SA::SpecAllocation(unsigned int lastSlot) {
         case SpecAllRandom:
             return this->RandomSlots(lastSlot);
         case SpecAllFF:
-        case SpecAllMSCL:
             return this->FirstFitSlots(lastSlot);
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
@@ -86,11 +86,93 @@ void SA::FirstFit(Call* call) {
 }
 
 void SA::MSCL(Call* call) {
-    std::cout << "Function not implemented" << std::endl;
+    unsigned int numSlotsReq = call->GetNumberSlots();
+    unsigned int numSlotsTop = this->topology->GetNumSlots();
+    Route* route = call->GetRoute();
+    unsigned int orNode = route->GetOrNode()->GetNodeId();
+    unsigned int deNode = route->GetDeNode()->GetNodeId();
+    std::vector<std::shared_ptr<Route>> intRoutes = 
+    this->resourceAlloc->GetInterRoutes(orNode, deNode, route);
+    
+    unsigned int vetCapInic[intRoutes.size()];
+    unsigned int vetCapFin[intRoutes.size()];
+    bool vetDispInt[numSlotsTop];
+    double perda, perdaMin = Def::Max_Double;
+    unsigned int si = Def::Max_UnInt;
+    bool DispFitSi = false;
+    
+    for(unsigned int s = 0; s < (numSlotsTop - numSlotsReq + 1); s++){
+        DispFitSi = this->topology->CheckSlotsDisp(route, s, 
+                                                   s + numSlotsReq - 1);
+        
+        if(DispFitSi){
+            perda = 0.0;
+            
+            for(unsigned int r = 0; r < intRoutes.size(); r++){
+                
+                for(unsigned int se = 0; se < numSlotsTop; se++){
+                    if(!(this->topology->CheckSlotDisp(intRoutes.at(r).get(), 
+                                                       se))){
+                        vetDispInt[se] = false;
+                    }
+                    else{
+                        vetDispInt[se] = true;
+                    }
+                }
+                
+                vetCapInic[r] = 0;
+                vetCapFin[r] = 0;
+                
+                //Calculates the initial capacity based on the number of 
+                //allocation forms.
+                for(unsigned int i = 2; i <= 5; i++)
+                    vetCapInic[r] += this->CalcNumFormAloc(i, vetDispInt);
+                
+                //Calculates the requisition allocation impact in the 
+                //interfering routes for each set of slots
+                for(unsigned int i = s; i < s + numSlotsReq; i++)
+                    vetDispInt[i] = false;
+                
+                for(unsigned int i = 2; i <= 5; i++)
+                    vetCapFin[r] += this->CalcNumFormAloc(i, vetDispInt);
+                
+                perda += vetCapFin[r] - vetCapInic[r];
+            }
+            
+            if(perda < perdaMin){
+                perdaMin = perda;
+                si = s;
+            }
+        }
+    }
+    
+    if(perdaMin < Def::Max_Double){
+        call->SetFirstSlot(si);
+        call->SetLastSlot(si + numSlotsReq - 1);
+    }
 }
 
 Topology* SA::GetTopology() {
     return topology;
+}
+
+unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
+    unsigned int sum = 0;
+    unsigned int si, se;
+    unsigned int numNodes = this->topology->GetNumNodes();
+    
+    for(si = 0; si < numNodes - reqSize; si++){
+        for(se = si; se < si + reqSize; se++){
+            
+            if(dispVec[se] == false)
+                break;
+        }
+        
+        if(se == si + reqSize)
+            sum++;
+    }
+    
+    return sum;
 }
 
 int SA::CalcNumFormAloc(int L, bool* Disp,int tam) { 
@@ -164,7 +246,6 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
 }
 
 std::vector<unsigned int> SA::FirstFitSlots(unsigned int lastSlot) {
-    //unsigned int numSlots = this->resourceAlloc->GetTopology()->GetNumSlots();
     std::vector<unsigned int> vecSlots(0);
     
     for(unsigned int a = 0; a <= lastSlot; a++)

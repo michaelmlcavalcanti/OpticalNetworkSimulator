@@ -27,7 +27,6 @@ class Call;
  * @brief Class responsible for spectral allocation of the call requests.
  */
 class SA {
-
 public:
     /**
      * @brief Standard constructor for a SA object.
@@ -47,7 +46,12 @@ public:
      * @param call Call request.
      */
     void SpecAllocation(Call* call);
-    
+    /**
+     * @brief Function that gets the possible first slots for spectral 
+     * allocation based on the last possible first slot.
+     * @param lastSlot Last possible first slot.
+     * @return Container of possible first slots.
+     */
     std::vector<unsigned int> SpecAllocation(unsigned int lastSlot);
     /**
      * @brief Function to apply random spectral allocation to a call request.
@@ -76,6 +80,7 @@ public:
      * @param call Call request.
      */
     virtual void MSCL(Call* call);
+    
     /**
      * @brief Function that find all possible slots for SA, based on random 
      * order.
@@ -83,7 +88,12 @@ public:
      * @return Vector with all possible slots for allocation.
      */
     std::vector<unsigned int> RandomSlots(Call* call);
-    
+    /**
+     * @brief Gets the vector with all possible first slots for spectrum
+     * allocation, with random ordination.
+     * @param lastSlot Last first slot possible for allocation.
+     * @return Vector with possible first slots.
+     */
     std::vector<unsigned int> RandomSlots(unsigned int lastSlot);
     /**
      * @brief Function that find all possible slots for SA, based on FF order.
@@ -91,7 +101,12 @@ public:
      * @return Vector with all possible slots for allocation.
      */
     std::vector<unsigned int> FirstFitSlots(Call* call);
-    
+    /**
+     * @brief Gets the vector with all possible first slots for spectrum
+     * allocation, with first fit ordination.
+     * @param lastSlot Last first slot possible for allocation.
+     * @return Vector with possible first slots.
+     */
     std::vector<unsigned int> FirstFitSlots(unsigned int lastSlot);
     
     /**
@@ -104,6 +119,8 @@ public:
      * @return ResourceAlloc pointer.
      */
     ResourceAlloc* GetResourceAlloc();
+    
+    unsigned int CalcNumFormAloc(unsigned int reqSize, bool* dispVec);
     
     int CalcNumFormAloc(int L, bool* Disp, int tam);
 private:

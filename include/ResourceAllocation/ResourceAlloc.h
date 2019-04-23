@@ -32,7 +32,6 @@ class Modulation;
  * spectral allocation.
  */
 class ResourceAlloc {
-    
 public:
     /**
      * @brief Standard constructor for a ResourceAlloc object.
@@ -167,7 +166,11 @@ public:
      * @return 0 if will apply R-SA or 1 if will apply SA-R.
      */
     bool CheckResourceAllocOrder(Call* call);
-    
+    /**
+     * @brief Checks if the simulation will need the container of interfering
+     * routes of each node pair route(s).
+     * @return True if the simulation uses interfering routes.
+     */
     bool CheckInterRouting();
     
     /**
@@ -190,22 +193,56 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
-    
+    /**
+     * @brief Gets the container that indicate the RSA order (R-SA or SA-R) for
+     * each node pair in the network.
+     * @return Container of RSA order for all node pairs.
+     */
     std::vector<bool> GetResourceAllocOrder() const;
-    
-    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
-
+    /**
+     * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
+     * each node pair in the network.
+     * @param resourceAllocOrder Container of RSA order for all node pairs.
+     */
     void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
-    
+    /**
+     * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
+     * each node pair in the network of the output of the first simulation.
+     */
     void SetResourceAllocOrder();
+    /**
+     * @brief Gets the container of interfering routes of a specified node pair 
+     * and route of this pair.
+     * @param ori Source node index.
+     * @param des Destination node index.
+     * @param pos Route index of the node pair.
+     * @return Interfering routes.
+     */
+    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
     
+    std::vector<std::shared_ptr<Route>> GetInterRoutes(unsigned int orNode,
+    unsigned int deNode, Route* route);
+    /**
+     * @brief Gets the container of number of interfering routes the MSCL 
+     * will check for all node pair and routes in the network.
+     * @return Container of number of interfering routes to check.
+     */
     std::vector<std::vector<unsigned int>> GetNumInterRoutesToCheck();
-    
+    /**
+     * @brief Set the container of number of interfering routes the MSCL 
+     * will check for all node pair and routes in the network.
+     * This function will construct the container with the maximum number of
+     * interfering routes.
+     */
     void SetNumInterRoutesToCheck();
-    
+    /**
+     * @brief Set the container of number of interfering routes the MSCL 
+     * will check for all node pair and routes in the network.
+     * @param numInterRoutesToCheck Container of number of interfering routes 
+     * to check.
+     */
     void SetNumInterRoutesToCheck(std::vector<std::vector<unsigned int>> 
     numInterRoutesToCheck);
-
 private:
     /**
      * @breif Pointer to a SimulationType object that
@@ -245,9 +282,14 @@ private:
      * routes of all routes in the network
      */
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
-    
+    /**
+     * @brief Vector that contain the RSA order, by node pair.
+     */
     std::vector<bool> resourceAllocOrder;
-    
+    /**
+     * @brief Container of the number of interfering routes the algorithm
+     * will check, by node pair and route(s) of this pair.
+     */
     std::vector<std::vector<unsigned int>> numInterRoutesToCheck;
 };
 #endif /* RESOURCEALLOC_H */
