@@ -89,14 +89,14 @@ void SimulationType::AdditionalSettings() {
     
     if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
+        this->resourceAlloc->UpdateRoutesCosts();
         
         if(this->resourceAlloc->CheckInterRouting()){
             this->resourceAlloc->SetInterferingRoutes2();
             this->resourceAlloc->SetNumInterRoutesToCheck();
+            this->resourceAlloc->SetNumSlotsTraffic();
         }
     }
-    
-    int x = 0;
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

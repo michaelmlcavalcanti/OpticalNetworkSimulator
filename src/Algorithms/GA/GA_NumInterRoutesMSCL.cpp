@@ -15,12 +15,13 @@
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Data/Data.h"
+#include "../../../include/Data/Options.h"
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
 
 GA_NumInterRoutesMSCL::GA_NumInterRoutesMSCL(SimulationType* simul)
 :GA_MO(simul), numNodes(0), vecNumMaxInterRoutes(0) {
-    
+    assert(this->GetSimul()->GetOptions()->GetSpecAllOption() == SpecAllMSCL);
 }
 
 GA_NumInterRoutesMSCL::~GA_NumInterRoutesMSCL() {

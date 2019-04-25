@@ -45,8 +45,8 @@ indA, const std::shared_ptr<Individual>& indB) const {
 
 void GA_MO::KeepInitialPopulation() {
     this->initialPopulation = this->paretoFronts.front();
-    std::make_heap(this->initialPopulation.begin(), 
-                   this->initialPopulation.end(), OrderIndividuals());
+    std::sort(this->initialPopulation.begin(), this->initialPopulation.end(), 
+              OrderIndividuals());
 }
 
 void GA_MO::SelectPopulation() {
@@ -94,7 +94,7 @@ void GA_MO::SelectPopulation() {
         }
         
         //Add the Pareto front to the vector of fronts, in ascending order.
-        std::make_heap(auxFront.begin(), auxFront.end(), OrderIndividuals());
+        std::sort(auxFront.begin(), auxFront.end(), OrderIndividuals());
         this->paretoFronts.push_back(auxFront);
         this->totalPopulation.insert(this->totalPopulation.end(),
         vecDominated.begin(), vecDominated.end());
@@ -176,4 +176,10 @@ std::vector<Individual*> GA_MO::GetIniPopulation() const {
     }
     
     return auxVecInd;
+}
+
+void GA_MO::print(std::ostream& ostream) const {
+    
+    ostream << "Number of individuals of the first Pareto front: " 
+            << this->firstParetoFronts.back().size() << std::endl;
 }

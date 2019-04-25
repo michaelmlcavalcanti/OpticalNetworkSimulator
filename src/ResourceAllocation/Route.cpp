@@ -19,11 +19,13 @@
 
 Route::Route(ResourceAlloc* rsaAlg, const std::vector<int>& path)
 :resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path),
-pathNodes(0) {
+pathNodes(0), cost(0.0) {
     
     for(auto it: this->path){
         this->pathNodes.push_back(this->topology->GetNode(it));
     }
+    
+    this->SetCost();
 }
 
 Route::~Route() {
@@ -36,6 +38,16 @@ bool Route::operator==(const Route& right) const {
         return true;
     
     return false;
+}
+
+bool Route::operator<(const Route& right) const {
+    
+    return right.GetCost() > this->GetCost();
+}
+
+bool Route::operator>(const Route& right) const {
+    
+    return right.GetCost() < this->GetCost(); 
 }
 
 int Route::GetOrNodeId() const {
@@ -82,12 +94,12 @@ unsigned int Route::GetNumNodes() const {
     return this->path.size();
 }
 
-std::vector<int> Route::GetPath() {
+std::vector<int> Route::GetPath() const {
     return this->path;
 }
 
-double Route::GetCost() {
-    Link *link;
+double Route::GetCost() const {
+    /*Link *link;
     double cost = 0.0;
     
     for(unsigned int a = 0; a < this->GetNumHops(); a++){
@@ -95,7 +107,14 @@ double Route::GetCost() {
         cost += link->GetCost();
     }
     
-    return cost;
+    return cost;*/
+    return this->cost;
+}
+
+void Route::SetCost(double cost) {
+    assert(cost >= 0.0);
+    
+    this->cost = cost;
 }
 
 Link* Route::GetLink(unsigned int index) const {
@@ -132,4 +151,16 @@ std::shared_ptr<Route> Route::AddRoute(std::shared_ptr<Route>& route) {
     }
     
     return std::make_shared<Route>(this->resourceAlloc, newPath);
+}
+
+void Route::SetCost() {
+    Link *link;
+    double cost = 0.0;
+    
+    for(unsigned int a = 0; a < this->GetNumHops(); a++){
+        link = this->topology->GetLink(this->path.at(a), this->path.at(a+1));
+        cost += link->GetCost();
+    }
+    
+    this->SetCost(cost);
 }

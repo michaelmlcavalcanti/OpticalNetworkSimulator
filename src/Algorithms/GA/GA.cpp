@@ -15,16 +15,16 @@
 #include "../../../include/GeneralClasses/Def.h"
 
 std::default_random_engine GA::random_generator(Def::randomDevice());
-//std::default_random_engine GA::random_generator(0);
 
 std::ostream& operator<<(std::ostream& ostream, const GA* ga) {
     ostream << "Generation: " << ga->actualGeneration << std::endl;
-            
+    ga->print(ostream);
+    
     return ostream;
 }
 
 GA::GA(SimulationType* simul)
-:simul(simul), numberIndividuals(50), numberGenerations(500),
+:simul(simul), numberIndividuals(50), numberGenerations(300),
 probCrossover(0.5), probMutation(0.1), actualGeneration(0), 
 maxNumSimulation(5) {
     

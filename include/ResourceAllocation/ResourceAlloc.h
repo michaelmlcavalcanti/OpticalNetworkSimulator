@@ -24,6 +24,7 @@ class Routing;
 class SA;
 class Call;
 class Modulation;
+class Traffic;
 
 #include "../Data/Options.h"
 
@@ -193,6 +194,8 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
+    
+    ResourceAllocOption GetResourAllocOption() const;
     /**
      * @brief Gets the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network.
@@ -219,7 +222,14 @@ public:
      * @return Interfering routes.
      */
     std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
-    
+    /**
+     * @brief Gets the container of interfering routes of a specified node pair 
+     * and route of this pair.
+     * @param orNode Source node index.
+     * @param deNode Destination node index.
+     * @param route Route that determine the index of the node pair.
+     * @return Interfering routes.
+     */
     std::vector<std::shared_ptr<Route>> GetInterRoutes(unsigned int orNode,
     unsigned int deNode, Route* route);
     /**
@@ -228,6 +238,16 @@ public:
      * @return Container of number of interfering routes to check.
      */
     std::vector<std::vector<unsigned int>> GetNumInterRoutesToCheck();
+    /**
+     * @brief Gets the number of interfering routes to check for an specified 
+     * node pair and position. Used for MSCL SA algorithm.
+     * @param orNode Source node index.
+     * @param deNode Destination node index.
+     * @param route Route that determine the vector index.
+     * @return Number of interfering routes to check.
+     */
+    unsigned int GetNumInterRoutesToCheck(unsigned int orNode, 
+    unsigned int deNode, Route* route);
     /**
      * @brief Set the container of number of interfering routes the MSCL 
      * will check for all node pair and routes in the network.
@@ -243,6 +263,15 @@ public:
      */
     void SetNumInterRoutesToCheck(std::vector<std::vector<unsigned int>> 
     numInterRoutesToCheck);
+    
+    std::vector<unsigned int> GetNumSlotsTraffic() const;
+    
+    void SetNumSlotsTraffic();
+    /**
+     * @brief Update the cost values for all routes in container. Used for
+     * offline routing.
+     */
+    void UpdateRoutesCosts();
 private:
     /**
      * @breif Pointer to a SimulationType object that
@@ -250,9 +279,13 @@ private:
      */
     SimulationType* simulType;
     /**
-     * @brief Pointer to the Topology object this object will use.
+     * @brief Pointer to the Topology object of this simulation.
      */
     Topology* topology;
+    /**
+     * @brief Pointer to the Traffic object of this simulation.
+     */
+    Traffic* traffic;
     /**
      * @brief Resource allocation option chosen.
      */
@@ -291,5 +324,10 @@ private:
      * will check, by node pair and route(s) of this pair.
      */
     std::vector<std::vector<unsigned int>> numInterRoutesToCheck;
+    /**
+     * @brief Container of the possible number of slots the simulation may
+     * have. It is used in MSCL SA for find the capacity loss.
+     */
+    std::vector<unsigned int> numSlotsTraffic;
 };
 #endif /* RESOURCEALLOC_H */

@@ -13,12 +13,12 @@
 
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/ResourceAllocation/CSA.h"
-#include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
-#include "../../include/Structure/Topology.h"
-#include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/Calls/Call.h"
+#include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Node.h"
+#include "../../include/GeneralClasses/Def.h"
 
 SA::SA(ResourceAlloc* rsa, SpectrumAllocationOption option, Topology* topology) 
 :resourceAlloc(rsa), specAllOption(option), topology(topology) {
@@ -93,6 +93,10 @@ void SA::MSCL(Call* call) {
     unsigned int deNode = route->GetDeNode()->GetNodeId();
     std::vector<std::shared_ptr<Route>> intRoutes = 
     this->resourceAlloc->GetInterRoutes(orNode, deNode, route);
+    unsigned int numInterRoutesCheck =
+    this->resourceAlloc->GetNumInterRoutesToCheck(orNode, deNode, route);
+    std::vector<unsigned> vecTrafficSlots = 
+    this->resourceAlloc->GetNumSlotsTraffic();
     
     unsigned int vetCapInic[intRoutes.size()];
     unsigned int vetCapFin[intRoutes.size()];
@@ -108,7 +112,7 @@ void SA::MSCL(Call* call) {
         if(DispFitSi){
             perda = 0.0;
             
-            for(unsigned int r = 0; r < intRoutes.size(); r++){
+            for(unsigned int r = 0; r < numInterRoutesCheck; r++){
                 
                 for(unsigned int se = 0; se < numSlotsTop; se++){
                     if(!(this->topology->CheckSlotDisp(intRoutes.at(r).get(), 
@@ -125,16 +129,21 @@ void SA::MSCL(Call* call) {
                 
                 //Calculates the initial capacity based on the number of 
                 //allocation forms.
-                for(unsigned int i = 2; i <= 5; i++)
-                    vetCapInic[r] += this->CalcNumFormAloc(i, vetDispInt);
-                
+                //for(unsigned int i = 2; i <= 5; i++)
+                for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
+                    vetCapInic[r] += this->CalcNumFormAloc(
+                                     vecTrafficSlots.at(i), vetDispInt);
+                }
                 //Calculates the requisition allocation impact in the 
                 //interfering routes for each set of slots
                 for(unsigned int i = s; i < s + numSlotsReq; i++)
                     vetDispInt[i] = false;
                 
-                for(unsigned int i = 2; i <= 5; i++)
-                    vetCapFin[r] += this->CalcNumFormAloc(i, vetDispInt);
+                //for(unsigned int i = 2; i <= 5; i++)
+                for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
+                    vetCapFin[r] += this->CalcNumFormAloc(
+                                          vecTrafficSlots.at(i), vetDispInt);
+                }
                 
                 perda += vetCapFin[r] - vetCapInic[r];
             }

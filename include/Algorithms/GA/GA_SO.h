@@ -34,11 +34,7 @@ class GA_SO : public GA {
          */
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
-    };
-    
-    friend std::ostream& operator<<(std::ostream& ostream, 
-    const GA_SO* ga);
-    
+    };    
 public:
     /**
      * @brief Default constructor of a GA_SO algorithm.
@@ -149,6 +145,8 @@ public:
      * population, with less simulation than the minimum required.
      */
     void CheckMinSimul() override;
+    
+    void print(std::ostream& ostream) const override;
 private:
     /**
      * @brief Number of best individuals the process of selection will choose.

@@ -135,6 +135,9 @@ public:
      * population, with less simulation than the minimum required.
      */
     virtual void CheckMinSimul() = 0;
+    
+    
+    virtual void print(std::ostream& ostream) const = 0;
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this algorithm.

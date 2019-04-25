@@ -50,6 +50,10 @@ public:
      */
     bool operator==(const Route& right) const;
     
+    bool operator<(const Route& right) const;
+    
+    bool operator>(const Route& right) const;
+
     /**
      * @brief Function that return the source node Id of this route.
      * @return Source node Id.
@@ -96,12 +100,16 @@ public:
      * @brief Get the path, vector of node Id, of this route.
      * @return Container of nodes Id.
      */
-    std::vector<int> GetPath();
+    std::vector<int> GetPath() const;
     /**
      * @brief Get the total cost of this route.
      * @return Route cost.
      */
-    double GetCost();
+    double GetCost() const;
+    
+    void SetCost(double cost);
+    
+    void SetCost();
     /**
      * @brief Function that return a specified link of this route.
      * @param index Link index.
@@ -129,7 +137,6 @@ public:
      * @return Created route.
      */
     std::shared_ptr<Route> AddRoute(std::shared_ptr<Route>& route);
-
 private:
     /**
      * @brief ResourceAlloc used by this route.
@@ -147,6 +154,8 @@ private:
      * @brief Container of the nodes pointers of this path.
      */
     std::vector<Node*> pathNodes;
+    
+    double cost;
 };
 
 #endif /* ROUTE_H */

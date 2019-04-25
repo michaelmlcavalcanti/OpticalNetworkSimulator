@@ -81,9 +81,10 @@ void GA_SingleObjective::Save() {
 }
 
 void GA_SingleObjective::Help() {
-    std::cout << "GA SINGLE OBJECTIVE SIMULATION" << std::endl
-              << "This type of simulation applies the genetic algorithm "
-              << "for single objective."
+    std::cout << "GA SIMULATION" << std::endl
+              << "This type of simulation applies the genetic algorithm." 
+              << std::endl;
+    std::cout << "The specific GA is determined by the option chosen."
               << std::endl << std::endl;
 }
 

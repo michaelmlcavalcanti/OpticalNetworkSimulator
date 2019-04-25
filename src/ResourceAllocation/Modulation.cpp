@@ -14,6 +14,8 @@
 #include "../../include/ResourceAllocation/Modulation.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/GeneralClasses/General.h"
+#include "../../include/Data/Options.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 const boost::unordered_map<TypeModulation, unsigned int> 
 Modulation::mapModulation = boost::assign::map_list_of
@@ -125,4 +127,74 @@ bool Modulation::isEON() {
         return true;
     
     return false;
+}
+
+std::vector<unsigned int> Modulation::GetPossibleSlots(std::vector<double> 
+                                                       traffic) {
+    std::vector<unsigned int> posSlots(0);
+    ResourceAllocOption option = this->resourAlloc->GetResourAllocOption();
+    
+    if(!this->isEON()){
+        posSlots.push_back(1);
+        return posSlots;
+    }
+    
+    switch(option){
+        case ResourAllocRSA:
+            posSlots = this->GetPossibleSlotsFixedMod(traffic);
+            break;
+        case ResourAllocRMSA:
+            posSlots = this->GetPossibleSlotsVariableMod(traffic);
+            break;
+        default:
+            std::cerr << "Invalid resource allocation option" << std::endl;
+    }
+    
+    return posSlots;
+}
+
+std::vector<unsigned int> Modulation::GetPossibleSlotsFixedMod(
+std::vector<double>& traffic) {
+    std::vector<unsigned int> posSlots(0);
+    double bitRate, bandwidth;
+    unsigned int numSlots;
+    TypeModulation modType = FixedModulation;
+    
+    for(unsigned a = 0; a < traffic.size(); a++){
+        bitRate = traffic.at(a);
+        bandwidth = this->BandwidthQAM(modType, bitRate);
+        numSlots = std::ceil(bandwidth/this->slotBandwidth);
+        
+        if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 
+        posSlots.end() ){
+            posSlots.push_back(numSlots);
+        }
+        
+    }
+    
+    return posSlots;
+}
+
+std::vector<unsigned int> Modulation::GetPossibleSlotsVariableMod(
+std::vector<double>& traffic) {
+    std::vector<unsigned int> posSlots(0);
+    double bitRate, bandwidth;
+    unsigned int numSlots;
+    TypeModulation mod;
+    
+    for(mod = FirstModulation; mod <= LastModulation; 
+    mod = TypeModulation(mod+1)){
+        for(unsigned a = 0; a < traffic.size(); a++){
+            bitRate = traffic.at(a);
+            bandwidth = this->BandwidthQAM(mod, bitRate);
+            numSlots = std::ceil(bandwidth/this->slotBandwidth);
+            
+            if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 
+            posSlots.end() ){
+                posSlots.push_back(numSlots);
+            }
+        }
+    }
+    
+    return posSlots;
 }

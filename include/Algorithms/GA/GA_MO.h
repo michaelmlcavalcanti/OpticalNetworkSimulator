@@ -119,6 +119,9 @@ public:
     std::vector<Individual*> GetParetoFront() const;
     
     std::vector<Individual*> GetIniPopulation() const;
+    
+    
+    void print(std::ostream& ostream) const override;
 private:
     /**
      * @brief Container of individuals, representing the initial population.

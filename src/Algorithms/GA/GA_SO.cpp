@@ -19,18 +19,7 @@ bool GA_SO::IndividualCompare::operator()(
 const std::shared_ptr<Individual>& indA, 
 const std::shared_ptr<Individual>& indB) const {
 
-    return (indA->GetFitness() > indB->GetFitness());
-}
-
-std::ostream& operator<<(std::ostream& ostream, 
-const GA_SO* ga) {
-    ostream << "Generation: " << ga->GetActualGeneration() << std::endl;
-    ostream << "Best individual: " << ga->GetBestIndividual()
-            << std::endl;
-    ostream << "Worst individual: " << ga->GetWorstIndividual()
-            << std::endl;
-    
-    return ostream;
+    return (indA->GetFitness() < indB->GetFitness());
 }
 
 GA_SO::GA_SO(SimulationType* simul)
@@ -50,16 +39,16 @@ void GA_SO::Initialize() {
 
 void GA_SO::KeepInitialPopulation() {
     this->initialPopulation = this->selectedPopulation;
-    std::make_heap(this->initialPopulation.begin(), 
-                   this->initialPopulation.end(), IndividualCompare());
+    std::sort(this->initialPopulation.begin(), this->initialPopulation.end(), 
+              IndividualCompare());
 }
 
 void GA_SO::SelectPopulation() {
     assert(this->selectedPopulation.empty());
     
     //Order all individuals, with best(smallest) Pb at the end of the vector.
-    std::make_heap(this->totalPopulation.begin(), this->totalPopulation.end(),
-                   IndividualCompare());
+    std::sort(this->totalPopulation.begin(), this->totalPopulation.end(),
+              IndividualCompare());
     
     //Select numBestIndividuals best individuals (Block. Prob.)
     for(unsigned int a = 0; a < this->numBestIndividuals; a++){
@@ -75,8 +64,8 @@ void GA_SO::SelectPopulation() {
     }
     
     //Sort the selected individuals, first worst last best.
-    std::make_heap(this->selectedPopulation.begin(), 
-                 this->selectedPopulation.end(), IndividualCompare());
+    std::sort(this->selectedPopulation.begin(), this->selectedPopulation.end(), 
+              IndividualCompare());
 }
 
 void GA_SO::SaveIndividuals() {
@@ -169,4 +158,12 @@ void GA_SO::CheckMinSimul() {
         }
     }
     this->SetTotalPopFitness();
+}
+
+void GA_SO::print(std::ostream& ostream) const {
+    
+    ostream << "Best individual: " << this->GetBestIndividual()
+            << std::endl;
+    ostream << "Worst individual: " << this->GetWorstIndividual()
+            << std::endl;
 }

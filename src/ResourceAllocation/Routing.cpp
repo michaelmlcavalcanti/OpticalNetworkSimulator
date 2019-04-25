@@ -20,7 +20,7 @@
 #include "../../include/Calls/Call.h"
 
 bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA, 
-                                       const std::shared_ptr<Route>& routeB) {
+                              const std::shared_ptr<Route>& routeB) {
     
     return (routeA->GetCost() > routeB->GetCost());
 }

@@ -18,14 +18,16 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/ResourceAllocation/CSA.h"
-#include "../../include/Data/Parameters.h"
-#include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Modulation.h"
+#include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Calls/Call.h"
+#include "../../include/Calls/Traffic.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
-:simulType(simulType), topology(nullptr), routing(nullptr), specAlloc(nullptr),
-allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0) {
+:simulType(simulType), topology(nullptr), traffic(nullptr), 
+routing(nullptr), specAlloc(nullptr), allRoutes(0), interRoutes(0), 
+resourceAllocOrder(0), numInterRoutesToCheck(0), numSlotsTraffic(0) {
     
 }
 
@@ -44,6 +46,7 @@ ResourceAlloc::~ResourceAlloc() {
 
 void ResourceAlloc::Load() {
     this->topology = this->simulType->GetTopology();
+    this->traffic = this->simulType->GetTraffic();
     unsigned int numNodes = this->topology->GetNumNodes();
     
     this->allRoutes.resize(numNodes*numNodes);
@@ -291,6 +294,10 @@ void ResourceAlloc::SetTopology(Topology* topology) {
     this->topology = topology;
 }
 
+ResourceAllocOption ResourceAlloc::GetResourAllocOption() const {
+    return resourAllocOption;
+}
+
 std::vector<bool> ResourceAlloc::GetResourceAllocOrder() const {
     return resourceAllocOrder;
 }
@@ -466,10 +473,8 @@ void ResourceAlloc::SetInterferingRoutes2() {
     
     for(unsigned int a = 0; a < this->interRoutes.size(); a++){
         for(unsigned int b = 0; b < this->interRoutes.at(a).size(); b++){
-            std::make_heap(this->interRoutes.at(a).at(b).begin(), 
-                           this->interRoutes.at(a).at(b).end(), RouteCompare());
-            std::reverse(this->interRoutes.at(a).at(b).begin(), 
-                         this->interRoutes.at(a).at(b).end());
+            std::sort(this->interRoutes.at(a).at(b).begin(), 
+                      this->interRoutes.at(a).at(b).end(), RouteCompare());
         }
     }
 }
@@ -477,6 +482,25 @@ void ResourceAlloc::SetInterferingRoutes2() {
 std::vector<std::vector<unsigned int> > 
 ResourceAlloc::GetNumInterRoutesToCheck() {
     return numInterRoutesToCheck;
+}
+
+unsigned int ResourceAlloc::GetNumInterRoutesToCheck(unsigned int orNode, 
+unsigned int deNode, Route* route) {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int vecIndex = orNode*numNodes + deNode;
+    unsigned int numRoutes = 0;
+    std::vector<unsigned int> vecNumInterRoutes = 
+    this->numInterRoutesToCheck.at(vecIndex);
+    
+    for(unsigned int pos = 0; pos < vecNumInterRoutes.size(); pos++){
+        
+        if(route == this->allRoutes.at(vecIndex).at(pos).get()){
+            numRoutes = this->numInterRoutesToCheck.at(vecIndex).at(pos);
+            break;
+        }
+    }
+    
+    return numRoutes;
 }
 
 void ResourceAlloc::SetNumInterRoutesToCheck() {
@@ -499,4 +523,25 @@ void ResourceAlloc::SetNumInterRoutesToCheck() {
 void ResourceAlloc::SetNumInterRoutesToCheck(
 std::vector<std::vector<unsigned int>> numInterRoutesToCheck) {
     this->numInterRoutesToCheck = numInterRoutesToCheck;
+}
+
+std::vector<unsigned int> ResourceAlloc::GetNumSlotsTraffic() const {
+    return numSlotsTraffic;
+}
+
+void ResourceAlloc::UpdateRoutesCosts() {
+    
+    for(auto it: this->allRoutes){
+        for(auto it2: it){
+            
+            if(it2 == nullptr)
+                continue;
+            it2->SetCost();
+        }
+    }
+}
+
+void ResourceAlloc::SetNumSlotsTraffic() {
+    this->numSlotsTraffic = this->modulation->GetPossibleSlots(
+    this->traffic->GetVecTraffic());
 }

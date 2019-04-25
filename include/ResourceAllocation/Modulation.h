@@ -53,6 +53,14 @@ public:
     
     bool isEON();
     
+    std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
+private:
+    
+    std::vector<unsigned int> GetPossibleSlotsFixedMod(std::vector<double>&
+                                                       traffic);
+    
+    std::vector<unsigned int> GetPossibleSlotsVariableMod(std::vector<double>&
+                                                          traffic);
 private:
     
     ResourceAlloc* resourAlloc;
