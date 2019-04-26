@@ -106,9 +106,15 @@ public:
      * @return Route cost.
      */
     double GetCost() const;
-    
+    /**
+     * @brief Set the total cost of this route.
+     * @param cost Route cost.
+     */
     void SetCost(double cost);
-    
+    /**
+     * @brief Set the total cost of this route. The cost is calculated based on
+     * the cost of links that compose the route.
+     */
     void SetCost();
     /**
      * @brief Function that return a specified link of this route.
@@ -154,7 +160,9 @@ private:
      * @brief Container of the nodes pointers of this path.
      */
     std::vector<Node*> pathNodes;
-    
+    /**
+     * @brief Cost of the route.
+     */
     double cost;
 };
 

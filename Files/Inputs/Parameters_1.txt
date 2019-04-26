@@ -4,7 +4,7 @@
 120
 220
 6
-100000
+10000
 500
 
 1-Number of slots per fiber
