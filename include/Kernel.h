@@ -16,8 +16,20 @@
 
 #include <vector>
 #include <memory>
+#include <fstream>
+#include <iostream>
+#include <boost/assign/list_of.hpp>
+#include <boost/unordered_map.hpp>
 
 class SimulationType;
+
+enum TypeSimulation{
+    InvalidSimulation,
+    MultiLoadSimulationType,
+    GaSimulationType,
+    FirstSimulation = MultiLoadSimulationType,
+    LastSimulation = GaSimulationType
+};
 
 /**
  * @brief The Kernel class is responsible for creating the
@@ -31,7 +43,7 @@ public:
      * @param numSimulations total number of 
      * simulations for this Kernel.
      */
-    Kernel(int numSimulations);
+    Kernel();
     /**
      * @brief Copy constructor for a Kernel object.
      * @param orig original Kernel object.
@@ -72,11 +84,14 @@ private:
     /**
      * @brief Total number of simulations in this kernel.
      */
-    const unsigned int numberSimulations;
+    unsigned int numberSimulations;
     /**
      * @brief Vector with all pointers to SimulationType objects.
      */
     std::vector<std::shared_ptr<SimulationType>> simulations;
+    
+    static const boost::unordered_map<TypeSimulation, 
+    std::string> mapSimulationType;
 };
 
 #endif /* KERNEL_H */

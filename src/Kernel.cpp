@@ -17,9 +17,14 @@
 #include "../include/SimulationType/MultiLoadSimulation.h"
 #include "../include/SimulationType/GA_SingleObjective.h"
 
-Kernel::Kernel(int numSimulations)
-:numberSimulations(numSimulations),
-simulations(0) {
+const boost::unordered_map<TypeSimulation, std::string> 
+Kernel::mapSimulationType = boost::assign::map_list_of
+    (InvalidSimulation, "Invalid")
+    (MultiLoadSimulationType, "Multiple Load Simulation")
+    (GaSimulationType, "GA Simulation");
+
+Kernel::Kernel()
+:numberSimulations(0), simulations(0) {
     
 }
 
@@ -41,12 +46,32 @@ void Kernel::Run() {
 }
 
 void Kernel::CreateSimulations() {
+    unsigned int auxSimulation;
     
-    for(unsigned int a = 1; a <= this->numberSimulations; ++a){
-        //if(a == 1)
-        //    simulations.push_back(std::make_shared<GA_SingleObjective>(a));
-        //else
-            simulations.push_back(std::make_shared<MultiLoadSimulation>(a));
+    std::cout << "Type the number of simulations to perform: ";
+    std::cin >> this->numberSimulations;
+    std::cout << std::endl;
+    
+    std::cout << "List of simulations types:" << std::endl;
+    for(TypeSimulation a = FirstSimulation; a <= LastSimulation; 
+    a = TypeSimulation(a+1)){
+        std::cout << a << "-" << this->mapSimulationType.at(a) << std::endl;
+    }
+    
+    for(unsigned a = 1; a <= this->numberSimulations; a++){
+        std::cout << "Enter the simulation type " << a << ":";
+        std::cin >> auxSimulation;
+        
+        switch(TypeSimulation(auxSimulation)){
+            case MultiLoadSimulationType:
+                simulations.push_back(std::make_shared<MultiLoadSimulation>(a));
+                break;
+            case GaSimulationType:
+                simulations.push_back(std::make_shared<GA_SingleObjective>(a));
+                break;
+            default:
+                std::cerr << "Invalid simulation type" << std::endl;
+        }
     }
 }
 

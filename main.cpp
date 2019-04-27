@@ -29,9 +29,9 @@ int main(int argc, char** argv) {
     std::cout << "\t----OPTICAL NETWORKS SIMULATOR----"  << std::endl;
     
     //Change the input main parameter to an integer value
-    int auxInt = strtol(argv[1], nullptr, 10);
+    //int auxInt = strtol(argv[1], nullptr, 10);
 
-    std::shared_ptr<Kernel> kernel = std::make_shared<Kernel>(auxInt);
+    std::shared_ptr<Kernel> kernel = std::make_shared<Kernel>();
     kernel->Run();
     kernel.reset();
 
