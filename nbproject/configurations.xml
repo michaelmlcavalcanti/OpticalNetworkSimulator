@@ -88,6 +88,9 @@
         <itemPath>include/SimulationType/SimulationType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <logicalFolder name="f1" displayName="Devices" projectFiles="true">
+          <itemPath>include/Structure/Devices/Device.h</itemPath>
+        </logicalFolder>
         <itemPath>include/Structure/Core.h</itemPath>
         <itemPath>include/Structure/Link.h</itemPath>
         <itemPath>include/Structure/MultiCoreLink.h</itemPath>
@@ -95,6 +98,7 @@
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/Structure/Devices/Regenerator.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -148,6 +152,9 @@
         <itemPath>src/SimulationType/SimulationType.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
+        <logicalFolder name="f1" displayName="Devices" projectFiles="true">
+          <itemPath>src/Structure/Devices/Device.cpp</itemPath>
+        </logicalFolder>
         <itemPath>src/Structure/Core.cpp</itemPath>
         <itemPath>src/Structure/Link.cpp</itemPath>
         <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
@@ -155,6 +162,7 @@
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/Structure/Devices/Regenerator.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -367,6 +375,13 @@
       </item>
       <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Structure/Devices/Device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/Devices/Regenerator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
@@ -467,6 +482,13 @@
             flavor2="0">
       </item>
       <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/Device.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/Regenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -679,6 +701,13 @@
       </item>
       <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Structure/Devices/Device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/Devices/Regenerator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
@@ -779,6 +808,13 @@
             flavor2="0">
       </item>
       <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/Device.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/Regenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -68,6 +68,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
+	${OBJECTDIR}/src/Structure/Devices/Device.o \
+	${OBJECTDIR}/src/Structure/Devices/Regenerator.o \
 	${OBJECTDIR}/src/Structure/Link.o \
 	${OBJECTDIR}/src/Structure/MultiCoreLink.o \
 	${OBJECTDIR}/src/Structure/Node.o \
@@ -262,6 +264,16 @@ ${OBJECTDIR}/src/Structure/Core.o: src/Structure/Core.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Core.o src/Structure/Core.cpp
+
+${OBJECTDIR}/src/Structure/Devices/Device.o: src/Structure/Devices/Device.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Structure/Devices
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Devices/Device.o src/Structure/Devices/Device.cpp
+
+${OBJECTDIR}/src/Structure/Devices/Regenerator.o: src/Structure/Devices/Regenerator.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Structure/Devices
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Devices/Regenerator.o src/Structure/Devices/Regenerator.cpp
 
 ${OBJECTDIR}/src/Structure/Link.o: src/Structure/Link.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure

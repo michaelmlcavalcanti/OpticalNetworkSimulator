@@ -93,9 +93,9 @@ GA* GA_SingleObjective::GetGA() const {
 }
 
 void GA_SingleObjective::CreateGA() {
-    assert(this->GetOptions()->GetGAOption() != GaOptionDisabled);
+    assert(this->GetOptions()->GetGaOption() != GaOptionDisabled);
     
-    switch(this->GetOptions()->GetGAOption()){
+    switch(this->GetOptions()->GetGaOption()){
         case GaRsaOrder:
             this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);
             break;

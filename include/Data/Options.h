@@ -139,10 +139,12 @@ enum GAOption {
     LastGaOption = GaNumRoutesCheckMSCL
 };
 
-
-enum TransponderOption {
-    TransOptionDisabled,
-    TransOptionEnabled
+/**
+ * @brief Regeneration option, with default as disabled.
+ */
+enum RegenerationOption {
+    RegenerationDisabled,
+    RegenerationEnabled
 };
 
 /**
@@ -337,19 +339,24 @@ public:
      * @brief Get the type of GA specified.
      * @return GA option.
      */
-    GAOption GetGAOption() const;
+    GAOption GetGaOption() const;
     /**
      * @brief Gets the GA option name.
      * @return GA option.
      */
-    std::string GetGAOptionName() const;
+    std::string GetGaOptionName() const;
     /**
      * @brief Sets the type of GA.
-     * @param gaOption GA option.
+     * @param GaOption GA option.
      */
-    void SetGAOption(GAOption gaOption);
+    void SetGaOption(GAOption GaOption);
     
-    void SetTransponderOption(TransponderOption transponderOption);
+    RegenerationOption GetRegenerationOption() const;
+    
+    std::string GetRegenerationOptionName() const;
+
+    void SetRegenerationOption(RegenerationOption regenerationOption);
+
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -396,7 +403,7 @@ private:
      */
     GAOption GaOption;
     
-    TransponderOption transponderOption;
+    RegenerationOption regenerationOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -460,8 +467,8 @@ private:
     static const boost::unordered_map<GAOption,
     std::string> mapGaOption;
     
-    static const boost::unordered_map<TransponderOption,
-    std::string> mapTransponderOption;
+    static const boost::unordered_map<RegenerationOption,
+    std::string> mapRegenerationOption;
 };
 
 #endif /* OPTIONS_H */

@@ -84,6 +84,11 @@ Options::mapGaOption = boost::assign::map_list_of
     (GaCoreOrder, "GA Core Order")
     (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check");
 
+const boost::unordered_map<RegenerationOption, std::string>
+Options::mapRegenerationOption = boost::assign::map_list_of
+    (RegenerationDisabled, "Disabled")
+    (RegenerationEnabled, "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -105,7 +110,9 @@ const Options* options) {
             << std::endl;
     ostream << "RSA Order: " << options->GetOrderRsaName()
             << std::endl;
-    ostream << "GA: " << options->GetGAOptionName()
+    ostream << "GA: " << options->GetGaOptionName()
+            << std::endl;
+    ostream << "Regeneration: " << options->GetRegenerationOptionName()
             << std::endl;
     
     return ostream;
@@ -117,7 +124,7 @@ routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
-GaOption(GaOptionDisabled), transponderOption(TransOptionDisabled) {
+GaOption(GaOptionDisabled), regenerationOption(RegenerationDisabled) {
     
 }
 
@@ -215,7 +222,11 @@ void Options::Load() {
     }
     std::cout << "Insert the GA Option: ";
     std::cin >> auxInt;
-    this->SetGAOption((GAOption) auxInt);
+    this->SetGaOption((GAOption) auxInt);
+    
+    std::cout << "Insert the Regeneration option: ";
+    std::cin >> auxInt;
+    this->SetRegenerationOption((RegenerationOption) auxInt);
     
     std::cout << std::endl;
 }
@@ -244,13 +255,36 @@ void Options::LoadFile() {
     auxIfstream >> auxInt;
     this->SetOrderRSA((RsaOrder) auxInt);
     auxIfstream >> auxInt;
-    this->SetGAOption((GAOption) auxInt);
+    this->SetGaOption((GAOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetRegenerationOption((RegenerationOption) auxInt);
 }
 
 void Options::Save() {
     std::ofstream& auxOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     auxOfstream << this << std::endl;
+}
+
+bool Options::IsGA_SO() const {
+    
+    switch(this->GetGaOption()){
+        case GaRsaOrder:
+        case GaCoreOrder:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool Options::IsGA_MO() const {
+    
+    switch(this->GetGaOption()){
+        case GaNumRoutesCheckMSCL:
+            return true;
+        default:
+            return false;
+    }
 }
 
 TopologyOption Options::GetTopologyOption() const {
@@ -386,35 +420,26 @@ void Options::SetOrderRSA(RsaOrder orderRSA) {
     this->orderRSA = orderRSA;
 }
 
-GAOption Options::GetGAOption() const {
-    return this->GaOption;
+GAOption Options::GetGaOption() const {
+    return GaOption;
 }
 
-std::string Options::GetGAOptionName() const {
+std::string Options::GetGaOptionName() const {
     return this->mapGaOption.at(this->GaOption);
 }
 
-void Options::SetGAOption(GAOption gaOption) {
-    this->GaOption = gaOption;
+void Options::SetGaOption(GAOption GaOption) {
+    this->GaOption = GaOption;
 }
 
-bool Options::IsGA_SO() const {
-    
-    switch(this->GetGAOption()){
-        case GaRsaOrder:
-        case GaCoreOrder:
-            return true;
-        default:
-            return false;
-    }
+RegenerationOption Options::GetRegenerationOption() const {
+    return regenerationOption;
 }
 
-bool Options::IsGA_MO() const {
-    
-    switch(this->GetGAOption()){
-        case GaNumRoutesCheckMSCL:
-            return true;
-        default:
-            return false;
-    }
+std::string Options::GetRegenerationOptionName() const {
+    return mapRegenerationOption.at(this->regenerationOption);
+}
+
+void Options::SetRegenerationOption(RegenerationOption regenerationOption) {
+    this->regenerationOption = regenerationOption;
 }
