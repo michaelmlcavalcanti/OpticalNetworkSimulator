@@ -21,7 +21,7 @@ Node* node) {
 }
 
 Node::Node(Topology* topPointer, NodeId nodeId) :
-topPointer(topPointer), nodeId(nodeId), nodeWorking(true) {
+topology(topPointer), nodeId(nodeId), nodeWorking(true) {
     
 }
 
@@ -47,4 +47,8 @@ void Node::SetNodeState(bool NodeWorking) {
 
 bool Node::IsNodeWorking() const {
     return nodeWorking;
+}
+
+Topology* Node::GetTopology() const {
+    return topology;
 }

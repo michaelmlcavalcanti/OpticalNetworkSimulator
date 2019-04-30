@@ -26,9 +26,15 @@ enum DeviceType{
 class Device {
 public:
     
-    Device(Topology* topology, DeviceType type);
+    Device(Topology* topology, DeviceType type = DeviceUndefined);
     
     virtual ~Device();
+    
+    
+    virtual void Initialize() = 0;
+    
+    
+    Topology* GetTopology() const;
 private:
     
     Topology* topology;

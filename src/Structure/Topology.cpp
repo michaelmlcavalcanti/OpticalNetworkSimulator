@@ -469,3 +469,7 @@ void Topology::Release(Call* call) {
         }
     }
 }
+
+SimulationType* Topology::GetSimulType() const {
+    return simulType;
+}

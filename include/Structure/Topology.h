@@ -241,6 +241,8 @@ public:
      */
     void Release(Call* call);
     
+    SimulationType* GetSimulType() const;
+
 private:
     /**
      * @brief A pointer to the simulation this object belong

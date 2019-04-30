@@ -72,14 +72,15 @@ public:
      * @param NodeWorking Node state.
      */
     void SetNodeState(bool NodeWorking);
-
-
+    
+    
+    Topology* GetTopology() const;
 private:
     /**
      * @brief Pointer to a Topology object that
      * owns this node
      */
-    Topology* topPointer;
+    Topology* topology;
     /**
      * @brief Node index.
      */

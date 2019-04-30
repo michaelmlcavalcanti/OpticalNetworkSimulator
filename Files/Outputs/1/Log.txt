@@ -22,27 +22,27 @@ Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
 DATA
-Simulation time:82.9647  Real simul time: 0.037163  Number of requests:10000
+Simulation time:82.9647  Real simul time: 0.078165  Number of requests:10000
 Load point:120  PbReq:0  PbSlots:-nan  HopsMed:2.1307  NetOcc:97637
 
 
-Simulation time:70.9124  Real simul time: 0.02094  Number of requests:10000
+Simulation time:70.9124  Real simul time: 0.027543  Number of requests:10000
 Load point:140  PbReq:0.0002  PbSlots:-nan  HopsMed:2.15583  NetOcc:99184
 
 
-Simulation time:62.2879  Real simul time: 0.019809  Number of requests:10000
+Simulation time:62.2879  Real simul time: 0.021097  Number of requests:10000
 Load point:160  PbReq:0.0015  PbSlots:-nan  HopsMed:2.15924  NetOcc:99975
 
 
-Simulation time:55.2468  Real simul time: 0.022842  Number of requests:10000
+Simulation time:55.2468  Real simul time: 0.021838  Number of requests:10000
 Load point:180  PbReq:0.005  PbSlots:-nan  HopsMed:2.16231  NetOcc:99792
 
 
-Simulation time:50.2877  Real simul time: 0.020996  Number of requests:10000
+Simulation time:50.2877  Real simul time: 0.022603  Number of requests:10000
 Load point:200  PbReq:0.0092  PbSlots:-nan  HopsMed:2.16108  NetOcc:98054
 
 
-Simulation time:45.732  Real simul time: 0.025955  Number of requests:10000
+Simulation time:45.732  Real simul time: 0.024073  Number of requests:10000
 Load point:220  PbReq:0.0174  PbSlots:-nan  HopsMed:2.16986  NetOcc:96284
 
 

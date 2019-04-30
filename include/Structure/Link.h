@@ -208,7 +208,6 @@ private:
      * @brief Boolean variable to indicate the  link state.
      */
     bool linkWorking;
-    
 };
 
 #endif /* LINK_H */

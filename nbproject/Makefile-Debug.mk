@@ -73,6 +73,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Structure/Link.o \
 	${OBJECTDIR}/src/Structure/MultiCoreLink.o \
 	${OBJECTDIR}/src/Structure/Node.o \
+	${OBJECTDIR}/src/Structure/NodeDevices.o \
 	${OBJECTDIR}/src/Structure/Topology.o
 
 
@@ -289,6 +290,11 @@ ${OBJECTDIR}/src/Structure/Node.o: src/Structure/Node.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Node.o src/Structure/Node.cpp
+
+${OBJECTDIR}/src/Structure/NodeDevices.o: src/Structure/NodeDevices.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Structure
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/NodeDevices.o src/Structure/NodeDevices.cpp
 
 ${OBJECTDIR}/src/Structure/Topology.o: src/Structure/Topology.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure

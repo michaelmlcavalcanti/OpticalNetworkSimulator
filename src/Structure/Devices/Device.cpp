@@ -21,3 +21,6 @@ Device::Device(Topology* topology, DeviceType type)
 Device::~Device() {
 }
 
+Topology* Device::GetTopology() const {
+    return topology;
+}

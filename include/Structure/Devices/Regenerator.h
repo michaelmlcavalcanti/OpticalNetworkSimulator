@@ -14,29 +14,36 @@
 #ifndef REGENERATOR_H
 #define REGENERATOR_H
 
-class Node;
+class NodeDevices;
 
 #include "Device.h"
+#include "../../Calls/CallGenerator.h"
 
 /**
- * @brief Virtualized regenerator class.
+ * @brief Class that represents a virtualized electronic regenerator.
  */
 class Regenerator : public Device {
 public:
 
-    Regenerator(Topology* topology, Node* node, DeviceType type);
+    Regenerator(Topology* topology, NodeDevices* node);
 
     virtual ~Regenerator();
     
     
+    void Initialize() override;
+
+    
     void SetRegeneratorOn();
     
     void SetRegeneratorOff();
+    
+    bool IsActive() const;
+
 private:
     
-    Node* node;
+    NodeDevices* node;
     
-    bool state;
+    bool isActive;
     
     TIME onTime;
     
