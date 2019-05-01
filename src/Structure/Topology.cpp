@@ -18,6 +18,7 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Node.h"
+#include "../../include/Structure/NodeDevices.h"
 #include "../../include/Structure/Link.h"
 #include "../../include/Structure/Core.h"
 #include "../../include/Structure/MultiCoreLink.h"
@@ -99,10 +100,15 @@ void Topology::Initialize() {
 }
 
 void Topology::CreateNodes(std::ifstream& ifstream) {
-    
     std::shared_ptr<Node> node;
+    
     for(unsigned int a = 0; a < this->GetNumNodes(); ++a){
-        node = std::make_shared<Node>(this, a);
+        
+        if(this->simulType->GetOptions()->GetDevicesOption() == DevicesEnabled)
+            node = std::make_shared<NodeDevices>(this, a);
+        else
+            node = std::make_shared<Node>(this, a);
+        
         this->InsertNode(node);
         node.reset();
     }
@@ -194,6 +200,14 @@ void Topology::InsertNode(std::shared_ptr<Node> node) {
 
 double Topology::GetMaxLength() const {
     return maxLength;
+}
+
+unsigned int Topology::GetNumRegenerators() const {
+    return numRegenerators;
+}
+
+void Topology::SetNumRegenerators(unsigned int numRegenerators) {
+    this->numRegenerators = numRegenerators;
 }
 
 void Topology::SetMaxLength() {

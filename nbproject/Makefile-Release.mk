@@ -47,6 +47,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o \
 	${OBJECTDIR}/src/Calls/Call.o \
+	${OBJECTDIR}/src/Calls/CallDevices.o \
 	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
@@ -65,6 +66,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/SA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Signal.o \
 	${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o \
+	${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o \
 	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
@@ -161,6 +163,11 @@ ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Call.o src/Calls/Call.cpp
 
+${OBJECTDIR}/src/Calls/CallDevices.o: src/Calls/CallDevices.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/CallDevices.o src/Calls/CallDevices.cpp
+
 ${OBJECTDIR}/src/Calls/CallGenerator.o: src/Calls/CallGenerator.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
@@ -250,6 +257,11 @@ ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o: src/SimulationType/GA_Sing
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o src/SimulationType/GA_SingleObjective.cpp
+
+${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o: src/SimulationType/IncNumRegSimulation.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o src/SimulationType/IncNumRegSimulation.cpp
 
 ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

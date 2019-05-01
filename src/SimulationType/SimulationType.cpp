@@ -24,8 +24,9 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 
-SimulationType::SimulationType(unsigned int simulIndex)
-:simulationIndex(simulIndex),
+SimulationType::SimulationType(unsigned int simulIndex, 
+TypeSimulation typeSimulation)
+:typeSimulation(typeSimulation), simulationIndex(simulIndex),
 parameters(std::make_shared<Parameters> (this)),
 options(std::make_shared<Options> (this)), 
 data(boost::make_unique<Data>(this)),
@@ -97,6 +98,10 @@ void SimulationType::AdditionalSettings() {
             this->resourceAlloc->SetNumSlotsTraffic();
         }
     }
+}
+
+TypeSimulation SimulationType::GetTypeSimulation() const {
+    return typeSimulation;
 }
 
 const unsigned int SimulationType::GetSimulationIndex() const {

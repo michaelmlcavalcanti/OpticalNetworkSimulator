@@ -274,3 +274,22 @@ void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {
     std::cout << "]" << int(division * 100.0) << "%" << std::endl;
     std::cout.flush();
 }
+
+void InputOutput::PrintProgressBar(unsigned actual, unsigned min, unsigned max) {
+    double division = (double) actual / (max - min);
+    int pos = barWidth * division;
+    
+    std::cout << "[";
+    
+    for(int a = 0; a < barWidth; a++){
+        if(a < pos)
+            std::cout << "=";
+        else if(a == pos)
+            std::cout << ">";
+        else
+            std::cout << " ";
+    }
+    
+    std::cout << "]" << int(division * 100.0) << "%" << std::endl;
+    std::cout.flush();
+}

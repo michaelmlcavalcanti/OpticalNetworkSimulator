@@ -55,6 +55,8 @@ public:
      * number of load points. And sets all values to 0.
      */
     void Initialize();
+    
+    void Initialize(unsigned int numPos);
     /**
      * @brief Update the data based on the call.
      * If call is Accepted, increment the number of accepted requests.
@@ -70,6 +72,8 @@ public:
      * @brief Saves the data values in the PBvLoad.txt file.
      */
     void SavePBvLoad();
+    
+    void SaveMainResults(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -149,6 +153,8 @@ private:
      * @param ostream Stream that contain the PBvLoad file.
      */
     void SavePBvLoad(std::ostream& ostream);
+    
+    void SaveMainResults(std::ostream& ostream, std::vector<unsigned> vec);
     
     void SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
     std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd);

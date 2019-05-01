@@ -59,6 +59,7 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>include/Calls/Call.h</itemPath>
+        <itemPath>include/Calls/CallDevices.h</itemPath>
         <itemPath>include/Calls/CallGenerator.h</itemPath>
         <itemPath>include/Calls/Event.h</itemPath>
         <itemPath>include/Calls/Traffic.h</itemPath>
@@ -84,6 +85,7 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>include/SimulationType/GA_SingleObjective.h</itemPath>
+        <itemPath>include/SimulationType/IncNumRegSimulation.h</itemPath>
         <itemPath>include/SimulationType/MultiLoadSimulation.h</itemPath>
         <itemPath>include/SimulationType/SimulationType.h</itemPath>
       </logicalFolder>
@@ -96,10 +98,10 @@
         <itemPath>include/Structure/Link.h</itemPath>
         <itemPath>include/Structure/MultiCoreLink.h</itemPath>
         <itemPath>include/Structure/Node.h</itemPath>
+        <itemPath>include/Structure/NodeDevices.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/Structure/NodeDevices.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -124,6 +126,7 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>src/Calls/Call.cpp</itemPath>
+        <itemPath>src/Calls/CallDevices.cpp</itemPath>
         <itemPath>src/Calls/CallGenerator.cpp</itemPath>
         <itemPath>src/Calls/Event.cpp</itemPath>
         <itemPath>src/Calls/Traffic.cpp</itemPath>
@@ -149,6 +152,7 @@
       </logicalFolder>
       <logicalFolder name="f1" displayName="SimulationType" projectFiles="true">
         <itemPath>src/SimulationType/GA_SingleObjective.cpp</itemPath>
+        <itemPath>src/SimulationType/IncNumRegSimulation.cpp</itemPath>
         <itemPath>src/SimulationType/MultiLoadSimulation.cpp</itemPath>
         <itemPath>src/SimulationType/SimulationType.cpp</itemPath>
       </logicalFolder>
@@ -161,10 +165,10 @@
         <itemPath>src/Structure/Link.cpp</itemPath>
         <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
         <itemPath>src/Structure/Node.cpp</itemPath>
+        <itemPath>src/Structure/NodeDevices.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/Structure/NodeDevices.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -325,6 +329,8 @@
       </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
@@ -372,6 +378,11 @@
             flavor2="0">
       </item>
       <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/SimulationType/IncNumRegSimulation.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -441,6 +452,8 @@
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Calls/CallDevices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
@@ -482,6 +495,11 @@
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SimulationType/IncNumRegSimulation.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -655,6 +673,8 @@
       </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Calls/CallGenerator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/Event.h" ex="false" tool="3" flavor2="0">
@@ -702,6 +722,11 @@
             flavor2="0">
       </item>
       <item path="include/SimulationType/GA_SingleObjective.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/SimulationType/IncNumRegSimulation.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -771,6 +796,8 @@
       </item>
       <item path="src/Calls/Call.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Calls/CallDevices.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Calls/CallGenerator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Calls/Event.cpp" ex="false" tool="1" flavor2="0">
@@ -812,6 +839,11 @@
       <item path="src/ResourceAllocation/Signal.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/SimulationType/GA_SingleObjective.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SimulationType/IncNumRegSimulation.cpp"
             ex="false"
             tool="1"
             flavor2="0">

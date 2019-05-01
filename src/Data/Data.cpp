@@ -31,9 +31,20 @@ const Data* data) {
             << "  Real simul time: " << data->GetRealSimulTime()
             << "  Number of requests:" << data->GetNumberReq() << std::endl;
     
-    ostream << "Load point:" << data->simulType->GetParameters()->
-            GetLoadPoint(data->GetActualIndex()) << "  PbReq:" << 
-            data->GetNumberBlocReq()/data->GetNumberReq() 
+    TypeSimulation type = data->simulType->GetTypeSimulation();
+    switch(type){
+        case MultiLoadSimulationType:
+            ostream << "Load point:" << data->simulType->GetParameters()->
+            GetLoadPoint(data->GetActualIndex());
+            break;
+        case IncNumRegType:
+            ostream << "Iteration: " << data->GetActualIndex();
+            break;
+        default:
+            ostream <<  "Invalid Type of simulation" << std::endl;
+    }
+    
+    ostream << "  PbReq:" << data->GetNumberBlocReq()/data->GetNumberReq() 
             << "  PbSlots:" << data->GetNumberBlocSlots()/
             data->GetNumberSlotsReq() << "  HopsMed:" 
             << data->GetNumHopsPerRoute()/data->GetNumberAccReq() 
@@ -68,6 +79,20 @@ void Data::Initialize() {
     this->netOccupancy.assign(size, 0.0);
     this->simulTime.assign(size, 0.0);
     this->realSimulTime.assign(size, 0.0);
+}
+
+void Data::Initialize(unsigned int numPos) {
+    
+    this->numberReq.assign(numPos, 0.0);
+    this->numberBlocReq.assign(numPos, 0.0);
+    this->numberAccReq.assign(numPos, 0.0);
+    this->numberSlotsReq.assign(numPos, 0.0);
+    this->numberBlocSlots.assign(numPos, 0.0);
+    this->numberAccSlots.assign(numPos, 0.0);
+    this->numHopsPerRoute.assign(numPos, 0.0);
+    this->netOccupancy.assign(numPos, 0.0);
+    this->simulTime.assign(numPos, 0.0);
+    this->realSimulTime.assign(numPos, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
@@ -105,13 +130,15 @@ void Data::SaveMultiloadLog() {
 void Data::SavePBvLoad() {
     std::ofstream &resultOfstream = this->simulType->GetInputOutput()
                                         ->GetResultFile();
-    unsigned int numLoadPoints = this->simulType->GetParameters()
-                                     ->GetNumberLoadPoints();
     
-    for(unsigned int a = 0; a < numLoadPoints; a++){
-        this->SetActualIndex(a);
-        this->SavePBvLoad(resultOfstream);
-    }
+    this->SavePBvLoad(resultOfstream);
+}
+
+void Data::SaveMainResults(std::vector<unsigned> vecParam) {
+    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
+                                        ->GetResultFile();
+    
+    this->SaveMainResults(resultOfstream, vecParam);
 }
 
 void Data::SaveGaFiles() {
@@ -230,10 +257,26 @@ void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
 }
 
-void Data::SavePBvLoad(std::ostream& ostream) {   
-    ostream << this->simulType->GetParameters()->GetLoadPoint(this
+void Data::SavePBvLoad(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(this
                    ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
                    this->GetNumberReq() << std::endl;
+    }
+}
+
+void Data::SaveMainResults(std::ostream& ostream, std::vector<unsigned> vec) {
+    assert(vec.size() == this->numberReq.size());
+    
+    for(unsigned int a = 0; a < vec.size(); a++){
+        this->SetActualIndex(a);
+        ostream << vec.at(a) << "\t" << this->GetNumberBlocReq()/
+                   this->GetNumberReq() << std::endl;
+    }
 }
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 

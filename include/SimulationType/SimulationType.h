@@ -15,6 +15,7 @@
 #define SIMULATIONTYPE_H
 
 #include <memory>
+#include <iostream>
 
 class Parameters;
 class Options;
@@ -24,6 +25,8 @@ class InputOutput;
 class Traffic;
 class CallGenerator;
 class ResourceAlloc;
+
+#include "../Kernel.h"
 
 /**
  * @brief Base class for Simulations objects.
@@ -35,7 +38,7 @@ public:
      * @brief Standard constructor for a SimulationType object.
      * @param simulIndex index of this simulation.
      */
-    SimulationType(unsigned int simulIndex);
+    SimulationType(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
      * @brief Copy constructor for a SimulationType object.
      * @param orig original SimulationType object.
@@ -81,6 +84,7 @@ public:
      */
     virtual void Help() = 0;
     
+    TypeSimulation GetTypeSimulation() const;
     /**
      * @brief Returns the simulation index
      * @return Simulation index
@@ -212,6 +216,7 @@ public:
     double numberRequests;
 
 private:
+    TypeSimulation typeSimulation;
     /**
      * @brief Index of the simulation
      */

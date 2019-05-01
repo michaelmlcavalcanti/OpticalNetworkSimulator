@@ -124,6 +124,11 @@ public:
      * @return Length of the longest link
      */
     double GetMaxLength() const;
+    
+    unsigned int GetNumRegenerators() const;
+
+    void SetNumRegenerators(unsigned int numRegenerators);
+
     /**
      * @brief Set additional settings of this topology
      */
@@ -276,6 +281,8 @@ private:
      * @brief Length of the longest link
      */
     double maxLength;
+    
+    unsigned int numRegenerators;
     
     /**
      * @brief Calculate the maximum link in this topology

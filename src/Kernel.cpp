@@ -16,11 +16,13 @@
 #include "../include/SimulationType/SimulationType.h"
 #include "../include/SimulationType/MultiLoadSimulation.h"
 #include "../include/SimulationType/GA_SingleObjective.h"
+#include "../include/SimulationType/IncNumRegSimulation.h"
 
 const boost::unordered_map<TypeSimulation, std::string> 
 Kernel::mapSimulationType = boost::assign::map_list_of
     (InvalidSimulation, "Invalid")
     (MultiLoadSimulationType, "Multiple Load Simulation")
+    (IncNumRegType, "Increase Number of Regenerators")
     (GaSimulationType, "GA Simulation");
 
 Kernel::Kernel()
@@ -47,6 +49,7 @@ void Kernel::Run() {
 
 void Kernel::CreateSimulations() {
     unsigned int auxSimulation;
+    TypeSimulation typeSimul;
     
     std::cout << "Type the number of simulations to perform: ";
     std::cin >> this->numberSimulations;
@@ -61,13 +64,20 @@ void Kernel::CreateSimulations() {
     for(unsigned a = 1; a <= this->numberSimulations; a++){
         std::cout << "Enter the simulation type " << a << ":";
         std::cin >> auxSimulation;
+        typeSimul = (TypeSimulation) auxSimulation;
         
-        switch(TypeSimulation(auxSimulation)){
+        switch(typeSimul){
             case MultiLoadSimulationType:
-                simulations.push_back(std::make_shared<MultiLoadSimulation>(a));
+                simulations.push_back(std::make_shared<MultiLoadSimulation>(a, 
+                                      typeSimul));
+                break;
+            case IncNumRegType:
+                simulations.push_back(std::make_shared<IncNumRegSimulation>(a, 
+                                      typeSimul));
                 break;
             case GaSimulationType:
-                simulations.push_back(std::make_shared<GA_SingleObjective>(a));
+                simulations.push_back(std::make_shared<GA_SingleObjective>(a, 
+                                      typeSimul));
                 break;
             default:
                 std::cerr << "Invalid simulation type" << std::endl;

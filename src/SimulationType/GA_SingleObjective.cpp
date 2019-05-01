@@ -21,8 +21,9 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Data/Options.h"
 
-GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex) 
-:SimulationType(simulIndex) {
+GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex, 
+TypeSimulation typeSimulation) 
+:SimulationType(simulIndex, typeSimulation) {
     
 }
 

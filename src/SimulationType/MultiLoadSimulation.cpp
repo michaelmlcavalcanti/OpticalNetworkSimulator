@@ -20,8 +20,9 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Data/InputOutput.h"
 
-MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex)
-:SimulationType(simulIndex){
+MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex, 
+TypeSimulation typeSimulation)
+:SimulationType(simulIndex, typeSimulation){
     
 }
 
@@ -39,7 +40,7 @@ void MultiLoadSimulation::Run() {
         this->GetCallGenerator()->SetNetworkLoad(loadPoint);
         this->GetInputOutput()->PrintProgressBar(a, numLoadPoints);
         
-        SimulationType::Run();
+        this->RunBase();
         
         std::cout << this->GetData() << std::endl;
     }

@@ -84,6 +84,11 @@ Options::mapGaOption = boost::assign::map_list_of
     (GaCoreOrder, "GA Core Order")
     (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check");
 
+const boost::unordered_map<DevicesOption, std::string>
+Options::mapDevicesOption = boost::assign::map_list_of
+    (DevicesDisabled, "Disabled")
+    (DevicesEnabled, "Enabled");
+
 const boost::unordered_map<RegenerationOption, std::string>
 Options::mapRegenerationOption = boost::assign::map_list_of
     (RegenerationDisabled, "Disabled")
@@ -124,7 +129,8 @@ routingOption(RoutingInvalid), specAllOption(SpecAllInvalid),
 linkCostType(Invalid), trafficOption(TrafficInvalid), 
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
-GaOption(GaOptionDisabled), regenerationOption(RegenerationDisabled) {
+GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
+regenerationOption(RegenerationDisabled) {
     
 }
 
@@ -224,6 +230,21 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetGaOption((GAOption) auxInt);
     
+    std::cout << "Devices Option" << std::endl;
+    for(DevicesOption a = DevicesDisabled; a <= DevicesEnabled;
+    a = DevicesOption(a+1)){
+        std::cout << a << "-" << this->mapDevicesOption.at(this->devicesOption)
+                  << std::endl;
+    }
+    std::cout << "Insert the Devices option: ";
+    std::cin >> auxInt;
+    this->SetDevicesOption((DevicesOption) auxInt);
+    
+    std::cout << "Regeneration Option" << std::endl;
+    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationEnabled;
+    a = RegenerationOption(a+1)){
+        std::cout << a << "-" << this->mapRegenerationOption.at(a) << std::endl;
+    }
     std::cout << "Insert the Regeneration option: ";
     std::cin >> auxInt;
     this->SetRegenerationOption((RegenerationOption) auxInt);
@@ -256,6 +277,8 @@ void Options::LoadFile() {
     this->SetOrderRSA((RsaOrder) auxInt);
     auxIfstream >> auxInt;
     this->SetGaOption((GAOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetDevicesOption((DevicesOption) auxInt);
     auxIfstream >> auxInt;
     this->SetRegenerationOption((RegenerationOption) auxInt);
 }
@@ -430,6 +453,18 @@ std::string Options::GetGaOptionName() const {
 
 void Options::SetGaOption(GAOption GaOption) {
     this->GaOption = GaOption;
+}
+
+DevicesOption Options::GetDevicesOption() const {
+    return devicesOption;
+}
+
+std::string Options::GetDevicesOptionName() const {
+    return this->mapDevicesOption.at(this->devicesOption);
+}
+
+void Options::SetDevicesOption(DevicesOption devicesOption) {
+    this->devicesOption = devicesOption;
 }
 
 RegenerationOption Options::GetRegenerationOption() const {

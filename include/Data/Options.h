@@ -139,6 +139,12 @@ enum GAOption {
     LastGaOption = GaNumRoutesCheckMSCL
 };
 
+
+enum DevicesOption {
+    DevicesDisabled,
+    DevicesEnabled
+};
+
 /**
  * @brief Regeneration option, with default as disabled.
  */
@@ -351,6 +357,12 @@ public:
      */
     void SetGaOption(GAOption GaOption);
     
+    DevicesOption GetDevicesOption() const;
+    
+    std::string GetDevicesOptionName() const;
+
+    void SetDevicesOption(DevicesOption devicesOption);
+
     RegenerationOption GetRegenerationOption() const;
     
     std::string GetRegenerationOptionName() const;
@@ -402,6 +414,8 @@ private:
      * @brief Genetic algorithm option.
      */
     GAOption GaOption;
+    
+    DevicesOption devicesOption;
     
     RegenerationOption regenerationOption;
     
@@ -466,6 +480,9 @@ private:
      */
     static const boost::unordered_map<GAOption,
     std::string> mapGaOption;
+    
+    static const boost::unordered_map<DevicesOption,
+    std::string> mapDevicesOption;
     
     static const boost::unordered_map<RegenerationOption,
     std::string> mapRegenerationOption;

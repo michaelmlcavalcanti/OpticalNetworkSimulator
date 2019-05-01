@@ -109,7 +109,8 @@ public:
      * @param max Progress total value.
      */
     void PrintProgressBar(unsigned int actual, unsigned int max);
-
+    
+    void PrintProgressBar(unsigned actual, unsigned min, unsigned max);
 private:
     /**
      * @brief Function to load the .txt file to output the blocking probability

@@ -31,7 +31,7 @@ public:
      * @brief Standard constructor for a GA_SingleObjective object.
      * @param simulIndex Index of this simulation.
      */
-    GA_SingleObjective(unsigned int simulIndex);
+    GA_SingleObjective(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
      * @brief Destructor of a GA_SingleObjective object.
      */

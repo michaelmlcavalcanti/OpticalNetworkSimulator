@@ -16,8 +16,6 @@
 
 #include "SimulationType.h"
 
-#include <iostream>
-
 /**
  * @brief Derived class from SimulationType.
  * This type of simulation runs for a specified number 
@@ -30,7 +28,7 @@ public:
      * @brief Standard constructor for a MultiLoadSimulation object.
      * @param simulIndex index of this simulation.
      */
-    MultiLoadSimulation(unsigned int simulIndex);
+    MultiLoadSimulation(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
      * @brief Copy constructor for a MultiLoadSimulation object.
      * @param orig original MultiLoadSimulation object.
