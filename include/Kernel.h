@@ -22,6 +22,9 @@
 
 class SimulationType;
 
+/**
+ * @brief Enumerate the types of simulations the Kernel can create.
+ */
 enum TypeSimulation{
     InvalidSimulation,
     MultiLoadSimulationType,

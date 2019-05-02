@@ -150,7 +150,7 @@ enum DevicesOption {
  */
 enum RegenerationOption {
     RegenerationDisabled,
-    RegenerationEnabled
+    RegenerationUniformDist
 };
 
 /**

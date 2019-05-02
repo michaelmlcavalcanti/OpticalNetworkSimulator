@@ -12,14 +12,13 @@
  */
 
 #include "../../include/Data/Data.h"
-
-#include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Options.h"
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/SimulationType/GA_SingleObjective.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
-#include "../../include/SimulationType/GA_SingleObjective.h"
 #include "../../include/Algorithms/GA/GA.h"
 #include "../../include/Algorithms/GA/GA_SO.h"
 #include "../../include/Algorithms/GA/GA_MO.h"

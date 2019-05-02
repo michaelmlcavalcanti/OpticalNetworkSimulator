@@ -53,6 +53,8 @@ private:
     
     unsigned int numFreeRegenerators;
     
+    const double trafficSupported;
+    
     std::vector<std::shared_ptr<Regenerator>> regenerators;
 };
 

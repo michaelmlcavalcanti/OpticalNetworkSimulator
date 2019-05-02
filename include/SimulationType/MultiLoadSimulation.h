@@ -22,7 +22,6 @@
  * of load points, simulating for each one.
  */
 class MultiLoadSimulation : public SimulationType {
-
 public:
     /**
      * @brief Standard constructor for a MultiLoadSimulation object.
@@ -40,10 +39,13 @@ public:
     virtual ~MultiLoadSimulation();
     
     /**
-     * @brief Runs a simulation with specified parameters.
+     * @brief Runs a multiple load simulation with specified parameters.
      */
     virtual void Run() override;
-    
+    /**
+     * @brief Function used to call the Run function of the base class 
+     * SimulationType.
+     */
     void RunBase() override;
     /**
      * @brief Load parameters to the simulation from the terminal.
@@ -66,7 +68,6 @@ public:
      * @brief Prints a description of the simulation.
      */
     void Help() override;
-    
 private:
     
 };

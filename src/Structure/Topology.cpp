@@ -52,8 +52,8 @@ const Topology* topology) {
 }
 
 Topology::Topology(SimulationType* simulType) 
-:simulType(simulType), vecNodes(0), vecLinks(0), 
-numNodes(0), numLinks(0), numSlots(0), numCores(0), maxLength(0.0) {
+:simulType(simulType), vecNodes(0), vecLinks(0), numNodes(0), numLinks(0), 
+numSlots(0), numCores(0), maxLength(0.0), numRegenerators(0) {
 
 }
 
@@ -207,7 +207,12 @@ unsigned int Topology::GetNumRegenerators() const {
 }
 
 void Topology::SetNumRegenerators(unsigned int numRegenerators) {
+    assert((this->simulType->GetOptions()->GetDevicesOption() != 
+           DevicesDisabled) && this->simulType->GetOptions()->
+           GetRegenerationOption() != RegenerationDisabled);
+    
     this->numRegenerators = numRegenerators;
+    this->DistributeRegenerators();
 }
 
 void Topology::SetMaxLength() {
@@ -486,4 +491,22 @@ void Topology::Release(Call* call) {
 
 SimulationType* Topology::GetSimulType() const {
     return simulType;
+}
+
+void Topology::DistributeRegenerators() {
+    unsigned int numRegPerNode;
+    
+    switch(this->simulType->GetOptions()->GetRegenerationOption()){
+        case RegenerationUniformDist:
+            numRegPerNode = numRegenerators / numNodes;
+            
+            for(unsigned a = 0; a < numNodes; a++){
+                NodeDevices* node = 
+                dynamic_cast<NodeDevices*>(vecNodes.at(a).get());
+                node->SetNumRegenerator(numRegPerNode);
+            }
+            break;
+        default:
+            std::cerr << "Error in regenerators distribution" << std::endl;
+    }
 }

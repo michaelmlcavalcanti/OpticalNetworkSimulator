@@ -92,7 +92,7 @@ Options::mapDevicesOption = boost::assign::map_list_of
 const boost::unordered_map<RegenerationOption, std::string>
 Options::mapRegenerationOption = boost::assign::map_list_of
     (RegenerationDisabled, "Disabled")
-    (RegenerationEnabled, "Enabled");
+    (RegenerationUniformDist, "Enabled");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -241,7 +241,7 @@ void Options::Load() {
     this->SetDevicesOption((DevicesOption) auxInt);
     
     std::cout << "Regeneration Option" << std::endl;
-    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationEnabled;
+    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationUniformDist;
     a = RegenerationOption(a+1)){
         std::cout << a << "-" << this->mapRegenerationOption.at(a) << std::endl;
     }

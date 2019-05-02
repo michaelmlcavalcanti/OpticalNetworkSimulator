@@ -44,7 +44,7 @@ void IncNumRegSimulation::Run() {
         this->GetInputOutput()->PrintProgressBar(actualPoint, numPoints);
         
         vecNumReg.push_back(a);
-        this->GetTopology()->SetNumRegenerators(a); //
+        this->GetTopology()->SetNumRegenerators(a);
         
         this->RunBase();
         std::cout << this->GetData() << std::endl;

@@ -19,8 +19,6 @@
 #include <cassert>
 #include <iostream>
 
-//#include "Link.h"
-
 class SimulationType;
 class Node;
 class Link;
@@ -34,7 +32,6 @@ class Topology {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Topology* topology);
-    
 public:
     /**
      * @brief Standard constructor for a Topology object.
@@ -245,9 +242,11 @@ public:
      * @param call Call request to disconnect.
      */
     void Release(Call* call);
-    
+    /**
+     * @brief Gets the SimulationType object that owns this Toopology.
+     * @return Pointer to a SimulationType object.
+     */
     SimulationType* GetSimulType() const;
-
 private:
     /**
      * @brief A pointer to the simulation this object belong
@@ -294,6 +293,8 @@ private:
      * topology, based in the selected option.
      */
     void SetLinksIniCost();
+    
+    void DistributeRegenerators();
 };
 
 #endif /* TOPOLOGY_H */

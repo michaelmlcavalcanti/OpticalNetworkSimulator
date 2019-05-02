@@ -32,7 +32,6 @@ class ResourceAlloc;
  * @brief Base class for Simulations objects.
  */
 class SimulationType {
-
 public:
     /**
      * @brief Standard constructor for a SimulationType object.
@@ -54,7 +53,8 @@ public:
      */
     virtual void Run();
     /**
-     * @brief Function used to call the Run base SimulationType class function.
+     * @brief Function used to call the Run function of the base class 
+     * SimulationType.
      */
     virtual void RunBase() = 0;
     /**
@@ -186,7 +186,6 @@ public:
      * @param traffic pointer to a ResourceAlloc object.
      */
     void SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm);
-
 private:
     /**
      * @brief Initialize all the simulation parameters, such as
@@ -206,7 +205,6 @@ private:
      * Topology and CallGenerator.
      */
     void FinalizeAll();
-
 public:
     /**
      * @brief Actual number of request created.
@@ -214,7 +212,6 @@ public:
      * in function GenerateCall of CallGenerator class.
      */
     double numberRequests;
-
 private:
     TypeSimulation typeSimulation;
     /**

@@ -12,13 +12,12 @@
  */
 
 #include "../../include/Calls/CallGenerator.h"
-
-#include "../../include/SimulationType/SimulationType.h"
-#include "../../include/Structure/Topology.h"
-#include "../../include/Data/Parameters.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Event.h"
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Structure/Topology.h"
+#include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
 
 std::default_random_engine CallGenerator::random_generator(0);

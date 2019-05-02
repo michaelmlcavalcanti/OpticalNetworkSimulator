@@ -16,7 +16,7 @@
 
 NodeDevices::NodeDevices(Topology* topPointer, NodeId nodeId)
 :Node(topPointer, nodeId), numRegenerator(0), numFreeRegenerators(0),
-regenerators(0) {
+trafficSupported(100E9), regenerators(0) {
 
 }
 
