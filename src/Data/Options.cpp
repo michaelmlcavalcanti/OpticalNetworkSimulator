@@ -24,6 +24,7 @@ Options::mapTopologyOptions = boost::assign::map_list_of
     (TopologyRing, "Ring")
     (TopologyToroidal, "Toroidal")
     (TopologyGermany,  "Germany")
+    (TopologyEON_RT, "EON_RT")
     (TopologyItaly, "Italy");
 
 const boost::unordered_map<RoutingOption, std::string>

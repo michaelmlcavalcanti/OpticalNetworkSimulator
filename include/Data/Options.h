@@ -31,6 +31,7 @@ enum TopologyOption {
     TopologyRing,
     TopologyToroidal,
     TopologyGermany,
+    TopologyEON_RT,
     TopologyItaly,
     FirstTopology = TopologyNSFNet,
     LastTopology = TopologyItaly

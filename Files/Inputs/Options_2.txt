@@ -16,6 +16,7 @@
     2 - Ring
     3 - Toroidal
     4 - Germany
+    5 - EON-RT
     5 - Italy
 2-Routing algorithm
     0 - Invalid
