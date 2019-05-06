@@ -72,16 +72,22 @@ void SA::Random(Call* call) {
 void SA::FirstFit(Call* call) {
     Route* route = call->GetRoute();
     unsigned int numSlotsReq = call->GetNumberSlots();
-    unsigned int maxSlotIndex = this->topology->GetNumSlots() - 
-                                 numSlotsReq;
+    unsigned int topNumSlots = this->topology->GetNumSlots();
+    unsigned int numContigSlots = 0;
     
-    for(unsigned int slot = 0; slot <= maxSlotIndex; slot++){
+    for(unsigned int slot = 0; slot < topNumSlots; slot++){
         
-        if(this->topology->CheckSlotsDisp(route, slot, slot + numSlotsReq - 1)){
-            call->SetFirstSlot(slot);
-            call->SetLastSlot(slot + numSlotsReq - 1);
-            break;
+        if(this->topology->CheckSlotDisp(route, slot)){
+            numContigSlots++;
+            
+            if(numContigSlots == numSlotsReq){
+                call->SetFirstSlot(slot - numSlotsReq + 1);
+                call->SetLastSlot(slot);
+                break;
+            }
         }
+        else
+            numContigSlots = 0;
     }
 }
 
