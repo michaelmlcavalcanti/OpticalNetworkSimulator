@@ -32,7 +32,7 @@ GA_SingleObjective::~GA_SingleObjective() {
 
 void GA_SingleObjective::Run() {
     this->GetCallGenerator()->SetNetworkLoad(this->
-    GetParameters()->GetMidLoadPoint());
+    GetParameters()->GetMaxLoadPoint());
     unsigned int numGenerations = this->gaAlgorithm->GetNumberGenerations();
     
     this->gaAlgorithm->InitializePopulation();

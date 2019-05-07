@@ -10,10 +10,13 @@
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/ResourceAllocation/Routing.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Algorithms/GA/GA.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/GA_SingleObjective.cpp</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Structure/Topology.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/SimulationType/SimulationType.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/SimulationType.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Algorithms/GA/GA.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Algorithms/GA/GA_SO.h</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/ResourceAllocation/SA.cpp</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/SA.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Algorithms/GA/GA_SO.cpp</file>
         </group>
     </open-files>

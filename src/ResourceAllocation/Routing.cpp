@@ -26,7 +26,7 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
 }
 
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology)
-:resourceAlloc(rsa), routingOption(option), topology(topology), K(3) {
+:resourceAlloc(rsa), routingOption(option), topology(topology), K(4) {
 
 }
 
