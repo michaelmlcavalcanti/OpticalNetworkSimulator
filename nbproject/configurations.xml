@@ -501,6 +501,9 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <commandLine>-static -static-libstdc++ -static-libgcc</commandLine>
+        </linkerTool>
       </compileType>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>

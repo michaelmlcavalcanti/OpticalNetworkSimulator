@@ -15,6 +15,7 @@
 
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Data/Options.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Parameters* parameters) {
@@ -37,6 +38,9 @@ const Parameters* parameters) {
             << parameters->GetNumberBloqMax() << std::endl;
     ostream << "Slot bandwidth (GHz): "
             << parameters->GetSlotBandwidth()/1E9 << std::endl;
+    if(parameters->simulType->GetOptions()->GetRoutingOption() ==
+    RoutingYEN)
+        ostream << "K: " << parameters->GetNumberRoutes() << std::endl;
     
     return ostream;
 }
@@ -82,6 +86,9 @@ void Parameters::Load() {
     std::cout << "Insert maximum number of blocked calls: ";
     std::cin >> auxDouble;
     this->SetNumberBloqMax(auxDouble);
+    std::cout << "Insert the value for K: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberRoutes(auxUnsInt);
     
     this->SetLoadPointUniform();
     
@@ -110,6 +117,8 @@ void Parameters::LoadFile() {
     this->SetNumberReqMax(auxDouble);
     auxIfstream >> auxDouble;
     this->SetNumberBloqMax(auxDouble);
+    auxIfstream >> auxInt;
+    this->SetNumberRoutes(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -238,4 +247,14 @@ unsigned int Parameters::GetNumberCores() const {
 void Parameters::SetNumberCores(unsigned int numberCores) {
     //assert(this->numberCores >= 1);
     this->numberCores = numberCores;
+}
+
+unsigned int Parameters::GetNumberRoutes() const {
+    return numberRoutes;
+}
+
+void Parameters::SetNumberRoutes(unsigned int numberRoutes) {
+    assert(numberRoutes > 0);
+    
+    this->numberRoutes = numberRoutes;
 }

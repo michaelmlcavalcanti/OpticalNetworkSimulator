@@ -273,6 +273,13 @@ public:
      */
     void UpdateRoutesCosts();
 private:
+    
+    void CreateRsaOrder();
+    
+    void CreateRouting();
+    
+    void CreateSpecAllocation();
+private:
     /**
      * @breif Pointer to a SimulationType object that
      * owns this RSA.
