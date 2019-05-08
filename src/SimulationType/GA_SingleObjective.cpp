@@ -32,8 +32,7 @@ GA_SingleObjective::~GA_SingleObjective() {
 }
 
 void GA_SingleObjective::Run() {
-    this->GetCallGenerator()->SetNetworkLoad(this->
-    GetParameters()->GetMidLoadPoint());
+    this->SetLoadPoint();
     unsigned int numGenerations = this->gaAlgorithm->GetNumberGenerations();
     
     this->gaAlgorithm->InitializePopulation();
@@ -105,5 +104,27 @@ void GA_SingleObjective::CreateGA() {
             break;
         default:
             std::cerr << "Invalid GA option" << std::endl;
+    }
+}
+
+void GA_SingleObjective::SetLoadPoint() {
+    unsigned int point = 0;
+    
+    switch(point){
+        case 0:
+            this->GetCallGenerator()->SetNetworkLoad(this->
+            GetParameters()->GetMinLoadPoint());
+            break;
+        case 1:
+            this->GetCallGenerator()->SetNetworkLoad(this->
+            GetParameters()->GetMidLoadPoint());
+            break;
+        case 2:
+            this->GetCallGenerator()->SetNetworkLoad(this->
+            GetParameters()->GetMaxLoadPoint());
+            break;
+        default:
+            std::cerr << "Invalid load point" << std::endl;
+            abort();
     }
 }

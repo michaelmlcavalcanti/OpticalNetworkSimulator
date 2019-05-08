@@ -51,36 +51,12 @@ void ResourceAlloc::Load() {
     
     this->allRoutes.resize(numNodes*numNodes);
     
-    //Create the RSA order vector based on the option set.
-    switch(this->simulType->GetOptions()->GetOrderRSA()){
-        case OrderRoutingSa:
-            this->resourceAllocOrder.assign(numNodes*numNodes, false);
-            break;
-        case OrderSaRouting:
-            this->resourceAllocOrder.assign(numNodes*numNodes, true);
-            break;
-        case MixedOrder:
-            this->resourceAllocOrder.resize(numNodes*numNodes);
-            this->SetResourceAllocOrder();
-            break;
-        default:
-            std::cout << "Invalid RSA order" << std::endl;
-    }
-    
-    this->routing = std::make_shared<Routing>(this,
-        this->simulType->GetOptions()->GetRoutingOption(), this->topology);
-    
-    if(this->topology->GetNumCores() == 1){
-        this->specAlloc = std::make_shared<SA>(this, this->simulType->
-                          GetOptions()->GetSpecAllOption(), this->topology);
-    }
-    else{
-        this->specAlloc = std::make_shared<CSA>(this, this->simulType->
-                          GetOptions()->GetSpecAllOption(), this->topology);
-    }
+    this->CreateRsaOrder();
+    this->CreateRouting();
+    this->CreateSpecAllocation();
     
     this->modulation = std::make_shared<Modulation>(this, 
-        this->simulType->GetParameters()->GetSlotBandwidth());
+    this->simulType->GetParameters()->GetSlotBandwidth());
     
     this->resourAllocOption = this->simulType->GetOptions()->
                                                GetResourAllocOption();
@@ -544,4 +520,46 @@ void ResourceAlloc::UpdateRoutesCosts() {
 void ResourceAlloc::SetNumSlotsTraffic() {
     this->numSlotsTraffic = this->modulation->GetPossibleSlots(
     this->traffic->GetVecTraffic());
+}
+
+void ResourceAlloc::CreateRsaOrder() {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    
+    switch(this->simulType->GetOptions()->GetOrderRSA()){
+        case OrderRoutingSa:
+            this->resourceAllocOrder.assign(numNodes*numNodes, false);
+            break;
+        case OrderSaRouting:
+            this->resourceAllocOrder.assign(numNodes*numNodes, true);
+            break;
+        case MixedOrder:
+            this->resourceAllocOrder.resize(numNodes*numNodes);
+            this->SetResourceAllocOrder();
+            break;
+        default:
+            std::cout << "Invalid RSA order" << std::endl;
+    }
+}
+
+void ResourceAlloc::CreateRouting() {
+    RoutingOption option = this->simulType->GetOptions()->GetRoutingOption();
+            
+    this->routing = std::make_shared<Routing>(this, option, this->topology);
+    
+    if(option == RoutingYEN){
+        this->routing->SetK(this->simulType->GetParameters()->
+                            GetNumberRoutes());
+    }
+}
+
+void ResourceAlloc::CreateSpecAllocation() {
+    SpectrumAllocationOption option = this->simulType->GetOptions()->
+                                      GetSpecAllOption();
+    
+    if(this->topology->GetNumCores() == 1){
+        this->specAlloc = std::make_shared<SA>(this, option, this->topology);
+    }
+    else{
+        this->specAlloc = std::make_shared<CSA>(this, option, this->topology);
+    }
 }
