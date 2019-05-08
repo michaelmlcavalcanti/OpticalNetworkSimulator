@@ -175,7 +175,10 @@ public:
      * @param numberSlots Number of slots per fiber/core.
      */
     void SetNumberSlots(unsigned int numberSlots);
+    
+    unsigned int GetNumberRoutes() const;
 
+    void SetNumberRoutes(unsigned int numberRoutes);
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -226,6 +229,8 @@ private:
      * @brief Number of cores per link.
      */
     unsigned int numberCores;
+    
+    unsigned int numberRoutes;
     
     /**
      * @brief Calculate the load step.

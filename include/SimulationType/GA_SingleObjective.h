@@ -75,6 +75,8 @@ private:
      * @brief Function to create the GA algorithm, based on the option chosen.
      */
     void CreateGA();
+    
+    void SetLoadPoint();
 private:
     /**
      * 
