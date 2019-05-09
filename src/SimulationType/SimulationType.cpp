@@ -91,6 +91,7 @@ void SimulationType::AdditionalSettings() {
     if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
         this->resourceAlloc->UpdateRoutesCosts();
+        this->resourceAlloc->CreateRsaOrder();
         
         if(this->resourceAlloc->CheckInterRouting()){
             this->resourceAlloc->SetInterferingRoutes2();

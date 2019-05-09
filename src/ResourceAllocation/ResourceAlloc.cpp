@@ -51,7 +51,6 @@ void ResourceAlloc::Load() {
     
     this->allRoutes.resize(numNodes*numNodes);
     
-    this->CreateRsaOrder();
     this->CreateRouting();
     this->CreateSpecAllocation();
     
@@ -298,6 +297,34 @@ void ResourceAlloc::SetResourceAllocOrder() {
     this->SetResourceAllocOrder(vecBool);
 }
 
+void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
+    assert(this->simulType->GetOptions()->GetTopologyOption() == TopologyRing);
+    unsigned int numNodes = this->topology->GetNumNodes();
+    std::vector<bool> vecBool;
+    Route* auxRoute;
+    unsigned int maxNumHops = 1;
+    
+    for(unsigned int orNode = 0; orNode < numNodes; orNode++){
+        for(unsigned int deNode = 0; deNode < numNodes; deNode++){
+            
+            if(orNode == deNode){
+                vecBool.push_back(false);
+                continue;
+            }
+            auxRoute = this->GetRoutes(orNode, deNode).front().get();
+            
+            if(auxRoute->GetNumHops() <= maxNumHops){
+                vecBool.push_back(true);
+            }
+            else{
+                vecBool.push_back(false);
+            }
+        }
+    }
+    
+    assert(this->resourceAllocOrder.size() == numNodes*numNodes);
+}
+
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
 int des, int pos) {
     return this->interRoutes.at(ori*(this->topology->GetNumNodes()) + des)
@@ -524,6 +551,7 @@ void ResourceAlloc::SetNumSlotsTraffic() {
 
 void ResourceAlloc::CreateRsaOrder() {
     unsigned int numNodes = this->topology->GetNumNodes();
+    this->resourceAllocOrder.resize(numNodes * numNodes);
     
     switch(this->simulType->GetOptions()->GetOrderRSA()){
         case OrderRoutingSa:
@@ -533,11 +561,14 @@ void ResourceAlloc::CreateRsaOrder() {
             this->resourceAllocOrder.assign(numNodes*numNodes, true);
             break;
         case MixedOrder:
-            this->resourceAllocOrder.resize(numNodes*numNodes);
             this->SetResourceAllocOrder();
+            break;
+        case HeuristicsOrder:
+            this->SetResAllocOrderHeuristicsRing();
             break;
         default:
             std::cout << "Invalid RSA order" << std::endl;
+            abort();
     }
 }
 

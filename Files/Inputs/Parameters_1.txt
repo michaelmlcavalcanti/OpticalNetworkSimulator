@@ -6,6 +6,7 @@
 6
 10000
 500
+3
 
 1-Number of slots per fiber
 2-Number of cores per link
@@ -15,3 +16,4 @@
 6-Number of points
 7-Maximum number  of requisitions
 8-Maximum  number of blocked requests
+9-Value for k-shortest routes

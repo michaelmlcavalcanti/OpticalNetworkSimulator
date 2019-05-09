@@ -124,8 +124,9 @@ enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
     MixedOrder,
+    HeuristicsOrder,
     FirstOrderRSA = OrderRoutingSa,
-    LastOrderRSA = MixedOrder
+    LastOrderRSA = HeuristicsOrder
 };
 
 /**

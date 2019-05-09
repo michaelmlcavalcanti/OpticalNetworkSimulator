@@ -53,6 +53,7 @@
     0 - Routing-SA
     1 - SA-Routing
     2 - Mixed order
+    3 - Heuristics order
 10-GA Option
     0 - GA Disabled
     1 - GA RSA Order
