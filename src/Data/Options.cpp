@@ -119,6 +119,8 @@ const Options* options) {
             << std::endl;
     ostream << "GA: " << options->GetGaOptionName()
             << std::endl;
+    ostream << "Devices: " << options->GetDevicesOptionName()
+            << std::endl;
     ostream << "Regeneration: " << options->GetRegenerationOptionName()
             << std::endl;
     
