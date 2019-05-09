@@ -76,7 +76,8 @@ const boost::unordered_map<RsaOrder,  std::string>
 Options::mapOrderRSA = boost::assign::map_list_of
     (OrderRoutingSa, "Routing-SA")
     (OrderSaRouting, "SA-Routing")
-    (MixedOrder, "Mixed order");
+    (MixedOrder, "Mixed order")
+    (HeuristicsOrder, "Heuristics Ring Order");
 
 const boost::unordered_map<GAOption, std::string>
 Options::mapGaOption = boost::assign::map_list_of

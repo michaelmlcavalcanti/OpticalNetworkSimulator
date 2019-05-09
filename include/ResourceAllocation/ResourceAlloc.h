@@ -213,6 +213,8 @@ public:
      * each node pair in the network of the output of the first simulation.
      */
     void SetResourceAllocOrder();
+    
+    void SetResAllocOrderHeuristicsRing();
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
      * and route of this pair.
@@ -272,9 +274,9 @@ public:
      * offline routing.
      */
     void UpdateRoutesCosts();
-private:
     
     void CreateRsaOrder();
+private:
     
     void CreateRouting();
     
