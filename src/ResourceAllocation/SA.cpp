@@ -137,8 +137,8 @@ void SA::MSCL(Call* call) {
                 //allocation forms.
                 //for(unsigned int i = 2; i <= 5; i++)
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
-                    vetCapInic[r] += this->CalcNumFormAloc(
-                                     vecTrafficSlots.at(i), vetDispInt);
+                    vetCapInic[r] += this->
+                    CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
                 }
                 //Calculates the requisition allocation impact in the 
                 //interfering routes for each set of slots
@@ -147,8 +147,8 @@ void SA::MSCL(Call* call) {
                 
                 //for(unsigned int i = 2; i <= 5; i++)
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
-                    vetCapFin[r] += this->CalcNumFormAloc(
-                                          vecTrafficSlots.at(i), vetDispInt);
+                    vetCapFin[r] += this->
+                    CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
                 }
                 
                 perda += vetCapFin[r] - vetCapInic[r];
@@ -174,13 +174,15 @@ Topology* SA::GetTopology() {
 unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
     unsigned int sum = 0;
     unsigned int si, se;
-    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int numSlots = this->topology->GetNumSlots();
     
-    for(si = 0; si < numNodes - reqSize; si++){
+    for(si = 0; si < numSlots - reqSize; si++){
         for(se = si; se < si + reqSize; se++){
             
-            if(dispVec[se] == false)
+            if(dispVec[se] == false){
+                si = se;
                 break;
+            }
         }
         
         if(se == si + reqSize)

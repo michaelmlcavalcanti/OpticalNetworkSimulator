@@ -302,7 +302,7 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
     unsigned int numNodes = this->topology->GetNumNodes();
     std::vector<bool> vecBool;
     Route* auxRoute;
-    unsigned int maxNumHops = 1;
+    unsigned int maxNumHops = 4;
     
     for(unsigned int orNode = 0; orNode < numNodes; orNode++){
         for(unsigned int deNode = 0; deNode < numNodes; deNode++){
@@ -313,16 +313,15 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
             }
             auxRoute = this->GetRoutes(orNode, deNode).front().get();
             
-            if(auxRoute->GetNumHops() <= maxNumHops){
-                vecBool.push_back(true);
-            }
-            else{
+            if(auxRoute->GetNumHops() <= maxNumHops)
                 vecBool.push_back(false);
-            }
+            else
+                vecBool.push_back(true);
         }
     }
     
-    assert(this->resourceAllocOrder.size() == numNodes*numNodes);
+    assert(vecBool.size() == numNodes*numNodes);
+    this->SetResourceAllocOrder(vecBool);
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
