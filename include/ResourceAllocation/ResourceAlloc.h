@@ -152,8 +152,6 @@ public:
      */
     void SetInterferingRoutes();
     
-    void SetInterferingRoutes2();
-    
     /**
      * @brief Check if the call request OSNR is acceptable.
      * @param call Call request to evaluate the OSNR.

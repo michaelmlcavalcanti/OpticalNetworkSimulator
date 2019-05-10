@@ -97,6 +97,7 @@ void SA::MSCL(Call* call) {
     Route* route = call->GetRoute();
     unsigned int orNode = route->GetOrNode()->GetNodeId();
     unsigned int deNode = route->GetDeNode()->GetNodeId();
+    
     std::vector<std::shared_ptr<Route>> intRoutes = 
     this->resourceAlloc->GetInterRoutes(orNode, deNode, route);
     unsigned int numInterRoutesCheck =
