@@ -152,7 +152,7 @@ void SA::MSCL(Call* call) {
                     CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
                 }
                 
-                perda += vetCapFin[r] - vetCapInic[r];
+                perda += vetCapInic[r] - vetCapFin[r];
             }
             
             if(perda < perdaMin){
