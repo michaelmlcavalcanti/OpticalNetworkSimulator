@@ -11,6 +11,8 @@
  * Created on March 27, 2019, 3:51 PM
  */
 
+#include <condition_variable>
+
 #include "../../../include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Structure/Topology.h"
@@ -36,18 +38,40 @@ void GA_NumInterRoutesMSCL::Initialize() {
 }
 
 void GA_NumInterRoutesMSCL::InitializePopulation() {
-    assert(this->paretoFronts.empty() && this->totalPopulation.empty());
+    assert(this->actualParetoFronts.empty() && this->totalPopulation.empty());
+    std::vector<std::shared_ptr<Individual>> auxVecInd(0);
     
-    for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++){
-        this->paretoFronts.front().push_back(std::make_shared
-             <IndividualNumRoutesMSCL>(this));
-    }
+    for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++)
+        auxVecInd.push_back(std::make_shared<IndividualNumRoutesMSCL>(this));
+    
+    this->actualParetoFronts.push_back(auxVecInd);
 }
 
 void GA_NumInterRoutesMSCL::CreateNewPopulation() {
     this->totalPopulation.clear();
+    
+    std::vector<Individual*> vecBaseInd = this->GetIniPopulation();
+    std::vector<IndividualNumRoutesMSCL*> vecInd(0);
+    for(auto it: vecBaseInd){
+        vecInd.push_back(dynamic_cast<IndividualNumRoutesMSCL*>(it));
+    }
+    
     this->Crossover();
     this->Mutation();
+}
+
+void GA_NumInterRoutesMSCL::SelectPopulation() {
+    GA_MO::SelectPopulation();
+    std::vector<std::vector<std::shared_ptr<IndividualNumRoutesMSCL>>> vecInd(0);
+    std::vector<std::shared_ptr<IndividualNumRoutesMSCL>> auxVec(0);
+    
+    for(auto it1: this->actualParetoFronts){
+        for(auto it2: it1){
+            auxVec.push_back(std::dynamic_pointer_cast<IndividualNumRoutesMSCL>(it2));
+        }
+        vecInd.push_back(auxVec);
+    }
+    int x = 0;
 }
 
 void GA_NumInterRoutesMSCL::ApplyIndividual(Individual* ind) {
@@ -66,6 +90,7 @@ void GA_NumInterRoutesMSCL::SetIndParameters(Individual* ind) {
     
     auxInd->SetBlockProb(blockProb);
     auxInd->SetSimulTime(simulTime);
+    auxInd->SetCount(auxInd->GetCount() + 1);
 }
 
 unsigned int GA_NumInterRoutesMSCL::GetNumNodes() const {
@@ -104,7 +129,7 @@ void GA_NumInterRoutesMSCL::Crossover() {
     std::vector<std::shared_ptr<IndividualNumRoutesMSCL>> auxVecTotalPop;
     
     //Put all individual in the Pareto fronts to an auxiliary vector.
-    for(auto it1: this->paretoFronts){
+    for(auto it1: this->actualParetoFronts){
         for(auto it2: it1){
             auxVecTotalPop.push_back(
             std::dynamic_pointer_cast<IndividualNumRoutesMSCL>(it2));
@@ -188,12 +213,12 @@ void GA_NumInterRoutesMSCL::Mutation() {
                               (this->totalPopulation.at(a).get()));
     }
     
-    for(auto it: this->paretoFronts){
+    for(auto it: this->actualParetoFronts){
         this->totalPopulation.insert(this->totalPopulation.end(),
              it.begin(), it.end());
     }
     
-    this->paretoFronts.clear();
+    this->actualParetoFronts.clear();
 }
 
 void GA_NumInterRoutesMSCL::MutateIndividual(IndividualNumRoutesMSCL* 

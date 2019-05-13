@@ -52,7 +52,6 @@ double IndividualNumRoutesMSCL::GetBlockProb() const {
 void IndividualNumRoutesMSCL::SetBlockProb(double blockProb) {
     assert(this->GetCount() < this->ga->GetMaxNumSimulation());
     assert(blockProb >= 0.0);
-    this->SetCount(this->GetCount()+1);
     
     if(this->GetCount() == 1)
         this->blockProb = blockProb;

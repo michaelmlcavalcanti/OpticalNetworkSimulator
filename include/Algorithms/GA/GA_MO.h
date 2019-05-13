@@ -135,7 +135,7 @@ public:
     /**
      * @brief Container of the Pareto fronts of the GA.
      */
-    std::vector<std::vector<std::shared_ptr<Individual>>> paretoFronts;
+    std::vector<std::vector<std::shared_ptr<Individual>>> actualParetoFronts;
     /**
      * @brief Container of individuals, representing the total population.
      */

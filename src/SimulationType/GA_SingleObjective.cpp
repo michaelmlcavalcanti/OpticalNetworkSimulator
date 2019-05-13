@@ -66,6 +66,10 @@ void GA_SingleObjective::Load() {
 void GA_SingleObjective::LoadFile() {
     SimulationType::LoadFile();
     this->CreateGA();
+}
+
+void GA_SingleObjective::AdditionalSettings() {
+    SimulationType::AdditionalSettings();
     this->gaAlgorithm->Initialize();
 }
 
@@ -103,11 +107,12 @@ void GA_SingleObjective::CreateGA() {
             break;
         default:
             std::cerr << "Invalid GA option" << std::endl;
+            std::abort();
     }
 }
 
 void GA_SingleObjective::SetLoadPoint() {
-    unsigned int point = 0;
+    unsigned int point = 1;
     
     switch(point){
         case 0:

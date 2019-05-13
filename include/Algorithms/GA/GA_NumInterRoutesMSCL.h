@@ -53,6 +53,8 @@ public:
      */
     void CreateNewPopulation() override;
     
+    void SelectPopulation() override;
+    
     /**
      * @brief Gets the number of nodes of the network.
      * @return Number of nodes.
