@@ -103,7 +103,7 @@ void GA_MO::SelectPopulation() {
     }
     
     this->totalPopulation.clear();
-    assert(this->GetNumIndParetoFronts() == numInd);
+    assert(this->GetNumIndParetoFronts() == numInd); //Error in this assertion.
 }
 
 void GA_MO::SaveIndividuals() {

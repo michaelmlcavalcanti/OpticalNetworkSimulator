@@ -47,7 +47,7 @@ public:
     };
     /**
      * @brief Structure to compare two individuals, based on their first 
-     * parameter.
+     * parameter (Ascending order).
      */
     struct OrderIndividuals{
         /**
