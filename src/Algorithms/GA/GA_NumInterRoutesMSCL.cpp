@@ -53,20 +53,6 @@ void GA_NumInterRoutesMSCL::CreateNewPopulation() {
     this->Mutation();
 }
 
-void GA_NumInterRoutesMSCL::SelectPopulation() {
-    GA_MO::SelectPopulation();
-    std::vector<std::vector<std::shared_ptr<IndividualNumRoutesMSCL>>> vecInd(0);
-    std::vector<std::shared_ptr<IndividualNumRoutesMSCL>> auxVec(0);
-    
-    for(auto it1: this->actualParetoFronts){
-        for(auto it2: it1){
-            auxVec.push_back(std::dynamic_pointer_cast<IndividualNumRoutesMSCL>(it2));
-        }
-        vecInd.push_back(auxVec);
-    }
-    int x = 0;
-}
-
 void GA_NumInterRoutesMSCL::ApplyIndividual(Individual* ind) {
     IndividualNumRoutesMSCL* auxInd = dynamic_cast<IndividualNumRoutesMSCL*>
                                       (ind);
