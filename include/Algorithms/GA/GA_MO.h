@@ -120,6 +120,8 @@ public:
     
     std::vector<Individual*> GetIniPopulation() const;
     
+    unsigned int GetSavePasso() const;
+
     
     void print(std::ostream& ostream) const override;
 private:
@@ -131,6 +133,8 @@ private:
      * @brief Container to keep the first Pareto front of each generation.
      */
     std::vector<std::vector<std::shared_ptr<Individual>>> firstParetoFronts;
+    
+    unsigned int savePasso;
 public:
     /**
      * @brief Container of the Pareto fronts of the GA.
