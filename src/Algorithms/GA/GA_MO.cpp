@@ -16,8 +16,8 @@
 #include "../../../include/Data/Data.h"
 
 GA_MO::GA_MO(SimulationType* simul)
-:GA(simul), initialPopulation(0), firstParetoFronts(0), actualParetoFronts(0), 
-totalPopulation(0) {
+:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(5), 
+actualParetoFronts(0), totalPopulation(0) {
     
 }
 
@@ -87,10 +87,12 @@ void GA_MO::SelectPopulation() {
         
         //Fill an auxiliary vector with the right amount of 
         //non-dominated solutions.
-        while(!this->totalPopulation.empty() && 
-        (this->GetNumIndParetoFronts() < numInd)){
+        unsigned int added = 0;
+        while((!this->totalPopulation.empty()) && 
+        ((this->GetNumIndParetoFronts() + added) < numInd)){
             auxFront.push_back(this->totalPopulation.back());
             this->totalPopulation.pop_back();
+            added++;
         }
         
         //Add the Pareto front to the vector of fronts, in ascending order.
@@ -161,7 +163,7 @@ unsigned int GA_MO::GetNumIndParetoFronts() const {
 std::vector<Individual*> GA_MO::GetParetoFront() const {
     std::vector<Individual*> auxVecInd(0);
     
-    for(auto it: this->actualParetoFronts.at(this->GetActualGeneration()-1)){
+    for(auto it: this->firstParetoFronts.at(this->GetActualGeneration()-1)){
         auxVecInd.push_back(it.get());
     }
     
@@ -178,8 +180,13 @@ std::vector<Individual*> GA_MO::GetIniPopulation() const {
     return auxVecInd;
 }
 
+unsigned int GA_MO::GetSavePasso() const {
+    return savePasso;
+}
+
 void GA_MO::print(std::ostream& ostream) const {
     
     ostream << "Number of individuals of the first Pareto front: " 
-            << this->firstParetoFronts.back().size() << std::endl;
+            << this->firstParetoFronts.at(this->GetActualGeneration()-1).size() 
+            << std::endl;
 }

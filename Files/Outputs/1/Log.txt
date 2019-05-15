@@ -1,0 +1,29 @@
+OPTIONS
+Topology: NSFNet
+Routing algorithm: Dijkstra
+Spectral allocation algorithm: MSCL
+Links cost type: Minimum hops
+Traffic requests(Gbps): 10-40-100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Number of Interfering Routes Check
+
+PARAMETERS
+Number of slots per fiber: 64
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 30
+Maximum load point(erlang): 60
+Number of points: 6
+Total number of requisitions: 1000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+
+Generation: 5
+Number of individuals of the first Pareto front: 5
+
+Generation: 10
+Number of individuals of the first Pareto front: 4
+

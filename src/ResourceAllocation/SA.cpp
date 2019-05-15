@@ -95,18 +95,19 @@ void SA::MSCL(Call* call) {
     unsigned int numSlotsReq = call->GetNumberSlots();
     unsigned int numSlotsTop = this->topology->GetNumSlots();
     Route* route = call->GetRoute();
+    Route* auxRoute;
     unsigned int orNode = route->GetOrNode()->GetNodeId();
     unsigned int deNode = route->GetDeNode()->GetNodeId();
     
-    std::vector<std::shared_ptr<Route>> intRoutes = 
+    std::vector<std::shared_ptr<Route>> intRoutes =
     this->resourceAlloc->GetInterRoutes(orNode, deNode, route);
     unsigned int numInterRoutesCheck =
     this->resourceAlloc->GetNumInterRoutesToCheck(orNode, deNode, route);
     std::vector<unsigned> vecTrafficSlots = 
     this->resourceAlloc->GetNumSlotsTraffic();
     
-    unsigned int vetCapInic[intRoutes.size()];
-    unsigned int vetCapFin[intRoutes.size()];
+    unsigned int vetCapInic[numInterRoutesCheck+1];
+    unsigned int vetCapFin[numInterRoutesCheck+1];
     bool vetDispInt[numSlotsTop];
     double perda, perdaMin = Def::Max_Double;
     unsigned int si = Def::Max_UnInt;
@@ -119,11 +120,15 @@ void SA::MSCL(Call* call) {
         if(DispFitSi){
             perda = 0.0;
             
-            for(unsigned int r = 0; r < numInterRoutesCheck; r++){
+            for(unsigned int r = 0; r <= numInterRoutesCheck; r++){
+                
+                if(r != 0)
+                    auxRoute = intRoutes.at(r-1).get();
+                else
+                    auxRoute = route;
                 
                 for(unsigned int se = 0; se < numSlotsTop; se++){
-                    if(!(this->topology->CheckSlotDisp(intRoutes.at(r).get(), 
-                                                       se))){
+                    if(!(this->topology->CheckSlotDisp(auxRoute, se))){
                         vetDispInt[se] = false;
                     }
                     else{
@@ -136,7 +141,6 @@ void SA::MSCL(Call* call) {
                 
                 //Calculates the initial capacity based on the number of 
                 //allocation forms.
-                //for(unsigned int i = 2; i <= 5; i++)
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
                     vetCapInic[r] += this->
                     CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
@@ -146,7 +150,8 @@ void SA::MSCL(Call* call) {
                 for(unsigned int i = s; i < s + numSlotsReq; i++)
                     vetDispInt[i] = false;
                 
-                //for(unsigned int i = 2; i <= 5; i++)
+                //Calculates the final capacity based on the number of 
+                //allocation forms.
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
                     vetCapFin[r] += this->
                     CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);

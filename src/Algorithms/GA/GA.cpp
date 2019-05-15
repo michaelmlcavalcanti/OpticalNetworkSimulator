@@ -25,8 +25,8 @@ std::ostream& operator<<(std::ostream& ostream, const GA* ga) {
 
 GA::GA(SimulationType* simul)
 :simul(simul), numberIndividuals(50), numberGenerations(100),
-probCrossover(0.8), probMutation(0.15), actualGeneration(0), 
-maxNumSimulation(5) {
+probCrossover(0.5), probMutation(0.1), actualGeneration(0), 
+maxNumSimulation(1) {
     
 }
 
