@@ -63,7 +63,7 @@ public:
     /**
      * @brief Keeps the selected population in the initial population container.
      */
-    void KeepInitialPopulation() override;
+    virtual void KeepInitialPopulation() override;
     /**
      * @brief Selects the best population among the total population generated
      * by crossover and mutation. The selection is made first, selecting a 

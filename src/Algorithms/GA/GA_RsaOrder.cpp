@@ -61,6 +61,17 @@ void GA_RsaOrder::CreateNewPopulation() {
     this->Mutation();
 }
 
+void GA_RsaOrder::KeepInitialPopulation() {
+    GA_SO::KeepInitialPopulation();
+    
+    std::vector<IndividualBool*> vecInd(0);
+    unsigned int numInd = this->GetNumberIndividuals();
+    
+    for(unsigned int a = 0; a < numInd; a++){
+        vecInd.push_back(dynamic_cast<IndividualBool*>())
+    }
+}
+
 unsigned int GA_RsaOrder::GetNumNodes() const {
     return numNodes;
 }

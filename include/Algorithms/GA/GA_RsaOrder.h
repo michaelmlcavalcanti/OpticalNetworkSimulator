@@ -51,6 +51,8 @@ public:
      * population.
      */
     void CreateNewPopulation() override;
+    
+    void KeepInitialPopulation() override;
 
     /**
      * @brief Gets the number of nodes of the network.
