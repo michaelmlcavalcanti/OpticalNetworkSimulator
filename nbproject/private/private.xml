@@ -9,12 +9,13 @@
         <group>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Data/Data.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Algorithms/GA/GA_MO.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/GA_SingleObjective.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/SimulationType/GA_SingleObjective.h</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/GA_SingleObjective.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Algorithms/GA/GA.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Algorithms/GA/IndividualNumRoutesMSCL.cpp</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/Files/Inputs/Parameters_1.txt</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Algorithms/GA/GA_MO.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Algorithms/GA/GA_NumInterRoutesMSCL.h</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/Files/Inputs/Options_1.txt</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/main.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Algorithms/GA/GA.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Data/Data.cpp</file>

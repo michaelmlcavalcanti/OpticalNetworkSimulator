@@ -120,9 +120,13 @@ public:
      */
     ResourceAlloc* GetResourceAlloc();
     
-    unsigned int CalcNumFormAloc(unsigned int reqSize, bool* dispVec);
+    unsigned int CalcNumFormAloc(unsigned int reqSize, 
+                                 std::vector<bool>& dispVec);
     
     int CalcNumFormAloc(int L, bool* Disp, int tam);
+    
+    std::vector<unsigned int> GetBlocksFreeSlots(unsigned int reqSize, 
+                                                 std::vector<bool>& dispVec);
 private:
     /**
      * @brief RourceAlloc that own this object.

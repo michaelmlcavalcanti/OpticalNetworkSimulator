@@ -16,7 +16,7 @@
 #include "../../../include/Data/Data.h"
 
 GA_MO::GA_MO(SimulationType* simul)
-:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(5), 
+:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(10), 
 actualParetoFronts(0), totalPopulation(0) {
     
 }
