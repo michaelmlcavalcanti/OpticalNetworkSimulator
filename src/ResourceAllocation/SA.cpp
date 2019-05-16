@@ -108,10 +108,28 @@ void SA::MSCL(Call* call) {
     
     unsigned int vetCapInic[numInterRoutesCheck+1];
     unsigned int vetCapFin[numInterRoutesCheck+1];
-    bool vetDispInt[numSlotsTop];
     double perda, perdaMin = Def::Max_Double;
     unsigned int si = Def::Max_UnInt;
     bool DispFitSi = false;
+    
+    
+    std::vector<bool> auxVecDisp;
+    std::vector<std::vector<bool>> vecDisp;
+    vecDisp.resize(numInterRoutesCheck+1);
+    for(unsigned int a = 0; a <= numInterRoutesCheck; a++){
+        if(a != 0)
+            auxRoute = intRoutes.at(a-1).get();
+        else
+            auxRoute = route;
+        vecDisp.at(a).resize(numSlotsTop);
+        
+        for(unsigned int b = 0; b < numSlotsTop; b++){
+            if(!(this->topology->CheckSlotDisp(auxRoute, b)))
+                vecDisp.at(a).at(b) = false;
+            else
+                vecDisp.at(a).at(b) = true;
+        }
+    }
     
     for(unsigned int s = 0; s < (numSlotsTop - numSlotsReq + 1); s++){
         DispFitSi = this->topology->CheckSlotsDisp(route, s, 
@@ -122,19 +140,7 @@ void SA::MSCL(Call* call) {
             
             for(unsigned int r = 0; r <= numInterRoutesCheck; r++){
                 
-                if(r != 0)
-                    auxRoute = intRoutes.at(r-1).get();
-                else
-                    auxRoute = route;
-                
-                for(unsigned int se = 0; se < numSlotsTop; se++){
-                    if(!(this->topology->CheckSlotDisp(auxRoute, se))){
-                        vetDispInt[se] = false;
-                    }
-                    else{
-                        vetDispInt[se] = true;
-                    }
-                }
+                auxVecDisp = vecDisp.at(r);
                 
                 vetCapInic[r] = 0;
                 vetCapFin[r] = 0;
@@ -143,21 +149,24 @@ void SA::MSCL(Call* call) {
                 //allocation forms.
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
                     vetCapInic[r] += this->
-                    CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
+                    CalcNumFormAloc(vecTrafficSlots.at(i), auxVecDisp);
                 }
                 //Calculates the requisition allocation impact in the 
                 //interfering routes for each set of slots
                 for(unsigned int i = s; i < s + numSlotsReq; i++)
-                    vetDispInt[i] = false;
+                    auxVecDisp.at(i) = false;
                 
                 //Calculates the final capacity based on the number of 
                 //allocation forms.
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
                     vetCapFin[r] += this->
-                    CalcNumFormAloc(vecTrafficSlots.at(i), vetDispInt);
+                    CalcNumFormAloc(vecTrafficSlots.at(i), auxVecDisp);
                 }
                 
                 perda += vetCapInic[r] - vetCapFin[r];
+                
+                if(perda >= perdaMin)
+                    break;
             }
             
             if(perda < perdaMin){
@@ -177,7 +186,7 @@ Topology* SA::GetTopology() {
     return topology;
 }
 
-unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
+/*unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
     unsigned int sum = 0;
     unsigned int si, se;
     unsigned int numSlots = this->topology->GetNumSlots();
@@ -194,6 +203,18 @@ unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
         if(se == si + reqSize)
             sum++;
     }
+    
+    return sum;
+}*/
+
+unsigned int SA::CalcNumFormAloc(unsigned int reqSize, 
+                                 std::vector<bool>& dispVec) {
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(reqSize, dispVec);
+    unsigned int sum = 0;
+    
+    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
+        sum += freeSlotsBlocks.at(a) - reqSize + 1;
     
     return sum;
 }
@@ -275,4 +296,27 @@ std::vector<unsigned int> SA::FirstFitSlots(unsigned int lastSlot) {
         vecSlots.push_back(a);
     
     return vecSlots;
+}
+
+std::vector<unsigned int> SA::GetBlocksFreeSlots(unsigned int reqSize, 
+                                             std::vector<bool>& dispVec) {
+    unsigned int topNumSlots = this->topology->GetNumSlots();
+    unsigned int sizeBlock = 0;
+    std::vector<unsigned int> freeSlotsBlocks(0);
+    
+    for(unsigned int a = 0; a < topNumSlots; a++){
+        
+        if(dispVec.at(a) == true)
+            sizeBlock++;
+        else{
+            if(sizeBlock >= reqSize)
+                freeSlotsBlocks.push_back(sizeBlock);
+            sizeBlock = 0;
+        }
+    }
+    
+    if(sizeBlock >= reqSize)
+        freeSlotsBlocks.push_back(sizeBlock);
+    
+    return freeSlotsBlocks;
 }
