@@ -302,7 +302,7 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
     unsigned int numNodes = this->topology->GetNumNodes();
     std::vector<bool> vecBool;
     Route* auxRoute;
-    unsigned int maxNumHops = 1;
+    unsigned int maxNumHops = 4;
     
     for(unsigned int orNode = 0; orNode < numNodes; orNode++){
         for(unsigned int deNode = 0; deNode < numNodes; deNode++){
@@ -313,16 +313,15 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
             }
             auxRoute = this->GetRoutes(orNode, deNode).front().get();
             
-            if(auxRoute->GetNumHops() <= maxNumHops){
-                vecBool.push_back(true);
-            }
-            else{
+            if(auxRoute->GetNumHops() <= maxNumHops)
                 vecBool.push_back(false);
-            }
+            else
+                vecBool.push_back(true);
         }
     }
     
-    assert(this->resourceAllocOrder.size() == numNodes*numNodes);
+    assert(vecBool.size() == numNodes*numNodes);
+    this->SetResourceAllocOrder(vecBool);
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
@@ -348,67 +347,6 @@ unsigned int orNode, unsigned int deNode, Route* route){
 }
 
 void ResourceAlloc::SetInterferingRoutes() {
-    std::shared_ptr<Route> routeAux, routeAux2;
-    int nodeRoute[2], nodeRouteInt[2], countRoutes = 0;
-    bool flag = true;
-    
-    this->interRoutes.resize(this->allRoutes.size());
-    /*Initialize vector of vector of route pointer for Interfering Routes*/
-    for(unsigned int r = 1; r < this->allRoutes.size() - 1; r++){
-        if(r%(this->topology->GetNumNodes() + 1) == 0)
-            r += 1;
-        this->interRoutes.at(r).resize(this->allRoutes.at(r).size());
-    }
-    //this->interRoutes.resize(totalRoutes); 
-    /*Vary the first position of allRoutes*/
-    for(unsigned int a = 1; a < allRoutes.size() - 1; a++){
-      if(a%(this->topology->GetNumNodes() + 1) == 0)
-            a += 1;
-      /*Vary second position of allRoutes*/
-      for(unsigned int e = 0;e < allRoutes.at(a).size();e++){  
-        routeAux = this->allRoutes.at(a).at(e);
-        /*Search links to verify interfering routes*/
-        for(unsigned int b = 0; b < routeAux->GetNumHops() - 1; b++){
-            nodeRoute[0] = routeAux->GetNodeId(b);
-            nodeRoute[1] = routeAux->GetNodeId(b+1);
-            /*Search in allRoutes to extract all interfering routes*/
-            for(unsigned int c = 1; c < allRoutes.size() - 1; c++){
-              if(c%(this->topology->GetNumNodes() + 1) == 0)
-                 c += 1;
-              for(unsigned int f = 0;f < allRoutes.at(c).size();f++){
-                routeAux2 = allRoutes.at(c).at(f);
-                if(routeAux == routeAux2)
-                   continue;
-                for(unsigned int d = 0; d < (routeAux2->GetNumHops()-1); d++){
-                   nodeRouteInt[0] = routeAux2->GetNodeId(d);
-                   nodeRouteInt[1] = routeAux2->GetNodeId(d+1);
-                   if(nodeRoute[0]==nodeRouteInt[0] && 
-                          nodeRoute[1]==nodeRouteInt[1]){
-                      /*Verify if interfering route is already in interRoutes*/
-                       for(unsigned int p = 0; p < this->interRoutes.at(a).at(e)
-                               .size(); p++){
-                          if(this->interRoutes.at(a).at(e).at(p) == routeAux2){
-                              flag = false;
-                              d = routeAux2->GetNumHops()-1;
-                              break;
-                          }
-                       }
-                       if(flag){
-                         this->interRoutes.at(a).at(e).push_back(routeAux2);
-                         break;
-                       }
-                       flag = true;
-                   }
-                }
-              }
-            }
-        }
-        countRoutes++;
-      }
-    }
-}
-
-void ResourceAlloc::SetInterferingRoutes2() {
     std::shared_ptr<Route> routeAux, interRoute;
     Link *auxLink, *interLink;
     unsigned int numNodes = this->topology->GetNumNodes();

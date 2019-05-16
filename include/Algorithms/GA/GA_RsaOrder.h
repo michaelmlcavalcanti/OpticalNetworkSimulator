@@ -150,6 +150,8 @@ private:
      * @param ind Specified individual.
      */
     void MutateIndividual(IndividualBool* const ind);
+    
+    void DuplicateTotalPop();
 private:
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.

@@ -81,6 +81,7 @@ void Kernel::CreateSimulations() {
                 break;
             default:
                 std::cerr << "Invalid simulation type" << std::endl;
+                std::abort();
         }
     }
 }

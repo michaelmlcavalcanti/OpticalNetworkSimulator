@@ -166,10 +166,13 @@ private:
     
     void SaveInitPopulation(GA_SO* ga, std::ostream& initPop);
     
-    void SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds);
+    void SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds, 
+    std::ostream& bestInd);
     
     void SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream, 
     std::ostream& bestInds);
+    
+    void SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd);
 private:
     /**
      * @brief A pointer to the simulation this object belong

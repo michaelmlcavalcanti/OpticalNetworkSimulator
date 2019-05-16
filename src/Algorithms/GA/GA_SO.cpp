@@ -23,7 +23,7 @@ const std::shared_ptr<Individual>& indB) const {
 }
 
 GA_SO::GA_SO(SimulationType* simul)
-:GA(simul), numBestIndividuals(30), sumFitness(0.0), initialPopulation(0),
+:GA(simul), numBestIndividuals(50), sumFitness(0.0), initialPopulation(0),
 bestIndividuals(0), worstIndividuals(0), selectedPopulation(0),
 totalPopulation(0) {
     
@@ -55,6 +55,7 @@ void GA_SO::SelectPopulation() {
         this->selectedPopulation.push_back(this->totalPopulation.back());
         this->totalPopulation.pop_back();
     }
+    
     //Select randomly the others.
     std::shuffle(this->totalPopulation.begin(), 
                  this->totalPopulation.end(), this->random_generator);

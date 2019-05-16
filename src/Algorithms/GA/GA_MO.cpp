@@ -16,8 +16,8 @@
 #include "../../../include/Data/Data.h"
 
 GA_MO::GA_MO(SimulationType* simul)
-:GA(simul), initialPopulation(0), firstParetoFronts(0), paretoFronts(0), 
-totalPopulation(0) {
+:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(10), 
+actualParetoFronts(0), totalPopulation(0) {
     
 }
 
@@ -44,13 +44,13 @@ indA, const std::shared_ptr<Individual>& indB) const {
 }
 
 void GA_MO::KeepInitialPopulation() {
-    this->initialPopulation = this->paretoFronts.front();
+    this->initialPopulation = this->actualParetoFronts.front();
     std::sort(this->initialPopulation.begin(), this->initialPopulation.end(), 
               OrderIndividuals());
 }
 
 void GA_MO::SelectPopulation() {
-    assert(this->paretoFronts.empty());
+    assert(this->actualParetoFronts.empty());
     std::vector<std::shared_ptr<Individual>> vecDominated(0);
     std::vector<std::shared_ptr<Individual>> auxFront(0);
     std::shared_ptr<Individual> auxInd;
@@ -87,15 +87,17 @@ void GA_MO::SelectPopulation() {
         
         //Fill an auxiliary vector with the right amount of 
         //non-dominated solutions.
-        while(!this->totalPopulation.empty() && 
-        (this->GetNumIndParetoFronts() < numInd)){
+        unsigned int added = 0;
+        while((!this->totalPopulation.empty()) && 
+        ((this->GetNumIndParetoFronts() + added) < numInd)){
             auxFront.push_back(this->totalPopulation.back());
             this->totalPopulation.pop_back();
+            added++;
         }
         
         //Add the Pareto front to the vector of fronts, in ascending order.
         std::sort(auxFront.begin(), auxFront.end(), OrderIndividuals());
-        this->paretoFronts.push_back(auxFront);
+        this->actualParetoFronts.push_back(auxFront);
         this->totalPopulation.insert(this->totalPopulation.end(),
         vecDominated.begin(), vecDominated.end());
         vecDominated.clear();
@@ -107,12 +109,12 @@ void GA_MO::SelectPopulation() {
 }
 
 void GA_MO::SaveIndividuals() {
-    this->firstParetoFronts.push_back(this->paretoFronts.front());
+    this->firstParetoFronts.push_back(this->actualParetoFronts.front());
 }
 
 void GA_MO::RunSelectPop() {
     
-    for(auto it: this->paretoFronts.front()){
+    for(auto it: this->actualParetoFronts.front()){
         this->ApplyIndividual(it.get());
         this->GetSimul()->RunBase();
         this->SetIndParameters(it.get());
@@ -151,7 +153,7 @@ void GA_MO::CheckMinSimul() {
 unsigned int GA_MO::GetNumIndParetoFronts() const {
     unsigned int numInd = 0;
     
-    for(auto it: this->paretoFronts){
+    for(auto it: this->actualParetoFronts){
         numInd += it.size();
     }
 
@@ -161,7 +163,7 @@ unsigned int GA_MO::GetNumIndParetoFronts() const {
 std::vector<Individual*> GA_MO::GetParetoFront() const {
     std::vector<Individual*> auxVecInd(0);
     
-    for(auto it: this->paretoFronts.at(this->GetActualGeneration()-1)){
+    for(auto it: this->firstParetoFronts.at(this->GetActualGeneration()-1)){
         auxVecInd.push_back(it.get());
     }
     
@@ -178,8 +180,13 @@ std::vector<Individual*> GA_MO::GetIniPopulation() const {
     return auxVecInd;
 }
 
+unsigned int GA_MO::GetSavePasso() const {
+    return savePasso;
+}
+
 void GA_MO::print(std::ostream& ostream) const {
     
     ostream << "Number of individuals of the first Pareto front: " 
-            << this->firstParetoFronts.back().size() << std::endl;
+            << this->firstParetoFronts.at(this->GetActualGeneration()-1).size() 
+            << std::endl;
 }

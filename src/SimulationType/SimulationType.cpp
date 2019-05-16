@@ -88,17 +88,17 @@ void SimulationType::Save() {
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
     
-    this->resourceAlloc->CreateRsaOrder();
     if(this->resourceAlloc->IsOfflineRouting()){
         this->resourceAlloc->RoutingOffline();
         this->resourceAlloc->UpdateRoutesCosts();
         
         if(this->resourceAlloc->CheckInterRouting()){
-            this->resourceAlloc->SetInterferingRoutes2();
+            this->resourceAlloc->SetInterferingRoutes();
             this->resourceAlloc->SetNumInterRoutesToCheck();
             this->resourceAlloc->SetNumSlotsTraffic();
         }
     }
+    this->resourceAlloc->CreateRsaOrder();
 }
 
 TypeSimulation SimulationType::GetTypeSimulation() const {

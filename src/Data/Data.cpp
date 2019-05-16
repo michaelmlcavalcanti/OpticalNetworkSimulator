@@ -23,6 +23,7 @@
 #include "../../include/Algorithms/GA/GA_SO.h"
 #include "../../include/Algorithms/GA/GA_MO.h"
 #include "../../include/Algorithms/GA/IndividualBool.h"
+#include "../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {    
@@ -155,7 +156,7 @@ void Data::SaveGaFiles() {
     if(this->simulType->GetOptions()->IsGA_SO())
         this->SaveGaSoFiles(logOfstream, initPop, bestInds, worstInds, bestInd);
     else if(this->simulType->GetOptions()->IsGA_MO())
-        this->SaveGaMoFiles(logOfstream, bestInds);
+        this->SaveGaMoFiles(logOfstream, bestInds, bestInd);
 }
 
 void Data::SetNumberReq(double numReq) {
@@ -323,31 +324,62 @@ void Data::SaveInitPopulation(GA_SO* ga, std::ostream& initPop) {
     }
 }
 
-void Data::SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds) {
+void Data::SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds, 
+std::ostream& bestInd) {
     GA_MO* ga = dynamic_cast<GA_MO*>( dynamic_cast<GA_SingleObjective*>
                                       (this->simulType)->GetGA() );
     
     this->SaveParetoFronts(ga, logOfstream, bestInds);
+    this->SaveLastIndividuals(ga, bestInd);
 }
 
 void Data::SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream, 
 std::ostream& bestInds) {
     std::vector<Individual*> auxVecInd(0);
     unsigned int numGen = ga->GetNumberGenerations();
+    unsigned int passo = ga->GetSavePasso();
     
-    for(unsigned int a = 0; a <= numGen; a++){
+    for(unsigned int a = 0; a <= numGen; a++){  
         ga->SetActualGeneration(a);
-        logOfstream << ga << std::endl;
+        auxVecInd.clear();
         
-        if(a != 0)
-            auxVecInd = ga->GetParetoFront();
-        else
+        if(a == 0)
             auxVecInd = ga->GetIniPopulation();
+        else if(a % passo == 0){
+            logOfstream << ga << std::endl;
+            auxVecInd = ga->GetParetoFront();
+        }
         
         for(auto it: auxVecInd){
             bestInds << it->GetMainParameter() << "\t" 
                      << it->GetSecondParameter() << std::endl;
         }
-        bestInds << std::endl;
+        
+        if(!auxVecInd.empty())
+            bestInds << std::endl;
+    }
+}
+
+void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
+    //Make function to check the cast for the best individual
+    //and a switch function for casting according to the individual.
+    IndividualNumRoutesMSCL* ind;
+    ga->SetActualGeneration(ga->GetNumberGenerations());
+    std::vector<Individual*> auxVecInd = ga->GetParetoFront();
+    std::vector<std::vector<unsigned int>> auxGenes(0);
+    
+    for(auto it1: auxVecInd){
+        ind = dynamic_cast<IndividualNumRoutesMSCL*>(it1);
+        auxGenes = ind->GetGenes();
+        
+        for(unsigned int a = 0; a < auxGenes.size(); a++){
+            if(auxGenes.at(a).empty()){
+                bestInd << 0 << "\t";
+            }
+            for(unsigned int b = 0; b < auxGenes.at(a).size(); b++){
+                bestInd << auxGenes.at(a).at(b) << "\t";
+            }
+        }
+        bestInd << std::endl;
     }
 }

@@ -53,6 +53,8 @@ public:
      * @brief Load simulation inputs from files.
      */
     void LoadFile() override;
+    
+    void AdditionalSettings() override;
     /**
      * @brief Print this simulation
      */
