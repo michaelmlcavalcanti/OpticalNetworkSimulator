@@ -29,7 +29,12 @@ Individual::Individual(GA* ga)
 }
 
 Individual::Individual(const std::shared_ptr<const Individual>& orig)
-:ga(orig->ga), fitness(0.0), count(0) {
+:ga(orig->ga), fitness(orig->fitness), count(orig->count) {
+    
+}
+
+Individual::Individual(const std::shared_ptr<const Individual>& orig, 
+double value):ga(orig->ga), fitness(value), count(0) {
     
 }
 

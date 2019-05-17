@@ -33,14 +33,23 @@ GA_SO::~GA_SO() {
     
 }
 
+void GA_SO::LoadFile() {
+    GA::LoadFile();
+    
+    std::ifstream auxIfstream;
+    unsigned int auxInt;
+    this->GetSimul()->GetInputOutput()->LoadGA_SO(auxIfstream);
+    
+    auxIfstream >> auxInt;
+    this->SetNumBestIndividuals(auxInt);
+}
+
 void GA_SO::Initialize() {
     GA::Initialize();
 }
 
 void GA_SO::KeepInitialPopulation() {
-    this->initialPopulation = this->selectedPopulation;
-    std::sort(this->initialPopulation.begin(), this->initialPopulation.end(), 
-              IndividualCompare());
+    
 }
 
 void GA_SO::SelectPopulation() {
@@ -70,8 +79,7 @@ void GA_SO::SelectPopulation() {
 }
 
 void GA_SO::SaveIndividuals() {
-    this->bestIndividuals.push_back(this->selectedPopulation.back());
-    this->worstIndividuals.push_back(this->selectedPopulation.front());
+
 }
 
 void GA_SO::SetSumFitness(double sumFitness) {
@@ -167,4 +175,9 @@ void GA_SO::print(std::ostream& ostream) const {
             << std::endl;
     ostream << "Worst individual: " << this->GetWorstIndividual()
             << std::endl;
+}
+
+void GA_SO::SetNumBestIndividuals(unsigned int numBestIndividuals) {
+    assert(numBestIndividuals <= this->GetNumberIndividuals());
+    this->numBestIndividuals = numBestIndividuals;
 }

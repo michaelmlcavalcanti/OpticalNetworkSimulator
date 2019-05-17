@@ -20,7 +20,18 @@
  * @brief Generic genetic algorithm class for single objective. This class 
  * contains all generic functions for this type of GA.
  */
-class GA_SO : public GA {
+class GA_SO : public GA { 
+public:
+    /**
+     * @brief Default constructor of a GA_SO algorithm.
+     * @param simul Simulation that own this algorithm.
+     */
+    GA_SO(SimulationType* simul);
+    /**
+     * @brief Default destructor of a GA_SO algorithm.
+     */
+    virtual ~GA_SO();
+    
     /**
      * @brief Struct to compare two individuals, based on their fitness.
      */
@@ -34,17 +45,9 @@ class GA_SO : public GA {
          */
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
-    };    
-public:
-    /**
-     * @brief Default constructor of a GA_SO algorithm.
-     * @param simul Simulation that own this algorithm.
-     */
-    GA_SO(SimulationType* simul);
-    /**
-     * @brief Default destructor of a GA_SO algorithm.
-     */
-    virtual ~GA_SO();
+    };
+    
+    void LoadFile() override;
     
     /**
      * @brief Initialize the GA algorithm with the probability distribution.
@@ -75,7 +78,7 @@ public:
      * @brief Function that saves the best and the worst individuals in their
      * respective containers.
      */
-    void SaveIndividuals() override;
+    virtual void SaveIndividuals() override;
 
     /**
      * @brief Sets the sumFitness variable.
@@ -146,18 +149,28 @@ public:
      */
     void CheckMinSimul() override;
     
+    
     void print(std::ostream& ostream) const override;
+    
+    
+    void SetNumBestIndividuals(unsigned int numBestIndividuals);
+
 private:
     /**
      * @brief Number of best individuals the process of selection will choose.
      */
-    const unsigned int numBestIndividuals;
+    unsigned int numBestIndividuals;
     /**
      * @brief Sum of all individuals fitness of the selected individuals 
      * container.
      */
     double sumFitness;
-    
+    /**
+     * @brief Probability distribution used in this GA algorithm for the 
+     * roulette draw.
+     */
+    std::uniform_real_distribution<double> fitnessDistribution;
+protected:
     /**
      * @brief Container of individuals, representing the initial population.
      */
@@ -171,13 +184,7 @@ private:
      * @brief Container of individuals, representing the worst individuals, one
      * for each generation.
      */
-    std::vector<std::shared_ptr<Individual>> worstIndividuals;
-    
-    /**
-     * @brief Probability distribution used in this GA algorithm for the 
-     * roulette draw.
-     */
-    std::uniform_real_distribution<double> fitnessDistribution;
+    std::vector<std::shared_ptr<Individual>> worstIndividuals; 
 public:
     /**
      * @brief Container of individuals, representing the selected population.

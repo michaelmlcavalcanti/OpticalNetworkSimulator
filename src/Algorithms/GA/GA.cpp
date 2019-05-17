@@ -13,6 +13,7 @@
 
 #include "../../../include/Algorithms/GA/GA.h"
 #include "../../../include/GeneralClasses/Def.h"
+#include "../../../include/SimulationType/SimulationType.h"
 
 std::default_random_engine GA::random_generator(Def::randomDevice());
 
@@ -34,6 +35,25 @@ GA::~GA() {
     
 }
 
+void GA::LoadFile() {
+    std::ifstream auxIfstream;
+    unsigned int auxInt;
+    double auxDouble;
+    
+    this->simul->GetInputOutput()->LoadGA(auxIfstream);
+    
+    auxIfstream >> auxInt;
+    this->SetNumberIndividuals(auxInt);
+    auxIfstream >> auxInt;
+    this->SetNumberGenerations(auxInt);
+    auxIfstream >> auxDouble;
+    this->SetProbCrossover(auxDouble);
+    auxIfstream >> auxDouble;
+    this->SetProbMutation(auxDouble);
+    auxIfstream >> auxInt;
+    this->SetMaxNumSimulation(auxInt);
+}
+
 void GA::Initialize() {
     this->probDistribution = std::uniform_real_distribution<double>(0, 1);
 }
@@ -42,20 +62,42 @@ const unsigned int GA::GetNumberGenerations() const {
     return numberGenerations;
 }
 
+void GA::SetNumberGenerations(unsigned int numberGenerations) {
+    this->numberGenerations = numberGenerations;
+}
+
 const unsigned int GA::GetNumberIndividuals() const {
     return numberIndividuals;
+}
+
+void GA::SetNumberIndividuals(unsigned int numberIndividuals) {
+    this->numberIndividuals = numberIndividuals;
 }
 
 const double GA::GetProbCrossover() const {
     return probCrossover;
 }
 
+void GA::SetProbCrossover(double probCrossover) {
+    assert(probCrossover >= 0 && probCrossover <= 1.0);
+    this->probCrossover = probCrossover;
+}
+
 const double GA::GetProbMutation() const {
     return probMutation;
 }
 
+void GA::SetProbMutation(double probMutation) {
+    assert(probMutation >= 0 && probMutation <= 1.0);
+    this->probMutation = probMutation;
+}
+
 const unsigned int GA::GetMaxNumSimulation() const {
     return maxNumSimulation;
+}
+
+void GA::SetMaxNumSimulation(unsigned int maxNumSimulation) {
+    this->maxNumSimulation = maxNumSimulation;
 }
 
 double GA::GetProbDistribution() {

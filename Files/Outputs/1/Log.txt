@@ -22,42 +22,42 @@ Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
 Generation: 1
-Best individual: 0.014715
-Worst individual: 0.0157925
+Best individual: 0.01397
+Worst individual: 0.01587
 
 Generation: 2
-Best individual: 0.01464
-Worst individual: 0.015145
+Best individual: 0.01371
+Worst individual: 0.01543
 
 Generation: 3
-Best individual: 0.014195
-Worst individual: 0.015355
+Best individual: 0.0136
+Worst individual: 0.01591
 
 Generation: 4
-Best individual: 0.0144125
-Worst individual: 0.0155925
+Best individual: 0.01351
+Worst individual: 0.01596
 
 Generation: 5
-Best individual: 0.01408
-Worst individual: 0.0155925
+Best individual: 0.01342
+Worst individual: 0.01615
 
 Generation: 6
-Best individual: 0.0144825
-Worst individual: 0.01614
+Best individual: 0.01287
+Worst individual: 0.01638
 
 Generation: 7
-Best individual: 0.01386
-Worst individual: 0.0158125
+Best individual: 0.01406
+Worst individual: 0.01635
 
 Generation: 8
-Best individual: 0.01386
-Worst individual: 0.01529
+Best individual: 0.01356
+Worst individual: 0.01584
 
 Generation: 9
-Best individual: 0.01386
-Worst individual: 0.0150025
+Best individual: 0.0140675
+Worst individual: 0.01567
 
 Generation: 10
-Best individual: 0.01386
-Worst individual: 0.01579
+Best individual: 0.0140675
+Worst individual: 0.0156375
 

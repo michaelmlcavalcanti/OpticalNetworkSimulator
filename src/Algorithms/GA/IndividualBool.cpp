@@ -34,7 +34,14 @@ IndividualBool::IndividualBool(GA_RsaOrder* ga, bool gene)
 
 IndividualBool::IndividualBool(
 const std::shared_ptr<const IndividualBool>& orig)
-:Individual(orig), ga(orig->ga), genes(orig->genes), blockProb(0.0) {
+:Individual(orig), ga(orig->ga), genes(orig->genes), 
+blockProb(orig->blockProb) {
+    
+}
+
+IndividualBool::IndividualBool(const std::shared_ptr<const IndividualBool>& 
+orig, double value):Individual(orig, value), ga(orig->ga), genes(orig->genes), 
+blockProb(value)  {
     
 }
 

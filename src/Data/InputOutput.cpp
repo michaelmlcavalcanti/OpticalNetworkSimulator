@@ -112,6 +112,66 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
     }while(!traffic.is_open());
 }
 
+void InputOutput::LoadGA(std::ifstream& gaParam) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        gaParam.open("Files/Inputs/GA/GA_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!gaParam.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: GA_" 
+                      << auxInt << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+
+    }while(!gaParam.is_open());
+}
+
+void InputOutput::LoadGA_SO(std::ifstream& gaSoParam) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        gaSoParam.open("Files/Inputs/GA/GA_SO_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!gaSoParam.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: GA_SO_" 
+                      << auxInt << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+
+    }while(!gaSoParam.is_open());
+}
+
+void InputOutput::LoadGA_MO(std::ifstream& gaMoParam) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        gaMoParam.open("Files/Inputs/GA/GA_MO_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!gaMoParam.is_open()) {       
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: GA_MO_" 
+                      << auxInt << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+
+    }while(!gaMoParam.is_open());
+}
+
 void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     
     do{
