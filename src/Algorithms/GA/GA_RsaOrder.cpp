@@ -61,6 +61,31 @@ void GA_RsaOrder::CreateNewPopulation() {
     this->Mutation();
 }
 
+void GA_RsaOrder::KeepInitialPopulation() {
+    GA_SO::KeepInitialPopulation();
+    std::shared_ptr<IndividualBool> auxInd;
+    
+    for(auto it: this->selectedPopulation){
+        auxInd = std::dynamic_pointer_cast<IndividualBool>(it);
+        this->initialPopulation.push_back(
+        std::make_shared<IndividualBool>(auxInd));
+    }
+    std::sort(this->initialPopulation.begin(), this->initialPopulation.end(),
+              IndividualCompare());
+}
+
+void GA_RsaOrder::SaveIndividuals() {
+    GA_SO::SaveIndividuals();
+    std::shared_ptr<IndividualBool> auxInd;
+    
+    auxInd = std::dynamic_pointer_cast<IndividualBool>
+             (this->selectedPopulation.back());
+    this->bestIndividuals.push_back(std::make_shared<IndividualBool>(auxInd));
+    auxInd = std::dynamic_pointer_cast<IndividualBool>
+             (this->selectedPopulation.front());
+    this->worstIndividuals.push_back(std::make_shared<IndividualBool>(auxInd));
+}
+
 unsigned int GA_RsaOrder::GetNumNodes() const {
     return numNodes;
 }
@@ -206,7 +231,7 @@ void GA_RsaOrder::DuplicateTotalPop() {
     
     for(unsigned int a = 0; a < popSize; a++){
         newInd = std::make_shared<IndividualBool>(std::static_pointer_cast
-        <IndividualBool>(this->totalPopulation.at(a)));
+        <IndividualBool>(this->totalPopulation.at(a)), 0.0);
         this->totalPopulation.push_back(newInd);
     }
 }

@@ -3,6 +3,11 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="f1" displayName="Files" projectFiles="true">
       <logicalFolder name="f1" displayName="Inputs" projectFiles="true">
+        <logicalFolder name="f3" displayName="GA" projectFiles="true">
+          <itemPath>Files/Inputs/GA/GA_1.txt</itemPath>
+          <itemPath>Files/Inputs/GA/GA_MO_1.txt</itemPath>
+          <itemPath>Files/Inputs/GA/GA_SO_1.txt</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="Topologies" projectFiles="true">
           <itemPath>Files/Inputs/Topologies/EON_RT.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Germany.txt</itemPath>
@@ -14,6 +19,7 @@
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
           <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_40-100--200.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_50-120-300.txt</itemPath>
         </logicalFolder>
         <itemPath>Files/Inputs/Options_1.txt</itemPath>
@@ -188,6 +194,12 @@
           <warningLevel>2</warningLevel>
         </ccTool>
       </compileType>
+      <item path="Files/Inputs/GA/GA_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/GA/GA_MO_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/GA/GA_SO_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
@@ -228,6 +240,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_40-100--200.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -505,6 +522,12 @@
           <commandLine>-static -static-libstdc++ -static-libgcc</commandLine>
         </linkerTool>
       </compileType>
+      <item path="Files/Inputs/GA/GA_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/GA/GA_MO_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/GA/GA_SO_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/Options_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Options_2.txt" ex="false" tool="3" flavor2="0">
@@ -545,6 +568,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_40-100--200.txt"
             ex="false"
             tool="3"
             flavor2="0">

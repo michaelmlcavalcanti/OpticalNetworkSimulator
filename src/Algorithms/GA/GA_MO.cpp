@@ -16,13 +16,24 @@
 #include "../../../include/Data/Data.h"
 
 GA_MO::GA_MO(SimulationType* simul)
-:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(10), 
+:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(5), 
 actualParetoFronts(0), totalPopulation(0) {
     
 }
 
 GA_MO::~GA_MO() {
 
+}
+
+void GA_MO::LoadFile() {
+    GA::LoadFile();
+    
+    std::ifstream auxIfstream;
+    unsigned int auxInt;
+    this->GetSimul()->GetInputOutput()->LoadGA_SO(auxIfstream);
+    
+    auxIfstream >> auxInt;
+    this->SetSavePasso(auxInt);
 }
 
 void GA_MO::Initialize() {
@@ -178,6 +189,10 @@ std::vector<Individual*> GA_MO::GetIniPopulation() const {
     }
     
     return auxVecInd;
+}
+
+void GA_MO::SetSavePasso(unsigned int savePasso) {
+    this->savePasso = savePasso;
 }
 
 unsigned int GA_MO::GetSavePasso() const {

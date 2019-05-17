@@ -60,12 +60,13 @@ void GA_SingleObjective::RunBase() {
 void GA_SingleObjective::Load() {
     SimulationType::Load();
     this->CreateGA();
-    this->gaAlgorithm->Initialize();
+    this->gaAlgorithm->LoadFile();
 }
 
 void GA_SingleObjective::LoadFile() {
     SimulationType::LoadFile();
     this->CreateGA();
+    this->gaAlgorithm->LoadFile();
 }
 
 void GA_SingleObjective::AdditionalSettings() {

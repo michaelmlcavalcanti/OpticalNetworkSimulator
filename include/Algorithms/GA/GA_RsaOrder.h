@@ -51,6 +51,15 @@ public:
      * population.
      */
     void CreateNewPopulation() override;
+    /**
+     * @brief Keeps the selected population in the initial population container.
+     */
+    void KeepInitialPopulation() override;
+    /**
+     * @brief Function that saves the best and the worst individuals in their
+     * respective containers.
+     */
+    void SaveIndividuals() override;
 
     /**
      * @brief Gets the number of nodes of the network.

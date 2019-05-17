@@ -39,6 +39,9 @@ public:
      */
     IndividualNumRoutesMSCL(const std::shared_ptr
                             <const IndividualNumRoutesMSCL>& orig);
+    
+    IndividualNumRoutesMSCL(const std::shared_ptr<const 
+                            IndividualNumRoutesMSCL>& orig, double value);
     /**
      * @brief Default destructor of this individual.
      */

@@ -32,6 +32,9 @@ public:
      */
     virtual ~GA_MO();
     
+    
+    void LoadFile() override;
+
     /**
      * @brief Structure for determinate if an individual is dominated by other.
      */
@@ -120,8 +123,10 @@ public:
     
     std::vector<Individual*> GetIniPopulation() const;
     
-    unsigned int GetSavePasso() const;
+    void SetSavePasso(unsigned int savePasso);
 
+    unsigned int GetSavePasso() const;
+    
     
     void print(std::ostream& ostream) const override;
 private:
