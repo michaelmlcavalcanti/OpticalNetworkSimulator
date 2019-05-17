@@ -36,6 +36,9 @@ public:
      * @param orig Original individual to be copied.
      */
     Individual(const std::shared_ptr<const Individual>& orig);
+    
+    Individual(const std::shared_ptr<const Individual>& orig, 
+               double value);
     /**
      * @brief Default destructor of a generic individual.
      */

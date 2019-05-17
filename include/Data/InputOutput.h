@@ -61,6 +61,12 @@ public:
      * @param traffic stream that operates in Traffic file.
      */
     void LoadTraffic(std::ifstream& traffic);
+    
+    void LoadGA(std::ifstream& gaParam);
+    
+    void LoadGA_SO(std::ifstream& gaSoParam);
+    
+    void LoadGA_MO(std::ifstream& gaMoParam);
     /**
      * @brief Loads the RSA order input file from the first simulation made.
      * @param orderRsa Ifstream with the input file.

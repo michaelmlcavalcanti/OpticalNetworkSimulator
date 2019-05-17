@@ -36,9 +36,15 @@ IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga)
 
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(
 const std::shared_ptr<const IndividualNumRoutesMSCL>& orig)
-:Individual(orig), ga(orig->ga), blockProb(0.0), simulTime(0.0), 
-genes(orig->genes) {
+:Individual(orig), ga(orig->ga), blockProb(orig->blockProb), 
+simulTime(orig->simulTime), genes(orig->genes) {
     
+}
+
+IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(const std::shared_ptr<const 
+IndividualNumRoutesMSCL>& orig, double value):Individual(orig, value), 
+ga(orig->ga), blockProb(value), simulTime(value), genes(orig->genes){
+
 }
 
 IndividualNumRoutesMSCL::~IndividualNumRoutesMSCL() {

@@ -1,0 +1,12 @@
+20
+10
+0.5
+0.1
+3
+
+
+1-Number of individuals
+2-Number of generations
+3-Crossover probability
+4-Mutation probability
+5-Maximum number of simulations

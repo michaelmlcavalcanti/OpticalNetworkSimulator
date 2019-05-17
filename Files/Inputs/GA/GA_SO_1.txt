@@ -1,0 +1,4 @@
+10
+
+
+1-Number of best individuals (elitism)
