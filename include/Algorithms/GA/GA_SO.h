@@ -152,6 +152,8 @@ public:
     
     void print(std::ostream& ostream) const override;
     
+    std::ostream& printParameters(std::ostream& ostream) const override;
+    
     
     void SetNumBestIndividuals(unsigned int numBestIndividuals);
 

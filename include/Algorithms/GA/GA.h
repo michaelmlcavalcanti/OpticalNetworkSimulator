@@ -151,6 +151,8 @@ public:
     
     
     virtual void print(std::ostream& ostream) const = 0;
+    
+    virtual std::ostream& printParameters(std::ostream& ostream) const;
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this algorithm.

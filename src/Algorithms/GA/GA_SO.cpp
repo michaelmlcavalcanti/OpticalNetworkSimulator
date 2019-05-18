@@ -177,6 +177,16 @@ void GA_SO::print(std::ostream& ostream) const {
             << std::endl;
 }
 
+std::ostream& GA_SO::printParameters(std::ostream& ostream) const {
+    GA::printParameters(ostream);
+    
+    ostream << "GA SO PARAMETERS" << std::endl;
+    ostream << "Number of best individuals to select: " 
+            << this->numBestIndividuals << std::endl;
+    
+    return ostream;
+}
+
 void GA_SO::SetNumBestIndividuals(unsigned int numBestIndividuals) {
     assert(numBestIndividuals <= this->GetNumberIndividuals());
     this->numBestIndividuals = numBestIndividuals;
