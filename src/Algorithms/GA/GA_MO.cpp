@@ -211,7 +211,7 @@ std::ostream& GA_MO::printParameters(std::ostream& ostream) const {
     
     ostream << "GA MO PARAMETERS" << std::endl;
     ostream << "Step of generation to save: " << this->GetSavePasso()
-            << std::endl;
+            << std::endl << std::endl;
     
     return ostream;
 }

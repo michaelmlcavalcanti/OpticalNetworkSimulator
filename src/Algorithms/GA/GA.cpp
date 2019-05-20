@@ -128,7 +128,7 @@ std::ostream& GA::printParameters(std::ostream& ostream) const {
     ostream << "Mutation probability: " << this->GetProbMutation()
             << std::endl;
     ostream << "Number of maximum simulation: " << this->GetMaxNumSimulation()
-            << std::endl;
+            << std::endl << std::endl;
     
     return ostream;
 }

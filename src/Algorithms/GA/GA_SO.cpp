@@ -182,7 +182,7 @@ std::ostream& GA_SO::printParameters(std::ostream& ostream) const {
     
     ostream << "GA SO PARAMETERS" << std::endl;
     ostream << "Number of best individuals to select: " 
-            << this->numBestIndividuals << std::endl;
+            << this->numBestIndividuals << std::endl << std::endl;
     
     return ostream;
 }

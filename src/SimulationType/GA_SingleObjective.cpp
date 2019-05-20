@@ -78,6 +78,7 @@ void GA_SingleObjective::AdditionalSettings() {
 void GA_SingleObjective::Print() {
     this->Help();
     SimulationType::Print();
+    this->gaAlgorithm->printParameters(std::cout);
 }
 
 void GA_SingleObjective::Save() {
