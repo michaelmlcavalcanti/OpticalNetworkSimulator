@@ -21,43 +21,53 @@ Total number of requisitions: 100000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
+GA PARAMETERS
+Number of individuals: 20
+Number of generations: 10
+Crossover probability: 0.5
+Mutation probability: 0.1
+Number of maximum simulation: 3
+
+GA SO PARAMETERS
+Number of best individuals to select: 10
+
 Generation: 1
 Best individual: 0.01397
-Worst individual: 0.01587
+Worst individual: 0.016245
 
 Generation: 2
 Best individual: 0.01371
-Worst individual: 0.01543
+Worst individual: 0.0157925
 
 Generation: 3
 Best individual: 0.0136
-Worst individual: 0.01591
+Worst individual: 0.01636
 
 Generation: 4
 Best individual: 0.01351
-Worst individual: 0.01596
+Worst individual: 0.01646
 
 Generation: 5
 Best individual: 0.01342
-Worst individual: 0.01615
+Worst individual: 0.0156
 
 Generation: 6
 Best individual: 0.01287
-Worst individual: 0.01638
+Worst individual: 0.0159
 
 Generation: 7
-Best individual: 0.01406
-Worst individual: 0.01635
+Best individual: 0.01394
+Worst individual: 0.01529
 
 Generation: 8
 Best individual: 0.01356
-Worst individual: 0.01584
+Worst individual: 0.01553
 
 Generation: 9
-Best individual: 0.0140675
+Best individual: 0.013615
 Worst individual: 0.01567
 
 Generation: 10
-Best individual: 0.0140675
-Worst individual: 0.0156375
+Best individual: 0.0139025
+Worst individual: 0.0159375
 

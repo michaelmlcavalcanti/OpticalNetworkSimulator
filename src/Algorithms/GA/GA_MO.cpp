@@ -205,3 +205,13 @@ void GA_MO::print(std::ostream& ostream) const {
             << this->firstParetoFronts.at(this->GetActualGeneration()-1).size() 
             << std::endl;
 }
+
+std::ostream& GA_MO::printParameters(std::ostream& ostream) const {
+    GA::printParameters(ostream);
+    
+    ostream << "GA MO PARAMETERS" << std::endl;
+    ostream << "Step of generation to save: " << this->GetSavePasso()
+            << std::endl << std::endl;
+    
+    return ostream;
+}

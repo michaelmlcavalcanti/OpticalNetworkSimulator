@@ -129,6 +129,8 @@ public:
     
     
     void print(std::ostream& ostream) const override;
+    
+    std::ostream& printParameters(std::ostream& ostream) const override;
 private:
     /**
      * @brief Container of individuals, representing the initial population.

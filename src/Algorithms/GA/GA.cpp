@@ -116,3 +116,19 @@ void GA::SetActualGeneration(unsigned int actualGeneration) {
     assert(actualGeneration >= 0);
     this->actualGeneration = actualGeneration;
 }
+
+std::ostream& GA::printParameters(std::ostream& ostream) const {
+    ostream << "GA PARAMETERS" << std::endl;
+    ostream << "Number of individuals: " << this->GetNumberIndividuals()
+            << std::endl;
+    ostream << "Number of generations: " << this->GetNumberGenerations()
+            << std::endl;
+    ostream << "Crossover probability: " << this->GetProbCrossover()
+            << std::endl;
+    ostream << "Mutation probability: " << this->GetProbMutation()
+            << std::endl;
+    ostream << "Number of maximum simulation: " << this->GetMaxNumSimulation()
+            << std::endl << std::endl;
+    
+    return ostream;
+}

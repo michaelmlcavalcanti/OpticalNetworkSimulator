@@ -242,6 +242,7 @@ std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {
     GA_SO* ga = dynamic_cast<GA_SO*>( dynamic_cast<GA_SingleObjective*>
                                       (this->simulType)->GetGA() );
     
+    ga->printParameters(logOfstream);
     this->SaveBestWorstIndividuals(ga, logOfstream, bestInds, worstInds);
     this->SaveBestIndividual(ga, bestInd);
     this->SaveInitPopulation(ga, initPop);
@@ -287,6 +288,7 @@ std::ostream& bestInd) {
     GA_MO* ga = dynamic_cast<GA_MO*>( dynamic_cast<GA_SingleObjective*>
                                       (this->simulType)->GetGA() );
     
+    ga->printParameters(logOfstream);
     this->SaveParetoFronts(ga, logOfstream, bestInds);
     this->SaveLastIndividuals(ga, bestInd);
 }
