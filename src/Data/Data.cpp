@@ -74,6 +74,7 @@ void Data::Initialize() {
 void Data::StorageCall(Call* call) {
     unsigned int numHops = call->GetRoute()->GetNumHops();
     unsigned int numSlots = call->GetNumberSlots();
+    double bitRate = call->GetBitRate();
     
     switch(call->GetStatus()){
         case Accepted:
@@ -81,13 +82,16 @@ void Data::StorageCall(Call* call) {
             this->numHopsPerRoute.at(this->actualIndex) += (double) numHops;
             this->netOccupancy.at(this->actualIndex) += 
             (double) numSlots * numHops;
+            this->numberAccSlots.at(this->actualIndex) += bitRate;
             break;
         case Blocked:
             this->numberBlocReq.at(this->actualIndex)++;
+            this->numberBlocSlots.at(this->actualIndex) += bitRate;
             break;
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
-    }   
+    }
+    this->numberSlotsReq.at(this->actualIndex) += bitRate;
 }
 
 void Data::SaveMultiloadLog() {

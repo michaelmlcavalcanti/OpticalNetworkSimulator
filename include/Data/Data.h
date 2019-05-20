@@ -112,7 +112,7 @@ public:
     double GetPbReq() const;
     
     double GetNumberSlotsReq() const;
-    
+
     double GetNumberBlocSlots(unsigned int index) const;
     
     double GetNumberBlocSlots() const;
