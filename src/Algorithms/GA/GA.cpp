@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& ostream, const GA* ga) {
 GA::GA(SimulationType* simul)
 :simul(simul), numberIndividuals(20), numberGenerations(10),
 probCrossover(0.5), probMutation(0.1), actualGeneration(0), 
-maxNumSimulation(3) {
+maxNumSimulation(3), loadPoint(0.0) {
     
 }
 
@@ -42,6 +42,8 @@ void GA::LoadFile() {
     
     this->simul->GetInputOutput()->LoadGA(auxIfstream);
     
+    auxIfstream >> auxDouble;
+    this->SetLoadPoint(auxDouble);
     auxIfstream >> auxInt;
     this->SetNumberIndividuals(auxInt);
     auxIfstream >> auxInt;
@@ -117,8 +119,18 @@ void GA::SetActualGeneration(unsigned int actualGeneration) {
     this->actualGeneration = actualGeneration;
 }
 
+double GA::GetLoadPoint() const {
+    return loadPoint;
+}
+
+void GA::SetLoadPoint(double loadPoint) {
+    assert(loadPoint > 0.0);
+    this->loadPoint = loadPoint;
+}
+
 std::ostream& GA::printParameters(std::ostream& ostream) const {
     ostream << "GA PARAMETERS" << std::endl;
+    ostream << "Network load(erlang): " << this->GetLoadPoint() << std::endl;
     ostream << "Number of individuals: " << this->GetNumberIndividuals()
             << std::endl;
     ostream << "Number of generations: " << this->GetNumberGenerations()

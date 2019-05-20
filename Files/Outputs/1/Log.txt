@@ -21,53 +21,28 @@ Total number of requisitions: 100000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 
-GA PARAMETERS
-Number of individuals: 20
-Number of generations: 10
-Crossover probability: 0.5
-Mutation probability: 0.1
-Number of maximum simulation: 3
+DATA
+Simulation time:713.297  Real simul time: 0.242828  Number of requests:100000
+Load point:140  PbReq:0.00423  PbSlots:0.0105744  HopsMed:2.13956  NetOcc:975439
 
-GA SO PARAMETERS
-Number of best individuals to select: 10
 
-Generation: 1
-Best individual: 0.01397
-Worst individual: 0.016245
+Simulation time:658.128  Real simul time: 0.155017  Number of requests:100000
+Load point:152  PbReq:0.00812  PbSlots:0.0202714  HopsMed:2.1396  NetOcc:965529
 
-Generation: 2
-Best individual: 0.01371
-Worst individual: 0.0157925
 
-Generation: 3
-Best individual: 0.0136
-Worst individual: 0.01636
+Simulation time:613.139  Real simul time: 0.154491  Number of requests:100000
+Load point:164  PbReq:0.01253  PbSlots:0.0306925  HopsMed:2.13216  NetOcc:953796
 
-Generation: 4
-Best individual: 0.01351
-Worst individual: 0.01646
 
-Generation: 5
-Best individual: 0.01342
-Worst individual: 0.0156
+Simulation time:568.309  Real simul time: 0.153957  Number of requests:100000
+Load point:176  PbReq:0.01832  PbSlots:0.0448518  HopsMed:2.13555  NetOcc:941388
 
-Generation: 6
-Best individual: 0.01287
-Worst individual: 0.0159
 
-Generation: 7
-Best individual: 0.01394
-Worst individual: 0.01529
+Simulation time:530.243  Real simul time: 0.161359  Number of requests:100000
+Load point:188  PbReq:0.02296  PbSlots:0.0567954  HopsMed:2.12985  NetOcc:918860
 
-Generation: 8
-Best individual: 0.01356
-Worst individual: 0.01553
 
-Generation: 9
-Best individual: 0.013615
-Worst individual: 0.01567
+Simulation time:499.572  Real simul time: 0.158559  Number of requests:100000
+Load point:200  PbReq:0.0318  PbSlots:0.0784748  HopsMed:2.12337  NetOcc:897347
 
-Generation: 10
-Best individual: 0.0139025
-Worst individual: 0.0159375
 

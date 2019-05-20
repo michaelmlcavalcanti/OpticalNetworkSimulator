@@ -135,6 +135,10 @@ public:
      */
     void SetActualGeneration(unsigned int actualGeneration);
     
+    double GetLoadPoint() const;
+
+    void SetLoadPoint(double loadPoint);
+
     /**
      * @brief Runs the simulation for the selected population of the GA.
      */
@@ -182,6 +186,8 @@ private:
      * @brief Number of maximum simulation each individual will do.
      */
     unsigned int maxNumSimulation;
+    
+    double loadPoint;
     /**
      * @brief Probability distribution used in this GA algorithm for crossover
      * and mutation.
