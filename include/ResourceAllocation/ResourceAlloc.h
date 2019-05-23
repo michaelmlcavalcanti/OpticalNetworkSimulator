@@ -25,6 +25,8 @@ class SA;
 class Call;
 class Modulation;
 class Traffic;
+class Resources;
+class Options;
 
 #include "../Data/Options.h"
 
@@ -51,6 +53,8 @@ public:
      * physical layer options.
      */
     void Load();
+    
+    void AdditionalSettings();
     
     /**
      * @brief Choose the type of resource allocation for a call, based in the 
@@ -193,7 +197,10 @@ public:
      */
     void SetTopology(Topology* topology);
     
+    Resources* GetResources() const;
+
     ResourceAllocOption GetResourAllocOption() const;
+    
     /**
      * @brief Gets the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network.
@@ -265,6 +272,11 @@ public:
     numInterRoutesToCheck);
     
     std::vector<unsigned int> GetNumSlotsTraffic() const;
+private:
+    
+    void CreateRouting();
+    
+    void CreateSpecAllocation();
     
     void SetNumSlotsTraffic();
     /**
@@ -274,11 +286,6 @@ public:
     void UpdateRoutesCosts();
     
     void CreateRsaOrder();
-private:
-    
-    void CreateRouting();
-    
-    void CreateSpecAllocation();
 private:
     /**
      * @breif Pointer to a SimulationType object that
@@ -293,6 +300,8 @@ private:
      * @brief Pointer to the Traffic object of this simulation.
      */
     Traffic* traffic;
+    
+    Options* options;
     /**
      * @brief Resource allocation option chosen.
      */
@@ -313,28 +322,7 @@ private:
      * @brief Modulation object owned by this object.
      */
     std::shared_ptr<Modulation> modulation;
-    /**
-     * @brief Vector of all routes for all network node pairs.
-     */
-    std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
-    /**
-     *@brief Vector of vector of vector of route pointers to store interfering 
-     * routes of all routes in the network
-     */
-    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> interRoutes;
-    /**
-     * @brief Vector that contain the RSA order, by node pair.
-     */
-    std::vector<bool> resourceAllocOrder;
-    /**
-     * @brief Container of the number of interfering routes the algorithm
-     * will check, by node pair and route(s) of this pair.
-     */
-    std::vector<std::vector<unsigned int>> numInterRoutesToCheck;
-    /**
-     * @brief Container of the possible number of slots the simulation may
-     * have. It is used in MSCL SA for find the capacity loss.
-     */
-    std::vector<unsigned int> numSlotsTraffic;
+    
+    std::shared_ptr<Resources> resources;
 };
 #endif /* RESOURCEALLOC_H */

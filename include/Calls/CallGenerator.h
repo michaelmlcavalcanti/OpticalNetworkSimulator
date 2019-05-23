@@ -159,7 +159,10 @@ public:
     TIME GetRealSimulationTime() const;
 
     void SetRealSimulationTime(TIME realSimullationTime);
-
+private:
+    
+    std::shared_ptr<Call> CreateCall(unsigned orNodeIndex, unsigned deNodeIndex, 
+                                     unsigned trafficIndex, TIME deactTime);
 private:
     /**
      * @breif Pointer to a SimulationType object that

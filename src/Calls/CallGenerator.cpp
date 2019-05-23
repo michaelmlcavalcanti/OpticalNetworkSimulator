@@ -14,11 +14,13 @@
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/CallDevices.h"
 #include "../../include/Calls/Event.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
+#include "../../include/Data/Options.h"
 
 std::default_random_engine CallGenerator::random_generator(0);
 
@@ -86,9 +88,8 @@ void CallGenerator::GenerateCall() {
     TIME arrivalTime = exponencialHDistribution(random_generator);
     TIME deactvationTime = exponencialMuDistribution(random_generator);
     
-    newCall = std::make_shared<Call>(this->topology->GetNode(auxIndexOrNode),
-    this->topology->GetNode(auxIndexDeNode), this->traffic->
-    GetTraffic(auxIndexTraffic), deactvationTime);
+    newCall = this->CreateCall(auxIndexOrNode, auxIndexDeNode, auxIndexTraffic,
+                               deactvationTime);
     
     //Event creation from the call created before
     std::shared_ptr<Event> newEvent = 
@@ -168,4 +169,20 @@ TIME CallGenerator::GetRealSimulationTime() const {
 void CallGenerator::SetRealSimulationTime(TIME realSimullationTime) {
     assert(realSimullationTime > 0.0);
     this->realSimulationTime = realSimullationTime;
+}
+
+std::shared_ptr<Call> CallGenerator::CreateCall(unsigned orNodeIndex, 
+unsigned deNodeIndex, unsigned trafficIndex, TIME deactTime) {
+    std::shared_ptr<Call> newCall;
+    Node* orNode = this->topology->GetNode(orNodeIndex);
+    Node* deNode = this->topology->GetNode(deNodeIndex);
+    double traffic = this->traffic->GetTraffic(trafficIndex);
+    
+    if(this->simulType->GetOptions()->GetDevicesOption() == DevicesDisabled)
+        newCall = std::make_shared<Call>(orNode, deNode, traffic, deactTime);
+    else
+        newCall = std::make_shared<CallDevices>(orNode, deNode, traffic, 
+                                                deactTime);
+    
+    return newCall;
 }

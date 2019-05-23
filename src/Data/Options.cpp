@@ -95,7 +95,18 @@ Options::mapDevicesOption = boost::assign::map_list_of
 const boost::unordered_map<RegenerationOption, std::string>
 Options::mapRegenerationOption = boost::assign::map_list_of
     (RegenerationDisabled, "Disabled")
-    (RegenerationUniformDist, "Enabled");
+    (RegenerationEnabled, "Enabled");
+
+const boost::unordered_map<RegPlacementOption, std::string>
+Options::mapRegPlacOption = boost::assign::map_list_of
+    (RegPlacInvalid, "Invalid")
+    (RegPlacUniform, "Uniform");
+
+const boost::unordered_map<RegAssignmentOption, std::string>
+Options::mapRegAssOption = boost::assign::map_list_of
+    (RegAssInvalid, "Invalid")
+    (RegAssMinReg, "Minimum regeneration")
+    (RegAssMaxReg, "Maximum regeneration");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -135,7 +146,8 @@ linkCostType(Invalid), trafficOption(TrafficInvalid),
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
-regenerationOption(RegenerationDisabled) {
+regenerationOption(RegenerationDisabled), regPlacOption(RegPlacInvalid),
+regAssOption(RegAssInvalid) {
     
 }
 
@@ -246,7 +258,7 @@ void Options::Load() {
     this->SetDevicesOption((DevicesOption) auxInt);
     
     std::cout << "Regeneration Option" << std::endl;
-    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationUniformDist;
+    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationEnabled;
     a = RegenerationOption(a+1)){
         std::cout << a << "-" << this->mapRegenerationOption.at(a) << std::endl;
     }
@@ -482,4 +494,28 @@ std::string Options::GetRegenerationOptionName() const {
 
 void Options::SetRegenerationOption(RegenerationOption regenerationOption) {
     this->regenerationOption = regenerationOption;
+}
+
+RegPlacementOption Options::GetRegPlacOption() const {
+    return regPlacOption;
+}
+
+std::string Options::GetRegPlacOptionName() const {
+    return mapRegPlacOption.at(this->regPlacOption);
+}
+
+void Options::SetRegPlacOption(RegPlacementOption regPlacOption) {
+    this->regPlacOption = regPlacOption;
+}
+
+RegAssignmentOption Options::GetRegAssOption() const {
+    return regAssOption;
+}
+
+std::string Options::GetRegAssOptionName() const {
+    return mapRegAssOption.at(this->regAssOption);
+}
+
+void Options::SetRegAssOption(RegAssignmentOption regAssOption) {
+    this->regAssOption = regAssOption;
 }

@@ -16,6 +16,8 @@
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Calls/CallGenerator.h"
 
+const double Regenerator::trafficSupported = 100E9;
+
 Regenerator::Regenerator(Topology* topology, NodeDevices* node)
 :Device(topology, DeviceRegenerator), node(node), isActive(false), onTime(0.0), 
 totalOnTime(0.0) {
@@ -51,4 +53,8 @@ void Regenerator::SetRegeneratorOff() {
 
 bool Regenerator::IsActive() const {
     return isActive;
+}
+
+const double Regenerator::GetTrafficSupported() {
+    return trafficSupported;
 }

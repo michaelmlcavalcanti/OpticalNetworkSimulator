@@ -61,6 +61,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
+	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
 	${OBJECTDIR}/src/ResourceAllocation/Route.o \
 	${OBJECTDIR}/src/ResourceAllocation/Routing.o \
 	${OBJECTDIR}/src/ResourceAllocation/SA.o \
@@ -232,6 +233,11 @@ ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/Reso
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o src/ResourceAllocation/ResourceAlloc.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/Resources.o: src/ResourceAllocation/Resources.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Resources.o src/ResourceAllocation/Resources.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/Route.o: src/ResourceAllocation/Route.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

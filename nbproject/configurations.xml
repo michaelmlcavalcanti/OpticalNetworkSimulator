@@ -109,6 +109,7 @@
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/ResourceAllocation/Resources.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -176,6 +177,7 @@
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/ResourceAllocation/Resources.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -383,6 +385,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/Resources.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/Route.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Routing.h"
@@ -502,6 +509,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/Resources.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -743,6 +755,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/Resources.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/Route.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/ResourceAllocation/Routing.h"
@@ -862,6 +879,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/Resources.cpp"
             ex="false"
             tool="1"
             flavor2="0">

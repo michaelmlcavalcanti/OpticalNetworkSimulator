@@ -77,6 +77,6 @@ void IncNumRegSimulation::Save() {
 void IncNumRegSimulation::Help() {
     std::cout << "INCREASE NUMBER OF TRANSPONDERS SIMULATION" << std::endl
               << "This type of simulation increase the total number of "
-              << "regenerators in the network and analyzes the network "
-              << "performance. " << std::endl << std::endl;
+              << "regenerators in the network and analyzes its performance. " 
+              << std::endl << std::endl;
 }

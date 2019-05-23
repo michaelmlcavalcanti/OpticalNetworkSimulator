@@ -153,7 +153,20 @@ enum DevicesOption {
  */
 enum RegenerationOption {
     RegenerationDisabled,
-    RegenerationUniformDist
+    RegenerationEnabled
+};
+
+
+enum RegPlacementOption {
+    RegPlacInvalid,
+    RegPlacUniform
+};
+
+
+enum RegAssignmentOption {
+    RegAssInvalid,
+    RegAssMinReg,
+    RegAssMaxReg
 };
 
 /**
@@ -164,7 +177,6 @@ class Options {
     
     friend std::ostream& operator<<(std::ostream& ostream,
     const Options* options);
-    
 public:
     /**
      * @brief Standard constructor for a Options object.
@@ -372,6 +384,17 @@ public:
 
     void SetRegenerationOption(RegenerationOption regenerationOption);
 
+    RegPlacementOption GetRegPlacOption() const;
+    
+    std::string GetRegPlacOptionName() const;
+    
+    void SetRegPlacOption(RegPlacementOption regPlacOption);
+
+    RegAssignmentOption GetRegAssOption() const;
+    
+    std::string GetRegAssOptionName() const;
+
+    void SetRegAssOption(RegAssignmentOption regAssOption);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -421,6 +444,10 @@ private:
     DevicesOption devicesOption;
     
     RegenerationOption regenerationOption;
+    
+    RegPlacementOption regPlacOption;
+    
+    RegAssignmentOption regAssOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -489,6 +516,12 @@ private:
     
     static const boost::unordered_map<RegenerationOption,
     std::string> mapRegenerationOption;
+    
+    static const boost::unordered_map<RegPlacementOption,
+    std::string> mapRegPlacOption;
+    
+    static const boost::unordered_map<RegAssignmentOption,
+    std::string> mapRegAssOption;
 };
 
 #endif /* OPTIONS_H */

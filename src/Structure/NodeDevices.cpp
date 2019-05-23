@@ -16,7 +16,7 @@
 
 NodeDevices::NodeDevices(Topology* topPointer, NodeId nodeId)
 :Node(topPointer, nodeId), numRegenerator(0), numFreeRegenerators(0),
-trafficSupported(100E9), regenerators(0) {
+regenerators(0) {
 
 }
 
@@ -58,6 +58,15 @@ void NodeDevices::SetNumRegenerator(unsigned int numRegenerator) {
 
 unsigned int NodeDevices::GetNumFreeRegenerators() const {
     return numFreeRegenerators;
+}
+
+bool NodeDevices::isThereFreeRegenerators(double bitRate) const {
+    unsigned int numReg = (unsigned int) std::ceil(bitRate / 
+                          Regenerator::GetTrafficSupported());
+    
+    if(numReg <= numFreeRegenerators)
+        return true;
+    return false;
 }
 
 void NodeDevices::CreateRegenerators() {

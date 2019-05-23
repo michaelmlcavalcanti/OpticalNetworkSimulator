@@ -38,7 +38,9 @@ public:
     void SetRegeneratorOff();
     
     bool IsActive() const;
-
+    
+    
+    static const double GetTrafficSupported();
 private:
     
     NodeDevices* node;
@@ -48,6 +50,8 @@ private:
     TIME onTime;
     
     TIME totalOnTime;
+    
+    static const double trafficSupported;
 };
 
 #endif /* REGENERATOR_H */

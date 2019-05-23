@@ -42,6 +42,8 @@ public:
     void SetNumRegenerator(unsigned int numRegenerator);
     
     unsigned int GetNumFreeRegenerators() const;
+    
+    bool isThereFreeRegenerators(double bitRate) const;
 private:
     
     void CreateRegenerators();
@@ -52,8 +54,6 @@ private:
     unsigned int numRegenerator;
     
     unsigned int numFreeRegenerators;
-    
-    const double trafficSupported;
     
     std::vector<std::shared_ptr<Regenerator>> regenerators;
 };

@@ -496,8 +496,8 @@ SimulationType* Topology::GetSimulType() const {
 void Topology::DistributeRegenerators() {
     unsigned int numRegPerNode;
     
-    switch(this->simulType->GetOptions()->GetRegenerationOption()){
-        case RegenerationUniformDist:
+    switch(this->simulType->GetOptions()->GetRegPlacOption()){
+        case RegPlacUniform:
             numRegPerNode = numRegenerators / numNodes;
             
             for(unsigned a = 0; a < numNodes; a++){
