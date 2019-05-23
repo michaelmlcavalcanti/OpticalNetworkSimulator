@@ -6,8 +6,9 @@
 3
 
 
-1-Number of individuals
-2-Number of generations
-3-Crossover probability
-4-Mutation probability
-5-Maximum number of simulations
+1-Load point
+2-Number of individuals
+3-Number of generations
+4-Crossover probability
+5-Mutation probability
+6-Maximum number of simulations
