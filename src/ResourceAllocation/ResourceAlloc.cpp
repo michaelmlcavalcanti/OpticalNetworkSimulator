@@ -297,6 +297,14 @@ Resources* ResourceAlloc::GetResources() const {
     return resources.get();
 }
 
+Traffic* ResourceAlloc::GetTraffic() const {
+    return traffic;
+}
+
+void ResourceAlloc::SetTraffic(Traffic* traffic) {
+    this->traffic = traffic;
+}
+
 ResourceAllocOption ResourceAlloc::GetResourAllocOption() const {
     return resourAllocOption;
 }

@@ -198,7 +198,11 @@ public:
     void SetTopology(Topology* topology);
     
     Resources* GetResources() const;
-
+    
+    Traffic* GetTraffic() const;
+    
+    void SetTraffic(Traffic* traffic);
+    
     ResourceAllocOption GetResourAllocOption() const;
     
     /**

@@ -13,6 +13,8 @@
 
 #include "../../include/ResourceAllocation/Resources.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/Calls/Traffic.h"
 
 Resources::Resources(ResourceAlloc* resourceAlloc)
 :allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0), 
@@ -54,7 +56,36 @@ void Resources::SetSubRoutes() {
 }
 
 void Resources::SetSubRoutesNumRegSlotsMod() {
+    unsigned int sizeTraffic = resourceAlloc->GetTraffic()->
+                                              GetVecTraffic().size();
+    unsigned int auxSize;
+    double auxBitRate;
+    numReg.resize(sizeTraffic);
+    numSlots.resize(sizeTraffic);
+    subRoutesModulation.resize(sizeTraffic);
     
+    //Loop for amount of traffics.
+    for(unsigned trSize = 0; trSize < sizeTraffic; trSize++){
+        auxBitRate = resourceAlloc->GetTraffic()->GetTraffic(trSize);
+        auxSize = allRoutes.size();
+        numReg.at(trSize).resize(auxSize);
+        numSlots.at(trSize).resize(auxSize);
+        subRoutesModulation.at(trSize).resize(auxSize);
+        
+        //Loop for all node pairs in network.
+        for(unsigned nodeSize = 0; nodeSize < allRoutes.size(); nodeSize++){
+            auxSize = allRoutes.at(nodeSize).size();
+            numReg.at(trSize).at(nodeSize).resize(auxSize);
+            numSlots.at(trSize).at(nodeSize).resize(auxSize);
+            subRoutesModulation.at(trSize).at(nodeSize).resize(auxSize);
+            
+            for(unsigned rouSize = 0; rouSize < allRoutes.at(nodeSize).size();
+            rouSize++){
+                auxSize = subRoutes.at(nodeSize).at(rouSize).size();
+                
+            }
+        }
+    }
 }
 
 void Resources::MakeSubRoutes(std::shared_ptr<Route> totalRoute, 
