@@ -56,7 +56,7 @@ void ResourceAlloc::Load() {
     this->modulation = std::make_shared<Modulation>(this, 
     this->simulType->GetParameters()->GetSlotBandwidth());
     
-    this->resources = std::make_shared<Resources>(this);
+    this->resources = std::make_shared<Resources>(this, modulation.get());
     
     this->resourAllocOption = this->simulType->GetOptions()->
                                                GetResourAllocOption();
@@ -79,8 +79,10 @@ void ResourceAlloc::AdditionalSettings() {
             this->SetNumSlotsTraffic();
         }
         
-        if(this->options->GetRegenerationOption() == RegenerationEnabled)
+        if(this->options->GetRegenerationOption() == RegenerationEnabled){
+            assert(options->GetPhyLayerOption() == PhyLayerEnabled);
             this->resources->CreateRegResources();
+        }
     }
     this->CreateRsaOrder();
 }

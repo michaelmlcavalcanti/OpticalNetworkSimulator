@@ -25,7 +25,7 @@ class Route;
 class Resources {
 public:
     
-    Resources(ResourceAlloc* resourceAlloc);
+    Resources(ResourceAlloc* resourceAlloc, Modulation* modulation);
     
     virtual ~Resources();
     
@@ -41,6 +41,9 @@ private:
     
     void MakeSubRoutes(std::shared_ptr<Route> totalRoute, unsigned int curNode,
     unsigned index1, unsigned int index2);
+    
+    void function(unsigned trIndex, unsigned nodeIndex, unsigned routeIndex, 
+    unsigned numSubRoutesIndex, unsigned subRouteIndex);
 public:
     /**
      * @brief Vector of all routes for all network node pairs.
@@ -80,6 +83,8 @@ private:
      * @brief ResourceAlloc object that owns this routing.
      */
     ResourceAlloc* resourceAlloc;
+    
+    Modulation* modulation;
 };
 
 #endif /* RESOURCES_H */

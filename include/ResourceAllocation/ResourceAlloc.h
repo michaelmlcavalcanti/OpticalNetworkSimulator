@@ -16,6 +16,7 @@
 
 #include <vector>
 #include <memory>
+#include <cassert>
 
 class SimulationType;
 class Topology;

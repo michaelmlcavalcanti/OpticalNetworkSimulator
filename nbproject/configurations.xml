@@ -85,6 +85,7 @@
         <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
         <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
+        <itemPath>include/ResourceAllocation/Resources.h</itemPath>
         <itemPath>include/ResourceAllocation/Route.h</itemPath>
         <itemPath>include/ResourceAllocation/Routing.h</itemPath>
         <itemPath>include/ResourceAllocation/SA.h</itemPath>
@@ -109,7 +110,6 @@
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/ResourceAllocation/Resources.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -153,6 +153,7 @@
         <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
         <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/Resources.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Route.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Routing.cpp</itemPath>
         <itemPath>src/ResourceAllocation/SA.cpp</itemPath>
@@ -177,7 +178,6 @@
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/ResourceAllocation/Resources.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
