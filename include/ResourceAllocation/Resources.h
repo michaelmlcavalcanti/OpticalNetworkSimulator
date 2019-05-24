@@ -33,17 +33,24 @@ public:
     ResourceAlloc* GetResourceAlloc() const;
     
     void CreateRegResources();
+    
+    void CreateOfflineModulation();
 private:
     
-    void SetSubRoutes();
+    void SetRegSubRoutes();
     
     void SetSubRoutesNumRegSlotsMod();
     
     void MakeSubRoutes(std::shared_ptr<Route> totalRoute, unsigned int curNode,
     unsigned index1, unsigned int index2);
     
-    void function(unsigned trIndex, unsigned nodeIndex, unsigned routeIndex, 
-    unsigned numSubRoutesIndex, unsigned subRouteIndex);
+    void TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
+    unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex);
+    
+    void TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
+    unsigned routeIndex);
+    
+    void RemoveInvalidRegOptions();
 public:
     /**
      * @brief Vector of all routes for all network node pairs.

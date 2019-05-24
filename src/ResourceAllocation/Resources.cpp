@@ -33,11 +33,38 @@ ResourceAlloc* Resources::GetResourceAlloc() const {
 }
 
 void Resources::CreateRegResources() {
-    this->SetSubRoutes();
+    this->SetRegSubRoutes();
     this->SetSubRoutesNumRegSlotsMod();
+    this->RemoveInvalidRegOptions();
 }
 
-void Resources::SetSubRoutes() {
+void Resources::CreateOfflineModulation() {
+    unsigned int sizeTraffic = resourceAlloc->GetTraffic()->
+                                              GetVecTraffic().size();
+    unsigned int sizeNumNodes = this->allRoutes.size();
+    unsigned int sizeRoutes;
+    subRoutesModulation.resize(sizeTraffic);
+    
+    for(unsigned trIndex = 0; trIndex < sizeTraffic; trIndex++){
+        subRoutesModulation.at(trIndex).resize(sizeNumNodes);
+        
+        for(unsigned nodeIndex = 0; nodeIndex < sizeNumNodes; nodeIndex++){
+            sizeRoutes = allRoutes.at(nodeIndex).size();
+            subRoutesModulation.at(trIndex).at(nodeIndex).resize(sizeRoutes);
+            
+            for(unsigned rouIndex = 0; rouIndex < sizeRoutes; rouIndex++){
+                subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
+                                   .resize(1);
+                subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
+                                   .front().resize(1, InvalidModulation);
+                
+                this->TestBestModulation(trIndex, nodeIndex, rouIndex);
+            }
+        }
+    }
+}
+
+void Resources::SetRegSubRoutes() {
     unsigned int sizeNumNodes = this->allRoutes.size();
     this->subRoutes.resize(sizeNumNodes*sizeNumNodes);
     unsigned int sizeNumRoutes;
@@ -73,7 +100,8 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
         subRoutesModulation.at(trIndex).resize(sizeNodes);
         
         //Loop for all node pairs in network.
-        for(unsigned nodePairIndex = 0; nodePairIndex < sizeNodes; nodePairIndex++){
+        for(unsigned nodePairIndex = 0; nodePairIndex < sizeNodes; 
+        nodePairIndex++){
             sizeRoutes = subRoutes.at(nodePairIndex).size();
             numReg.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
             numSlots.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
@@ -82,29 +110,31 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
             //Loop for the number of routes of each node pair.
             for(unsigned rouIndex = 0; rouIndex < sizeRoutes; rouIndex++){
                 sizeSubRoutes = subRoutes.at(nodePairIndex).at(rouIndex).size();
-                numReg.at(trIndex).at(nodePairIndex).at(rouIndex).resize(sizeSubRoutes);
-                numSlots.at(trIndex).at(nodePairIndex).at(rouIndex).resize(sizeSubRoutes);
+                numReg.at(trIndex).at(nodePairIndex).at(rouIndex)
+                      .resize(sizeSubRoutes);
+                numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
+                        .resize(sizeSubRoutes);
                 subRoutesModulation.at(trIndex).at(nodePairIndex).at(rouIndex)
                                    .resize(sizeSubRoutes);
                 
                 //Loop for the number of sub-routes sets.
                 for(unsigned numSubRoIndex = 0; numSubRoIndex < sizeSubRoutes; 
                 numSubRoIndex++){
-                    sizeSubRo = subRoutes.at(nodePairIndex).at(rouIndex).at(numSubRoIndex)
-                                       .size();
+                    sizeSubRo = subRoutes.at(nodePairIndex).at(rouIndex)
+                                         .at(numSubRoIndex).size();
                     numReg.at(trIndex).at(nodePairIndex).at(rouIndex)
                           .at(numSubRoIndex) = sizeSubRo - 1;
                     numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
                             .at(numSubRoIndex) = 0;
-                    subRoutesModulation.at(trIndex).at(nodePairIndex).at(rouIndex)
-                    .at(numSubRoIndex).resize(sizeSubRo, InvalidModulation);
+                    subRoutesModulation.at(trIndex).at(nodePairIndex)
+                                       .at(rouIndex).at(numSubRoIndex)
+                                       .resize(sizeSubRo, InvalidModulation);
                     
-                    //Loop for all routes in this sub-route set.
+                    //Loop for all transparent segments that compose the route.
                     for(unsigned subRouteIndex = 0; subRouteIndex < sizeSubRo;
-                    subRouteIndex++){
-                        this->function(trIndex, nodePairIndex, rouIndex, numSubRoIndex, 
-                                       subRouteIndex);
-                    }
+                    subRouteIndex++)
+                        this->TestBestModulation(trIndex, nodePairIndex,
+                        rouIndex, numSubRoIndex, subRouteIndex);
                 }
             }
         }
@@ -139,7 +169,7 @@ unsigned int curNode, unsigned index1, unsigned int index2) {
     }
 }
 
-void Resources::function(unsigned trIndex, unsigned nodeIndex, 
+void Resources::TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
 unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
     std::shared_ptr<Route> route = subRoutes.at(nodeIndex).at(routeIndex)
     .at(numSubRoutesIndex).at(subRouteIndex);
@@ -164,4 +194,84 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
         }
     }
 }
- 
+
+void Resources::TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
+unsigned routeIndex) {
+    std::shared_ptr<Route> route = allRoutes.at(nodeIndex).at(routeIndex);
+    double bitRate = this->resourceAlloc->GetTraffic()->GetTraffic(trIndex);
+    
+    std::shared_ptr<Call> testCall = std::make_shared<Call>(route->GetOrNode(),
+    route->GetDeNode(), bitRate, 0.0);
+    testCall->SetRoute(route);
+    
+    for(TypeModulation mod = LastModulation; mod >= FirstModulation; 
+    mod = TypeModulation(mod-1)){
+        testCall->SetModulation(mod);
+        modulation->SetModulationParam(testCall.get());
+        
+        if(resourceAlloc->CheckOSNR(testCall.get())){
+            subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
+                               .front() = testCall->GetModulation();
+            break;
+        }
+    }
+}
+
+void Resources::RemoveInvalidRegOptions() {
+    unsigned int trSize, nodeSize, routeSize, subRouteSize, segSize;
+    TypeModulation auxMod;
+    unsigned int index;
+    std::vector<unsigned int> invalidIndexes(0);
+    
+    trSize = subRoutesModulation.size();
+    
+    for(unsigned trIndex = 0; trIndex < trSize; trIndex++){
+        nodeSize = subRoutesModulation.at(trIndex).size();
+        
+        for(unsigned nodeIndex = 0; nodeIndex < nodeSize; nodeIndex++){
+            routeSize = subRoutesModulation.at(trIndex).at(nodeIndex).size();
+            
+            for(unsigned routeIndex = 0; routeIndex < routeSize; routeIndex++){
+                subRouteSize = subRoutesModulation.at(trIndex).at(nodeIndex)
+                                                  .at(routeIndex).size();
+                
+                for(unsigned subIndex = 0; subIndex < subRouteSize; subIndex++){
+                    segSize = subRoutesModulation.at(trIndex).at(nodeIndex)
+                              .at(routeIndex).at(subIndex).size();
+                    
+                    for(unsigned segIndex = 0; segIndex < segSize; segIndex++){
+                        auxMod = subRoutesModulation.at(trIndex).at(nodeIndex)
+                                 .at(routeIndex).at(subIndex).at(segIndex);
+                        
+                        if(auxMod == InvalidModulation){
+                            invalidIndexes.push_back(subIndex);
+                            break;
+                        }
+                    }
+                }
+                
+                while(!invalidIndexes.empty()){
+                    index = invalidIndexes.back();
+                    invalidIndexes.pop_back();
+                    subRoutes.at(nodeIndex).at(routeIndex).erase(
+                    subRoutes.at(nodeIndex).at(routeIndex).begin() + index);
+                    
+                    numReg.at(trIndex).at(nodeIndex).at(routeIndex).erase(
+                    numReg.at(trIndex).at(nodeIndex).at(routeIndex).begin() + 
+                    index);
+                    
+                    numSlots.at(trIndex).at(nodeIndex).at(routeIndex).erase(
+                    numSlots.at(trIndex).at(nodeIndex).at(routeIndex).begin() + 
+                    index);
+                    
+                    //subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
+                    //.at(index).clear();
+                    subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
+                    .erase(subRoutesModulation.at(trIndex).at(nodeIndex)
+                    .at(routeIndex).begin() + index);
+                }
+                invalidIndexes.clear();
+            }
+        }
+    }
+}

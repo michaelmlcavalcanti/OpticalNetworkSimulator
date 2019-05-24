@@ -83,13 +83,17 @@ public:
      * @param call Call request that the function will try to allocate.
      */
     void SpecRouting(Call* call);
+    
+    void RMSA(Call* call);
     /**
      * @brief Function for modulation, then routing and then spectral 
      * allocation for a specified call. For each modulation, try the RSA
      * algorithm.
      * @param call Call request that the function will try to allocate.
      */
-    void RMSA(Call* call);
+    void OnlineModulationRSA(Call* call);
+    
+    void OfflineModulationRSA(Call* call);
     
     /**
      * @brief Function to input one route to the container of all routes for a 

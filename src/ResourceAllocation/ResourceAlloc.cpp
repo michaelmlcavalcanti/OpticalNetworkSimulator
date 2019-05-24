@@ -58,10 +58,8 @@ void ResourceAlloc::Load() {
     
     this->resources = std::make_shared<Resources>(this, modulation.get());
     
-    this->resourAllocOption = this->simulType->GetOptions()->
-                                               GetResourAllocOption();
-    
-    this->phyLayerOption = this->simulType->GetOptions()->GetPhyLayerOption();
+    this->resourAllocOption = this->options->GetResourAllocOption();
+    this->phyLayerOption = this->options->GetPhyLayerOption();
     
     unsigned int numNodes = this->topology->GetNumNodes();
     this->resources->allRoutes.resize(numNodes*numNodes);
@@ -81,7 +79,11 @@ void ResourceAlloc::AdditionalSettings() {
         
         if(this->options->GetRegenerationOption() == RegenerationEnabled){
             assert(options->GetPhyLayerOption() == PhyLayerEnabled);
+            assert(options->GetResourAllocOption() == ResourAllocRMSA);
             this->resources->CreateRegResources();
+        }
+        else if(options->GetResourAllocOption() == ResourAllocRMSA){
+            this->resources->CreateOfflineModulation();
         }
     }
     this->CreateRsaOrder();
@@ -136,6 +138,14 @@ void ResourceAlloc::RoutingSpec(Call* call) {
 }
 
 void ResourceAlloc::RMSA(Call* call) {
+    
+    if(this->IsOfflineRouting())
+        this->OfflineModulationRSA(call);
+    else
+        this->OnlineModulationRSA(call);
+}
+
+void ResourceAlloc::OnlineModulationRSA(Call* call) {
     TypeModulation mod;
     
     for(mod = LastModulation; mod >= FirstModulation; 
@@ -147,6 +157,10 @@ void ResourceAlloc::RMSA(Call* call) {
         if(call->GetStatus() == Accepted)
             break;
     }
+}
+
+void ResourceAlloc::OfflineModulationRSA(Call* call) {
+
 }
 
 void ResourceAlloc::SpecRouting(Call* call) {
