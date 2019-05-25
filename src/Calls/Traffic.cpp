@@ -18,6 +18,7 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Options.h"
+#include "../../include/GeneralClasses/Def.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Traffic* traffic) {
@@ -67,4 +68,15 @@ double Traffic::GetTraffic(unsigned int index) const {
 
 void Traffic::SetVecTraffic(std::vector<double> vecTraffic) {
     this->vecTraffic = vecTraffic;
+}
+
+unsigned int Traffic::GetTrafficIndex(double bitRate) const{
+    
+    for(unsigned a = 0; a < vecTraffic.size(); a++){
+        
+        if(vecTraffic.at(a) == bitRate)
+            return a;
+    }
+    
+    return Def::Max_UnInt;
 }

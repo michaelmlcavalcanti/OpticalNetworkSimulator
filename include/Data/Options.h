@@ -163,7 +163,9 @@ enum RegenerationOption {
  */
 enum RegPlacementOption {
     RegPlacInvalid,
-    RegPlacUniform
+    RegPlacUniform,
+    FirstRegPlac = RegPlacUniform,
+    LastRegPlac = RegPlacUniform
 };
 
 /**
@@ -172,7 +174,9 @@ enum RegPlacementOption {
 enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,
-    RegAssMaxReg
+    RegAssMaxReg,
+    FirstRegAss = RegAssMinReg,
+    LastRegAss = RegAssMaxReg
 };
 
 /**

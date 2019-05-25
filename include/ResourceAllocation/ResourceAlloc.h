@@ -86,9 +86,8 @@ public:
     
     void RMSA(Call* call);
     /**
-     * @brief Function for modulation, then routing and then spectral 
-     * allocation for a specified call. For each modulation, try the RSA
-     * algorithm.
+     * @brief Function that varies the modulation format to find the best
+     * possible one.
      * @param call Call request that the function will try to allocate.
      */
     void OnlineModulationRSA(Call* call);

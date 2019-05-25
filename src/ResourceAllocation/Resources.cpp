@@ -16,6 +16,9 @@
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Structure/Topology.h"
+#include "../../include/Structure/Node.h"
+#include "../../include/GeneralClasses/Def.h"
 
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
 :allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0), 
@@ -62,6 +65,19 @@ void Resources::CreateOfflineModulation() {
             }
         }
     }
+}
+
+TypeModulation Resources::GetModulationFormat(Call* call) {
+    unsigned trIndex = this->resourceAlloc->GetTraffic()->GetTrafficIndex(
+                       call->GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * 
+    resourceAlloc->GetTopology()->GetNumNodes()) + 
+    call->GetDeNode()->GetNodeId();
+    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), 
+    call->GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    
+    return subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
+                              .front();
 }
 
 void Resources::SetRegSubRoutes() {
@@ -274,4 +290,18 @@ void Resources::RemoveInvalidRegOptions() {
             }
         }
     }
+}
+
+unsigned Resources::GetRouteIndex(Route* route, unsigned orNode, 
+unsigned deNode) {
+    unsigned numNodes = this->resourceAlloc->GetTopology()->GetNumNodes();
+    unsigned sizeRoutes = allRoutes.at(orNode*numNodes + deNode).size();
+    
+    for(unsigned a = 0; a < sizeRoutes; a++){
+        
+        if(route == allRoutes.at(orNode*numNodes + deNode).at(a).get())
+            return a;
+    }
+    
+    return Def::Max_UnInt;
 }

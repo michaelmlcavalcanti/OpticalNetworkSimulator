@@ -64,6 +64,7 @@ public:
      */
     void SetVecTraffic(std::vector<double> vecTraffic);
 
+    unsigned int GetTrafficIndex(double bitRate) const;
 private:
     /**
      * @brief A pointer to the simulation this object belong.

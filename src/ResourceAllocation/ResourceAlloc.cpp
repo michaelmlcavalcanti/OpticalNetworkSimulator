@@ -101,6 +101,7 @@ void ResourceAlloc::ResourAlloc(Call* call) {
             break;
         default:
             std::cerr << "Invalid resource allocation option" << std::endl;
+            std::abort();
     }
     
     if(call->GetStatus() == NotEvaluated)
@@ -160,7 +161,9 @@ void ResourceAlloc::OnlineModulationRSA(Call* call) {
 }
 
 void ResourceAlloc::OfflineModulationRSA(Call* call) {
-
+    
+    call->SetModulation(resources->GetModulationFormat(call));
+    this->RSA(call);
 }
 
 void ResourceAlloc::SpecRouting(Call* call) {

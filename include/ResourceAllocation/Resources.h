@@ -19,6 +19,7 @@
 
 class ResourceAlloc;
 class Route;
+class Call;
 
 #include "Modulation.h"
 
@@ -35,7 +36,10 @@ public:
     void CreateRegResources();
     
     void CreateOfflineModulation();
+    
+    TypeModulation GetModulationFormat(Call* call);
 private:
+    
     
     void SetRegSubRoutes();
     
@@ -51,6 +55,9 @@ private:
     unsigned routeIndex);
     
     void RemoveInvalidRegOptions();
+    
+    
+    unsigned GetRouteIndex(Route* route, unsigned orNode, unsigned deNode);
 public:
     /**
      * @brief Vector of all routes for all network node pairs.

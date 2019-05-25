@@ -136,6 +136,13 @@ const Options* options) {
     ostream << "Regeneration: " << options->GetRegenerationOptionName()
             << std::endl;
     
+    if(options->GetRegenerationOption() == RegenerationEnabled){
+        ostream << "Regeneration Placement: " << options->GetRegPlacOptionName()
+                << std::endl;
+        ostream << "Regeneration Assignment: " << options->GetRegAssOptionName()
+                << std::endl;
+    }
+    
     return ostream;
 }
 
@@ -266,6 +273,24 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetRegenerationOption((RegenerationOption) auxInt);
     
+    std::cout << "Regeneration Placement Option" << std::endl;
+    for(RegPlacementOption a = FirstRegPlac; a <= LastRegPlac;
+    a = RegPlacementOption(a+1)){
+        std::cout << a << "-" << this->mapRegPlacOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the Regeneration Placement option: ";
+    std::cin >> auxInt;
+    this->SetRegPlacOption((RegPlacementOption) auxInt);
+    
+    std::cout << "Regeneration Assignment Option" << std::endl;
+    for(RegAssignmentOption a = FirstRegAss; a <= LastRegAss;
+    a = RegAssignmentOption(a+1)){
+        std::cout << a << "-" << this->mapRegAssOption.at(a) << std::endl;
+    }
+    std::cout << "Insert the Regeneration Assignment option: ";
+    std::cin >> auxInt;
+    this->SetRegAssOption((RegAssignmentOption) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -298,6 +323,10 @@ void Options::LoadFile() {
     this->SetDevicesOption((DevicesOption) auxInt);
     auxIfstream >> auxInt;
     this->SetRegenerationOption((RegenerationOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetRegPlacOption((RegPlacementOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetRegAssOption((RegAssignmentOption) auxInt);
 }
 
 void Options::Save() {
@@ -505,6 +534,7 @@ std::string Options::GetRegPlacOptionName() const {
 }
 
 void Options::SetRegPlacOption(RegPlacementOption regPlacOption) {
+    assert(regPlacOption >= FirstRegPlac && regPlacOption <= LastRegPlac);
     this->regPlacOption = regPlacOption;
 }
 
@@ -517,5 +547,6 @@ std::string Options::GetRegAssOptionName() const {
 }
 
 void Options::SetRegAssOption(RegAssignmentOption regAssOption) {
+    assert(regAssOption >= FirstRegAss && regAssOption <= LastRegAss);
     this->regAssOption = regAssOption;
 }
