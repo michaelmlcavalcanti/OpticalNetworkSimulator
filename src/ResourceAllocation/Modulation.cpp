@@ -122,7 +122,7 @@ double Modulation::GetSNRbQAM(unsigned int M) {
     return 0.0;
 }
 
-bool Modulation::isEON() {
+bool Modulation::isEON() const {
     if(this->slotBandwidth <= 12.5*1E9)
         return true;
     

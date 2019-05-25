@@ -142,7 +142,9 @@ enum GAOption {
     LastGaOption = GaNumRoutesCheckMSCL
 };
 
-
+/**
+ * @brief Option responsible to allow Devices in the network.
+ */
 enum DevicesOption {
     DevicesDisabled,
     DevicesEnabled
@@ -156,13 +158,17 @@ enum RegenerationOption {
     RegenerationEnabled
 };
 
-
+/**
+ * @brief Numerate the regenerator placement option.
+ */
 enum RegPlacementOption {
     RegPlacInvalid,
     RegPlacUniform
 };
 
-
+/**
+ * @brief Numerate the regenerator assignment option.
+ */
 enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,

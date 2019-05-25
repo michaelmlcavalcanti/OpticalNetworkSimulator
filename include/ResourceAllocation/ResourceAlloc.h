@@ -309,7 +309,9 @@ private:
      * @brief Pointer to the Traffic object of this simulation.
      */
     Traffic* traffic;
-    
+    /**
+     * @brief Pointer to the Option object of this simulation.
+     */
     Options* options;
     /**
      * @brief Resource allocation option chosen.
@@ -331,7 +333,9 @@ private:
      * @brief Modulation object owned by this object.
      */
     std::shared_ptr<Modulation> modulation;
-    
+    /**
+     * @brief Resource object owned by the object.
+     */
     std::shared_ptr<Resources> resources;
 };
 #endif /* RESOURCEALLOC_H */
