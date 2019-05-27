@@ -183,7 +183,14 @@ public:
     bool IsThereTrialRoute() const;
     
     void ClearTrialRoutes();
-        
+    
+    void PushTrialModulations(std::vector<TypeModulation> modulations);
+    
+    void PushTrialModulation(TypeModulation modulation);
+    
+    TypeModulation PopTrialModulation();
+    
+    void ClearTrialModulations();
 private:
     /**
      * @brief Status of this Call.
@@ -229,6 +236,8 @@ private:
     double bitRate;
     
     TypeModulation modulation;
+    
+    std::deque<TypeModulation> trialModulation;
     /**
      * @brief Deactivation time of this Call.
      * Not used if the call is blocked.

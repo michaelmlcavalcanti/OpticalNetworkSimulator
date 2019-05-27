@@ -39,8 +39,8 @@ Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
 :status(NotEvaluated), orNode(orNode), deNode(deNode), 
 firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
 core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-modulation(InvalidModulation), deactivationTime(deacTime), route(nullptr), 
-trialRoutes(0) {
+modulation(InvalidModulation), trialModulation(0), deactivationTime(deacTime), 
+route(nullptr), trialRoutes(0) {
     
 }
 
@@ -184,6 +184,10 @@ void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
         if(it != nullptr)
             this->trialRoutes.push_back(it);
     routes.clear();
+    
+    if(trialModulation.size() != trialRoutes.size()){
+        trialModulation.resize(trialRoutes.size(), trialModulation.front());
+    }
 }
 
 std::shared_ptr<Route> Call::PopTrialRoute() {
@@ -212,3 +216,29 @@ void Call::ClearTrialRoutes() {
     }
 }
 
+void Call::PushTrialModulations(std::vector<TypeModulation> modulations) {
+    
+    for(auto it: modulations){
+        this->trialModulation.push_back(it);
+    }
+}
+
+void Call::PushTrialModulation(TypeModulation modulation) {
+    
+    trialModulation.push_back(modulation);
+}
+
+TypeModulation Call::PopTrialModulation() {
+    TypeModulation modulation;
+    
+    if(!this->trialModulation.empty()){
+        modulation = this->trialModulation.front();
+        this->trialModulation.pop_front();
+    }
+    
+    return modulation;
+}
+
+void Call::ClearTrialModulations() {
+    this->trialModulation.clear();
+}

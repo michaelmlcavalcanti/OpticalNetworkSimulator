@@ -37,7 +37,7 @@ public:
     
     void CreateOfflineModulation();
     
-    TypeModulation GetModulationFormat(Call* call);
+    std::vector<TypeModulation> GetModulationFormat(Call* call);
 private:
     
     

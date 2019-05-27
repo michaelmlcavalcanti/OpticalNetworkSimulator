@@ -56,6 +56,9 @@ void Resources::CreateOfflineModulation() {
             subRoutesModulation.at(trIndex).at(nodeIndex).resize(sizeRoutes);
             
             for(unsigned rouIndex = 0; rouIndex < sizeRoutes; rouIndex++){
+                
+                if(allRoutes.at(nodeIndex).at(rouIndex) == nullptr)
+                    continue;
                 subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
                                    .resize(1);
                 subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
@@ -67,17 +70,21 @@ void Resources::CreateOfflineModulation() {
     }
 }
 
-TypeModulation Resources::GetModulationFormat(Call* call) {
+std::vector<TypeModulation> Resources::GetModulationFormat(Call* call) {
+    std::vector<TypeModulation> vecMod(0);
     unsigned trIndex = this->resourceAlloc->GetTraffic()->GetTrafficIndex(
                        call->GetBitRate());
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * 
     resourceAlloc->GetTopology()->GetNumNodes()) + 
     call->GetDeNode()->GetNodeId();
-    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), 
-    call->GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    unsigned sizeRoute = subRoutesModulation.at(trIndex).at(nodeIndex).size();
     
-    return subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
-                              .front();
+    for(unsigned int routeIndex = 0; routeIndex < sizeRoute; routeIndex++){
+        vecMod.push_back(subRoutesModulation.at(trIndex).at(nodeIndex)
+        .at(routeIndex).front().front());
+    }
+    
+    return vecMod;
 }
 
 void Resources::SetRegSubRoutes() {

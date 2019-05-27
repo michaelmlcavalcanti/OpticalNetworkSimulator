@@ -93,7 +93,7 @@ void ResourceAlloc::ResourAlloc(Call* call) {
     
     switch(this->resourAllocOption){
         case ResourAllocRSA:
-            call->SetModulation(FixedModulation);
+            call->PushTrialModulation(FixedModulation);
             this->RSA(call);
             break;
         case ResourAllocRMSA:
@@ -117,12 +117,13 @@ void ResourceAlloc::RSA(Call* call) {
 }
 
 void ResourceAlloc::RoutingSpec(Call* call) {
-    this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
     
     if(call->IsThereTrialRoute()){
         do{
             call->SetRoute(call->PopTrialRoute());
+            call->SetModulation(call->PopTrialModulation());
+            this->modulation->SetModulationParam(call);
             
             if(!this->CheckOSNR(call))
                 continue;
@@ -151,7 +152,7 @@ void ResourceAlloc::OnlineModulationRSA(Call* call) {
     
     for(mod = LastModulation; mod >= FirstModulation; 
                               mod = TypeModulation(mod-1)){
-        call->SetModulation(mod);
+        call->PushTrialModulation(mod);
         
         this->RSA(call);
         
@@ -162,7 +163,7 @@ void ResourceAlloc::OnlineModulationRSA(Call* call) {
 
 void ResourceAlloc::OfflineModulationRSA(Call* call) {
     
-    call->SetModulation(resources->GetModulationFormat(call));
+    call->PushTrialModulations(resources->GetModulationFormat(call));
     this->RSA(call);
 }
 
