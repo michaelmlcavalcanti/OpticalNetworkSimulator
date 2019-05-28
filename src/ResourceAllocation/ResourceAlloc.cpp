@@ -27,7 +27,7 @@
 #include "../../include/Calls/Traffic.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
-:simulType(simulType), topology(nullptr), traffic(nullptr), options(nullptr),
+:topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
 routing(nullptr), specAlloc(nullptr) {
     
 }
@@ -294,6 +294,15 @@ bool ResourceAlloc::CheckOSNR(Call* call) {
         if(!this->topology->CheckOSNR(call->GetRoute(), call->GetOsnrTh()))
             return false;
     
+    return true;
+}
+
+bool ResourceAlloc::CheckOSNR(std::vector<Call*> calls) {
+    
+    for(auto it: calls){
+        if(!this->CheckOSNR(it))
+            return false;
+    }
     return true;
 }
 

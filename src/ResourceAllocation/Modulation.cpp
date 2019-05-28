@@ -54,6 +54,12 @@ void Modulation::SetModulationParam(Call* call) {
     call->SetOsnrTh(OSNRth);
 }
 
+void Modulation::SetModulationParam(std::vector<Call*> calls) {
+    
+    for(auto it: calls)
+        this->SetModulationParam(it);
+}
+
 double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
     assert(M >= 2  && M <= 6);
     

@@ -61,6 +61,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
+	${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
 	${OBJECTDIR}/src/ResourceAllocation/Route.o \
 	${OBJECTDIR}/src/ResourceAllocation/Routing.o \
@@ -233,6 +234,11 @@ ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/Reso
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o src/ResourceAllocation/ResourceAlloc.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o: src/ResourceAllocation/ResourceDeviceAlloc.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o src/ResourceAllocation/ResourceDeviceAlloc.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/Resources.o: src/ResourceAllocation/Resources.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

@@ -53,7 +53,7 @@ public:
      * SpecAlloc and Modulation objects. Receive resource allocation and the 
      * physical layer options.
      */
-    void Load();
+    virtual void Load();
     
     void AdditionalSettings();
     
@@ -62,7 +62,7 @@ public:
      * option.
      * @param call Call request to apply resource allocation.
      */
-    void ResourAlloc(Call* call);
+    virtual void ResourAlloc(Call* call);
     /**
      * @brief Function to apply resource allocation without modulation 
      * variation. The RSA order will be determined by the vector 
@@ -166,6 +166,8 @@ public:
      * @return True if the call presents a acceptable OSNR.
      */
     bool CheckOSNR(Call* call);
+    
+    bool CheckOSNR(std::vector<Call*> calls);
     /**
      * @brief Check if this ResourceAlloc will apply R-SA or SA-R, depending 
      * on the order vector.
@@ -294,12 +296,7 @@ private:
     void UpdateRoutesCosts();
     
     void CreateRsaOrder();
-private:
-    /**
-     * @breif Pointer to a SimulationType object that
-     * owns this RSA.
-     */
-    SimulationType* simulType;
+protected:
     /**
      * @brief Pointer to the Topology object of this simulation.
      */
@@ -312,6 +309,11 @@ private:
      * @brief Pointer to the Option object of this simulation.
      */
     Options* options;
+    /**
+     * @breif Pointer to a SimulationType object that
+     * owns this RSA.
+     */
+    SimulationType* simulType;
     /**
      * @brief Resource allocation option chosen.
      */

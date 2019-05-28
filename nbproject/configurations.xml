@@ -85,6 +85,7 @@
         <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
         <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
+        <itemPath>include/ResourceAllocation/ResourceDeviceAlloc.h</itemPath>
         <itemPath>include/ResourceAllocation/Resources.h</itemPath>
         <itemPath>include/ResourceAllocation/Route.h</itemPath>
         <itemPath>include/ResourceAllocation/Routing.h</itemPath>
@@ -153,6 +154,7 @@
         <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
         <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
+        <itemPath>src/ResourceAllocation/ResourceDeviceAlloc.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Resources.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Route.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Routing.cpp</itemPath>
@@ -385,6 +387,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ResourceDeviceAlloc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/Resources.h"
             ex="false"
             tool="3"
@@ -509,6 +516,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ResourceDeviceAlloc.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -755,6 +767,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ResourceDeviceAlloc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/Resources.h"
             ex="false"
             tool="3"
@@ -879,6 +896,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ResourceAlloc.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ResourceDeviceAlloc.cpp"
             ex="false"
             tool="1"
             flavor2="0">

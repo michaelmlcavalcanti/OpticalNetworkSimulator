@@ -16,6 +16,7 @@
 
 #include <vector>
 #include <memory>
+#include <bits/stl_bvector.h>
 
 class ResourceAlloc;
 class Route;
@@ -38,8 +39,16 @@ public:
     void CreateOfflineModulation();
     
     std::vector<TypeModulation> GetModulationFormat(Call* call);
-private:
     
+    std::vector<unsigned int> GetNumRegenerators(Call* call);
+    
+    std::vector<unsigned int> GetNumSlotsRegenerators(Call* call);
+    
+    std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
+                                                       unsigned int auxIndex);
+    std::vector<TypeModulation> GetSubRoutesMod(Call* call,
+                                                unsigned int auxIndex);
+private:
     
     void SetRegSubRoutes();
     
@@ -55,7 +64,6 @@ private:
     unsigned routeIndex);
     
     void RemoveInvalidRegOptions();
-    
     
     unsigned GetRouteIndex(Route* route, unsigned orNode, unsigned deNode);
 public:

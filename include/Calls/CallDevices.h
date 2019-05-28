@@ -15,6 +15,7 @@
 #define CALLDEVICES_H
 
 #include "Call.h"
+#include "../ResourceAllocation/Modulation.h"
 
 class Regenerator;
 
@@ -24,13 +25,18 @@ public:
     CallDevices(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
     
     virtual ~CallDevices();
+    
+    
+    void CreateTranspSegments(std::vector<std::shared_ptr<Route> > subroutes);
+    
+    void SetTranspSegModulation(std::vector<TypeModulation> modulations);
+    
+    std::vector<Call*> GetTranspSegments();
 private:
     
     std::vector<std::shared_ptr<Call>> transpSegments;
     
     std::vector<std::shared_ptr<Regenerator>> regenerators;
-    
-    unsigned int totalNumSlots;
 };
 
 #endif /* CALLDEVICES_H */

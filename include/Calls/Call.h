@@ -50,8 +50,7 @@ public:
      * @param deNode call destination node.
      * @param bitRate call bit rate.
      */
-    Call(Node* orNode, Node* deNode, double bitRate, 
-         TIME deacTime);
+    Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
     
     Call(const Call& orig);
     

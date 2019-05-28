@@ -59,6 +59,8 @@ public:
      * @param call Call request to be analyzed.
      */
     void SetModulationParam(Call* call);
+    
+    void SetModulationParam(std::vector<Call*> calls);
     /**
      * @brief Function to calculate the spectral bandwidth of a optical signal, 
      * based on the modulation format and the bit rate.

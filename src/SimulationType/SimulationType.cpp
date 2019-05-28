@@ -23,6 +23,7 @@
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/CallGenerator.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 
 SimulationType::SimulationType(unsigned int simulIndex, 
 TypeSimulation typeSimulation)
@@ -34,7 +35,7 @@ topology(std::make_shared<Topology> (this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
 callGenerator(std::make_shared<CallGenerator>(this)),
-resourceAlloc(std::make_shared<ResourceAlloc>(this)) {
+resourceAlloc(nullptr) {
     
 }
 
@@ -61,8 +62,8 @@ void SimulationType::Load() {
     this->topology->LoadFile();
     this->traffic->LoadFile();
     this->GetData()->Initialize();
+    this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
-    this->resourceAlloc->Load();
 }
 
 void SimulationType::LoadFile() {
@@ -71,8 +72,8 @@ void SimulationType::LoadFile() {
     this->topology->LoadFile();
     this->traffic->LoadFile();
     this->GetData()->Initialize();
+    this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
-    this->resourceAlloc->Load();
 }
 
 void SimulationType::Print() {
@@ -199,4 +200,13 @@ void SimulationType::Simulate() {
 
 void SimulationType::FinalizeAll() {
     this->callGenerator->Finalize();
+}
+
+void SimulationType::CreateLoadResourceAlloc() {
+    if(this->options->GetDevicesOption() == DevicesDisabled)
+        this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
+    else
+        this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
+    
+    this->resourceAlloc->Load();
 }

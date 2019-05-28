@@ -87,6 +87,51 @@ std::vector<TypeModulation> Resources::GetModulationFormat(Call* call) {
     return vecMod;
 }
 
+std::vector<unsigned int> Resources::GetNumRegenerators(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
+    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    
+    return numReg.at(trIndex).at(nodeIndex).at(routeIndex);
+}
+
+std::vector<unsigned int> Resources::GetNumSlotsRegenerators(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
+    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    
+    return numSlots.at(trIndex).at(nodeIndex).at(routeIndex);
+}
+
+std::vector<std::shared_ptr<Route>> Resources::GetVecSubRoute(Call* call, 
+unsigned int auxIndex) {
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
+    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    
+    return subRoutes.at(nodeIndex).at(routeIndex).at(auxIndex);
+}
+
+std::vector<TypeModulation> Resources::GetSubRoutesMod(Call* call, 
+unsigned int auxIndex) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
+    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
+    
+    return subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
+                              .at(auxIndex);
+}
+
 void Resources::SetRegSubRoutes() {
     unsigned int sizeNumNodes = this->allRoutes.size();
     this->subRoutes.resize(sizeNumNodes*sizeNumNodes);

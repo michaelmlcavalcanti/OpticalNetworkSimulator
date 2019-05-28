@@ -39,11 +39,6 @@ public:
      */
     SimulationType(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
-     * @brief Copy constructor for a SimulationType object.
-     * @param orig original SimulationType object.
-     */
-    SimulationType(const SimulationType& orig);
-    /**
      * @brief Virtual destructor of a SimulationType object.
      */
     virtual ~SimulationType();
@@ -205,6 +200,8 @@ private:
      * Topology and CallGenerator.
      */
     void FinalizeAll();
+    
+    void CreateLoadResourceAlloc();
 public:
     /**
      * @brief Actual number of request created.
