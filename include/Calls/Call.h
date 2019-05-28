@@ -116,6 +116,8 @@ public:
      */
     void SetNumberSlots(unsigned int numberSlots);
     
+    unsigned int GetTotalNumSlots() const;
+
     unsigned int GetCore() const;
 
     void SetCore(unsigned int core);
@@ -190,6 +192,10 @@ public:
     
     TypeModulation PopTrialModulation();
     
+    TypeModulation GetModulation(unsigned int index);
+    
+    void UpdateTrialModulations();
+    
     void ClearTrialModulations();
 private:
     /**
@@ -217,6 +223,8 @@ private:
      * the fibers.
      */
     unsigned int numberSlots;
+    
+    unsigned int totalNumSlots;
     
     unsigned int core;
     /**

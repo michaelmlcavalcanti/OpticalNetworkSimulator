@@ -96,16 +96,15 @@ void Data::Initialize(unsigned int numPos) {
 }
 
 void Data::StorageCall(Call* call) {
-    unsigned int numHops = call->GetRoute()->GetNumHops();
-    unsigned int numSlots = call->GetNumberSlots();
     double bitRate = call->GetBitRate();
     
     switch(call->GetStatus()){
         case Accepted:
             this->numberAccReq.at(this->actualIndex)++;
-            this->numHopsPerRoute.at(this->actualIndex) += (double) numHops;
+            this->numHopsPerRoute.at(this->actualIndex) += (double) 
+            call->GetRoute()->GetNumHops();
             this->netOccupancy.at(this->actualIndex) += 
-            (double) numSlots * numHops;
+            (double) call->GetTotalNumSlots();
             this->numberAccSlots.at(this->actualIndex) += bitRate;
             break;
         case Blocked:

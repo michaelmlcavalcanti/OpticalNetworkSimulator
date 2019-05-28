@@ -14,6 +14,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/GeneralClasses/Def.h"
+#include "../../include/ResourceAllocation/Route.h"
 
 const boost::unordered_map<CallStatus, std::string> 
 Call::mapCallStatus = boost::assign::map_list_of
@@ -38,9 +39,9 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
 Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
 :status(NotEvaluated), orNode(orNode), deNode(deNode), 
 firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
-core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), bitRate(bitRate), 
-modulation(InvalidModulation), trialModulation(0), deactivationTime(deacTime), 
-route(nullptr), trialRoutes(0) {
+totalNumSlots(0), core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), 
+bitRate(bitRate), modulation(InvalidModulation), trialModulation(0), 
+deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
     
 }
 
@@ -102,7 +103,13 @@ unsigned int Call::GetNumberSlots() const {
 }
 
 void Call::SetNumberSlots(unsigned int numberSlots) {
+    assert(numberSlots > 0);
     this->numberSlots = numberSlots;
+    this->totalNumSlots = numberSlots * this->route->GetNumHops();
+}
+
+unsigned int Call::GetTotalNumSlots() const {
+    return totalNumSlots;
 }
 
 unsigned int Call::GetCore() const {
@@ -184,10 +191,6 @@ void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
         if(it != nullptr)
             this->trialRoutes.push_back(it);
     routes.clear();
-    
-    if(trialModulation.size() != trialRoutes.size()){
-        trialModulation.resize(trialRoutes.size(), trialModulation.front());
-    }
 }
 
 std::shared_ptr<Route> Call::PopTrialRoute() {
@@ -229,7 +232,7 @@ void Call::PushTrialModulation(TypeModulation modulation) {
 }
 
 TypeModulation Call::PopTrialModulation() {
-    TypeModulation modulation;
+    TypeModulation modulation = InvalidModulation;
     
     if(!this->trialModulation.empty()){
         modulation = this->trialModulation.front();
@@ -239,6 +242,16 @@ TypeModulation Call::PopTrialModulation() {
     return modulation;
 }
 
+void Call::UpdateTrialModulations() {
+    
+    while(trialModulation.size() < trialRoutes.size())
+        trialModulation.push_back(trialModulation.front());
+}
+
 void Call::ClearTrialModulations() {
     this->trialModulation.clear();
+}
+
+TypeModulation Call::GetModulation(unsigned int index) {
+    return this->trialModulation.at(index);
 }

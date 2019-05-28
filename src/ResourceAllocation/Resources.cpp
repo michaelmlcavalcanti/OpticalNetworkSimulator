@@ -209,8 +209,7 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
         
         if(resourceAlloc->CheckOSNR(testCall.get())){
             numSlots.at(trIndex).at(nodeIndex).at(routeIndex)
-                    .at(numSubRoutesIndex) += (testCall->GetNumberSlots() * 
-                    testCall->GetRoute()->GetNumHops());
+                    .at(numSubRoutesIndex) += (testCall->GetTotalNumSlots());
             subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
             .at(numSubRoutesIndex).at(subRouteIndex) = testCall->GetModulation();
             break;

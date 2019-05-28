@@ -118,6 +118,7 @@ void ResourceAlloc::RSA(Call* call) {
 
 void ResourceAlloc::RoutingSpec(Call* call) {
     this->routing->RoutingCall(call);
+    call->UpdateTrialModulations();
     
     if(call->IsThereTrialRoute()){
         do{
@@ -132,6 +133,7 @@ void ResourceAlloc::RoutingSpec(Call* call) {
             
                 if(this->topology->IsValidLigthPath(call)){
                     call->ClearTrialRoutes();
+                    call->ClearTrialModulations();
                     call->SetStatus(Accepted);
                     break;
                 }
@@ -168,7 +170,6 @@ void ResourceAlloc::OfflineModulationRSA(Call* call) {
 }
 
 void ResourceAlloc::SpecRouting(Call* call) {
-    this->modulation->SetModulationParam(call);
     this->routing->RoutingCall(call);
     
     bool allocFound = false;
@@ -176,6 +177,7 @@ void ResourceAlloc::SpecRouting(Call* call) {
                                     call->GetNumberSlots();
     unsigned int numRoutes = call->GetNumRoutes();
     std::vector<unsigned int> possibleSlots(0);
+    //Corrigir essa parte, que depende da modulação já escolhida.
     possibleSlots = this->specAlloc->SpecAllocation(lastPossibleSlot);
     unsigned int auxSlot;
     
@@ -184,6 +186,8 @@ void ResourceAlloc::SpecRouting(Call* call) {
         
         for(unsigned int b = 0; b < numRoutes; b++){
             call->SetRoute(call->GetRoute(b));
+            call->SetModulation(call->GetModulation(b));
+            this->modulation->SetModulationParam(call);
             
             if(!this->CheckOSNR(call))
                 continue;
@@ -192,6 +196,7 @@ void ResourceAlloc::SpecRouting(Call* call) {
             auxSlot + call->GetNumberSlots() - 1)){
                 call->SetFirstSlot(auxSlot);
                 call->SetLastSlot(auxSlot + call->GetNumberSlots() - 1);
+                call->ClearTrialModulations();
                 call->ClearTrialRoutes();
                 call->SetStatus(Accepted);
                 allocFound = true;
