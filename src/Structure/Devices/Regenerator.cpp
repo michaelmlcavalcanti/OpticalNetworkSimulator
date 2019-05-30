@@ -13,6 +13,7 @@
 
 #include "../../../include/Structure/Devices/Regenerator.h"
 #include "../../../include/Structure/Topology.h"
+#include "../../../include/Structure/NodeDevices.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Calls/CallGenerator.h"
 
@@ -40,6 +41,7 @@ void Regenerator::SetRegeneratorOn() {
     this->isActive = true;
     this->onTime = this->GetTopology()->GetSimulType()->GetCallGenerator()->
                    GetSimulationTime();
+    node->DecreaseNumFreeRegenerators();
 }
 
 void Regenerator::SetRegeneratorOff() {
@@ -49,6 +51,7 @@ void Regenerator::SetRegeneratorOff() {
     this->totalOnTime += this->GetTopology()->GetSimulType()->
                          GetCallGenerator()->GetSimulationTime() - this->onTime;
     this->onTime = 0.0;
+    node->IncreaseNumFreeRegenerators();
 }
 
 bool Regenerator::IsActive() const {

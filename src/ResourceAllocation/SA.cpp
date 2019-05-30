@@ -16,6 +16,7 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/CallDevices.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Node.h"
 #include "../../include/GeneralClasses/Def.h"
@@ -43,6 +44,13 @@ void SA::SpecAllocation(Call* call) {
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
     }
+}
+
+void SA::SpecAllocation(CallDevices* call) {
+    std::vector<Call*> calls = call->GetTranspSegments();
+    
+    for(auto it: calls)
+        this->SpecAllocation(it);
 }
 
 std::vector<unsigned int> SA::SpecAllocation(unsigned int lastSlot) {

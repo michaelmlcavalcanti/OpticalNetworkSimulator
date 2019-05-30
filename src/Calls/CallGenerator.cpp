@@ -178,11 +178,19 @@ unsigned deNodeIndex, unsigned trafficIndex, TIME deactTime) {
     Node* deNode = this->topology->GetNode(deNodeIndex);
     double traffic = this->traffic->GetTraffic(trafficIndex);
     
-    if(this->simulType->GetOptions()->GetDevicesOption() == DevicesDisabled)
-        newCall = std::make_shared<Call>(orNode, deNode, traffic, deactTime);
-    else
-        newCall = std::make_shared<CallDevices>(orNode, deNode, traffic, 
-                                                deactTime);
+    switch(this->simulType->GetOptions()->GetDevicesOption()){
+        case DevicesDisabled:
+            newCall = std::make_shared<Call>(orNode, deNode, traffic, 
+                                             deactTime);
+            break;
+        case DevicesEnabled:
+            newCall = std::make_shared<CallDevices>(orNode, deNode, traffic, 
+                                                    deactTime);
+            break;
+        default:
+            std::cerr << "Invalid device option" << std::endl;
+            std::abort();
+    }
     
     return newCall;
 }

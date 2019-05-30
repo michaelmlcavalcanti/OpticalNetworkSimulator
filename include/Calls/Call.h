@@ -115,8 +115,12 @@ public:
      */
     void SetNumberSlots(unsigned int numberSlots);
     
-    unsigned int GetTotalNumSlots() const;
-
+    virtual unsigned int GetTotalNumSlots() const;
+    
+    virtual void SetTotalNumSlots();
+    
+    void SetTotalNumSlots(unsigned int numSlots);
+    
     unsigned int GetCore() const;
 
     void SetCore(unsigned int core);

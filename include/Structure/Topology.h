@@ -24,6 +24,7 @@ class Node;
 class Link;
 class Route;
 class Call;
+class CallDevices;
 
 /**
  * @brief Class Topology represents the topology of a simulation.
@@ -232,6 +233,10 @@ public:
      */
     bool IsValidLigthPath(Call* call);
     
+    bool IsValidLigthPath(CallDevices* call);
+    
+    bool CheckInsertFreeRegenerators(CallDevices* call);
+    
     /**
      * @brief Function to set a lightpath in the network of a specified request.
      * @param call Call request used.
@@ -247,6 +252,27 @@ public:
      * @return Pointer to a SimulationType object.
      */
     SimulationType* GetSimulType() const;
+private:
+    
+    void ConnectWithoutDevices(Call* call);
+    
+    void ConnectWithDevices(Call* call);
+    
+    void ReleaseWithoutDevices(Call* call);
+    
+    void ReleaseWithDevices(Call* call);
+    /**
+     * @brief Calculate the maximum link in this topology
+     * and sets the maxLength value.
+     */
+    void SetMaxLength();
+    /**
+     * @brief Set the  initial cost for all links in this
+     * topology, based in the selected option.
+     */
+    void SetLinksIniCost();
+    
+    void DistributeRegenerators();
 private:
     /**
      * @brief A pointer to the simulation this object belong
@@ -282,19 +308,6 @@ private:
     double maxLength;
     
     unsigned int numRegenerators;
-    
-    /**
-     * @brief Calculate the maximum link in this topology
-     * and sets the maxLength value.
-     */
-    void SetMaxLength();
-    /**
-     * @brief Set the  initial cost for all links in this
-     * topology, based in the selected option.
-     */
-    void SetLinksIniCost();
-    
-    void DistributeRegenerators();
 };
 
 #endif /* TOPOLOGY_H */

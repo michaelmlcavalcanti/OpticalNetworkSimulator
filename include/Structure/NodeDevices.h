@@ -21,6 +21,7 @@ class Regenerator;
 class Call;
 
 #include "Node.h"
+#include "Devices/Regenerator.h"
 
 class NodeDevices : public Node {
 public:
@@ -43,7 +44,14 @@ public:
     
     unsigned int GetNumFreeRegenerators() const;
     
+    void IncreaseNumFreeRegenerators();
+    
+    void DecreaseNumFreeRegenerators();
+    
     bool isThereFreeRegenerators(double bitRate) const;
+    
+    std::vector<std::shared_ptr<Regenerator>> GetFreeRegenenrators(
+                                              double bitRate) const;
 private:
     
     void CreateRegenerators();

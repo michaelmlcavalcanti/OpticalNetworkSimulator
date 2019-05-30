@@ -16,6 +16,7 @@
 
 class ResourceAlloc;
 class Call;
+class CallDevices;
 
 #include <boost/assign/list_of.hpp>
 #include <boost/unordered_map.hpp>
@@ -60,7 +61,7 @@ public:
      */
     void SetModulationParam(Call* call);
     
-    void SetModulationParam(std::vector<Call*> calls);
+    void SetModulationParam(CallDevices* call);
     /**
      * @brief Function to calculate the spectral bandwidth of a optical signal, 
      * based on the modulation format and the bit rate.

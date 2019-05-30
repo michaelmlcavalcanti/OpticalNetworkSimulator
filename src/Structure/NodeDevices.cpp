@@ -60,6 +60,16 @@ unsigned int NodeDevices::GetNumFreeRegenerators() const {
     return numFreeRegenerators;
 }
 
+void NodeDevices::IncreaseNumFreeRegenerators() {
+    assert(numFreeRegenerators < numRegenerator);
+    numFreeRegenerators++;
+}
+
+void NodeDevices::DecreaseNumFreeRegenerators() {
+    assert(numFreeRegenerators > 0);
+    numFreeRegenerators--;
+}
+
 bool NodeDevices::isThereFreeRegenerators(double bitRate) const {
     unsigned int numReg = (unsigned int) std::ceil(bitRate / 
                           Regenerator::GetTrafficSupported());
@@ -67,6 +77,24 @@ bool NodeDevices::isThereFreeRegenerators(double bitRate) const {
     if(numReg <= numFreeRegenerators)
         return true;
     return false;
+}
+
+std::vector<std::shared_ptr<Regenerator> > NodeDevices::
+GetFreeRegenenrators(double bitRate) const {
+    std::vector<std::shared_ptr<Regenerator>> vecReg(0);
+    unsigned int numReg = (unsigned int) std::ceil(bitRate / 
+                          Regenerator::GetTrafficSupported());
+    
+    for(auto it: regenerators){
+        
+        if(!it->IsActive())
+            vecReg.push_back(it);
+        
+        if(vecReg.size() == numReg)
+            break;
+    }
+    
+    return vecReg;
 }
 
 void NodeDevices::CreateRegenerators() {

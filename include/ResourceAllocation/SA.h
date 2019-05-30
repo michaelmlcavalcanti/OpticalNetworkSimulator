@@ -20,6 +20,7 @@
 class ResourceAlloc;
 class Topology;
 class Call;
+class CallDevices;
 
 #include "../Data/Options.h"
 
@@ -46,6 +47,8 @@ public:
      * @param call Call request.
      */
     void SpecAllocation(Call* call);
+    
+    void SpecAllocation(CallDevices* call);
     /**
      * @brief Function that gets the possible first slots for spectral 
      * allocation based on the last possible first slot.

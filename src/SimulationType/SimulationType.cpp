@@ -191,6 +191,7 @@ void SimulationType::Simulate() {
                 break;
             default:
                 std::cerr << "Invalid event" << std::endl;
+                std::abort();
         }
     }
     

@@ -166,8 +166,6 @@ public:
      * @return True if the call presents a acceptable OSNR.
      */
     bool CheckOSNR(Call* call);
-    
-    bool CheckOSNR(std::vector<Call*> calls);
     /**
      * @brief Check if this ResourceAlloc will apply R-SA or SA-R, depending 
      * on the order vector.

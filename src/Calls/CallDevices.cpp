@@ -26,7 +26,8 @@ CallDevices::~CallDevices() {
 
 void CallDevices::CreateTranspSegments(std::vector<std::shared_ptr<Route> > 
 subroutes) {
-    assert(!subroutes.empty() && transpSegments.empty());
+    transpSegments.clear();
+    regenerators.clear();
     std::shared_ptr<Call> auxCall;
     
     for(auto it: subroutes){
@@ -54,4 +55,35 @@ std::vector<Call*> CallDevices::GetTranspSegments() {
         calls.push_back(it.get());
     
     return calls;
+}
+
+unsigned int CallDevices::GetTotalNumSlots() const {
+    unsigned int totalNumSlots = 0;
+    
+    for(auto it: transpSegments){
+        totalNumSlots += it->GetTotalNumSlots();
+    }
+    
+    return totalNumSlots;
+}
+
+void CallDevices::SetTotalNumSlots() {
+    unsigned int totalNumSlots = 0;
+    
+    for(auto it: transpSegments){
+        totalNumSlots += it->GetTotalNumSlots();
+    }
+    
+    Call::SetTotalNumSlots(totalNumSlots);
+}
+
+std::vector<std::shared_ptr<Regenerator> > CallDevices::GetRegenerators() const{
+    return regenerators;
+}
+
+void CallDevices::InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
+regenerators) {
+    this->regenerators.insert(this->regenerators.end(), regenerators.begin(),
+                              regenerators.end());
+    this->regenerators = regenerators;
 }

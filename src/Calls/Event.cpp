@@ -95,6 +95,7 @@ void Event::ImplementCallRequest() {
             break;
         default:
             std::cerr << "Invalid Call status" << std::endl;
+            std::abort();
     }
 }
 
@@ -102,5 +103,4 @@ void Event::ImplementCallEnd() {
     assert(this->call->GetStatus() == Accepted);
     
     this->parGenerator->GetTopology()->Release(this->call.get());
-    
 }

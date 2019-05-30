@@ -32,6 +32,16 @@ public:
     void SetTranspSegModulation(std::vector<TypeModulation> modulations);
     
     std::vector<Call*> GetTranspSegments();
+    
+    unsigned int GetTotalNumSlots() const override;
+    
+    void SetTotalNumSlots() override;
+    
+    std::vector<std::shared_ptr<Regenerator> > GetRegenerators() const;
+
+    void InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
+    regenerators);
+
 private:
     
     std::vector<std::shared_ptr<Call>> transpSegments;

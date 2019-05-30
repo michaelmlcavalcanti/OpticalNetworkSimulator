@@ -22,10 +22,12 @@
 #include "../../include/Structure/Link.h"
 #include "../../include/Structure/Core.h"
 #include "../../include/Structure/MultiCoreLink.h"
+#include "../../include/Structure/Devices/Regenerator.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/CallDevices.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Topology* topology) {
@@ -436,7 +438,56 @@ bool Topology::IsValidLigthPath(Call* call) {
     return false;
 }
 
+bool Topology::IsValidLigthPath(CallDevices* call) {
+    std::vector<Call*> calls = call->GetTranspSegments();
+    
+    for(auto it: calls){
+        if(!this->IsValidLigthPath(it))
+            return false;
+    }
+    return true;
+}
+
+bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
+    NodeDevices* auxNode;
+    std::vector<std::shared_ptr<Regenerator>> vecReg(0);
+    std::vector<std::shared_ptr<Regenerator>> auxVecReg(0);
+    std::vector<Call*> calls = call->GetTranspSegments();
+    
+    for(unsigned int a = 0; a < calls.size()-1; a++){
+        auxNode = dynamic_cast<NodeDevices*>(calls.at(a)->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(calls.at(a)->GetBitRate())){
+            auxVecReg = auxNode->GetFreeRegenenrators(calls.at(a)->GetBitRate());
+            vecReg.insert(vecReg.end(), auxVecReg.begin(), auxVecReg.end());
+        }
+        else{
+            auxVecReg.clear();
+            vecReg.clear();
+            return false;
+        }
+    }
+    
+    call->InsertRegenerators(vecReg);
+    return true;
+}
+
 void Topology::Connect(Call* call) {
+    
+    switch(simulType->GetOptions()->GetDevicesOption()){
+        case DevicesDisabled:
+            this->ConnectWithoutDevices(call);
+            break;
+        case DevicesEnabled:
+            this->ConnectWithDevices(call);
+            break;
+        default:
+            std::cerr << "Invalid connection used" << std::endl;
+            std::abort();
+    }
+}
+
+void Topology::ConnectWithoutDevices(Call* call) {
     Link* link;
     Route* route = call->GetRoute();
     unsigned int numHops = route->GetNumHops(), core;
@@ -462,7 +513,43 @@ void Topology::Connect(Call* call) {
     }
 }
 
+void Topology::ConnectWithDevices(Call* call) {
+    CallDevices* callDev = dynamic_cast<CallDevices*>(call);
+    RegenerationOption regOption = simulType->GetOptions()
+                                            ->GetRegenerationOption();
+    
+    if(regOption == RegenerationEnabled){
+        //Connect transparent segments
+        std::vector<Call*> transpSeg = callDev->GetTranspSegments();
+        for(auto it: transpSeg){
+            this->ConnectWithoutDevices(it);
+        }
+
+        //Connect Regenerators
+        std::vector<std::shared_ptr<Regenerator>> vecReg = callDev->
+                                                           GetRegenerators();
+        for(auto it: vecReg){
+            it->SetRegeneratorOn();
+        }
+    }
+}
+
 void Topology::Release(Call* call) {
+    
+    switch(simulType->GetOptions()->GetDevicesOption()){
+        case DevicesDisabled:
+            this->ReleaseWithoutDevices(call);
+            break;
+        case DevicesEnabled:
+            this->ReleaseWithDevices(call);
+            break;
+        default:
+            std::cerr << "Invalid connection used" << std::endl;
+            std::abort();
+    }
+}
+
+void Topology::ReleaseWithoutDevices(Call* call) {
     Link* link;
     Route* route = call->GetRoute();
     unsigned int numHops = route->GetNumHops(), core;
@@ -489,6 +576,27 @@ void Topology::Release(Call* call) {
     }
 }
 
+void Topology::ReleaseWithDevices(Call* call) {
+    CallDevices* callDev = dynamic_cast<CallDevices*>(call);
+    RegenerationOption regOption = simulType->GetOptions()
+                                            ->GetRegenerationOption();
+    
+    if(regOption == RegenerationEnabled){
+        //Release transparent segments
+        std::vector<Call*> transpSeg = callDev->GetTranspSegments();
+        for(auto it: transpSeg){
+            this->ReleaseWithoutDevices(it);
+        }
+
+        //Release Regenerators
+        std::vector<std::shared_ptr<Regenerator>> vecReg = callDev->
+                                                           GetRegenerators();
+        for(auto it: vecReg){
+            it->SetRegeneratorOff();
+        }
+    }
+}
+
 SimulationType* Topology::GetSimulType() const {
     return simulType;
 }
@@ -507,6 +615,7 @@ void Topology::DistributeRegenerators() {
             }
             break;
         default:
-            std::cerr << "Error in regenerators distribution" << std::endl;
+            std::cerr << "Invalid regenerators distribution" << std::endl;
+            std::abort();
     }
 }

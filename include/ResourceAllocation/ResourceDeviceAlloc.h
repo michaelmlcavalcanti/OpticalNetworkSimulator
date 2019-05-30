@@ -41,6 +41,8 @@ private:
     
     void SetMaxRegChoiceOrder(CallDevices* call, 
                               std::vector<unsigned>& vecIndex);
+    
+    bool CheckOSNR(CallDevices* call);
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

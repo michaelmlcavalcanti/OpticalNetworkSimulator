@@ -26,7 +26,7 @@
 #include "../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
-const Data* data) {    
+const Data* data) {
     ostream << "Simulation time:" << data->GetSimulTime() 
             << "  Real simul time: " << data->GetRealSimulTime()
             << "  Number of requests:" << data->GetNumberReq() << std::endl;

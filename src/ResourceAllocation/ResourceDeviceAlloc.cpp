@@ -14,8 +14,10 @@
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/Resources.h"
+#include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Calls/CallDevices.h"
 #include "../../include/GeneralClasses/Def.h"
+#include "../../include/Structure/Topology.h"
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType) {
@@ -35,12 +37,13 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     
     if(this->options->GetRegenerationOption() == RegenerationEnabled)
         this->RoutingRegSpecAlloc(callDev);
-        
+    
+    if(call->GetStatus() == NotEvaluated)
+        call->SetStatus(Blocked);
 }
 
 void ResourceDeviceAlloc::RoutingRegSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
-    call->UpdateTrialModulations();
     std::vector<unsigned> indexBestReg(0);
     unsigned auxIndex;
     
@@ -54,10 +57,27 @@ void ResourceDeviceAlloc::RoutingRegSpecAlloc(CallDevices* call) {
                 auxIndex = indexBestReg.at(regIndex);
                 call->CreateTranspSegments(resources->GetVecSubRoute(call, 
                                            auxIndex));
+                
+                if(!topology->CheckInsertFreeRegenerators(call))
+                    continue;
                 call->SetTranspSegModulation(resources->GetSubRoutesMod(call, 
                                              auxIndex));
-                this->modulation->SetModulationParam(call->GetTranspSegments());
+                this->modulation->SetModulationParam(call);
+                
+                if(!this->CheckOSNR(call))
+                    continue;
+                
+                this->specAlloc->SpecAllocation(call);
+                
+                if(topology->IsValidLigthPath(call)){
+                    call->ClearTrialRoutes();
+                    call->SetStatus(Accepted);
+                    break;
+                }
             }
+            
+            if(call->GetStatus() == Accepted)
+                break;
             
         }while(call->IsThereTrialRoute());
     }
@@ -125,4 +145,16 @@ std::vector<unsigned>& vecIndex) {
         vecIndex.push_back(auxIndex);
         auxVecNumReg.at(auxIndex) = -1;
     }
+}
+
+bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
+    std::vector<Call*> calls = call->GetTranspSegments();
+    
+    if(phyLayerOption == PhyLayerEnabled)
+        for(auto it: calls){
+            if(!topology->CheckOSNR(it->GetRoute(), it->GetOsnrTh()))
+                return false;
+        }
+    
+    return true;
 }

@@ -297,15 +297,6 @@ bool ResourceAlloc::CheckOSNR(Call* call) {
     return true;
 }
 
-bool ResourceAlloc::CheckOSNR(std::vector<Call*> calls) {
-    
-    for(auto it: calls){
-        if(!this->CheckOSNR(it))
-            return false;
-    }
-    return true;
-}
-
 bool ResourceAlloc::CheckResourceAllocOrder(Call* call) {
     return this->resources->resourceAllocOrder.at( call->GetOrNode()->
     GetNodeId()*this->topology->GetNumNodes()+call->GetDeNode()->GetNodeId() );

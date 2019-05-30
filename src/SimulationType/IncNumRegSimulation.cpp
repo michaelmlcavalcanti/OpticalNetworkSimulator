@@ -47,6 +47,7 @@ void IncNumRegSimulation::Run() {
         this->GetTopology()->SetNumRegenerators(a);
         
         this->RunBase();
+        std::cout << "Number of regenerators: " << a << std::endl;
         std::cout << this->GetData() << std::endl;
         actualPoint++;
     }
@@ -75,7 +76,7 @@ void IncNumRegSimulation::Save() {
 }
 
 void IncNumRegSimulation::Help() {
-    std::cout << "INCREASE NUMBER OF TRANSPONDERS SIMULATION" << std::endl
+    std::cout << "INCREASE NUMBER OF REGENERATORS SIMULATION" << std::endl
               << "This type of simulation increase the total number of "
               << "regenerators in the network and analyzes its performance. " 
               << std::endl << std::endl;

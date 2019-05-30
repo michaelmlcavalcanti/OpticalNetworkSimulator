@@ -13,6 +13,7 @@
 
 #include "../../include/ResourceAllocation/Modulation.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Calls/CallDevices.h"
 #include "../../include/GeneralClasses/General.h"
 #include "../../include/Data/Options.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
@@ -50,14 +51,17 @@ void Modulation::SetModulationParam(Call* call) {
     else
         numSlots = 1;
     call->SetNumberSlots(numSlots);
+    call->SetTotalNumSlots();
     OSNRth = this->GetOSNRQAM(modValue, bitRate);
     call->SetOsnrTh(OSNRth);
 }
 
-void Modulation::SetModulationParam(std::vector<Call*> calls) {
+void Modulation::SetModulationParam(CallDevices* call) {
+    std::vector<Call*> calls = call->GetTranspSegments();
     
     for(auto it: calls)
         this->SetModulationParam(it);
+    call->SetTotalNumSlots();
 }
 
 double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
@@ -100,6 +104,7 @@ double Modulation::GetSNRbQAM(unsigned int M) {
                 break;
             default:
                 std::cerr << "Invalid modulation format" << std::endl;
+                std::abort();
         }
     }
     else if(this->BER == 3.8E-3){
@@ -121,11 +126,12 @@ double Modulation::GetSNRbQAM(unsigned int M) {
                 break;
             default:
                 std::cerr << "Invalid modulation format" << std::endl;
+                std::abort();
         }
     }
     
     std::cerr << "Problem in modulation" << std::endl;
-    return 0.0;
+    std::abort();
 }
 
 bool Modulation::isEON() const {

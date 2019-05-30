@@ -105,11 +105,19 @@ unsigned int Call::GetNumberSlots() const {
 void Call::SetNumberSlots(unsigned int numberSlots) {
     assert(numberSlots > 0);
     this->numberSlots = numberSlots;
-    this->totalNumSlots = numberSlots * this->route->GetNumHops();
 }
 
 unsigned int Call::GetTotalNumSlots() const {
     return totalNumSlots;
+}
+
+void Call::SetTotalNumSlots() {
+    totalNumSlots = numberSlots * route->GetNumHops();
+}
+
+void Call::SetTotalNumSlots(unsigned int numSlots) {
+    assert(numSlots > 0);
+    this->totalNumSlots = numSlots;
 }
 
 unsigned int Call::GetCore() const {
