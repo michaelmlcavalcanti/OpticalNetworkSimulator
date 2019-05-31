@@ -30,17 +30,18 @@ public:
 
     
     void ResourAlloc(Call* call) override;
-
 private:
+    
     void RoutingRegSpecAlloc(CallDevices* call);
     
-    void SetRegChoiceOrder(CallDevices* call, std::vector<unsigned>& vecIndex);
+    void SetRegChoiceOrder(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
     
     void SetMinRegChoiceOrder(CallDevices* call, 
-                              std::vector<unsigned>& vecIndex);
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
     
     void SetMaxRegChoiceOrder(CallDevices* call, 
-                              std::vector<unsigned>& vecIndex);
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
     
     bool CheckOSNR(CallDevices* call);
 };

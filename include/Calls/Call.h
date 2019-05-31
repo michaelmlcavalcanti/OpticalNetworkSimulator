@@ -178,6 +178,8 @@ public:
     unsigned int GetNumRoutes() const;
 
     void SetRoute(std::shared_ptr<Route> route);
+    
+    void SetRoute(unsigned int routeIndex);
 
     void PushTrialRoute(std::shared_ptr<Route> route);
     

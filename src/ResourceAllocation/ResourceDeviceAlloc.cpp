@@ -44,55 +44,44 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
 
 void ResourceDeviceAlloc::RoutingRegSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
-    std::vector<unsigned> indexBestReg(0);
-    unsigned auxIndex;
+    //Tuple with route index and set of subRoutes index
+    std::vector<std::tuple<unsigned, unsigned>> routeSubIndexes(0);
     
-    if(call->IsThereTrialRoute()){
-        do{
-            call->SetRoute(call->PopTrialRoute());
-            this->SetRegChoiceOrder(call, indexBestReg);
-            
-            for(unsigned int regIndex = 0; regIndex < indexBestReg.size(); 
-            regIndex++){
-                auxIndex = indexBestReg.at(regIndex);
-                call->CreateTranspSegments(resources->GetVecSubRoute(call, 
-                                           auxIndex));
-                
-                if(!topology->CheckInsertFreeRegenerators(call))
-                    continue;
-                call->SetTranspSegModulation(resources->GetSubRoutesMod(call, 
-                                             auxIndex));
-                this->modulation->SetModulationParam(call);
-                
-                if(!this->CheckOSNR(call))
-                    continue;
-                
-                this->specAlloc->SpecAllocation(call);
-                
-                if(topology->IsValidLigthPath(call)){
-                    call->ClearTrialRoutes();
-                    call->SetStatus(Accepted);
-                    break;
-                }
-            }
-            
-            if(call->GetStatus() == Accepted)
-                break;
-            
-        }while(call->IsThereTrialRoute());
+    this->SetRegChoiceOrder(call, routeSubIndexes);
+    
+    for(unsigned int a = 0; a < routeSubIndexes.size(); a++){
+        call->SetRoute(std::get<0>(routeSubIndexes.at(a)));
+        unsigned int auxIndex = std::get<1>(routeSubIndexes.at(a));
+        call->CreateTranspSegments(resources->GetVecSubRoute(call, auxIndex));
+        
+        if(!topology->CheckInsertFreeRegenerators(call))
+            continue;
+        call->SetTranspSegModulation(resources->GetSubRoutesMod(call,auxIndex));
+        this->modulation->SetModulationParam(call);
+        
+        if(!this->CheckOSNR(call))
+            continue;
+        
+        this->specAlloc->SpecAllocation(call);
+        
+        if(topology->IsValidLigthPath(call)){
+            call->ClearTrialRoutes();
+            call->SetStatus(Accepted);
+            break;
+        }
     }
 }
 
 void ResourceDeviceAlloc::SetRegChoiceOrder(CallDevices* call, 
-std::vector<unsigned>& vecIndex) {
-    vecIndex.clear();
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    vec.clear();
     
     switch(options->GetRegAssOption()){
         case RegAssMinReg:
-            this->SetMinRegChoiceOrder(call, vecIndex);
+            this->SetMinRegChoiceOrder(call, vec);
             break;
         case RegAssMaxReg:
-            this->SetMaxRegChoiceOrder(call, vecIndex);
+            this->SetMaxRegChoiceOrder(call, vec);
             break;
         default:
             std::cerr << "Invalid regenerator assignment option" << std::endl;
@@ -101,49 +90,88 @@ std::vector<unsigned>& vecIndex) {
 }
 
 void ResourceDeviceAlloc::SetMinRegChoiceOrder(CallDevices* call, 
-std::vector<unsigned>& vecIndex) {
-    std::vector<unsigned> vecNumReg = resources->GetNumRegenerators(call);
-    unsigned int auxInt;
-    unsigned int auxIndex;
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<unsigned>> vecNumReg = 
+    resources->GetNumAllRegPos(call);
+    std::vector<std::vector<unsigned>> vecNumSlots = 
+    resources->GetNumSlotsAllRegPos(call);
+    unsigned int posSize = 0;
+    unsigned int auxRouteIndex = 0;
+    unsigned int auxIndex = 0;
+    unsigned int auxRegInt;
+    unsigned int auxSlotsInt;
     
-    while(vecIndex.size() < vecNumReg.size()){
-        auxInt = Def::Max_UnInt;
+    for(unsigned int a = 0; a < vecNumReg.size(); a++){
+        posSize += vecNumReg.at(a).size();
+    }
+    
+    while(vec.size() < posSize){
+        auxRegInt = Def::Max_UnInt;
+        auxSlotsInt = Def::Max_UnInt;
         
         for(unsigned int a = 0; a < vecNumReg.size(); a++){
-            
-            if(auxInt > vecNumReg.at(a)){
-                auxInt = vecNumReg.at(a);
-                auxIndex = a;
+            for(unsigned int b = 0; b < vecNumReg.at(a).size(); b++){
+                
+                if(auxRegInt >= vecNumReg.at(a).at(b)){
+                    if(auxRegInt == vecNumReg.at(a).at(b) && 
+                    auxSlotsInt <= vecNumSlots.at(a).at(b)){
+                        continue;
+                    }
+                    else{
+                        auxRegInt = vecNumReg.at(a).at(b);
+                        auxSlotsInt = vecNumSlots.at(a).at(b);
+                        auxRouteIndex = a;
+                        auxIndex = b;
+                    }
+                }
             }
         }
-        vecIndex.push_back(auxIndex);
-        vecNumReg.at(auxIndex) = Def::Max_UnInt;
+        vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+        vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
 }
 
 void ResourceDeviceAlloc::SetMaxRegChoiceOrder(CallDevices* call, 
-std::vector<unsigned>& vecIndex) {
-    std::vector<unsigned> vecNumReg = resources->GetNumRegenerators(call);
-    std::vector<int> auxVecNumReg(0);
-    int auxInt;
-    unsigned int auxIndex;
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<unsigned>> vecNumReg = 
+    resources->GetNumAllRegPos(call);
+    std::vector<std::vector<unsigned>> vecNumSlots = 
+    resources->GetNumSlotsAllRegPos(call);
+    unsigned int posSize = 0;
+    unsigned int auxRouteIndex = 0;
+    unsigned int auxIndex = 0;
+    unsigned int auxRegInt;
+    unsigned int auxSlotsInt;
     
-    for(unsigned int a = 0; a < vecNumReg.size(); a++)
-        auxVecNumReg.push_back((int) vecNumReg.at(a));
+    for(unsigned int a = 0; a < vecNumReg.size(); a++){
+        posSize += vecNumReg.at(a).size();
+    }
     
-    
-    while(vecIndex.size() < auxVecNumReg.size()){
-        auxInt = -1;
+    while(vec.size() < posSize){
+        auxRegInt = 0;
+        auxSlotsInt = Def::Max_UnInt;
         
-        for(unsigned int a = 0; a < auxVecNumReg.size(); a++){
-            
-            if(auxInt < auxVecNumReg.at(a)){
-                auxInt = auxVecNumReg.at(a);
-                auxIndex = a;
+        for(unsigned int a = 0; a < vecNumReg.size(); a++){
+            for(unsigned int b = 0; b < vecNumReg.at(a).size(); b++){
+                
+                if(auxRegInt <= vecNumReg.at(a).at(b)){
+                    if(auxRegInt == vecNumReg.at(a).at(b) && 
+                    auxSlotsInt <= vecNumSlots.at(a).at(b)){
+                        continue;
+                    }
+                    else{
+                        auxRegInt = vecNumReg.at(a).at(b);
+                        auxSlotsInt = vecNumSlots.at(a).at(b);
+                        auxRouteIndex = a;
+                        auxIndex = b;
+                    }
+                }
             }
         }
-        vecIndex.push_back(auxIndex);
-        auxVecNumReg.at(auxIndex) = -1;
+        vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = 0;
+        vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
 }
 

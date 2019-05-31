@@ -206,8 +206,10 @@ void SimulationType::FinalizeAll() {
 void SimulationType::CreateLoadResourceAlloc() {
     if(this->options->GetDevicesOption() == DevicesDisabled)
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
-    else
+    else{
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
+        topology->SetNumRegenerators(topology->GetNumNodes() *  20);
+    }
     
     this->resourceAlloc->Load();
 }

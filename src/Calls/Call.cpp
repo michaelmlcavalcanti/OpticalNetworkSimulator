@@ -189,6 +189,11 @@ void Call::SetRoute(std::shared_ptr<Route> route) {
     this->route = route;
 }
 
+void Call::SetRoute(unsigned int routeIndex) {
+    assert(routeIndex < trialRoutes.size());
+    this->route = trialRoutes.at(routeIndex);
+}
+
 void Call::PushTrialRoute(std::shared_ptr<Route> route) {
     this->trialRoutes.push_back(route);
 }

@@ -42,7 +42,11 @@ public:
     
     std::vector<unsigned int> GetNumRegenerators(Call* call);
     
+    std::vector<std::vector<unsigned>> GetNumAllRegPos(Call* call);
+    
     std::vector<unsigned int> GetNumSlotsRegenerators(Call* call);
+    
+    std::vector<std::vector<unsigned>> GetNumSlotsAllRegPos(Call* call);
     
     std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
                                                        unsigned int auxIndex);

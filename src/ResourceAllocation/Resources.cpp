@@ -98,6 +98,15 @@ std::vector<unsigned int> Resources::GetNumRegenerators(Call* call) {
     return numReg.at(trIndex).at(nodeIndex).at(routeIndex);
 }
 
+std::vector<std::vector<unsigned> > Resources::GetNumAllRegPos(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numReg.at(trIndex).at(nodeIndex);
+}
+
 std::vector<unsigned int> Resources::GetNumSlotsRegenerators(Call* call) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
@@ -107,6 +116,15 @@ std::vector<unsigned int> Resources::GetNumSlotsRegenerators(Call* call) {
     GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
     
     return numSlots.at(trIndex).at(nodeIndex).at(routeIndex);
+}
+
+std::vector<std::vector<unsigned> > Resources::GetNumSlotsAllRegPos(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numSlots.at(trIndex).at(nodeIndex);
 }
 
 std::vector<std::shared_ptr<Route>> Resources::GetVecSubRoute(Call* call, 
