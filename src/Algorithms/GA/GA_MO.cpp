@@ -99,7 +99,7 @@ void GA_MO::SelectPopulation() {
         //Fill an auxiliary vector with the right amount of 
         //non-dominated solutions.
         unsigned int added = 0;
-        while((!this->totalPopulation.empty()) && 
+        while((!this->totalPopulation.empty()) &&
         ((this->GetNumIndParetoFronts() + added) < numInd)){
             auxFront.push_back(this->totalPopulation.back());
             this->totalPopulation.pop_back();

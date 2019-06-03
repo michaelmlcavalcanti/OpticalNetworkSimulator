@@ -162,6 +162,8 @@ private:
      * @param ind Specified individual.
      */
     void MutateIndividual(IndividualNumRoutesMSCL* const ind);
+    
+    void UpdateNumInterRoutes();
 private:
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.

@@ -67,6 +67,11 @@ public:
      * @param simulTime Simulation time.
      */
     void SetSimulTime(TIME simulTime);
+    
+    unsigned int GetTotalNumInterRoutes() const;
+    
+    void SetTotalNumInterRoutes();
+    
     /**
      * @brief Gets the container of genes of this individual.
      * @return Container of genes.
@@ -95,6 +100,8 @@ public:
      */
     void SetGene(unsigned int orN, unsigned int deN, unsigned int pos, 
                  unsigned int gene);
+    
+    
     /**
      * @brief Gets the first parameter(blocking probability) of this 
      * individual.
@@ -119,6 +126,8 @@ private:
      * @brief Individual simulation time.
      */
     TIME simulTime;
+    
+    unsigned int totalNumInterRoutes;
     /**
      * @brief Container of individual genes.
      */

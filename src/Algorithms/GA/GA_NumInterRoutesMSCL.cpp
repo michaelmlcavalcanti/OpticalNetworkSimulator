@@ -51,6 +51,7 @@ void GA_NumInterRoutesMSCL::CreateNewPopulation() {
     this->totalPopulation.clear();
     this->Crossover();
     this->Mutation();
+    this->UpdateNumInterRoutes();
 }
 
 void GA_NumInterRoutesMSCL::ApplyIndividual(Individual* ind) {
@@ -211,5 +212,14 @@ const ind) {
                 }
             }
         }
+    }
+}
+
+void GA_NumInterRoutesMSCL::UpdateNumInterRoutes() {
+    std::shared_ptr<IndividualNumRoutesMSCL> auxInd;
+    
+    for(auto it: totalPopulation){
+        auxInd = std::dynamic_pointer_cast<IndividualNumRoutesMSCL>(it);
+        auxInd->SetTotalNumInterRoutes();
     }
 }
