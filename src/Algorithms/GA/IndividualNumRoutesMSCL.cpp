@@ -15,7 +15,8 @@
 #include "../../../include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
 
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga)
-:Individual(ga), ga(ga), blockProb(0.0), simulTime(0.0), genes(0) {
+:Individual(ga), ga(ga), blockProb(0.0), simulTime(0.0), 
+totalNumInterRoutes(0), genes(0) {
     const unsigned int numNodes = this->ga->GetNumNodes();
     unsigned int numRoutes;
     
@@ -37,13 +38,15 @@ IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(GA_NumInterRoutesMSCL* ga)
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(
 const std::shared_ptr<const IndividualNumRoutesMSCL>& orig)
 :Individual(orig), ga(orig->ga), blockProb(orig->blockProb), 
-simulTime(orig->simulTime), genes(orig->genes) {
+simulTime(orig->simulTime), totalNumInterRoutes(orig->totalNumInterRoutes), 
+genes(orig->genes) {
     
 }
 
 IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(const std::shared_ptr<const 
 IndividualNumRoutesMSCL>& orig, double value):Individual(orig, value), 
-ga(orig->ga), blockProb(value), simulTime(value), genes(orig->genes){
+ga(orig->ga), blockProb(value), simulTime(value), 
+totalNumInterRoutes((unsigned) value), genes(orig->genes){
 
 }
 
@@ -77,6 +80,20 @@ void IndividualNumRoutesMSCL::SetSimulTime(TIME simulTime) {
     this->simulTime = (this->simulTime + simulTime) / 2.0;
 }
 
+unsigned int IndividualNumRoutesMSCL::GetTotalNumInterRoutes() const {
+    return totalNumInterRoutes;
+}
+
+void IndividualNumRoutesMSCL::SetTotalNumInterRoutes() {
+    unsigned int total = 0;
+    
+    for(auto it1: genes)
+        for(auto it2: it1)
+            total += it2;
+    
+    totalNumInterRoutes = total;
+}
+
 std::vector<std::vector<unsigned int> > IndividualNumRoutesMSCL::GetGenes() 
 const {
     return genes;
@@ -102,5 +119,5 @@ double IndividualNumRoutesMSCL::GetMainParameter() {
 }
 
 double IndividualNumRoutesMSCL::GetSecondParameter() {
-    return (double) this->GetSimulTime();
+    return (double) this->GetTotalNumInterRoutes();
 }
