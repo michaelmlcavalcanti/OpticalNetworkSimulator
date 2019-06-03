@@ -164,7 +164,8 @@ ResourceAlloc* SimulationType::GetResourceAlloc() const {
     return this->resourceAlloc.get();
 }
 
-void SimulationType::SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm) {
+void SimulationType::SetResourceAlloc(std::shared_ptr<ResourceAlloc> 
+rsaAlgorithm) {
     this->resourceAlloc = rsaAlgorithm;
 }
 
@@ -208,7 +209,7 @@ void SimulationType::CreateLoadResourceAlloc() {
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
     else{
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
-        topology->SetNumRegenerators(topology->GetNumNodes() *  20);
+        topology->SetNumRegenerators(topology->GetNumNodes() *  0);
     }
     
     this->resourceAlloc->Load();

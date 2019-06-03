@@ -43,6 +43,12 @@ private:
     void SetMaxRegChoiceOrder(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
     
+    void SetMetric01(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    
+    double CalcRegCost(CallDevices* call, unsigned routeIndex, 
+                       unsigned subRouteIndex);
+    
     bool CheckOSNR(CallDevices* call);
 };
 

@@ -156,6 +156,8 @@ public:
      * @return True if the slot is free.
      */
     bool IsSlotFree(unsigned int index) const;
+    
+    unsigned int GetNumSlots() const;
     /**
      * @brief Return the number of free slots in the link.
      * @return Number of free slots.

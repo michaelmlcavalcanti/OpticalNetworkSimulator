@@ -237,6 +237,10 @@ public:
     
     bool CheckInsertFreeRegenerators(CallDevices* call);
     
+    unsigned int GetNumUsedSlots(Route* route) const;
+    
+    unsigned int GetNumSlots(Route* route) const;
+    
     /**
      * @brief Function to set a lightpath in the network of a specified request.
      * @param call Call request used.

@@ -42,14 +42,27 @@ public:
     
     std::vector<unsigned int> GetNumRegenerators(Call* call);
     
+    unsigned int GetNumRegenerators(Call* call, unsigned routeIndex, 
+                                    unsigned subRouteIndex);
+    
     std::vector<std::vector<unsigned>> GetNumAllRegPos(Call* call);
     
     std::vector<unsigned int> GetNumSlotsRegenerators(Call* call);
     
     std::vector<std::vector<unsigned>> GetNumSlotsAllRegPos(Call* call);
     
+    unsigned int GetNumSlotsAllRegPos(Call* call, unsigned routeIndex, 
+                                      unsigned subRouteIndex);
+    
     std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
                                                        unsigned int auxIndex);
+    
+    std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
+    unsigned int routeIndex, unsigned int subRouteIndex);
+    
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> 
+    GetVecSubRoute(Call* call);
+    
     std::vector<TypeModulation> GetSubRoutesMod(Call* call,
                                                 unsigned int auxIndex);
 private:

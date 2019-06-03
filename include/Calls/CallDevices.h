@@ -14,6 +14,8 @@
 #ifndef CALLDEVICES_H
 #define CALLDEVICES_H
 
+typedef bool UseRegeneration;
+
 #include "Call.h"
 #include "../ResourceAllocation/Modulation.h"
 
@@ -41,12 +43,17 @@ public:
 
     void InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
     regenerators);
-
+    
+    void SetUseRegeneration();
+    
+    bool CheckUseRegeneration() const;
 private:
     
     std::vector<std::shared_ptr<Call>> transpSegments;
     
     std::vector<std::shared_ptr<Regenerator>> regenerators;
+    
+    UseRegeneration useRegeneration;
 };
 
 #endif /* CALLDEVICES_H */

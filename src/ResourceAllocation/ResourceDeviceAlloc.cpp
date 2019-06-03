@@ -14,10 +14,12 @@
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/Resources.h"
+#include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/Calls/CallDevices.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/Structure/NodeDevices.h"
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType) {
@@ -67,6 +69,7 @@ void ResourceDeviceAlloc::RoutingRegSpecAlloc(CallDevices* call) {
         if(topology->IsValidLigthPath(call)){
             call->ClearTrialRoutes();
             call->SetStatus(Accepted);
+            call->SetUseRegeneration();
             break;
         }
     }
@@ -83,6 +86,9 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         case RegAssMaxReg:
             this->SetMaxRegChoiceOrder(call, vec);
             break;
+        case RegMetric01:
+            this->SetMetric01(call, vec);
+            break;;
         default:
             std::cerr << "Invalid regenerator assignment option" << std::endl;
             std::abort();
@@ -173,6 +179,89 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         vecNumReg.at(auxRouteIndex).at(auxIndex) = 0;
         vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
+}
+
+void ResourceDeviceAlloc::SetMetric01(CallDevices* call, 
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<unsigned>> vecNumReg = 
+    resources->GetNumAllRegPos(call);
+    std::vector<std::vector<double>> vecCosts(0);
+    
+    //Calculate the cost of each possible regeneration option.
+    vecCosts.resize(vecNumReg.size());
+    for(unsigned a = 0; a < vecNumReg.size(); a++){
+        vecCosts.resize(vecNumReg.at(a).size());
+        
+        for(unsigned b = 0; b < vecNumReg.at(a).size(); b++){
+            vecCosts.at(a).at(b) = this->CalcRegCost(call, a, b);
+        }
+    }
+    
+    unsigned int auxRouteIndex = 0;
+    unsigned int auxIndex = 0;
+    double bestCost;
+    bool foundOption = true;
+    
+    //Order the regeneration options, based on the cost.
+    while(foundOption){
+        foundOption = false;
+        bestCost = Def::Max_UnInt;
+        
+        for(unsigned a = 0; a < vecCosts.size(); a++){
+            for(unsigned b = 0; b < vecCosts.at(a).size(); b++){
+                
+                if(vecCosts.at(a).at(b) < bestCost){
+                    bestCost = vecCosts.at(a).at(b);
+                    auxRouteIndex = a;
+                    auxIndex = b;
+                    foundOption = true;
+                }
+            }
+        }
+        
+        if(foundOption){
+            vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
+            vecCosts.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+        }
+    }
+}
+
+double ResourceDeviceAlloc::CalcRegCost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    double cost = 0.0;
+    double LU = 0.0, TU = 0.0;
+    unsigned int totalNumSlots = 0;
+    unsigned int usedNumSlots = 0;
+    unsigned int totalNumReg = 0;
+    unsigned int usedNumReg = 0;
+    const double alpha = 0.5;
+    unsigned int numReg = resources->GetNumRegenerators(call, routeIndex,
+                                                        subRouteIndex);
+    unsigned int numSlots = resources->GetNumSlotsAllRegPos(call, routeIndex,
+                                                            subRouteIndex);
+    std::vector<std::shared_ptr<Route>> vecRoutes = 
+    resources->GetVecSubRoute(call, routeIndex, subRouteIndex);
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    
+    for(unsigned int a = 0; a < vecRoutes.size(); a++){
+        auxRoute = vecRoutes.at(a);
+        usedNumSlots += topology->GetNumUsedSlots(auxRoute.get());
+        totalNumSlots += topology->GetNumSlots(auxRoute.get());
+        
+        if(a != vecRoutes.size()-1){
+            auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+            usedNumReg += auxNode->GetNumOccRegenerators();
+            totalNumReg += auxNode->GetNumRegenerator();
+        }
+    }
+    
+    LU = (double) usedNumSlots / (double) totalNumSlots;
+    TU = (double) usedNumReg / (double) totalNumReg;
+    cost = (1-alpha)*((double) numReg + (double) numSlots/3) + 
+           (alpha)*(LU + TU);
+    
+    return cost;
 }
 
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {

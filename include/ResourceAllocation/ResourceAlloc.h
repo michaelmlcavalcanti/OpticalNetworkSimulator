@@ -54,45 +54,20 @@ public:
      * physical layer options.
      */
     virtual void Load();
-    
+    /**
+     * @brief Function to apply the additional settings for the resource 
+     * allocation. It includes the offline routing, creation of interfering
+     * route container, creation of regenerator resources, creation of offline
+     * modulations and the RSA order.
+     */
     void AdditionalSettings();
     
     /**
-     * @brief Choose the type of resource allocation for a call, based in the 
-     * option.
+     * @brief Choose the type of resource allocation for a call, based on the 
+     * option chosen.
      * @param call Call request to apply resource allocation.
      */
     virtual void ResourAlloc(Call* call);
-    /**
-     * @brief Function to apply resource allocation without modulation 
-     * variation. The RSA order will be determined by the vector 
-     * resourceAllocOrder.
-     * @param call Call request that the function will try to allocate.
-     */
-    void RSA(Call* call);
-    /**
-     * @brief Function for routing then spectral allocation for a specified 
-     * call. For each route in the set of routes, try the spectral allocation.
-     * @param call Call request that the function will try to allocate.
-     */
-    void RoutingSpec(Call* call);
-    /**
-     * @brief Function for spectral allocation then routing for a specified 
-     * call. Try the first possible set of slots in each possible route. If
-     * not possible, try the second set of slots, and so on.
-     * @param call Call request that the function will try to allocate.
-     */
-    void SpecRouting(Call* call);
-    
-    void RMSA(Call* call);
-    /**
-     * @brief Function that varies the modulation format to find the best
-     * possible one.
-     * @param call Call request that the function will try to allocate.
-     */
-    void OnlineModulationRSA(Call* call);
-    
-    void OfflineModulationRSA(Call* call);
     
     /**
      * @brief Function to input one route to the container of all routes for a 
@@ -281,6 +256,45 @@ public:
     
     std::vector<unsigned int> GetNumSlotsTraffic() const;
 private:
+    /**
+     * @brief Function to apply resource allocation without modulation 
+     * variation. The RSA order will be determined by the vector 
+     * resourceAllocOrder.
+     * @param call Call request that the function will try to allocate.
+     */
+    void RSA(Call* call);
+    /**
+     * @brief Function to do the resource allocation with variable modulation 
+     * formats for a specified call request. Can be done online or offline.
+     * @param call Call request.
+     */
+    void RMSA(Call* call);
+    /**
+     * @brief Function for routing then spectral allocation for a specified 
+     * call. For each route in the set of routes, try the spectral allocation.
+     * @param call Call request that the function will try to allocate.
+     */
+    void RoutingSpec(Call* call);
+    /**
+     * @brief Function for spectral allocation then routing for a specified 
+     * call. Try the first possible set of slots in each possible route. If
+     * not possible, try the second set of slots, and so on.
+     * @param call Call request that the function will try to allocate.
+     */
+    void SpecRouting(Call* call);
+    /**
+     * @brief Function that varies the modulation format to find the best
+     * possible one.
+     * @param call Call request to allocate.
+     */
+    void OnlineModulationRSA(Call* call);
+    /**
+     * @brief Function that apply the pre-computed modulation format for a 
+     * specified call request.
+     * @param call Call request to allocate.
+     */
+    void OfflineModulationRSA(Call* call);
+    
     
     void CreateRouting();
     

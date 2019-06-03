@@ -158,6 +158,10 @@ bool Link::IsSlotFree(unsigned int index) const {
     return false;
 }
 
+unsigned int Link::GetNumSlots() const {
+    return slotsStatus.size();
+}
+
 unsigned int Link::GetNumberFreeSlots() const {
     unsigned int numFreeSlots = 0;
     unsigned int numSlots = this->topPointer->GetNumSlots();

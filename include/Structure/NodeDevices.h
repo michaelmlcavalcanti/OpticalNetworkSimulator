@@ -44,13 +44,15 @@ public:
     
     unsigned int GetNumFreeRegenerators() const;
     
+    unsigned int GetNumOccRegenerators() const;
+    
     void IncreaseNumFreeRegenerators();
     
     void DecreaseNumFreeRegenerators();
     
     bool isThereFreeRegenerators(double bitRate) const;
     
-    std::vector<std::shared_ptr<Regenerator>> GetFreeRegenenrators(
+    std::vector<std::shared_ptr<Regenerator>> GetFreeRegenenerators(
                                               double bitRate) const;
 private:
     

@@ -175,8 +175,9 @@ enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,
     RegAssMaxReg,
+    RegMetric01,
     FirstRegAss = RegAssInvalid,
-    LastRegAss = RegAssMaxReg
+    LastRegAss = RegMetric01
 };
 
 /**

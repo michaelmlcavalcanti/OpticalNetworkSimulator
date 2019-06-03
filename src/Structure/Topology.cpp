@@ -458,7 +458,7 @@ bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
         auxNode = dynamic_cast<NodeDevices*>(calls.at(a)->GetDeNode());
         
         if(auxNode->isThereFreeRegenerators(calls.at(a)->GetBitRate())){
-            auxVecReg = auxNode->GetFreeRegenenrators(calls.at(a)->GetBitRate());
+            auxVecReg = auxNode->GetFreeRegenenerators(calls.at(a)->GetBitRate());
             vecReg.insert(vecReg.end(), auxVecReg.begin(), auxVecReg.end());
         }
         else{
@@ -468,8 +468,33 @@ bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
         }
     }
     
-    call->InsertRegenerators(vecReg);
+    if(!vecReg.empty())
+        call->InsertRegenerators(vecReg);
     return true;
+}
+
+unsigned int Topology::GetNumUsedSlots(Route* route) const {
+    Link* link;
+    unsigned int numUsedSlots = 0;
+    
+    for(unsigned int a = 0; a < route->GetNumHops(); a++){
+        link = route->GetLink(a);
+        numUsedSlots += link->GetNumberOccupiedSlots();
+    }
+    
+    return numUsedSlots;
+}
+
+unsigned int Topology::GetNumSlots(Route* route) const {
+    Link* link;
+    unsigned int numSlots = 0;
+    
+    for(unsigned int a = 0; a < route->GetNumHops(); a++){
+        link = route->GetLink(a);
+        numSlots += link->GetNumSlots();
+    }
+    
+    return numSlots;
 }
 
 void Topology::Connect(Call* call) {

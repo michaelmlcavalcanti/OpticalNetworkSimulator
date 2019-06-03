@@ -116,6 +116,14 @@ void ResourceAlloc::RSA(Call* call) {
         this->SpecRouting(call);
 }
 
+void ResourceAlloc::RMSA(Call* call) {
+    
+    if(this->IsOfflineRouting())
+        this->OfflineModulationRSA(call);
+    else
+        this->OnlineModulationRSA(call);
+}
+
 void ResourceAlloc::RoutingSpec(Call* call) {
     this->routing->RoutingCall(call);
     call->UpdateTrialModulations();
@@ -139,34 +147,6 @@ void ResourceAlloc::RoutingSpec(Call* call) {
                 }
         }while(call->IsThereTrialRoute());
     }
-}
-
-void ResourceAlloc::RMSA(Call* call) {
-    
-    if(this->IsOfflineRouting())
-        this->OfflineModulationRSA(call);
-    else
-        this->OnlineModulationRSA(call);
-}
-
-void ResourceAlloc::OnlineModulationRSA(Call* call) {
-    TypeModulation mod;
-    
-    for(mod = LastModulation; mod >= FirstModulation; 
-                              mod = TypeModulation(mod-1)){
-        call->PushTrialModulation(mod);
-        
-        this->RSA(call);
-        
-        if(call->GetStatus() == Accepted)
-            break;
-    }
-}
-
-void ResourceAlloc::OfflineModulationRSA(Call* call) {
-    
-    call->PushTrialModulations(resources->GetModulationFormat(call));
-    this->RSA(call);
 }
 
 void ResourceAlloc::SpecRouting(Call* call) {
@@ -207,6 +187,26 @@ void ResourceAlloc::SpecRouting(Call* call) {
         if(allocFound)
             break;
     }
+}
+
+void ResourceAlloc::OnlineModulationRSA(Call* call) {
+    TypeModulation mod;
+    
+    for(mod = LastModulation; mod >= FirstModulation; 
+                              mod = TypeModulation(mod-1)){
+        call->PushTrialModulation(mod);
+        
+        this->RSA(call);
+        
+        if(call->GetStatus() == Accepted)
+            break;
+    }
+}
+
+void ResourceAlloc::OfflineModulationRSA(Call* call) {
+    
+    call->PushTrialModulations(resources->GetModulationFormat(call));
+    this->RSA(call);
 }
 
 void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 

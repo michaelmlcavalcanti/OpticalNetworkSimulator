@@ -106,7 +106,8 @@ const boost::unordered_map<RegAssignmentOption, std::string>
 Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssInvalid, "Invalid")
     (RegAssMinReg, "Minimum regeneration")
-    (RegAssMaxReg, "Maximum regeneration");
+    (RegAssMaxReg, "Maximum regeneration")
+    (RegMetric01, "Metric Walkowiak");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {

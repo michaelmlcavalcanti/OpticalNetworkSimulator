@@ -98,6 +98,16 @@ std::vector<unsigned int> Resources::GetNumRegenerators(Call* call) {
     return numReg.at(trIndex).at(nodeIndex).at(routeIndex);
 }
 
+unsigned int Resources::GetNumRegenerators(Call* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numReg.at(trIndex).at(nodeIndex).at(routeIndex).at(subRouteIndex);
+}
+
 std::vector<std::vector<unsigned> > Resources::GetNumAllRegPos(Call* call) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
@@ -127,6 +137,16 @@ std::vector<std::vector<unsigned> > Resources::GetNumSlotsAllRegPos(Call* call) 
     return numSlots.at(trIndex).at(nodeIndex);
 }
 
+unsigned int Resources::GetNumSlotsAllRegPos(Call* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numSlots.at(trIndex).at(nodeIndex).at(routeIndex).at(subRouteIndex);
+}
+
 std::vector<std::shared_ptr<Route>> Resources::GetVecSubRoute(Call* call, 
 unsigned int auxIndex) {
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
@@ -135,6 +155,22 @@ unsigned int auxIndex) {
     GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
     
     return subRoutes.at(nodeIndex).at(routeIndex).at(auxIndex);
+}
+
+std::vector<std::shared_ptr<Route> > Resources::GetVecSubRoute(Call* call, 
+unsigned int routeIndex, unsigned int subRouteIndex) {
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return subRoutes.at(nodeIndex).at(routeIndex).at(subRouteIndex);
+}
+
+std::vector<std::vector<std::vector<std::shared_ptr<Route> > > > 
+Resources::GetVecSubRoute(Call* call) {
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return subRoutes.at(nodeIndex);
 }
 
 std::vector<TypeModulation> Resources::GetSubRoutesMod(Call* call, 

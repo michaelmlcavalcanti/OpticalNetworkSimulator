@@ -16,7 +16,7 @@
 
 CallDevices::CallDevices(Node* orNode, Node* deNode, double bitRate, 
 TIME deacTime):Call(orNode, deNode, bitRate, deacTime), transpSegments(0),
-regenerators(0) {
+regenerators(0), useRegeneration(false) {
     
 }
 
@@ -83,7 +83,20 @@ std::vector<std::shared_ptr<Regenerator> > CallDevices::GetRegenerators() const{
 
 void CallDevices::InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
 regenerators) {
-    this->regenerators.insert(this->regenerators.end(), regenerators.begin(),
-                              regenerators.end());
+    assert(regenerators.empty());
     this->regenerators = regenerators;
+}
+
+void CallDevices::SetUseRegeneration() {
+    assert(this->GetStatus() == Accepted);
+    
+    if(regenerators.empty())
+        useRegeneration = false;
+    else
+        useRegeneration = true;
+}
+
+bool CallDevices::CheckUseRegeneration() const {
+    
+    return useRegeneration;
 }

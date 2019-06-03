@@ -60,6 +60,10 @@ unsigned int NodeDevices::GetNumFreeRegenerators() const {
     return numFreeRegenerators;
 }
 
+unsigned int NodeDevices::GetNumOccRegenerators() const {
+    return (numRegenerator - numFreeRegenerators);
+}
+
 void NodeDevices::IncreaseNumFreeRegenerators() {
     assert(numFreeRegenerators < numRegenerator);
     numFreeRegenerators++;
@@ -80,7 +84,7 @@ bool NodeDevices::isThereFreeRegenerators(double bitRate) const {
 }
 
 std::vector<std::shared_ptr<Regenerator> > NodeDevices::
-GetFreeRegenenrators(double bitRate) const {
+GetFreeRegenenerators(double bitRate) const {
     std::vector<std::shared_ptr<Regenerator>> vecReg(0);
     unsigned int numReg = (unsigned int) std::ceil(bitRate / 
                           Regenerator::GetTrafficSupported());
