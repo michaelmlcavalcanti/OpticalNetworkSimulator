@@ -30,9 +30,9 @@ IncNumRegSimulation::~IncNumRegSimulation() {
 
 void IncNumRegSimulation::Run() {
     unsigned int numNodes = this->GetTopology()->GetNumNodes();
-    unsigned int minNumReg = 4 * numNodes;
+    unsigned int minNumReg = 0 * numNodes;
     unsigned int maxNumReg = 40 * numNodes;
-    unsigned int stepNumReg = 4 * numNodes;
+    unsigned int stepNumReg = 2 * numNodes;
     unsigned int numPoints = (maxNumReg - minNumReg) / stepNumReg;
     unsigned int actualPoint = 0;
     this->GetCallGenerator()->SetNetworkLoad(this->

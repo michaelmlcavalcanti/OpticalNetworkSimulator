@@ -41,7 +41,7 @@ public:
     
     std::vector<std::shared_ptr<Regenerator> > GetRegenerators() const;
 
-    void InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
+    void SetRegenerators(std::vector<std::shared_ptr<Regenerator> > 
     regenerators);
     
     void SetUseRegeneration();

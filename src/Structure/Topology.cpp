@@ -469,7 +469,7 @@ bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
     }
     
     if(!vecReg.empty())
-        call->InsertRegenerators(vecReg);
+        call->SetRegenerators(vecReg);
     return true;
 }
 

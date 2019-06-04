@@ -81,7 +81,7 @@ std::vector<std::shared_ptr<Regenerator> > CallDevices::GetRegenerators() const{
     return regenerators;
 }
 
-void CallDevices::InsertRegenerators(std::vector<std::shared_ptr<Regenerator> > 
+void CallDevices::SetRegenerators(std::vector<std::shared_ptr<Regenerator> > 
 regenerators) {
     assert(regenerators.empty());
     this->regenerators = regenerators;

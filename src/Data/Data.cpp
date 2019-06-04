@@ -38,10 +38,12 @@ const Data* data) {
             GetLoadPoint(data->GetActualIndex());
             break;
         case IncNumRegType:
-            ostream << "Iteration: " << data->GetActualIndex();
+            ostream << "Load point:" << data->simulType->GetParameters()->
+            GetMidLoadPoint();
             break;
         default:
             ostream <<  "Invalid Type of simulation" << std::endl;
+            std::abort();
     }
     
     ostream << "  PbReq:" << data->GetNumberBlocReq()/data->GetNumberReq() 

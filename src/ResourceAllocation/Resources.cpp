@@ -18,6 +18,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Node.h"
+#include "../../include/Structure/Devices/Regenerator.h"
 #include "../../include/GeneralClasses/Def.h"
 
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
@@ -210,12 +211,15 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
     unsigned int sizeTraffic = resourceAlloc->GetTraffic()->
                                               GetVecTraffic().size();
     unsigned int sizeNodes, sizeRoutes, sizeSubRoutes, sizeSubRo;
+    double auxTraffic, multiplier;
     numReg.resize(sizeTraffic);
     numSlots.resize(sizeTraffic);
     subRoutesModulation.resize(sizeTraffic);
     
     //Loop for amount of traffics.
     for(unsigned trIndex = 0; trIndex < sizeTraffic; trIndex++){
+        auxTraffic = resourceAlloc->GetTraffic()->GetTraffic(trIndex);
+        multiplier = std::ceil(auxTraffic / Regenerator::GetTrafficSupported());
         sizeNodes = subRoutes.size();
         numReg.at(trIndex).resize(sizeNodes);
         numSlots.at(trIndex).resize(sizeNodes);
@@ -245,7 +249,7 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
                     sizeSubRo = subRoutes.at(nodePairIndex).at(rouIndex)
                                          .at(numSubRoIndex).size();
                     numReg.at(trIndex).at(nodePairIndex).at(rouIndex)
-                          .at(numSubRoIndex) = sizeSubRo - 1;
+                          .at(numSubRoIndex) = (sizeSubRo - 1) * multiplier;
                     numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
                             .at(numSubRoIndex) = 0;
                     subRoutesModulation.at(trIndex).at(nodePairIndex)

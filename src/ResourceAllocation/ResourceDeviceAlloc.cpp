@@ -190,7 +190,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     //Calculate the cost of each possible regeneration option.
     vecCosts.resize(vecNumReg.size());
     for(unsigned a = 0; a < vecNumReg.size(); a++){
-        vecCosts.resize(vecNumReg.at(a).size());
+        vecCosts.at(a).resize(vecNumReg.at(a).size());
         
         for(unsigned b = 0; b < vecNumReg.at(a).size(); b++){
             vecCosts.at(a).at(b) = this->CalcRegCost(call, a, b);
@@ -255,6 +255,9 @@ unsigned subRouteIndex) {
             totalNumReg += auxNode->GetNumRegenerator();
         }
     }
+    
+    if(totalNumReg == 0)
+        totalNumReg = 1;
     
     LU = (double) usedNumSlots / (double) totalNumSlots;
     TU = (double) usedNumReg / (double) totalNumReg;
