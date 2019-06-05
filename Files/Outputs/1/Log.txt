@@ -1,0 +1,27 @@
+OPTIONS
+Topology: NSFNet
+Routing algorithm: Dijkstra
+Spectral allocation algorithm: First Fit
+Links cost type: Minimum length
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RMSA
+Physical Layer: Enabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Disabled
+Devices: Enabled
+Regeneration: Enabled
+Regeneration Placement: Uniform
+Regeneration Assignment: Metric Walkowiak
+
+PARAMETERS
+Number of slots per fiber: 320
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 250
+Maximum load point(erlang): 400
+Number of points: 6
+Total number of requisitions: 1e+06
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+

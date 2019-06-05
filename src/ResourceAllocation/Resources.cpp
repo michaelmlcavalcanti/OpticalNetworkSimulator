@@ -231,7 +231,8 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
             sizeRoutes = subRoutes.at(nodePairIndex).size();
             numReg.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
             numSlots.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
-            subRoutesModulation.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
+            subRoutesModulation.at(trIndex).at(nodePairIndex)
+                               .resize(sizeRoutes);
             
             //Loop for the number of routes of each node pair.
             for(unsigned rouIndex = 0; rouIndex < sizeRoutes; rouIndex++){
@@ -378,8 +379,6 @@ void Resources::RemoveInvalidRegOptions() {
                 while(!invalidIndexes.empty()){
                     index = invalidIndexes.back();
                     invalidIndexes.pop_back();
-                    subRoutes.at(nodeIndex).at(routeIndex).erase(
-                    subRoutes.at(nodeIndex).at(routeIndex).begin() + index);
                     
                     numReg.at(trIndex).at(nodeIndex).at(routeIndex).erase(
                     numReg.at(trIndex).at(nodeIndex).at(routeIndex).begin() + 
@@ -389,8 +388,6 @@ void Resources::RemoveInvalidRegOptions() {
                     numSlots.at(trIndex).at(nodeIndex).at(routeIndex).begin() + 
                     index);
                     
-                    //subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
-                    //.at(index).clear();
                     subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
                     .erase(subRoutesModulation.at(trIndex).at(nodeIndex)
                     .at(routeIndex).begin() + index);

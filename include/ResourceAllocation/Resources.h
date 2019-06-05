@@ -14,9 +14,8 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
-#include <vector>
-#include <memory>
-#include <bits/stl_bvector.h>
+//#include <vector>
+//#include <memory>
 
 class ResourceAlloc;
 class Route;

@@ -41,18 +41,31 @@ public:
      * SimulationType.
      */
     void RunBase() override;
-
+    /**
+     * @brief Load parameters to the simulation from the terminal.
+     */
     void Load() override;
-
+    /**
+     * @brief Load parameters, options and such,
+     * to the simulation from a .txt file.
+     */
     void LoadFile() override;
-
+    /**
+     * @brief Print this simulation in terminal.
+     */
     void Print() override;
-
+    /**
+     * @brief Save the results in .txt files.
+     */
     void Save() override;
-
+    /**
+     * @brief Prints a description of the simulation.
+     */
     void Help() override;
 private:
-    
+    /**
+     * @brief Container with the total number of regenerators of each iteration.
+     */
     std::vector<unsigned> vecNumReg;
 };
 

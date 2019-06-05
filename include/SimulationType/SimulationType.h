@@ -79,6 +79,10 @@ public:
      */
     virtual void Help() = 0;
     
+    /**
+     * @brief Function to get the type of simulation.
+     * @return 
+     */
     TypeSimulation GetTypeSimulation() const;
     /**
      * @brief Returns the simulation index
@@ -210,6 +214,9 @@ public:
      */
     double numberRequests;
 private:
+    /**
+     * @brief Define the type of simulation based on the option chosen.
+     */
     TypeSimulation typeSimulation;
     /**
      * @brief Index of the simulation

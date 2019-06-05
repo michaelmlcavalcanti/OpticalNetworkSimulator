@@ -48,7 +48,7 @@ void Kernel::Run() {
 }
 
 void Kernel::CreateSimulations() {
-    unsigned int auxSimulation;
+    unsigned int auxIndex;
     TypeSimulation typeSimul;
     
     std::cout << "Type the number of simulations to perform: ";
@@ -63,26 +63,28 @@ void Kernel::CreateSimulations() {
     
     for(unsigned a = 1; a <= this->numberSimulations; a++){
         std::cout << "Enter the simulation type " << a << ":";
-        std::cin >> auxSimulation;
-        typeSimul = (TypeSimulation) auxSimulation;
+        std::cin >> auxIndex;
+        typeSimul = (TypeSimulation) auxIndex;
+        std::shared_ptr<SimulationType> auxSimulation;
         
         switch(typeSimul){
             case MultiLoadSimulationType:
-                simulations.push_back(std::make_shared<MultiLoadSimulation>(a, 
-                                      typeSimul));
+                auxSimulation = std::make_shared<MultiLoadSimulation>(a, 
+                                      typeSimul);
                 break;
             case IncNumRegType:
-                simulations.push_back(std::make_shared<IncNumRegSimulation>(a, 
-                                      typeSimul));
+                auxSimulation = std::make_shared<IncNumRegSimulation>(a, 
+                                      typeSimul);
                 break;
             case GaSimulationType:
-                simulations.push_back(std::make_shared<GA_SingleObjective>(a, 
-                                      typeSimul));
+                auxSimulation = std::make_shared<GA_SingleObjective>(a, 
+                                      typeSimul);
                 break;
             default:
                 std::cerr << "Invalid simulation type" << std::endl;
                 std::abort();
         }
+        simulations.push_back(auxSimulation);
     }
 }
 

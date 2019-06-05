@@ -2,30 +2,20 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>0</activeConfIndexElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/ResourceAllocation/ResourceAlloc.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/Resources.h</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/ResourceDeviceAlloc.h</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/Files/Inputs/Options_1.txt</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/main.cpp</file>
+            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/ResourceAlloc.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/IncNumRegSimulation.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/SimulationType/SimulationType.h</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/ResourceAllocation/ResourceDeviceAlloc.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Structure/Topology.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Structure/NodeDevices.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/Files/Inputs/Parameters_1.txt</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Calls/CallDevices.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/ResourceDeviceAlloc.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/Files/Inputs/Options_1.txt</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/ResourceAllocation/ResourceAlloc.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/Calls/Call.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/include/SimulationType/IncNumRegSimulation.h</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Structure/Topology.cpp</file>
             <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/SimulationType/SimulationType.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/ResourceAllocation/Resources.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Structure/NodeDevices.cpp</file>
-            <file>file:/mnt/Bruno_Dados/Google_Drive/Material_Academico/UFPE/Pesquisa/Simuladores/NetBeans/SimulatorOpticalNetwork/src/Kernel.cpp</file>
         </group>
     </open-files>
 </project-private>

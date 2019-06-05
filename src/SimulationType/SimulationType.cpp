@@ -209,7 +209,7 @@ void SimulationType::CreateLoadResourceAlloc() {
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
     else{
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
-        topology->SetNumRegenerators(topology->GetNumNodes() *  0);
+        topology->SetNumRegenerators(0);
     }
     
     this->resourceAlloc->Load();

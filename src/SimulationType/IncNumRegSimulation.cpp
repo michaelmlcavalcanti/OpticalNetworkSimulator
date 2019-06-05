@@ -31,18 +31,17 @@ IncNumRegSimulation::~IncNumRegSimulation() {
 void IncNumRegSimulation::Run() {
     unsigned int numNodes = this->GetTopology()->GetNumNodes();
     unsigned int minNumReg = 0 * numNodes;
-    unsigned int maxNumReg = 40 * numNodes;
-    unsigned int stepNumReg = 2 * numNodes;
-    unsigned int numPoints = (maxNumReg - minNumReg) / stepNumReg;
+    unsigned int maxNumReg = 60 * numNodes;
+    unsigned int stepNumReg = 4 * numNodes;
+    unsigned int numPoints = ((maxNumReg - minNumReg) / stepNumReg) + 1;
     unsigned int actualPoint = 0;
     this->GetCallGenerator()->SetNetworkLoad(this->
     GetParameters()->GetMidLoadPoint());
     this->GetData()->Initialize(numPoints);
     
+    this->GetInputOutput()->PrintProgressBar(0, numPoints);
     for(unsigned a = minNumReg; a <= maxNumReg; a += stepNumReg){
         this->GetData()->SetActualIndex(actualPoint);
-        this->GetInputOutput()->PrintProgressBar(actualPoint, numPoints);
-        
         vecNumReg.push_back(a);
         this->GetTopology()->SetNumRegenerators(a);
         
@@ -50,6 +49,7 @@ void IncNumRegSimulation::Run() {
         std::cout << "Number of regenerators: " << a << std::endl;
         std::cout << this->GetData() << std::endl;
         actualPoint++;
+        this->GetInputOutput()->PrintProgressBar(actualPoint, numPoints);
     }
 }
 
