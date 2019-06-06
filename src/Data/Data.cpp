@@ -39,7 +39,7 @@ const Data* data) {
             break;
         case IncNumRegType:
             ostream << "Load point:" << data->simulType->GetParameters()->
-            GetMidLoadPoint();
+            GetMaxLoadPoint();
             break;
         default:
             ostream <<  "Invalid Type of simulation" << std::endl;

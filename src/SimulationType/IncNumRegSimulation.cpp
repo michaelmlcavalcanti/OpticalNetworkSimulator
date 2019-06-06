@@ -31,12 +31,12 @@ IncNumRegSimulation::~IncNumRegSimulation() {
 void IncNumRegSimulation::Run() {
     unsigned int numNodes = this->GetTopology()->GetNumNodes();
     unsigned int minNumReg = 0 * numNodes;
-    unsigned int maxNumReg = 60 * numNodes;
+    unsigned int maxNumReg = 80 * numNodes;
     unsigned int stepNumReg = 4 * numNodes;
     unsigned int numPoints = ((maxNumReg - minNumReg) / stepNumReg) + 1;
     unsigned int actualPoint = 0;
     this->GetCallGenerator()->SetNetworkLoad(this->
-    GetParameters()->GetMidLoadPoint());
+    GetParameters()->GetMaxLoadPoint());
     this->GetData()->Initialize(numPoints);
     
     this->GetInputOutput()->PrintProgressBar(0, numPoints);
