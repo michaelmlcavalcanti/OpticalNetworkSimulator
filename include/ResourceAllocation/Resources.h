@@ -106,22 +106,41 @@ public:
      * have. It is used in MSCL SA for find the capacity loss.
      */
     std::vector<unsigned int> numSlotsTraffic;
-    
+    /**
+     * @brief Container with all possible sets of sub-routes for all routes of
+     * all node pairs in the network. This parameter is used for simulations
+     * with regeneration, in which will be used to list all possible combination
+     * of transparent segments.
+     */
     std::vector<std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>>
     subRoutes;
-    
+    /**
+     * @brief Container with the number of regenerators used in every 
+     * combination of transparent segments of all traffics of all routes of all 
+     * node pairs in the network.
+     */
     std::vector<std::vector<std::vector<std::vector<unsigned int>>>> numReg;
-    
+    /**
+     * @brief Container with the number of slots used in every 
+     * combination of transparent segments of all traffics of all routes of all 
+     * node pairs in the network.
+     */
     std::vector<std::vector<std::vector<std::vector<unsigned int>>>> numSlots;
-    
+    /**
+     * @brief Container with the best modulation format used in every 
+     * transparent segments of all traffics of all routes of all 
+     * node pairs in the network.
+     */
     std::vector<std::vector<std::vector<std::vector<std::vector<
                 TypeModulation>>>>> subRoutesModulation;
 private:
     /**
-     * @brief ResourceAlloc object that owns this routing.
+     * @brief ResourceAlloc object that owns these resources.
      */
     ResourceAlloc* resourceAlloc;
-    
+    /**
+     * @brief Pointer to the modulation object of the simulation.
+     */
     Modulation* modulation;
 };
 

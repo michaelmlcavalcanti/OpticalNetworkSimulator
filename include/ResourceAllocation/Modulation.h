@@ -41,7 +41,6 @@ enum TypeModulation{
  * its modulation format.
  */
 class Modulation {
-
 public:
     /**
      * @brief Default constructor of a modulation object.
@@ -55,12 +54,16 @@ public:
     virtual ~Modulation();
     
     /**
-     * @brief Calculates the physical layer parameters of a call request a apply
-     * the values to it.
+     * @brief Calculates the physical layer parameters of a call request and 
+     * apply the values to it.
      * @param call Call request to be analyzed.
      */
     void SetModulationParam(Call* call);
-    
+    /**
+     * @brief Calculates the physical layer parameters of a call request with 
+     * devices and apply the values to it.
+     * @param call Call request to be analyzed.
+     */
     void SetModulationParam(CallDevices* call);
     /**
      * @brief Function to calculate the spectral bandwidth of a optical signal, 
@@ -72,9 +75,18 @@ public:
     double BandwidthQAM(unsigned int M, double Rbps);
     
     double GetOSNRQAM(unsigned int M, double Rbps);
-    
+    /**
+     * @brief Function to get the SNRb value, in dB, depending on the modulation 
+     * value and the BER used as reference.
+     * @param M Modulation value.
+     * @return SNRb value.
+     */
     double GetSNRbQAM(unsigned int M);
-    
+    /**
+     * @brief Function to get the SNRb linear value.
+     * @param M Modulation value.
+     * @return SNRb value.
+     */
     double GetsnrbQAM(unsigned int M);
     /**
      * @brief Check if the simulation is EON, based on the slot bandwidth.

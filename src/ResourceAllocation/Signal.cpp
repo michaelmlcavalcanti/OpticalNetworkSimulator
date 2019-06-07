@@ -70,11 +70,11 @@ double Signal::GetOSNR() {
 }
 
 double Signal::pASE(double fn, double gain) {
-    return 2*Signal::nASE(Signal::fn, gain)*Signal::Bo;
+    return 2 * Signal::nASE(fn, gain) * Signal::Bo;
 }
 
 double Signal::nASE(double fn, double gain) {
     assert(gain >=  1.0);
     
-    return (Signal::h*Signal::v*(gain-1.0)*Signal::fn)/2.0;
+    return (Signal::h * Signal::v * (gain-1.0) * fn) / 2.0;
 }

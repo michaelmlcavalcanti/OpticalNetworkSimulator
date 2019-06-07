@@ -17,55 +17,146 @@
 #include <cassert>
 
 class Signal {
-
 public:
-    
+    /**
+     * @brief Default constructor of a signal. Begin with the update of the 
+     * input signal power, ASE power and  nonlinear power.
+     */
     Signal();
-    
+    /**
+     * @brief Default destructor of a signal.
+     */
     virtual ~Signal();
     
+    /**
+     * @brief Function to get the signal power.
+     * @return Signal power.
+     */
     double GetSignalPower() const;
-
+    /**
+     * @brief Function to set the signal power.
+     * @param signalPower Signal power.
+     */
     void SetSignalPower(double signalPower);
-    
+    /**
+     * @brief Function to get the signal ASE power.
+     * @return Signal ASE power.
+     */
     double GetAsePower() const;
-
+    /**
+     * @brief Function to set the signal ASE power.
+     * @param asePower Signal ASE power.
+     */
     void SetAsePower(double asePower);
-
+    /**
+     * @brief Function to get the signal nonlinear power.
+     * @return Signal nonlinear power.
+     */
     double GetNonLinearPower() const;
-
+    /**
+     * @brief Function to set the signal nonlinear power.
+     * @param nonLinearPower Signal nonlinear power.
+     */
     void SetNonLinearPower(double nonLinearPower);
-
+    /**
+     * @brief Function to calculate and get the signal OSNR(linear). The OSNR is
+     * calculated as function of signal power divided by the sum of ASE and 
+     * nonlinear powers.
+     * @return Signal OSNR.
+     */
     double GetOsnr();
-    
+    /**
+     * @brief Function to calculate and get the signal OSNR(dB).
+     * @return Signal OSNR.
+     */
     double GetOSNR();
-    //fn-noise factor; gain-gain of the EDFA. pASE retorna a potência ASE
+    /**
+     * @brief Function that calculate the ASE power.
+     * @param fn Noise factor.
+     * @param gain Gain of the EDFA.
+     * @return ASE power.
+     */
     static double pASE(double fn, double gain);
-    //nASE retorna a densidade espectral de potência
+    /**
+     * @brief Function to calculate the power spectral density.
+     * @param fn Noise factor.
+     * @param gain Gain of the EDFA.
+     * @return Power spectral density.
+     */
     static double nASE(double fn, double gain); 
     
-    static const double v;      //central frequency
-    static const double h;      //Planck constant
-    static const double Fn;     //Amplifier Noise Figure;
-    static const double fn;     //Amplifier Noise Factor;
-    static const double Bo;     //Reference Bandwidth;
-    static const double Alpha;  //Fiber attenuation coefficient
-    static const double alpha;  //Fiber attenuation coefficient
-    static const double pIn;    //Signal Input Power in Watts
-    static const double Pin;    //Signal Input Power in dBm;
-    static const double pRef;   //Reference Power at the fiber input in W;
-    static const double Pref;   //Reference Power at the fiber input in dBm;
-    static const double OSNRin; //OSNR of the input signal in dB
-    static const double osnrIn; //OSNR of the input signal in linear
-    static const double Lwss;   //WSS loss in dB
-    static const double lWSS;   //WSS loss in linear
-
+    /**
+     * @brief Central frequency.
+     */
+    static const double v;
+    /**
+     * @brief Planck constant.
+     */
+    static const double h;
+    /**
+     * @brief Amplifier Noise Figure.   
+     */
+    static const double Fn;
+    /**
+     * @brief Amplifier Noise Factor.
+     */
+    static const double fn;
+    /**
+     * @brief Reference Bandwidth.
+     */
+    static const double Bo;
+    /**
+     * @brief Fiber attenuation coefficient.
+     */
+    static const double Alpha;
+    /**
+     * @brief Fiber attenuation coefficient
+     */
+    static const double alpha;
+    /**
+     * @brief Signal Input Power(Watts).
+     */
+    static const double pIn;
+    /**
+     * @brief Signal Input Power(dBm).
+     */
+    static const double Pin;
+    /**
+     * @brief Reference Power at the fiber input(Watts).
+     */
+    static const double pRef;
+    /**
+     * @brief Reference Power at the fiber input(dBm).
+     */
+    static const double Pref;
+    /**
+     * @brief OSNR of the input signal(dB).
+     */
+    static const double OSNRin;
+    /**
+     * @brief OSNR of the input signal(linear).
+     */
+    static const double osnrIn;
+    /**
+     * @brief WSS loss(dB).
+     */
+    static const double Lwss;
+    /**
+     * @brief WSS loss(linear).
+     */
+    static const double lWSS;
 private:
-    
+    /**
+     * @brief Signal power(linear).
+     */
     double signalPower;
-    
+    /**
+     * @brief Signal ASE power(linear).
+     */
     double asePower;
-    
+    /**
+     * @brief Signal nonlinear power(linear).
+     */
     double nonLinearPower;
 };
 

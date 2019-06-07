@@ -38,7 +38,6 @@ class Link {
     
     friend std::ostream& operator<<(std::ostream& ostream,
     Link* link);
-    
 public:
     /**
      * @brief Standard constructor for a Link object.
@@ -57,7 +56,11 @@ public:
      * @brief Virtual destructor of a Link object.
      */
     virtual ~Link();
-    
+    /**
+     * @brief Operator used to compare two link pointers.
+     * @param right Link pointer to be compared.
+     * @return True if the links are the same.
+     */
     bool operator==(const Link& right) const;
     /**
      * @brief Initialize the link, setting the start values
@@ -173,7 +176,6 @@ public:
      * @return Pointer to topology
      */
     Topology* GetTopology() const;
-    
 private:
     /**
      * @brief Pointer to a Topology object that

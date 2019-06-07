@@ -17,7 +17,6 @@
 #include <cmath>
 
 class General {
-
 public:
     /**
      * @brief Function to convert linear value to a dB value.
@@ -60,9 +59,6 @@ public:
      */
     template <class T>
     static const T& MIN (const T& a, const T& b);
-    
-private:
-
 };
 
 template <class T>
