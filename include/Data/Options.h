@@ -180,6 +180,13 @@ enum RegAssignmentOption {
     LastRegAss = RegMetric01
 };
 
+enum StopCriteria {
+    NumCallRequestsMaximum,
+    NumCallRequestsBlocked,
+    FirstStopCriteria = NumCallRequestsMaximum,
+    LastStopCriteria = NumCallRequestsBlocked
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -406,6 +413,12 @@ public:
     std::string GetRegAssOptionName() const;
 
     void SetRegAssOption(RegAssignmentOption regAssOption);
+    
+    StopCriteria GetStopCriteria() const;
+
+    std::string GetStopCriteriaName() const;
+    
+    void SetStopCriteria(StopCriteria stopCriteria);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -459,6 +472,8 @@ private:
     RegPlacementOption regPlacOption;
     
     RegAssignmentOption regAssOption;
+    
+    StopCriteria stopCriteria;
     
     /**
      * @brief Map that keeps the topology option 
@@ -533,6 +548,9 @@ private:
     
     static const boost::unordered_map<RegAssignmentOption,
     std::string> mapRegAssOption;
+    
+    static const boost::unordered_map<StopCriteria,
+    std::string> mapStopCriteria;
 };
 
 #endif /* OPTIONS_H */

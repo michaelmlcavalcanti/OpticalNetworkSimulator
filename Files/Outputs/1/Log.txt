@@ -12,7 +12,8 @@ GA: GA Disabled
 Devices: Enabled
 Regeneration: Enabled
 Regeneration Placement: Uniform
-Regeneration Assignment: Metric Walkowiak
+Regeneration Assignment: Minimum regeneration
+Stop criteria: Number of blocked call requests
 
 PARAMETERS
 Number of slots per fiber: 320
@@ -24,4 +25,29 @@ Number of points: 6
 Total number of requisitions: 1e+06
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
+
+DATA
+Simulation time:18153.4  Real simul time: 15.671  Number of requests:4.53913e+06
+Load point:250  PbReq:0.000110153  PbSlots:0.000187918  HopsMed:2.37443  NetOcc:5.31729e+07
+
+
+Simulation time:2694.69  Real simul time: 2.6561  Number of requests:753630
+Load point:280  PbReq:0.000663456  PbSlots:0.0011321  HopsMed:2.37301  NetOcc:8.81524e+06
+
+
+Simulation time:741.333  Real simul time: 0.827166  Number of requests:229962
+Load point:310  PbReq:0.00217427  PbSlots:0.00369512  HopsMed:2.36984  NetOcc:2.66619e+06
+
+
+Simulation time:287.802  Real simul time: 0.369424  Number of requests:97608
+Load point:340  PbReq:0.00512253  PbSlots:0.00865202  HopsMed:2.36703  NetOcc:1.12227e+06
+
+
+Simulation time:114.813  Real simul time: 0.163691  Number of requests:42681
+Load point:370  PbReq:0.0117148  PbSlots:0.0198731  HopsMed:2.35345  NetOcc:479098
+
+
+Simulation time:69.0688  Real simul time: 0.111368  Number of requests:27605
+Load point:400  PbReq:0.0181127  PbSlots:0.0304457  HopsMed:2.36023  NetOcc:303472
+
 

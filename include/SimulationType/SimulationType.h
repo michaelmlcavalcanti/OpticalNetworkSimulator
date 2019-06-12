@@ -206,6 +206,11 @@ private:
     void FinalizeAll();
     
     void CreateLoadResourceAlloc();
+    
+    
+    void SimulateNumTotalReq();
+    
+    void SimulateNumBlocReq();
 public:
     /**
      * @brief Actual number of request created.

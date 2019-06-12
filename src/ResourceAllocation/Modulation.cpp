@@ -19,7 +19,7 @@
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 const boost::unordered_map<TypeModulation, unsigned int> 
-Modulation::mapModulation = boost::assign::map_list_of
+Modulation::mapNumBitsModulation = boost::assign::map_list_of
     (InvalidModulation, 0)
     (QAM_4, 2)
     (QAM_8, 3)
@@ -40,7 +40,7 @@ Modulation::~Modulation() {
 void Modulation::SetModulationParam(Call* call) {
     double bandwidth, OSNRth;
     unsigned int numSlots;
-    unsigned int modValue = this->mapModulation.at(call->GetModulation());
+    unsigned int modValue = this->mapNumBitsModulation.at(call->GetModulation());
     double bitRate = call->GetBitRate();
     
     bandwidth = this->BandwidthQAM(modValue, bitRate);

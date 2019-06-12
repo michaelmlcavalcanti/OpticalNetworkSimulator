@@ -140,7 +140,7 @@ private:
      * amount of bits to represent the signal.
      */
     static const boost::unordered_map<TypeModulation, 
-                                      unsigned int> mapModulation;
+                                      unsigned int> mapNumBitsModulation;
 };
 
 #endif /* MODULATION_H */

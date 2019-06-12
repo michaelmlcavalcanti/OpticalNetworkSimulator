@@ -176,24 +176,18 @@ void SimulationType::InitializeAll() {
 }
 
 void SimulationType::Simulate() {
-    double numReqMax = this->parameters->GetNumberReqMax();
     this->callGenerator->GenerateCall();
     
-    while(this->numberRequests <= numReqMax){
-        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
-        
-        switch(evt->GetEventType()){
-            case CallRequest:
-                evt->ImplementCallRequest();
-                this->callGenerator->GenerateCall();
-                break;
-            case CallEnd:
-                evt->ImplementCallEnd();
-                break;
-            default:
-                std::cerr << "Invalid event" << std::endl;
-                std::abort();
-        }
+    switch(this->GetOptions()->GetStopCriteria()){
+        case NumCallRequestsMaximum:
+            this->SimulateNumTotalReq();
+            break;
+        case NumCallRequestsBlocked:
+            this->SimulateNumBlocReq();
+            break;
+        default:
+            std::cerr << "Invalid stop criteria" << std::endl;
+            std::abort();
     }
     
     this->GetData()->SetNumberReq(this->numberRequests-1);
@@ -213,4 +207,46 @@ void SimulationType::CreateLoadResourceAlloc() {
     }
     
     this->resourceAlloc->Load();
+}
+
+void SimulationType::SimulateNumTotalReq() {
+    double numReqMax = this->parameters->GetNumberReqMax();
+    
+    while(this->numberRequests <= numReqMax){
+        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
+        
+        switch(evt->GetEventType()){
+            case CallRequest:
+                evt->ImplementCallRequest();
+                this->callGenerator->GenerateCall();
+                break;
+            case CallEnd:
+                evt->ImplementCallEnd();
+                break;
+            default:
+                std::cerr << "Invalid event" << std::endl;
+                std::abort();
+        }
+    }
+}
+
+void SimulationType::SimulateNumBlocReq() {
+    double numBlocReqMax = this->parameters->GetNumberBloqMax();
+    
+    while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
+        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
+        
+        switch(evt->GetEventType()){
+            case CallRequest:
+                evt->ImplementCallRequest();
+                this->callGenerator->GenerateCall();
+                break;
+            case CallEnd:
+                evt->ImplementCallEnd();
+                break;
+            default:
+                std::cerr << "Invalid event" << std::endl;
+                std::abort();
+        }
+    }
 }

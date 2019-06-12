@@ -109,6 +109,11 @@ Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssMaxReg, "Maximum regeneration")
     (RegMetric01, "Metric Walkowiak");
 
+const boost::unordered_map<StopCriteria, std::string>
+Options::mapStopCriteria = boost::assign::map_list_of
+    (NumCallRequestsMaximum, "Number of call requests")
+    (NumCallRequestsBlocked, "Number of blocked call requests");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -143,6 +148,8 @@ const Options* options) {
         ostream << "Regeneration Assignment: " << options->GetRegAssOptionName()
                 << std::endl;
     }
+    ostream << "Stop criteria: " << options->GetStopCriteriaName()
+            << std::endl;
     
     return ostream;
 }
@@ -155,7 +162,7 @@ resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
 regenerationOption(RegenerationDisabled), regPlacOption(RegPlacInvalid),
-regAssOption(RegAssInvalid) {
+regAssOption(RegAssInvalid), stopCriteria(NumCallRequestsMaximum) {
     
 }
 
@@ -292,6 +299,15 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetRegAssOption((RegAssignmentOption) auxInt);
     
+    std::cout << "Stop Criteria Options" << std::endl;
+    for(StopCriteria a = FirstStopCriteria; a <= LastStopCriteria;
+    a = StopCriteria(a+1)){
+        std::cout << a << "-" << this->mapStopCriteria.at(a) << std::endl;
+    }
+    std::cout << "Insert the Stop Criteria option: ";
+    std::cin >> auxInt;
+    this->SetStopCriteria((StopCriteria) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -328,6 +344,8 @@ void Options::LoadFile() {
     this->SetRegPlacOption((RegPlacementOption) auxInt);
     auxIfstream >> auxInt;
     this->SetRegAssOption((RegAssignmentOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetStopCriteria((StopCriteria) auxInt);
 }
 
 void Options::Save() {
@@ -550,4 +568,18 @@ std::string Options::GetRegAssOptionName() const {
 void Options::SetRegAssOption(RegAssignmentOption regAssOption) {
     assert(regAssOption >= FirstRegAss && regAssOption <= LastRegAss);
     this->regAssOption = regAssOption;
+}
+
+StopCriteria Options::GetStopCriteria() const {
+    return stopCriteria;
+}
+
+std::string Options::GetStopCriteriaName() const {
+    return mapStopCriteria.at(this->stopCriteria);
+}
+
+void Options::SetStopCriteria(StopCriteria stopCriteria) {
+    assert(stopCriteria >= FirstStopCriteria && 
+           stopCriteria <= LastStopCriteria);
+    this->stopCriteria = stopCriteria;
 }

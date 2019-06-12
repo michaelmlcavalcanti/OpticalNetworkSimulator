@@ -12,6 +12,7 @@
 1
 1
 1
+0
 
 1-Topology
     0 - Invalid
@@ -77,3 +78,6 @@
     1 - Minimum regeneration
     2 - Maximum regeneration
     3 - Walkowiak metric
+15-Stop Criteria
+    0 - Total number of call requests
+    1 - Number of blocked call requests

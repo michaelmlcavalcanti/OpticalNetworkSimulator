@@ -115,6 +115,7 @@ void Data::StorageCall(Call* call) {
             break;
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
+            std::abort();
     }
     this->numberSlotsReq.at(this->actualIndex) += bitRate;
 }

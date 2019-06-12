@@ -29,7 +29,6 @@ class Parameters {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Parameters* parameters);
-    
 public:
     /**
      * @brief Standard constructor for a Parameters object.
@@ -175,9 +174,15 @@ public:
      * @param numberSlots Number of slots per fiber/core.
      */
     void SetNumberSlots(unsigned int numberSlots);
-    
+    /**
+     * @brief Function to get the number of routes.
+     * @return Number of routes.
+     */
     unsigned int GetNumberRoutes() const;
-
+    /**
+     * @brief Function to set the number of routes.
+     * @param numberRoutes Number of routes.
+     */
     void SetNumberRoutes(unsigned int numberRoutes);
 private:
     /**
@@ -229,7 +234,10 @@ private:
      * @brief Number of cores per link.
      */
     unsigned int numberCores;
-    
+    /**
+     * @brief Number of routes. This parameter is used for more than one route
+     * per network node pair.
+     */
     unsigned int numberRoutes;
     
     /**
