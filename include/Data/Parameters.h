@@ -184,6 +184,11 @@ public:
      * @param numberRoutes Number of routes.
      */
     void SetNumberRoutes(unsigned int numberRoutes);
+    
+    double GetMaxSectionLegnth() const;
+
+    void SetMaxSectionLegnth(double maxSectionLegnth);
+
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -239,6 +244,8 @@ private:
      * per network node pair.
      */
     unsigned int numberRoutes;
+    
+    double maxSectionLegnth;
     
     /**
      * @brief Calculate the load step.

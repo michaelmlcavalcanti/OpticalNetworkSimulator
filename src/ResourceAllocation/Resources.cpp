@@ -48,13 +48,16 @@ void Resources::CreateOfflineModulation() {
     unsigned int sizeNumNodes = this->allRoutes.size();
     unsigned int sizeRoutes;
     subRoutesModulation.resize(sizeTraffic);
+    numSlots.resize(sizeTraffic);
     
     for(unsigned trIndex = 0; trIndex < sizeTraffic; trIndex++){
         subRoutesModulation.at(trIndex).resize(sizeNumNodes);
+        numSlots.at(trIndex).resize(sizeNumNodes);
         
         for(unsigned nodeIndex = 0; nodeIndex < sizeNumNodes; nodeIndex++){
             sizeRoutes = allRoutes.at(nodeIndex).size();
             subRoutesModulation.at(trIndex).at(nodeIndex).resize(sizeRoutes);
+            numSlots.at(trIndex).at(nodeIndex).resize(sizeRoutes);
             
             for(unsigned rouIndex = 0; rouIndex < sizeRoutes; rouIndex++){
                 
@@ -62,6 +65,7 @@ void Resources::CreateOfflineModulation() {
                     continue;
                 subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
                                    .resize(1);
+                numSlots.at(trIndex).at(nodeIndex).at(rouIndex).resize(1);
                 subRoutesModulation.at(trIndex).at(nodeIndex).at(rouIndex)
                                    .front().resize(1, InvalidModulation);
                 
@@ -338,9 +342,15 @@ unsigned routeIndex) {
         if(resourceAlloc->CheckOSNR(testCall.get())){
             subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
                                .front() = testCall->GetModulation();
+            numSlots.at(trIndex).at(nodeIndex).at(routeIndex).front() = 
+                    testCall->GetNumberSlots();
             break;
         }
     }
+    
+    if(subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
+                          .front() == InvalidModulation)
+        int x = 0;
 }
 
 void Resources::RemoveInvalidRegOptions() {

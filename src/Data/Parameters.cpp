@@ -41,6 +41,8 @@ const Parameters* parameters) {
     if(parameters->simulType->GetOptions()->GetRoutingOption() ==
     RoutingYEN)
         ostream << "K: " << parameters->GetNumberRoutes() << std::endl;
+    ostream << "Maximum section length (km): "
+            << parameters->GetMaxSectionLegnth()/1E3 << std::endl;
     
     return ostream;
 }
@@ -49,7 +51,7 @@ Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0),
 maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
 numberReqMax(0.0), mu(0.0), numberBloqMax(0),
-slotBandwidth(0.0), numberSlots(0), numberCores(0) {
+slotBandwidth(0.0), numberSlots(0), numberCores(0), maxSectionLegnth(0.0) {
     
 }
 
@@ -89,6 +91,9 @@ void Parameters::Load() {
     std::cout << "Insert the value for K: ";
     std::cin >> auxUnsInt;
     this->SetNumberRoutes(auxUnsInt);
+    std::cout << "Insert the  maximum section length (km): ";
+    std::cin >> auxDouble;
+    this->SetMaxSectionLegnth(auxDouble);
     
     this->SetLoadPointUniform();
     
@@ -119,6 +124,8 @@ void Parameters::LoadFile() {
     this->SetNumberBloqMax(auxDouble);
     auxIfstream >> auxInt;
     this->SetNumberRoutes(auxInt);
+    auxIfstream >> auxDouble;
+    this->SetMaxSectionLegnth(auxDouble);
     
     this->SetLoadPointUniform();
 }
@@ -257,4 +264,13 @@ void Parameters::SetNumberRoutes(unsigned int numberRoutes) {
     assert(numberRoutes > 0);
     
     this->numberRoutes = numberRoutes;
+}
+
+double Parameters::GetMaxSectionLegnth() const {
+    return maxSectionLegnth;
+}
+
+void Parameters::SetMaxSectionLegnth(double maxSectionLegnth) {
+    assert(maxSectionLegnth > 0.0);
+    this->maxSectionLegnth = maxSectionLegnth*1E3;
 }

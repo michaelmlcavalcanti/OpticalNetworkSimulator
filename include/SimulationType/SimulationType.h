@@ -204,12 +204,20 @@ private:
      * Topology and CallGenerator.
      */
     void FinalizeAll();
-    
+    /**
+     * @brief Function to create a load the resource allocation object.
+     */
     void CreateLoadResourceAlloc();
     
-    
+    /**
+     * @brief Function to simulate for a specified total number of call 
+     * requests.
+     */
     void SimulateNumTotalReq();
-    
+    /**
+     * @brief Function to simulate for a specified number of blocked call
+     * requests.
+     */
     void SimulateNumBlocReq();
 public:
     /**

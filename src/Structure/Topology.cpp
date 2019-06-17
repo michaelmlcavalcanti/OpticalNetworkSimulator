@@ -120,12 +120,13 @@ void Topology::CreateLinks(std::ifstream& ifstream) {
     unsigned  int orNode, deNode, nSec;
     double length;
     unsigned int numCores = this->GetNumCores();
+    double maxSecLength = simulType->GetParameters()->GetMaxSectionLegnth();
     
     for(unsigned int a = 0; a < this->GetNumLinks(); ++a){
         ifstream >> orNode;
         ifstream >> deNode;
         ifstream >> length;
-        ifstream >> nSec;
+        nSec = std::ceil(length / maxSecLength);
         std::shared_ptr<Link> link;
         
         if(numCores > 1){

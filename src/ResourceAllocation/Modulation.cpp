@@ -28,7 +28,7 @@ Modulation::mapNumBitsModulation = boost::assign::map_list_of
     (QAM_64, 6);
 
 Modulation::Modulation(ResourceAlloc* resourAlloc, double slotBand)
-:resourAlloc(resourAlloc), slotBandwidth(slotBand), BER(1E-3), polarization(1),
+:resourAlloc(resourAlloc), slotBandwidth(slotBand), BER(1E-3), polarization(2),
 rollOff(0.0) {
     
 }
@@ -73,8 +73,7 @@ double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
 double Modulation::GetOSNRQAM(unsigned int M, double Rbps) {
     double snrb = this->GetsnrbQAM(M);
     
-    return General::LinearTodB((Rbps*snrb)/
-                               (this->polarization*this->slotBandwidth));
+    return General::LinearTodB((Rbps*snrb) / (2*this->slotBandwidth));
 }
 
 double Modulation::GetsnrbQAM(unsigned int M) {
