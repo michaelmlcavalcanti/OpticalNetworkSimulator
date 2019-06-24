@@ -316,6 +316,15 @@ std::ofstream& InputOutput::GetIniPopulationFile() {
     return this->initialPopulation;
 }
 
+std::ofstream& InputOutput::LoadTable() {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    table.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/Table.txt");
+    
+    return table;
+}
+
 void InputOutput::PrintProgressBar(unsigned int actual, unsigned int max) {
     double division = (double) actual / max;
     int pos = barWidth * division;

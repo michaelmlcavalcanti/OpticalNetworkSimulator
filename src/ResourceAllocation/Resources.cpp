@@ -21,6 +21,9 @@
 #include "../../include/Structure/Devices/Regenerator.h"
 #include "../../include/GeneralClasses/Def.h"
 
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Data/InputOutput.h"
+
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
 :allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0), 
 numSlotsTraffic(0), subRoutes(0), numReg(0), numSlots(0), 
@@ -71,6 +74,50 @@ void Resources::CreateOfflineModulation() {
                 
                 this->TestBestModulation(trIndex, nodeIndex, rouIndex);
             }
+        }
+    }
+}
+
+void Resources::Save() {
+    unsigned int sizeTraffic = resourceAlloc->GetTraffic()->
+                                              GetVecTraffic().size();
+    unsigned int numNodes = resourceAlloc->GetTopology()->GetNumNodes();
+    std::ofstream &table = resourceAlloc->GetSimulType()->
+                                          GetInputOutput()->LoadTable();
+    unsigned numRoutes = allRoutes.at(1).size();
+    std::vector<double> traffic = resourceAlloc->GetTraffic()->GetVecTraffic();
+    std::vector<unsigned int> vecPosSlots = resourceAlloc->
+    GetModulation()->GetPossibleSlots(traffic);
+    std::vector<double> auxVecNum(vecPosSlots.size(), 0.0);
+    
+    table << numNodes << std::endl;
+    table << vecPosSlots.size() << std::endl;
+    
+    for(auto it: vecPosSlots)
+        table << it << "\t";
+    table << std::endl;
+    
+    for(unsigned orN = 0; orN < numNodes; orN++){
+        for(unsigned deN = 0; deN < numNodes; deN++){
+            if(orN == deN)
+                continue;
+            
+            for(unsigned trIndex = 0; trIndex < sizeTraffic; trIndex++){
+                for(unsigned rouIndex = 0; rouIndex < numRoutes; rouIndex++){
+                    for(unsigned a = 0; a < vecPosSlots.size(); a++){
+                        if(vecPosSlots.at(a) == numSlots.at(trIndex)
+                        .at(orN*numNodes+deN).at(rouIndex).front()){
+                            auxVecNum.at(a) = auxVecNum.at(a)+1.0;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            for(auto it: auxVecNum)
+                table << it << "\t";
+            std::fill(auxVecNum.begin(), auxVecNum.end(), 0.0);
+            table << std::endl;
         }
     }
 }

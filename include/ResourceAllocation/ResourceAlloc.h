@@ -178,6 +178,8 @@ public:
     
     Resources* GetResources() const;
     
+    std::shared_ptr<Modulation> GetModulation() const;
+
     Traffic* GetTraffic() const;
     
     void SetTraffic(Traffic* traffic);

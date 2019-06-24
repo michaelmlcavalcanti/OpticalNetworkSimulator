@@ -17,7 +17,7 @@
 
 #include "include/Kernel.h"
 
-    
+
 /**
  * @brief main function
  * @param argc Number of arguments

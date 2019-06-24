@@ -84,6 +84,7 @@ void ResourceAlloc::AdditionalSettings() {
         }
         else if(options->GetResourAllocOption() == ResourAllocRMSA){
             this->resources->CreateOfflineModulation();
+            this->resources->Save();
         }
     }
     this->CreateRsaOrder();
@@ -320,6 +321,10 @@ void ResourceAlloc::SetTopology(Topology* topology) {
 
 Resources* ResourceAlloc::GetResources() const {
     return resources.get();
+}
+
+std::shared_ptr<Modulation> ResourceAlloc::GetModulation() const {
+    return modulation;
 }
 
 Traffic* ResourceAlloc::GetTraffic() const {

@@ -37,6 +37,8 @@ public:
     
     void CreateOfflineModulation();
     
+    void Save();
+    
     std::vector<TypeModulation> GetModulationFormat(Call* call);
     
     std::vector<unsigned int> GetNumRegenerators(Call* call);

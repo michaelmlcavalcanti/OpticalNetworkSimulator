@@ -180,8 +180,8 @@ std::vector<double>& traffic) {
         posSlots.end() ){
             posSlots.push_back(numSlots);
         }
-        
     }
+    std::sort(posSlots.begin(), posSlots.end());
     
     return posSlots;
 }
@@ -197,7 +197,8 @@ std::vector<double>& traffic) {
     mod = TypeModulation(mod+1)){
         for(unsigned a = 0; a < traffic.size(); a++){
             bitRate = traffic.at(a);
-            bandwidth = this->BandwidthQAM(mod, bitRate);
+            bandwidth = this->BandwidthQAM(mapNumBitsModulation.at(mod), 
+                                           bitRate);
             numSlots = std::ceil(bandwidth/this->slotBandwidth);
             
             if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 
@@ -206,6 +207,7 @@ std::vector<double>& traffic) {
             }
         }
     }
+    std::sort(posSlots.begin(), posSlots.end());
     
     return posSlots;
 }

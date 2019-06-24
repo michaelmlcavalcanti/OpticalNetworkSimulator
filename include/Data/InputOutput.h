@@ -108,6 +108,8 @@ public:
      */
     std::ofstream& GetIniPopulationFile();
     
+    std::ofstream& LoadTable();
+    
     /**
      * @brief Function to print the progress bar, based in 
      * the inputs proportion.
@@ -160,6 +162,8 @@ private:
     std::ofstream worstIndividuals;
     
     std::ofstream initialPopulation;
+    
+    std::ofstream table;
     /**
      * @brief Size of the progress bar.
      */
