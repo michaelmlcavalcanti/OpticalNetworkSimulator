@@ -178,7 +178,7 @@ public:
     
     Resources* GetResources() const;
     
-    std::shared_ptr<Modulation> GetModulation() const;
+    Modulation* GetModulation() const;
 
     Traffic* GetTraffic() const;
     

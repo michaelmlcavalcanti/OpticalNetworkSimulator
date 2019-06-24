@@ -323,8 +323,8 @@ Resources* ResourceAlloc::GetResources() const {
     return resources.get();
 }
 
-std::shared_ptr<Modulation> ResourceAlloc::GetModulation() const {
-    return modulation;
+Modulation* ResourceAlloc::GetModulation() const {
+    return modulation.get();
 }
 
 Traffic* ResourceAlloc::GetTraffic() const {
