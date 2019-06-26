@@ -18,6 +18,7 @@
 #include <vector>
 
 class Regenerator;
+class BVT;
 class Call;
 
 #include "Node.h"
@@ -32,10 +33,6 @@ public:
     
     
     void Initialize() override;
-    
-    void ConnectRegenerator(Call* call);
-    
-    void ReleaseRegenerator(Call* call);
     
     
     unsigned int GetNumRegenerator() const;
@@ -54,6 +51,12 @@ public:
     
     std::vector<std::shared_ptr<Regenerator>> GetFreeRegenenerators(
                                               double bitRate) const;
+    
+    
+    unsigned int GetNumTransponder() const;
+
+    void SetNumTransponder(unsigned int numTransponder);
+
 private:
     
     void CreateRegenerators();
@@ -66,6 +69,11 @@ private:
     unsigned int numFreeRegenerators;
     
     std::vector<std::shared_ptr<Regenerator>> regenerators;
+    
+    
+    unsigned int numTransponder;
+    
+    std::vector<std::shared_ptr<BVT>> transponders;
 };
 
 #endif /* NODEDEVICES_H */

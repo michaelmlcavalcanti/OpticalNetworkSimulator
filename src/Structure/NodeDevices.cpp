@@ -16,8 +16,8 @@
 
 NodeDevices::NodeDevices(Topology* topPointer, NodeId nodeId)
 :Node(topPointer, nodeId), numRegenerator(0), numFreeRegenerators(0),
-regenerators(0) {
-
+regenerators(0), transponders(0) {
+    
 }
 
 NodeDevices::~NodeDevices() {
@@ -36,16 +36,6 @@ void NodeDevices::Initialize() {
     for(auto it: this->regenerators){
         it->Initialize();
     }
-}
-
-void NodeDevices::ConnectRegenerator(Call* call) {
-    //Create functions to connect the regenerators, and store them in the
-    //CallDevices
-}
-
-void NodeDevices::ReleaseRegenerator(Call* call) {
-    //Create functions to connect the regenerators, and store them in the
-    //CallDevices
 }
 
 unsigned int NodeDevices::GetNumRegenerator() const {
@@ -99,6 +89,14 @@ GetFreeRegenenerators(double bitRate) const {
     }
     
     return vecReg;
+}
+
+unsigned int NodeDevices::GetNumTransponder() const {
+    return numTransponder;
+}
+
+void NodeDevices::SetNumTransponder(unsigned int numTransponder) {
+    this->numTransponder = numTransponder;
 }
 
 void NodeDevices::CreateRegenerators() {

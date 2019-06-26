@@ -37,14 +37,14 @@ void ResourceDeviceAlloc::Load() {
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     
-    if(this->options->GetRegenerationOption() == RegenerationEnabled)
-        this->RoutingRegSpecAlloc(callDev);
+    if(this->options->GetRegenerationOption() == RegenerationVirtualized)
+        this->RoutingVirtRegSpecAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
 }
 
-void ResourceDeviceAlloc::RoutingRegSpecAlloc(CallDevices* call) {
+void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
     //Tuple with route index and set of subRoutes index
     std::vector<std::tuple<unsigned, unsigned>> routeSubIndexes(0);

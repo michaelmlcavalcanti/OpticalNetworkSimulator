@@ -12,6 +12,7 @@
 0
 0
 0
+0
 1
 
 1-Topology
@@ -67,17 +68,21 @@
 11-Devices Option
     0 - Disabled
     1 - Enabled
-12-Regeneration Option
+12-Transponder Option
     0 - Disabled
     1 - Enabled
-13-Regenerator Placement Option
+13-Regeneration Option
+    0 - Disabled
+    1 - Virtualized
+    2 - Back-to-back
+14-Regenerator Placement Option
     0 - Invalid
     1 - Uniform
-14-Regenerator Assignment Option
+15-Regenerator Assignment Option
     0 - Invalid
     1 - Minimum regeneration
     2 - Maximum regeneration
     3 - Walkowiak metric
-15-Stop Criteria
+16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests

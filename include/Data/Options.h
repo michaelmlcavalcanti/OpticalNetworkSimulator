@@ -150,12 +150,18 @@ enum DevicesOption {
     DevicesEnabled
 };
 
+enum TransponderOption {
+    TransponderDisabled,
+    TransponderEnabled
+};
+
 /**
  * @brief Regeneration option, with default as disabled.
  */
 enum RegenerationOption {
     RegenerationDisabled,
-    RegenerationEnabled
+    RegenerationVirtualized,
+    RegenerationBackToBack
 };
 
 /**
@@ -395,6 +401,12 @@ public:
     std::string GetDevicesOptionName() const;
 
     void SetDevicesOption(DevicesOption devicesOption);
+    
+    TransponderOption GetTransponderOption() const;
+
+    std::string GetTransponderOptionName() const;
+    
+    void SetTransponderOption(TransponderOption transponderOption);
 
     RegenerationOption GetRegenerationOption() const;
     
@@ -466,6 +478,8 @@ private:
     GAOption GaOption;
     
     DevicesOption devicesOption;
+    
+    TransponderOption transponderOption;
     
     RegenerationOption regenerationOption;
     
@@ -539,6 +553,9 @@ private:
     
     static const boost::unordered_map<DevicesOption,
     std::string> mapDevicesOption;
+    
+    static const boost::unordered_map<TransponderOption,
+    std::string> mapTransponderOption;
     
     static const boost::unordered_map<RegenerationOption,
     std::string> mapRegenerationOption;

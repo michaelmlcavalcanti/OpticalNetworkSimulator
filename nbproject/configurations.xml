@@ -110,7 +110,9 @@
         <itemPath>include/Structure/NodeDevices.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/Structure/Devices/BVT.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/Structure/Devices/SBVT_TSS_ML.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -179,7 +181,9 @@
         <itemPath>src/Structure/NodeDevices.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/Structure/Devices/BVT.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/Structure/Devices/SBVT_TSS_ML.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -433,9 +437,16 @@
       </item>
       <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Structure/Devices/BVT.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Devices/Device.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Devices/Regenerator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Structure/Devices/SBVT_TSS_ML.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -560,9 +571,16 @@
       </item>
       <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Structure/Devices/BVT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Structure/Devices/Device.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Devices/Regenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/SBVT_TSS_ML.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -815,9 +833,16 @@
       </item>
       <item path="include/Structure/Core.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Structure/Devices/BVT.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Structure/Devices/Device.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Devices/Regenerator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Structure/Devices/SBVT_TSS_ML.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -942,9 +967,16 @@
       </item>
       <item path="src/Structure/Core.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Structure/Devices/BVT.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Structure/Devices/Device.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Devices/Regenerator.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Structure/Devices/SBVT_TSS_ML.cpp"
             ex="false"
             tool="1"
             flavor2="0">

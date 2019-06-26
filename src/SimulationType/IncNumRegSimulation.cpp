@@ -17,6 +17,7 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Structure/Devices/Device.h"
 
 IncNumRegSimulation::IncNumRegSimulation(unsigned int simulIndex, 
 TypeSimulation typeSimulation)
@@ -43,7 +44,7 @@ void IncNumRegSimulation::Run() {
     for(unsigned a = minNumReg; a <= maxNumReg; a += stepNumReg){
         this->GetData()->SetActualIndex(actualPoint);
         vecNumReg.push_back(a);
-        this->GetTopology()->SetNumRegenerators(a);
+        this->GetTopology()->SetNumDevices(a, DeviceRegenerator);
         
         this->RunBase();
         std::cout << "Number of regenerators: " << a << std::endl;

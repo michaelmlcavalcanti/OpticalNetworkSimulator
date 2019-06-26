@@ -35,6 +35,8 @@ public:
     
     
     Topology* GetTopology() const;
+    
+    DeviceType GetType() const;
 private:
     
     Topology* topology;

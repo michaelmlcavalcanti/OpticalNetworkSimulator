@@ -50,6 +50,7 @@ private:
     TIME onTime;
     
     TIME totalOnTime;
+private:
     
     static const double trafficSupported;
 };

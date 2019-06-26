@@ -203,7 +203,7 @@ void SimulationType::CreateLoadResourceAlloc() {
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
     else{
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
-        topology->SetNumRegenerators(0);
+        topology->SetNumDevices(0, DeviceRegenerator);
     }
     
     this->resourceAlloc->Load();

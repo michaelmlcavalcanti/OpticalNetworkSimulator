@@ -32,7 +32,7 @@ public:
     void ResourAlloc(Call* call) override;
 private:
     
-    void RoutingRegSpecAlloc(CallDevices* call);
+    void RoutingVirtRegSpecAlloc(CallDevices* call);
     
     void SetRegChoiceOrder(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);

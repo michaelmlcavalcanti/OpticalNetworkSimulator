@@ -92,10 +92,16 @@ Options::mapDevicesOption = boost::assign::map_list_of
     (DevicesDisabled, "Disabled")
     (DevicesEnabled, "Enabled");
 
+const boost::unordered_map<TransponderOption, std::string>
+Options::mapTransponderOption = boost::assign::map_list_of
+    (TransponderDisabled, "Disabled")
+    (TransponderEnabled, "Enabled");
+
 const boost::unordered_map<RegenerationOption, std::string>
 Options::mapRegenerationOption = boost::assign::map_list_of
     (RegenerationDisabled, "Disabled")
-    (RegenerationEnabled, "Enabled");
+    (RegenerationVirtualized, "Virtualized")
+    (RegenerationBackToBack, "Back-to-back");
 
 const boost::unordered_map<RegPlacementOption, std::string>
 Options::mapRegPlacOption = boost::assign::map_list_of
@@ -139,10 +145,12 @@ const Options* options) {
             << std::endl;
     ostream << "Devices: " << options->GetDevicesOptionName()
             << std::endl;
+    ostream << "Transponders: " << options->GetTransponderOptionName()
+            << std::endl;
     ostream << "Regeneration: " << options->GetRegenerationOptionName()
             << std::endl;
     
-    if(options->GetRegenerationOption() == RegenerationEnabled){
+    if(options->GetRegenerationOption() == RegenerationVirtualized){
         ostream << "Regeneration Placement: " << options->GetRegPlacOptionName()
                 << std::endl;
         ostream << "Regeneration Assignment: " << options->GetRegAssOptionName()
@@ -161,8 +169,9 @@ linkCostType(Invalid), trafficOption(TrafficInvalid),
 resourAllocOption(ResourAllocInvalid), phyLayerOption(PhyLayerDisabled),
 networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
-regenerationOption(RegenerationDisabled), regPlacOption(RegPlacInvalid),
-regAssOption(RegAssInvalid), stopCriteria(NumCallRequestsMaximum) {
+transponderOption(TransponderDisabled), regenerationOption(RegenerationDisabled), 
+regPlacOption(RegPlacInvalid), regAssOption(RegAssInvalid), 
+stopCriteria(NumCallRequestsMaximum) {
     
 }
 
@@ -265,15 +274,25 @@ void Options::Load() {
     std::cout << "Devices Option" << std::endl;
     for(DevicesOption a = DevicesDisabled; a <= DevicesEnabled;
     a = DevicesOption(a+1)){
-        std::cout << a << "-" << this->mapDevicesOption.at(this->devicesOption)
+        std::cout << a << "-" << this->mapDevicesOption.at(a)
                   << std::endl;
     }
     std::cout << "Insert the Devices option: ";
     std::cin >> auxInt;
     this->SetDevicesOption((DevicesOption) auxInt);
     
+    std::cout << "Transponder Option" << std::endl;
+    for(TransponderOption a = TransponderDisabled; a <= TransponderEnabled;
+    a = TransponderOption(a+1)){
+        std::cout << a << "-" << mapTransponderOption.at(a)
+                  << std::endl;
+    }
+    std::cout << "Insert the Transponder option: ";
+    std::cin >> auxInt;
+    this->SetTransponderOption((TransponderOption) auxInt);
+    
     std::cout << "Regeneration Option" << std::endl;
-    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationEnabled;
+    for(RegenerationOption a = RegenerationDisabled; a <= RegenerationBackToBack;
     a = RegenerationOption(a+1)){
         std::cout << a << "-" << this->mapRegenerationOption.at(a) << std::endl;
     }
@@ -338,6 +357,8 @@ void Options::LoadFile() {
     this->SetGaOption((GAOption) auxInt);
     auxIfstream >> auxInt;
     this->SetDevicesOption((DevicesOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetTransponderOption((TransponderOption) auxInt);
     auxIfstream >> auxInt;
     this->SetRegenerationOption((RegenerationOption) auxInt);
     auxIfstream >> auxInt;
@@ -530,6 +551,18 @@ std::string Options::GetDevicesOptionName() const {
 
 void Options::SetDevicesOption(DevicesOption devicesOption) {
     this->devicesOption = devicesOption;
+}
+
+TransponderOption Options::GetTransponderOption() const {
+    return transponderOption;
+}
+
+std::string Options::GetTransponderOptionName() const {
+    return mapTransponderOption.at(this->transponderOption);
+}
+
+void Options::SetTransponderOption(TransponderOption transponderOption) {
+    this->transponderOption = transponderOption;
 }
 
 RegenerationOption Options::GetRegenerationOption() const {

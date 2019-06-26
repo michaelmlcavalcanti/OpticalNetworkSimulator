@@ -54,8 +54,9 @@ const Topology* topology) {
 }
 
 Topology::Topology(SimulationType* simulType) 
-:simulType(simulType), vecNodes(0), vecLinks(0), numNodes(0), numLinks(0), 
-numSlots(0), numCores(0), maxLength(0.0), numRegenerators(0) {
+:simulType(simulType), options(nullptr), vecNodes(0), vecLinks(0), numNodes(0), 
+numLinks(0), numSlots(0), numCores(0), maxLength(0.0), numRegenerators(0),
+numTransponders(0) {
 
 }
 
@@ -75,6 +76,7 @@ void Topology::LoadFile() {
     std::ifstream auxIfstream;
     unsigned int auxInt;
     
+    options = simulType->GetOptions();
     this->simulType->GetInputOutput()->LoadTopology(auxIfstream);
     
     auxIfstream >> auxInt;
@@ -106,7 +108,7 @@ void Topology::CreateNodes(std::ifstream& ifstream) {
     
     for(unsigned int a = 0; a < this->GetNumNodes(); ++a){
         
-        if(this->simulType->GetOptions()->GetDevicesOption() == DevicesEnabled)
+        if(options->GetDevicesOption() == DevicesEnabled)
             node = std::make_shared<NodeDevices>(this, a);
         else
             node = std::make_shared<Node>(this, a);
@@ -205,17 +207,42 @@ double Topology::GetMaxLength() const {
     return maxLength;
 }
 
+void Topology::SetNumDevices(unsigned int numDevices, DeviceType type) {
+    
+    switch(type){
+        case DeviceRegenerator:
+            this->SetNumRegenerators(numDevices);
+            break;
+        case DeviceTransponder:
+            this->SetNumTransponders(numDevices);
+            break;
+        default:
+            std::cerr << "Invalid device type" << std::endl;
+            std::abort();
+    }
+    this->DistributeDevices(type);
+}
+
 unsigned int Topology::GetNumRegenerators() const {
     return numRegenerators;
 }
 
 void Topology::SetNumRegenerators(unsigned int numRegenerators) {
-    assert((this->simulType->GetOptions()->GetDevicesOption() != 
-           DevicesDisabled) && this->simulType->GetOptions()->
-           GetRegenerationOption() != RegenerationDisabled);
+    assert((options->GetDevicesOption() != DevicesDisabled) && 
+            options->GetRegenerationOption() != RegenerationDisabled);
     
     this->numRegenerators = numRegenerators;
-    this->DistributeRegenerators();
+}
+
+unsigned int Topology::GetNumTransponders() const {
+    return numTransponders;
+}
+
+void Topology::SetNumTransponders(unsigned int numTransponders) {
+    assert((options->GetDevicesOption() != DevicesDisabled) && 
+           (options->GetTransponderOption() != TransponderDisabled));
+    
+    this->numTransponders = numTransponders;
 }
 
 void Topology::SetMaxLength() {
@@ -246,7 +273,7 @@ void Topology::SetAllLinksWorking() {
 
 void Topology::SetLinksIniCost() {
     
-    switch(this->simulType->GetOptions()->GetLinkCostType()){
+    switch(options->GetLinkCostType()){
         case MinHops:
             for(auto it : vecLinks){
                 if(it == nullptr)
@@ -500,7 +527,7 @@ unsigned int Topology::GetNumSlots(Route* route) const {
 
 void Topology::Connect(Call* call) {
     
-    switch(simulType->GetOptions()->GetDevicesOption()){
+    switch(options->GetDevicesOption()){
         case DevicesDisabled:
             this->ConnectWithoutDevices(call);
             break;
@@ -541,10 +568,9 @@ void Topology::ConnectWithoutDevices(Call* call) {
 
 void Topology::ConnectWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
-    RegenerationOption regOption = simulType->GetOptions()
-                                            ->GetRegenerationOption();
+    RegenerationOption regOption = options->GetRegenerationOption();
     
-    if(regOption == RegenerationEnabled){
+    if(regOption == RegenerationVirtualized){
         //Connect transparent segments
         std::vector<Call*> transpSeg = callDev->GetTranspSegments();
         for(auto it: transpSeg){
@@ -562,7 +588,7 @@ void Topology::ConnectWithDevices(Call* call) {
 
 void Topology::Release(Call* call) {
     
-    switch(simulType->GetOptions()->GetDevicesOption()){
+    switch(options->GetDevicesOption()){
         case DevicesDisabled:
             this->ReleaseWithoutDevices(call);
             break;
@@ -604,10 +630,9 @@ void Topology::ReleaseWithoutDevices(Call* call) {
 
 void Topology::ReleaseWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
-    RegenerationOption regOption = simulType->GetOptions()
-                                            ->GetRegenerationOption();
+    RegenerationOption regOption = options->GetRegenerationOption();
     
-    if(regOption == RegenerationEnabled){
+    if(regOption == RegenerationVirtualized){
         //Release transparent segments
         std::vector<Call*> transpSeg = callDev->GetTranspSegments();
         for(auto it: transpSeg){
@@ -627,21 +652,46 @@ SimulationType* Topology::GetSimulType() const {
     return simulType;
 }
 
+void Topology::DistributeDevices(DeviceType type) {
+    
+    switch(type){
+        case DeviceRegenerator:
+            this->DistributeRegenerators();
+            break;
+        case DeviceTransponder:
+            this->DistributeTransponders();
+            break;
+        default:
+            std::cerr << "Invalid device type" << std::endl;
+            std::abort();
+    }
+}
+
 void Topology::DistributeRegenerators() {
     unsigned int numRegPerNode;
     
-    switch(this->simulType->GetOptions()->GetRegPlacOption()){
+    switch(options->GetRegPlacOption()){
         case RegPlacUniform:
             numRegPerNode = numRegenerators / numNodes;
             
             for(unsigned a = 0; a < numNodes; a++){
-                NodeDevices* node = 
-                dynamic_cast<NodeDevices*>(vecNodes.at(a).get());
+                NodeDevices* node = dynamic_cast<NodeDevices*>(vecNodes.at(a)
+                                                                       .get());
                 node->SetNumRegenerator(numRegPerNode);
             }
             break;
         default:
             std::cerr << "Invalid regenerators distribution" << std::endl;
             std::abort();
+    }
+}
+
+void Topology::DistributeTransponders() {
+    unsigned int numTransPerNode;
+    
+    numTransPerNode = numTransponders / numNodes;
+    
+    for(unsigned a = 0; a < numNodes; a++){
+        NodeDevices* node = dynamic_cast<NodeDevices*>(vecNodes.at(a).get());
     }
 }

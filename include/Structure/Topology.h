@@ -25,9 +25,12 @@ class Link;
 class Route;
 class Call;
 class CallDevices;
+class Options;
+
+#include "Devices/Device.h"
 
 /**
- * @brief Class Topology represents the topology of a simulation.
+ * @brief Class Topology represents the physical topology of the simulation.
  */
 class Topology {
     
@@ -123,9 +126,34 @@ public:
      */
     double GetMaxLength() const;
     
+    /**
+     * @brief Function to set the total number of a specified device type.
+     * @param numDevices Total number of devices.
+     * @param type Devices type.
+     */
+    void SetNumDevices(unsigned int numDevices, DeviceType type);
+    /**
+     * @brief Function to get the number of virtualized regenerators in the 
+     * network.
+     * @return Number of virtualized regenerators.
+     */
     unsigned int GetNumRegenerators() const;
-
+    /**
+     * @brief Function to set the number of virtualized regenerators in the 
+     * network.
+     * @param numRegenerators Number of virtualized regenerators.
+     */
     void SetNumRegenerators(unsigned int numRegenerators);
+    /**
+     * @brief Function to get the number of BVTs in the network.
+     * @return Number of BVTs.
+     */
+    unsigned int GetNumTransponders() const;
+    /**
+     * @brief Function to set the number of BVTs in the network.
+     * @param numTransponders Number of BVTs.
+     */
+    void SetNumTransponders(unsigned int numTransponders);
 
     /**
      * @brief Set additional settings of this topology
@@ -232,13 +260,32 @@ public:
      * @return True if the lightpath is valid.
      */
     bool IsValidLigthPath(Call* call);
-    
+    /**
+     * @brief Function to check if a lightpath with devices is valid. This 
+     * function checks all transparent segments.
+     * @param call Call with devices to check.
+     * @return True if all transparent segments lightpaths are avalid.
+     */
     bool IsValidLigthPath(CallDevices* call);
-    
+    /**
+     * @brief Check if there is enough available regenerators to connect the 
+     * call request. Set the list of regenerators, if found, in the call 
+     * parameters.
+     * @param call Call request with devices.
+     * @return True if the function found a possible list of regenerators.
+     */
     bool CheckInsertFreeRegenerators(CallDevices* call);
-    
+    /**
+     * @brief Function to get the number of occupied slots in all route links.
+     * @param route Route to check.
+     * @return Number of slots occupied in the route.
+     */
     unsigned int GetNumUsedSlots(Route* route) const;
-    
+    /**
+     * @brief Function to get the total number of slots in all route links.
+     * @param route Route to check.
+     * @return Number os slots in the route.
+     */
     unsigned int GetNumSlots(Route* route) const;
     
     /**
@@ -257,13 +304,25 @@ public:
      */
     SimulationType* GetSimulType() const;
 private:
-    
+    /**
+     * @brief Function to connect a call request without devices usage.
+     * @param call Call request.
+     */
     void ConnectWithoutDevices(Call* call);
-    
+    /**
+     * @brief Function to connect a call request with devices usage.
+     * @param call Call request.
+     */
     void ConnectWithDevices(Call* call);
-    
+    /**
+     * @brief Function to release a call request without devices usage.
+     * @param call Call request.
+     */
     void ReleaseWithoutDevices(Call* call);
-    
+    /**
+     * @brief Function to release a call request with devices usage.
+     * @param call Call request.
+     */
     void ReleaseWithDevices(Call* call);
     /**
      * @brief Calculate the maximum link in this topology
@@ -276,12 +335,28 @@ private:
      */
     void SetLinksIniCost();
     
+    /**
+     * @brief Function to distribute the device among the network.
+     * @param type Device type.
+     */
+    void DistributeDevices(DeviceType type);
+    /**
+     * @brief Function to distribute the regenerators among the network nodes.
+     */
     void DistributeRegenerators();
+    /**
+     * @brief Function to distribute the BVTs among the network nodes.
+     */
+    void DistributeTransponders();
 private:
     /**
      * @brief A pointer to the simulation this object belong
      */
     SimulationType* simulType;
+    /**
+     * @brief Options of this simulation.
+     */
+    Options* options;
     /**
      * @brief Vector with all topology nodes 
      */
@@ -310,8 +385,14 @@ private:
      * @brief Length of the longest link
      */
     double maxLength;
-    
+    /**
+     * @brief Number of virtualized regenerators in the network.
+     */
     unsigned int numRegenerators;
+    /**
+     * @brief Number of transponders in the network.
+     */
+    unsigned int numTransponders;
 };
 
 #endif /* TOPOLOGY_H */

@@ -77,7 +77,7 @@ void ResourceAlloc::AdditionalSettings() {
             this->SetNumSlotsTraffic();
         }
         
-        if(this->options->GetRegenerationOption() == RegenerationEnabled){
+        if(this->options->GetRegenerationOption() != RegenerationDisabled){
             assert(options->GetPhyLayerOption() == PhyLayerEnabled);
             assert(options->GetResourAllocOption() == ResourAllocRMSA);
             this->resources->CreateRegResources();
