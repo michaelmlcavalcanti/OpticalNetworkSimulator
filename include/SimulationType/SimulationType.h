@@ -209,6 +209,8 @@ private:
      */
     void CreateLoadResourceAlloc();
     
+    void SetNumberOfDevices();
+    
     /**
      * @brief Function to simulate for a specified total number of call 
      * requests.

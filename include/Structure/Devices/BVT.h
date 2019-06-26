@@ -27,7 +27,7 @@ public:
     virtual ~BVT();
     
     
-    void Initialize() override;
+    virtual void Initialize() override;
     
     virtual bool IsPossibleAllocate(Call* call) = 0;
 private:

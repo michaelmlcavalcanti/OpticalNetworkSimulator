@@ -24,6 +24,10 @@ SBVT_TSS_ML::~SBVT_TSS_ML() {
     
 }
 
+void SBVT_TSS_ML::Initialize() {
+    BVT::Initialize();
+}
+
 bool SBVT_TSS_ML::IsPossibleAllocate(Call* call) {
     return true;
 }

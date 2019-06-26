@@ -223,28 +223,6 @@ void Topology::SetNumDevices(unsigned int numDevices, DeviceType type) {
     this->DistributeDevices(type);
 }
 
-unsigned int Topology::GetNumRegenerators() const {
-    return numRegenerators;
-}
-
-void Topology::SetNumRegenerators(unsigned int numRegenerators) {
-    assert((options->GetDevicesOption() != DevicesDisabled) && 
-            options->GetRegenerationOption() != RegenerationDisabled);
-    
-    this->numRegenerators = numRegenerators;
-}
-
-unsigned int Topology::GetNumTransponders() const {
-    return numTransponders;
-}
-
-void Topology::SetNumTransponders(unsigned int numTransponders) {
-    assert((options->GetDevicesOption() != DevicesDisabled) && 
-           (options->GetTransponderOption() != TransponderDisabled));
-    
-    this->numTransponders = numTransponders;
-}
-
 void Topology::SetMaxLength() {
     
     for(auto it : this->vecLinks){
@@ -652,6 +630,20 @@ SimulationType* Topology::GetSimulType() const {
     return simulType;
 }
 
+void Topology::SetNumRegenerators(unsigned int numRegenerators) {
+    assert((options->GetDevicesOption() != DevicesDisabled) && 
+            options->GetRegenerationOption() != RegenerationDisabled);
+    
+    this->numRegenerators = numRegenerators;
+}
+
+void Topology::SetNumTransponders(unsigned int numTransponders) {
+    assert((options->GetDevicesOption() != DevicesDisabled) && 
+           (options->GetTransponderOption() != TransponderDisabled));
+    
+    this->numTransponders = numTransponders;
+}
+
 void Topology::DistributeDevices(DeviceType type) {
     
     switch(type){
@@ -693,5 +685,6 @@ void Topology::DistributeTransponders() {
     
     for(unsigned a = 0; a < numNodes; a++){
         NodeDevices* node = dynamic_cast<NodeDevices*>(vecNodes.at(a).get());
+        node->SetNumTransponder(numTransPerNode);
     }
 }

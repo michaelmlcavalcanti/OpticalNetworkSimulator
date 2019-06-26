@@ -64,6 +64,7 @@ void SimulationType::Load() {
     this->GetData()->Initialize();
     this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
+    this->SetNumberOfDevices();
 }
 
 void SimulationType::LoadFile() {
@@ -74,6 +75,7 @@ void SimulationType::LoadFile() {
     this->GetData()->Initialize();
     this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
+    this->SetNumberOfDevices();
 }
 
 void SimulationType::Print() {
@@ -201,12 +203,15 @@ void SimulationType::FinalizeAll() {
 void SimulationType::CreateLoadResourceAlloc() {
     if(this->options->GetDevicesOption() == DevicesDisabled)
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
-    else{
+    else
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
-        topology->SetNumDevices(0, DeviceRegenerator);
-    }
     
     this->resourceAlloc->Load();
+}
+
+void SimulationType::SetNumberOfDevices() {
+    topology->SetNumDevices(0, DeviceRegenerator);
+    topology->SetNumDevices(0, DeviceTransponder);
 }
 
 void SimulationType::SimulateNumTotalReq() {

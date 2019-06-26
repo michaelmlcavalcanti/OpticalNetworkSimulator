@@ -59,9 +59,17 @@ public:
 
 private:
     
+    void InitializeRegnerators();
+    
+    void InitializeTransponders();
+    
     void CreateRegenerators();
     
     void DeleteRegenerators();
+    
+    void CreateTransponders();
+    
+    void DeleteTransponders();
 private:
     
     unsigned int numRegenerator;

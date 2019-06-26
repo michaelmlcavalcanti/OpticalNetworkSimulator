@@ -43,8 +43,8 @@ void IncNumRegSimulation::Run() {
     this->GetInputOutput()->PrintProgressBar(0, numPoints);
     for(unsigned a = minNumReg; a <= maxNumReg; a += stepNumReg){
         this->GetData()->SetActualIndex(actualPoint);
-        vecNumReg.push_back(a);
-        this->GetTopology()->SetNumDevices(a, DeviceRegenerator);
+        
+        this->SetNumberOfDevices(a);
         
         this->RunBase();
         std::cout << "Number of regenerators: " << a << std::endl;
@@ -81,4 +81,21 @@ void IncNumRegSimulation::Help() {
               << "This type of simulation increase the total number of "
               << "regenerators in the network and analyzes its performance. " 
               << std::endl << std::endl;
+}
+
+void IncNumRegSimulation::SetNumberOfDevices(unsigned int numDevices) {
+    DeviceType type = DeviceRegenerator;
+    vecNumReg.push_back(numDevices);
+    
+    switch(type){
+        case DeviceRegenerator:
+            this->GetTopology()->SetNumDevices(numDevices, DeviceRegenerator);
+            break;
+        case DeviceTransponder:
+            this->GetTopology()->SetNumDevices(numDevices, DeviceTransponder);
+            break;
+        default:
+            std::cerr << "Invalid device type" << std::endl;
+            std::abort();
+    }
 }

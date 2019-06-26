@@ -15,6 +15,7 @@
 #define INCNUMREGSIMULATION_H
 
 #include "SimulationType.h"
+#include "../Structure/Devices/Device.h"
 
 /**
  * @brief Type of simulation that increase the number of regenerators in the
@@ -62,6 +63,13 @@ public:
      * @brief Prints a description of the simulation.
      */
     void Help() override;
+private:
+    /**
+     * @brief Function to set the number of devices in the network. The device
+     * type will be chosen...
+     * @param numDevices Total number of devices in the network.
+     */
+    void SetNumberOfDevices(unsigned int numDevices);
 private:
     /**
      * @brief Container with the total number of regenerators of each iteration.

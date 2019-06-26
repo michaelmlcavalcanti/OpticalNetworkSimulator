@@ -132,28 +132,6 @@ public:
      * @param type Devices type.
      */
     void SetNumDevices(unsigned int numDevices, DeviceType type);
-    /**
-     * @brief Function to get the number of virtualized regenerators in the 
-     * network.
-     * @return Number of virtualized regenerators.
-     */
-    unsigned int GetNumRegenerators() const;
-    /**
-     * @brief Function to set the number of virtualized regenerators in the 
-     * network.
-     * @param numRegenerators Number of virtualized regenerators.
-     */
-    void SetNumRegenerators(unsigned int numRegenerators);
-    /**
-     * @brief Function to get the number of BVTs in the network.
-     * @return Number of BVTs.
-     */
-    unsigned int GetNumTransponders() const;
-    /**
-     * @brief Function to set the number of BVTs in the network.
-     * @param numTransponders Number of BVTs.
-     */
-    void SetNumTransponders(unsigned int numTransponders);
 
     /**
      * @brief Set additional settings of this topology
@@ -335,6 +313,17 @@ private:
      */
     void SetLinksIniCost();
     
+    /**
+     * @brief Function to set the number of virtualized regenerators in the 
+     * network.
+     * @param numRegenerators Number of virtualized regenerators.
+     */
+    void SetNumRegenerators(unsigned int numRegenerators);
+    /**
+     * @brief Function to set the number of BVTs in the network.
+     * @param numTransponders Number of BVTs.
+     */
+    void SetNumTransponders(unsigned int numTransponders);
     /**
      * @brief Function to distribute the device among the network.
      * @param type Device type.

@@ -16,7 +16,7 @@
 
 class Topology;
 
-enum DeviceType{
+enum DeviceType {
     DeviceUndefined,
     DeviceRegenerator,
     DeviceAmplifier,

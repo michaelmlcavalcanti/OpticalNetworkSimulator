@@ -24,6 +24,8 @@ public:
     virtual ~SBVT_TSS_ML();
     
     
+    void Initialize() override;
+    
     bool IsPossibleAllocate(Call* call) override;
 private:
     
