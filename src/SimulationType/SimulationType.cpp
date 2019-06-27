@@ -210,8 +210,11 @@ void SimulationType::CreateLoadResourceAlloc() {
 }
 
 void SimulationType::SetNumberOfDevices() {
-    topology->SetNumDevices(0, DeviceRegenerator);
-    topology->SetNumDevices(0, DeviceTransponder);
+    unsigned int numTotalVirtReg = topology->GetNumNodes() * 10;
+    unsigned int numTotalTransponder = topology->GetNumNodes() * 2;
+    
+    topology->SetNumDevices(numTotalVirtReg, DeviceRegenerator);
+    topology->SetNumDevices(numTotalTransponder, DeviceTransponder);
 }
 
 void SimulationType::SimulateNumTotalReq() {

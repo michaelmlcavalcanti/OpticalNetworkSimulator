@@ -46,7 +46,8 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
 
 void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
-    //Tuple with route index and set of subRoutes index
+    
+    //Tuple with route index and set of subRoutes index.
     std::vector<std::tuple<unsigned, unsigned>> routeSubIndexes(0);
     
     this->SetRegChoiceOrder(call, routeSubIndexes);
@@ -265,6 +266,12 @@ unsigned subRouteIndex) {
            (alpha)*(LU + TU);
     
     return cost;
+}
+
+void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
+    this->routing->RoutingCall(call);
+    
+    
 }
 
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {

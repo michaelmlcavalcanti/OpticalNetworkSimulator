@@ -22,6 +22,7 @@ class CallDevices;
 
 class ResourceDeviceAlloc : public ResourceAlloc {
 public:
+    
     ResourceDeviceAlloc(SimulationType *simulType);
     
     virtual ~ResourceDeviceAlloc();
@@ -48,6 +49,9 @@ private:
     
     double CalcRegCost(CallDevices* call, unsigned routeIndex, 
                        unsigned subRouteIndex);
+    
+    
+    void RoutingTranspSpecAlloc(CallDevices* call);
     
     bool CheckOSNR(CallDevices* call);
 };
