@@ -20,39 +20,94 @@
 class Call;
 class CallDevices;
 
+/**
+ * @brief Class responsible to apply the resource allocation with devices.
+ */
 class ResourceDeviceAlloc : public ResourceAlloc {
 public:
-    
+    /**
+     * @brief Standard constructor for a resource allocation with devices use.
+     * @param simulType Simulation that owns this object.
+     */
     ResourceDeviceAlloc(SimulationType *simulType);
-    
+    /**
+     * @brief Standard destructor for a resource allocation wiith devices.
+     */
     virtual ~ResourceDeviceAlloc();
-    
+    /**
+     * @brief Load the ResourceAlloc.
+     */
     void Load() override;
 
-    
+    /**
+     * @brief Choose the type of resource allocation for a call, based on the 
+     * option chosen.
+     * @param call Call request to apply resource allocation.
+     */
     void ResourAlloc(Call* call) override;
 private:
-    
+    /**
+     * @brief Function to apply the resource allocation with virtualized 
+     * regeneration option. First apply the routing, than try one possible
+     * allocation combination of route with regeneration option. The order
+     * is decided based on the metric chosen.
+     * @param call Call request the function will try to allocate.
+     */
     void RoutingVirtRegSpecAlloc(CallDevices* call);
-    
-    void SetRegChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetMinRegChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetMaxRegChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetMetric01(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    double CalcRegCost(CallDevices* call, unsigned routeIndex, 
-                       unsigned subRouteIndex);
-    
     
     void RoutingTranspSpecAlloc(CallDevices* call);
     
+    /**
+     * @brief Function to order the tuples of route and regeneration combination
+     * for a call request.
+     * @param call Call request to order.
+     * @param vec Container of tuples of route and regeneration combination 
+     * indexes.
+     */
+    void SetRegChoiceOrder(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    /**
+     * @brief Function to order the tuples of route and regeneration combination 
+     * indexes based on the metric of minimum regeneration combination.
+     * @param call Call request to order.
+     * @param vec Container of tuples of route and regeneration combination 
+     * indexes.
+     */
+    void SetMinRegChoiceOrder(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    /**
+     * @brief Function to order the tuples of route and regeneration combination 
+     * indexes based on the metric of maximum regeneration combination.
+     * @param call Call request to order.
+     * @param vec Container of tuples of route and regeneration combination 
+     * indexes.
+     */
+    void SetMaxRegChoiceOrder(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    /**
+     * @brief Function to order the tuples of route and regeneration combination 
+     * indexes based on a cost metric.
+     * @param call Call request to order.
+     * @param vec Container of tuples of route and regeneration combination 
+     * indexes.
+     */
+    void SetMetric01(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    /**
+     * @brief Function to calculate the tuple cost based on the DRE2BR 
+     * metric (Walkowiak).
+     * @param call Call request to order.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration combination index.
+     * @return Cost of the tuple.
+     */
+    double CalcRegCost(CallDevices* call, unsigned routeIndex, 
+                       unsigned subRouteIndex);
+    /**
+     * @brief Function to check the OSNR for a call request with devices.
+     * @param call Call to be analise.
+     * @return True if the OSNR is acceptable.
+     */
     bool CheckOSNR(CallDevices* call);
 };
 

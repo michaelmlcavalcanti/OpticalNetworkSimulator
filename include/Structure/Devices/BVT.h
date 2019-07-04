@@ -14,10 +14,13 @@
 #ifndef BVT_H
 #define BVT_H
 
+typedef bool CarrierState;
+
 class NodeDevices;
 
 #include "Device.h"
 #include "../../Calls/CallGenerator.h"
+#include "../../GeneralClasses/Def.h"
 
 class BVT : public Device {
 public:
@@ -35,6 +38,8 @@ private:
     NodeDevices* node;
     
     bool isActive;
+    
+    std::vector<CarrierState> carriers;
 };
 
 #endif /* BVT_H */

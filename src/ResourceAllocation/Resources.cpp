@@ -396,8 +396,12 @@ unsigned routeIndex) {
     }
     
     if(subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
-                          .front() == InvalidModulation)
-        int x = 0;
+                          .front() == InvalidModulation){
+        std::cerr << "Invalid modulation format for node pair: " 
+                  << route->GetOrNode()->GetNodeId() << "->"
+                  << route->GetDeNode()->GetNodeId() << std::endl;
+        std::abort();
+    }
 }
 
 void Resources::RemoveInvalidRegOptions() {

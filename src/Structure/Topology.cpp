@@ -23,6 +23,7 @@
 #include "../../include/Structure/Core.h"
 #include "../../include/Structure/MultiCoreLink.h"
 #include "../../include/Structure/Devices/Regenerator.h"
+#include "../../include/Structure/Devices/BVT.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
@@ -426,7 +427,7 @@ bool Topology::IsValidRoute(Route* route) {
     }
     return false;
 }
-
+    
 bool Topology::IsValidSlot(unsigned int index) {
     if(index >= 0 && index < this->numSlots)
         return true;
@@ -464,7 +465,8 @@ bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
         auxNode = dynamic_cast<NodeDevices*>(calls.at(a)->GetDeNode());
         
         if(auxNode->isThereFreeRegenerators(calls.at(a)->GetBitRate())){
-            auxVecReg = auxNode->GetFreeRegenenerators(calls.at(a)->GetBitRate());
+            auxVecReg = auxNode->GetFreeRegenenerators(calls.at(a)->
+                                 GetBitRate());
             vecReg.insert(vecReg.end(), auxVecReg.begin(), auxVecReg.end());
         }
         else{
@@ -477,6 +479,28 @@ bool Topology::CheckInsertFreeRegenerators(CallDevices* call) {
     if(!vecReg.empty())
         call->SetRegenerators(vecReg);
     return true;
+}
+
+bool Topology::CheckInsertFreeBVTs(CallDevices* call) {
+    NodeDevices* orNode = dynamic_cast<NodeDevices*>(call->GetRoute()
+                                                         ->GetOrNode());
+    NodeDevices* deNode = dynamic_cast<NodeDevices*>(call->GetRoute()
+                                                         ->GetDeNode());
+    unsigned int numSlots = call->GetNumberSlots();
+    std::vector<std::shared_ptr<BVT>> vecBVT(0);
+    std::vector<std::shared_ptr<BVT>> auxVecBVT(0);
+    
+    if(orNode->isThereFreeBVT(numSlots) && deNode->isThereFreeBVT(numSlots)){
+        auxVecBVT = orNode->GetBVTs(numSlots);
+        vecBVT.insert(vecBVT.end(), auxVecBVT.begin(), auxVecBVT.end());
+        auxVecBVT = deNode->GetBVTs(numSlots);
+        vecBVT.insert(vecBVT.end(), auxVecBVT.begin(), auxVecBVT.end());
+        call->SetTransponders(vecBVT);
+        
+        return true;
+    }
+    
+    return false;
 }
 
 unsigned int Topology::GetNumUsedSlots(Route* route) const {
@@ -547,19 +571,33 @@ void Topology::ConnectWithoutDevices(Call* call) {
 void Topology::ConnectWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     RegenerationOption regOption = options->GetRegenerationOption();
+    TransponderOption transOption = options->GetTransponderOption();
     
-    if(regOption == RegenerationVirtualized){
+    if(regOption != RegenerationDisabled){
         //Connect transparent segments
         std::vector<Call*> transpSeg = callDev->GetTranspSegments();
         for(auto it: transpSeg){
             this->ConnectWithoutDevices(it);
         }
 
-        //Connect Regenerators
-        std::vector<std::shared_ptr<Regenerator>> vecReg = callDev->
-                                                           GetRegenerators();
-        for(auto it: vecReg){
-            it->SetRegeneratorOn();
+        if(regOption == RegenerationVirtualized){
+            std::vector<std::shared_ptr<Regenerator>> vecReg = 
+            callDev->GetRegenerators();
+            
+            for(auto it: vecReg){
+                it->SetRegeneratorOn();
+            }
+        }
+        //else{}
+        //Implement the option for back-to-back regeneration
+    }
+    else if(transOption == TransponderEnabled){
+        this->ConnectWithoutDevices(call);
+        
+        std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
+        
+        for(auto it: bvts){
+            //Connect BVT
         }
     }
 }
@@ -609,19 +647,35 @@ void Topology::ReleaseWithoutDevices(Call* call) {
 void Topology::ReleaseWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     RegenerationOption regOption = options->GetRegenerationOption();
+    TransponderOption transOption = options->GetTransponderOption();
     
-    if(regOption == RegenerationVirtualized){
+    if(regOption != RegenerationDisabled){
         //Release transparent segments
         std::vector<Call*> transpSeg = callDev->GetTranspSegments();
         for(auto it: transpSeg){
             this->ReleaseWithoutDevices(it);
         }
 
-        //Release Regenerators
-        std::vector<std::shared_ptr<Regenerator>> vecReg = callDev->
-                                                           GetRegenerators();
-        for(auto it: vecReg){
-            it->SetRegeneratorOff();
+        if(regOption == RegenerationVirtualized){
+            //Release Regenerators
+            std::vector<std::shared_ptr<Regenerator>> vecReg = 
+            callDev->GetRegenerators();
+            
+            for(auto it: vecReg){
+                it->SetRegeneratorOff();
+            }
+        }
+        //else{}
+        //Implement the option for back-to-back regeneration
+        
+    }
+    else if(transOption == TransponderEnabled){
+        this->ReleaseWithoutDevices(call);
+        
+        std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
+        
+        for(auto it: bvts){
+            //Release BVT
         }
     }
 }

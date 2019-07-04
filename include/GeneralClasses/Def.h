@@ -17,6 +17,9 @@
 #include <random>
 #include <limits>
 
+#define occupied true
+#define free false
+
 class Def {
 public:
     /**

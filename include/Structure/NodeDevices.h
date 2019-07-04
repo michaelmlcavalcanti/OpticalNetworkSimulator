@@ -56,7 +56,10 @@ public:
     unsigned int GetNumTransponder() const;
 
     void SetNumTransponder(unsigned int numTransponder);
+    
+    bool isThereFreeBVT(unsigned int numSlots) const;
 
+    std::vector<std::shared_ptr<BVT>> GetBVTs(unsigned int numSlots) const;
 private:
     
     void InitializeRegnerators();

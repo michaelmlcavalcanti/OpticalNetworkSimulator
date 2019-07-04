@@ -175,15 +175,25 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
-    
+    /**
+     * @brief Function to get the resource pointer.
+     * @return Resource pointer.
+     */
     Resources* GetResources() const;
-    
+    /**
+     * @brief Function to get the modulation pointer.
+     * @return Modulation pointer.
+     */
     Modulation* GetModulation() const;
-
+    /**
+     * @brief Function to get the traffic pointer.
+     * @return Traffic pointer.
+     */
     Traffic* GetTraffic() const;
-    
-    void SetTraffic(Traffic* traffic);
-    
+    /**
+     * @brief Function to get the resource allocation option.
+     * @return Resource allocation option.
+     */
     ResourceAllocOption GetResourAllocOption() const;
     
     /**
@@ -297,18 +307,29 @@ private:
      */
     void OfflineModulationRSA(Call* call);
     
-    
+    /**
+     * @brief Function to create the routing object and the other parameters
+     * used, based on the routing choice.
+     */
     void CreateRouting();
-    
+    /**
+     * @brief Function to create a spectrum allocation object based on the
+     * option chosen.
+     */
     void CreateSpecAllocation();
-    
+    /**
+     * @brief Function to set the container with the possible number of slots
+     * a connection request could have.
+     */
     void SetNumSlotsTraffic();
     /**
      * @brief Update the cost values for all routes in container. Used for
      * offline routing.
      */
     void UpdateRoutesCosts();
-    
+    /**
+     * @brief Function to create the container of RSA order per node pair.
+     */
     void CreateRsaOrder();
 protected:
     /**

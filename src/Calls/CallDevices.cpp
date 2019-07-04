@@ -100,3 +100,12 @@ bool CallDevices::CheckUseRegeneration() const {
     
     return useRegeneration;
 }
+
+std::vector<std::shared_ptr<BVT>> CallDevices::GetTransponders() const {
+    return transponders;
+}
+
+void CallDevices::SetTransponders(std::vector<std::shared_ptr<BVT>> 
+transponders) {
+    this->transponders = transponders;
+}

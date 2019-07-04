@@ -253,6 +253,8 @@ public:
      * @return True if the function found a possible list of regenerators.
      */
     bool CheckInsertFreeRegenerators(CallDevices* call);
+    
+    bool CheckInsertFreeBVTs(CallDevices* call);
     /**
      * @brief Function to get the number of occupied slots in all route links.
      * @param route Route to check.

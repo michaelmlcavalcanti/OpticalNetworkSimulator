@@ -84,7 +84,7 @@ void ResourceAlloc::AdditionalSettings() {
         }
         else if(options->GetResourAllocOption() == ResourAllocRMSA){
             this->resources->CreateOfflineModulation();
-            this->resources->Save();
+            this->resources->Save(); //Retirar depois.
         }
     }
     this->CreateRsaOrder();
@@ -329,10 +329,6 @@ Modulation* ResourceAlloc::GetModulation() const {
 
 Traffic* ResourceAlloc::GetTraffic() const {
     return traffic;
-}
-
-void ResourceAlloc::SetTraffic(Traffic* traffic) {
-    this->traffic = traffic;
 }
 
 ResourceAllocOption ResourceAlloc::GetResourAllocOption() const {

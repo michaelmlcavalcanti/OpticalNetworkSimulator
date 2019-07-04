@@ -37,8 +37,10 @@ void ResourceDeviceAlloc::Load() {
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     
-    if(this->options->GetRegenerationOption() == RegenerationVirtualized)
+    if(options->GetRegenerationOption() != RegenerationDisabled)
         this->RoutingVirtRegSpecAlloc(callDev);
+    else if(options->GetTransponderOption() == TransponderEnabled)
+        this->RoutingTranspSpecAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
@@ -73,6 +75,32 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
             call->SetUseRegeneration();
             break;
         }
+    }
+}
+
+void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
+    this->routing->RoutingCall(call);
+    
+    if(call->IsThereTrialRoute()){
+        do{
+            call->SetRoute(call->PopTrialRoute());
+            call->SetModulation(resources->GetSubRoutesMod(call, 0).front());
+            this->modulation->SetModulationParam(call);
+            
+            if(!topology->CheckInsertFreeBVTs(call))
+                continue;
+            
+            if(!this->CheckOSNR(call))
+                continue;
+            
+            this->specAlloc->SpecAllocation(call);
+            
+                if(this->topology->IsValidLigthPath(call)){
+                    call->ClearTrialRoutes();
+                    call->SetStatus(Accepted);
+                    break;
+                }
+        }while(call->IsThereTrialRoute());
     }
 }
 
@@ -266,12 +294,6 @@ unsigned subRouteIndex) {
            (alpha)*(LU + TU);
     
     return cost;
-}
-
-void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
-    this->routing->RoutingCall(call);
-    
-    
 }
 
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {

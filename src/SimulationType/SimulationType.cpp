@@ -64,7 +64,6 @@ void SimulationType::Load() {
     this->GetData()->Initialize();
     this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
-    this->SetNumberOfDevices();
 }
 
 void SimulationType::LoadFile() {
@@ -75,7 +74,6 @@ void SimulationType::LoadFile() {
     this->GetData()->Initialize();
     this->CreateLoadResourceAlloc();
     this->callGenerator->Load();
-    this->SetNumberOfDevices();
 }
 
 void SimulationType::Print() {
@@ -91,6 +89,9 @@ void SimulationType::Save() {
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
     this->resourceAlloc->AdditionalSettings();
+    
+    if(options->GetDevicesOption() != DevicesDisabled)
+        this->SetNumberOfDevices();
 }
 
 TypeSimulation SimulationType::GetTypeSimulation() const {
@@ -213,8 +214,10 @@ void SimulationType::SetNumberOfDevices() {
     unsigned int numTotalVirtReg = topology->GetNumNodes() * 10;
     unsigned int numTotalTransponder = topology->GetNumNodes() * 2;
     
-    topology->SetNumDevices(numTotalVirtReg, DeviceRegenerator);
-    topology->SetNumDevices(numTotalTransponder, DeviceTransponder);
+    if(options->GetRegenerationOption() == RegenerationVirtualized)
+        topology->SetNumDevices(numTotalVirtReg, DeviceRegenerator);
+    if(options->GetTransponderOption() != TransponderDisabled)
+        topology->SetNumDevices(numTotalTransponder, DeviceTransponder);
 }
 
 void SimulationType::SimulateNumTotalReq() {

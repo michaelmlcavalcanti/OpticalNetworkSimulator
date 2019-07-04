@@ -96,6 +96,21 @@ void NodeDevices::SetNumTransponder(unsigned int numTransponder) {
     this->numTransponder = numTransponder;
 }
 
+bool NodeDevices::isThereFreeBVT(unsigned int numSlots) const {
+    //Need implementaion
+    
+    return true;
+}
+
+std::vector<std::shared_ptr<BVT> > NodeDevices::GetBVTs(unsigned int numSlots) 
+const {
+    std::vector<std::shared_ptr<BVT>> vecBVT(0);
+    
+    //Need implementaion
+    
+    return vecBVT;
+}
+
 void NodeDevices::InitializeRegnerators() {
     this->numFreeRegenerators = this->numRegenerator;
     

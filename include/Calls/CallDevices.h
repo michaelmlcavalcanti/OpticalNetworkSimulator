@@ -20,6 +20,7 @@ typedef bool UseRegeneration;
 #include "../ResourceAllocation/Modulation.h"
 
 class Regenerator;
+class BVT;
 
 class CallDevices : public Call {
 public:
@@ -47,6 +48,12 @@ public:
     void SetUseRegeneration();
     
     bool CheckUseRegeneration() const;
+    
+    
+    std::vector<std::shared_ptr<BVT>> GetTransponders() const;
+
+    void SetTransponders(std::vector<std::shared_ptr<BVT> > transponders);
+
 private:
     
     std::vector<std::shared_ptr<Call>> transpSegments;
@@ -54,6 +61,8 @@ private:
     std::vector<std::shared_ptr<Regenerator>> regenerators;
     
     UseRegeneration useRegeneration;
+    
+    std::vector<std::shared_ptr<BVT>> transponders;
 };
 
 #endif /* CALLDEVICES_H */
