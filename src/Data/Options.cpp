@@ -25,7 +25,8 @@ Options::mapTopologyOptions = boost::assign::map_list_of
     (TopologyToroidal, "Toroidal")
     (TopologyGermany,  "Germany")
     (TopologyEON_RT, "EON_RT")
-    (TopologyItaly, "Italy");
+    (TopologyItaly, "Italy")
+    (Topogy3_Nodes, "3_Nodes");
 
 const boost::unordered_map<RoutingOption, std::string>
 Options::mapRoutingOptions = boost::assign::map_list_of
@@ -51,10 +52,11 @@ Options::mapLinkCostType = boost::assign::map_list_of
 const boost::unordered_map<TrafficOption, std::string>
 Options::mapTrafficOptions = boost::assign::map_list_of
     (TrafficInvalid, "Invalid")
-    (Traficc_100_200_400, "100-200-400")
-    (Traficc_50_120_300, "50-120-300")
+    (Traffic_100_200_400, "100-200-400")
+    (Traffic_50_120_300, "50-120-300")
     (Traffic_10_40_100_200_400, "10-40-100-200-400")
-    (Traffic_40_100_200, "40-100-200");
+    (Traffic_40_100_200, "40-100-200")
+    (Traffic_100_200, "100-200");
 
 const boost::unordered_map<ResourceAllocOption, std::string>
 Options::mapResourAllocOption = boost::assign::map_list_of

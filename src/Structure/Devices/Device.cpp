@@ -13,15 +13,11 @@
 
 #include "../../../include/Structure/Devices/Device.h"
 
-Device::Device(Topology* topology, DeviceType type)
-:topology(topology), type(type) {
+Device::Device(Topology* topology, NodeDevices* node, DeviceType type)
+:topology(topology), node(node), type(type) {
 
 }
 
 Device::~Device() {
     
-}
-
-DeviceType Device::GetType() const {
-    return type;
 }

@@ -33,8 +33,9 @@ enum TopologyOption {
     TopologyGermany,
     TopologyEON_RT,
     TopologyItaly,
+    Topogy3_Nodes,
     FirstTopology = TopologyNSFNet,
-    LastTopology = TopologyItaly
+    LastTopology = Topogy3_Nodes
 };
 
 /**
@@ -78,12 +79,13 @@ enum LinkCostType {
  */
 enum TrafficOption {
     TrafficInvalid,
-    Traficc_100_200_400,
-    Traficc_50_120_300,
+    Traffic_100_200_400,
+    Traffic_50_120_300,
     Traffic_10_40_100_200_400,
     Traffic_40_100_200,
-    FirstTrafficOption = Traficc_100_200_400,
-    LastTrafficOption = Traffic_40_100_200
+    Traffic_100_200,
+    FirstTrafficOption = Traffic_100_200_400,
+    LastTrafficOption = Traffic_100_200
 };
 
 /**

@@ -20,7 +20,7 @@
 const double Regenerator::trafficSupported = 100E9;
 
 Regenerator::Regenerator(Topology* topology, NodeDevices* node)
-:Device(topology, DeviceRegenerator), node(node), isActive(false), onTime(0.0), 
+:Device(topology, node, DeviceRegenerator), isActive(false), onTime(0.0), 
 totalOnTime(0.0) {
     
 }

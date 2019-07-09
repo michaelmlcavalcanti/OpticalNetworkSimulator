@@ -15,6 +15,7 @@
 #define DEVICE_H
 
 class Topology;
+class NodeDevices;
 
 enum DeviceType {
     DeviceUndefined,
@@ -23,25 +24,40 @@ enum DeviceType {
     DeviceTransponder
 };
 
+/**
+ * @brief Basic device class used in the physical topology.
+ */
 class Device {
 public:
-    
-    Device(Topology* topology, DeviceType type = DeviceUndefined);
-    
+    /**
+     * @brief Standard constructor of a basic device object.
+     * @param topology Physical topology to which this device belongs.
+     * @param type Type that characterizes the device.
+     */
+    Device(Topology* topology, NodeDevices* node, 
+    DeviceType type = DeviceUndefined);
+    /**
+     * @brief Standard destructor of a basic device object.
+     */
     virtual ~Device();
     
-    
+    /**
+     * @brief Initialize the main parameters of a device.
+     */
     virtual void Initialize() = 0;
-    
-    
-    Topology* GetTopology() const;
-    
-    DeviceType GetType() const;
 protected:
-    
+    /**
+     * @brief Physical topology to which this device belongs.
+     */
     Topology* topology;
+    /**
+     * @brief Node to which this SBVT belongs.
+     */
+    NodeDevices* node;
 private:
-    
+    /**
+     * @brief Type that characterizes the device.
+     */
     DeviceType type;
 };
 

@@ -14,7 +14,7 @@
 #include "../../../include/Structure/Devices/BVT.h"
 
 BVT::BVT(Topology* topology, NodeDevices* node, TypeBVT typeBVT)
-:Device(topology, DeviceTransponder), node(node), typeBVT(typeBVT), 
+:Device(topology, node, DeviceTransponder), typeBVT(typeBVT), 
 isActive(false) {
     
 }
