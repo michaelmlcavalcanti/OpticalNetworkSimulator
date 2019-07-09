@@ -59,7 +59,7 @@ public:
     
     bool isThereFreeBVT(unsigned int numSlots) const;
 
-    std::vector<std::shared_ptr<BVT>> GetBVTs(unsigned int numSlots) const;
+    std::vector<std::shared_ptr<BVT>> GetBVTs(CallDevices* call) const;
 private:
     
     void InitializeRegnerators();

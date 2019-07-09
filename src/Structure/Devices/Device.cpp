@@ -22,10 +22,6 @@ Device::~Device() {
     
 }
 
-Topology* Device::GetTopology() const {
-    return topology;
-}
-
 DeviceType Device::GetType() const {
     return type;
 }

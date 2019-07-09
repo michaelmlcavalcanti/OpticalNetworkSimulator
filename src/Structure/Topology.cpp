@@ -491,9 +491,9 @@ bool Topology::CheckInsertFreeBVTs(CallDevices* call) {
     std::vector<std::shared_ptr<BVT>> auxVecBVT(0);
     
     if(orNode->isThereFreeBVT(numSlots) && deNode->isThereFreeBVT(numSlots)){
-        auxVecBVT = orNode->GetBVTs(numSlots);
+        auxVecBVT = orNode->GetBVTs(call);
         vecBVT.insert(vecBVT.end(), auxVecBVT.begin(), auxVecBVT.end());
-        auxVecBVT = deNode->GetBVTs(numSlots);
+        auxVecBVT = deNode->GetBVTs(call);
         vecBVT.insert(vecBVT.end(), auxVecBVT.begin(), auxVecBVT.end());
         call->SetTransponders(vecBVT);
         
@@ -597,7 +597,7 @@ void Topology::ConnectWithDevices(Call* call) {
         std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
         
         for(auto it: bvts){
-            //Connect BVT
+            it->ConnectSubCarriers(callDev);
         }
     }
 }
@@ -657,7 +657,6 @@ void Topology::ReleaseWithDevices(Call* call) {
         }
 
         if(regOption == RegenerationVirtualized){
-            //Release Regenerators
             std::vector<std::shared_ptr<Regenerator>> vecReg = 
             callDev->GetRegenerators();
             
@@ -675,7 +674,7 @@ void Topology::ReleaseWithDevices(Call* call) {
         std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
         
         for(auto it: bvts){
-            //Release BVT
+            it->ReleaseSubCarriers(callDev);
         }
     }
 }

@@ -83,6 +83,7 @@ void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
     
     if(call->IsThereTrialRoute()){
         do{
+            call->ClearTransponders();
             call->SetRoute(call->PopTrialRoute());
             call->SetModulation(resources->GetSubRoutesMod(call, 0).front());
             this->modulation->SetModulationParam(call);
@@ -95,11 +96,11 @@ void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
             
             this->specAlloc->SpecAllocation(call);
             
-                if(this->topology->IsValidLigthPath(call)){
-                    call->ClearTrialRoutes();
-                    call->SetStatus(Accepted);
-                    break;
-                }
+            if(this->topology->IsValidLigthPath(call)){
+                call->ClearTrialRoutes();
+                call->SetStatus(Accepted);
+                break;
+            }
         }while(call->IsThereTrialRoute());
     }
 }

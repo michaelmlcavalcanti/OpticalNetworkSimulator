@@ -26,8 +26,21 @@ public:
     
     void Initialize() override;
     
-    bool IsPossibleAllocate(Call* call) override;
+    unsigned int GetNumberFreeSubCarriers() const override;
+    
+    void SetCallToSubCarriers(CallDevices* call, unsigned int numSubCarriers) 
+    override;
+    
+    void ConnectSubCarriers(CallDevices* call) override;
+    
+    void ReleaseSubCarriers(CallDevices* call) override;
 private:
+    
+    std::vector<CarrierState> subCarriers;
+    
+    std::vector<TypeModulation> modulations;
+    
+    std::vector<CallDevices*> calls;
     
     static unsigned int numSubCarriers;
 };

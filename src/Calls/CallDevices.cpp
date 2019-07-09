@@ -109,3 +109,7 @@ void CallDevices::SetTransponders(std::vector<std::shared_ptr<BVT>>
 transponders) {
     this->transponders = transponders;
 }
+
+void CallDevices::ClearTransponders() {
+    transponders.clear();
+}

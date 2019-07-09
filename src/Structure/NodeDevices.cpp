@@ -14,6 +14,7 @@
 #include "../../include/Structure/NodeDevices.h"
 #include "../../include/Structure/Devices/Regenerator.h"
 #include "../../include/Structure/Devices/SBVT_TSS_ML.h"
+#include "../../include/Calls/CallDevices.h"
 
 NodeDevices::NodeDevices(Topology* topPointer, NodeId nodeId)
 :Node(topPointer, nodeId), numRegenerator(0), numFreeRegenerators(0),
@@ -97,16 +98,41 @@ void NodeDevices::SetNumTransponder(unsigned int numTransponder) {
 }
 
 bool NodeDevices::isThereFreeBVT(unsigned int numSlots) const {
-    //Need implementaion
+    unsigned int numFreeBVT = 0;
     
-    return true;
+    for(auto it: transponders){
+        numFreeBVT += it->GetNumberFreeSubCarriers();
+        
+        if(numFreeBVT >= numSlots)
+            return true;
+    }
+    
+    return false;
 }
 
-std::vector<std::shared_ptr<BVT> > NodeDevices::GetBVTs(unsigned int numSlots) 
+std::vector<std::shared_ptr<BVT> > NodeDevices::GetBVTs(CallDevices* call) 
 const {
     std::vector<std::shared_ptr<BVT>> vecBVT(0);
+    unsigned int numSlots = call->GetNumberSlots();
+    unsigned int totalNumSlotsAllocated = 0;
+    unsigned int auxNumFreeSubCarriers = 0;
     
-    //Need implementaion
+    for(auto it: transponders){
+        auxNumFreeSubCarriers = it->GetNumberFreeSubCarriers();
+        
+        if(auxNumFreeSubCarriers > 0){
+            vecBVT.push_back(it);
+            totalNumSlotsAllocated += auxNumFreeSubCarriers;
+            
+            if(totalNumSlotsAllocated > numSlots){
+                auxNumFreeSubCarriers -= (totalNumSlotsAllocated - numSlots);
+            }
+            it->SetCallToSubCarriers(call, auxNumFreeSubCarriers);
+        }
+        
+        if(totalNumSlotsAllocated >= numSlots)
+            break;
+    }
     
     return vecBVT;
 }

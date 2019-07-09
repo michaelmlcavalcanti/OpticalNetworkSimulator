@@ -18,28 +18,40 @@ typedef bool CarrierState;
 
 class NodeDevices;
 
+enum TypeBVT {
+    TypeInvalid,
+    TypeBVT_TSS_ML
+};
+
 #include "Device.h"
-#include "../../Calls/CallGenerator.h"
 #include "../../GeneralClasses/Def.h"
+#include  "../../ResourceAllocation/Modulation.h"
 
 class BVT : public Device {
 public:
     
-    BVT(Topology* topology, NodeDevices* node);
+    BVT(Topology* topology, NodeDevices* node, TypeBVT typeBVT);
     
     virtual ~BVT();
     
     
     virtual void Initialize() override;
     
-    virtual bool IsPossibleAllocate(Call* call) = 0;
+    virtual unsigned int GetNumberFreeSubCarriers() const = 0;
+    
+    virtual void SetCallToSubCarriers(CallDevices* call, 
+                                      unsigned int numSubCarriers) = 0;
+    
+    virtual void ConnectSubCarriers(CallDevices* call) = 0;
+    
+    virtual void ReleaseSubCarriers(CallDevices* call) = 0;
 private:
     
     NodeDevices* node;
     
-    bool isActive;
+    TypeBVT typeBVT;
     
-    std::vector<CarrierState> carriers;
+    bool isActive;
 };
 
 #endif /* BVT_H */

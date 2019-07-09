@@ -39,7 +39,7 @@ void Regenerator::SetRegeneratorOn() {
     assert(!this->isActive);
     
     this->isActive = true;
-    this->onTime = this->GetTopology()->GetSimulType()->GetCallGenerator()->
+    this->onTime = topology->GetSimulType()->GetCallGenerator()->
                    GetSimulationTime();
     node->DecreaseNumFreeRegenerators();
 }
@@ -48,7 +48,7 @@ void Regenerator::SetRegeneratorOff() {
     assert(this->isActive);
     
     this->isActive = false;
-    this->totalOnTime += this->GetTopology()->GetSimulType()->
+    this->totalOnTime += topology->GetSimulType()->
                          GetCallGenerator()->GetSimulationTime() - this->onTime;
     this->onTime = 0.0;
     node->IncreaseNumFreeRegenerators();

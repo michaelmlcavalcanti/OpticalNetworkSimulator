@@ -37,9 +37,10 @@ public:
     Topology* GetTopology() const;
     
     DeviceType GetType() const;
-private:
+protected:
     
     Topology* topology;
+private:
     
     DeviceType type;
 };

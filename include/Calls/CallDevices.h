@@ -24,20 +24,49 @@ class BVT;
 
 class CallDevices : public Call {
 public:
-    
+    /**
+     * @brief Standard constructor for a call request which makes use of 
+     * devices.
+     * @param orNode Call request source node.
+     * @param deNode Call request destination node.
+     * @param bitRate Call request bit rate.
+     * @param deacTime Call request deactivation time.
+     */
     CallDevices(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
-    
+    /**
+     * @brief Standard destructor of a call request with devices.
+     */
     virtual ~CallDevices();
     
-    
+    /**
+     * @brief Function to create the transparent segments of the call based on
+     * the set of routes that will compose the total lightpath. It will create a
+     * container of Calls between regenerators.
+     * @param subroutes Set of routes indicating the segments.
+     */
     void CreateTranspSegments(std::vector<std::shared_ptr<Route> > subroutes);
-    
+    /**
+     * @brief Function to set the modulation format for each transparent segment 
+     * of the call request.
+     * @param modulations Container of modulation formats.
+     */
     void SetTranspSegModulation(std::vector<TypeModulation> modulations);
-    
+    /**
+     * @brief Function to get the container of the transparent segments, in 
+     * which each call represents a lightpath between regenerators.
+     * @return 
+     */
     std::vector<Call*> GetTranspSegments();
-    
+    /**
+     * @brief Function to get the total number of slots occupied by the 
+     * lightpath.
+     * @return Call request total number of slots.
+     */
     unsigned int GetTotalNumSlots() const override;
-    
+    /**
+     * @brief Function to set the total number of slots. It will sum the number
+     * of slots of each transparent segment.
+     */
     void SetTotalNumSlots() override;
     
     std::vector<std::shared_ptr<Regenerator> > GetRegenerators() const;
@@ -54,14 +83,25 @@ public:
 
     void SetTransponders(std::vector<std::shared_ptr<BVT> > transponders);
 
+    void ClearTransponders();
 private:
-    
+    /**
+     * @brief Container of call request transparent segments. Used if the
+     * simulation make use of regeneration.
+     */
     std::vector<std::shared_ptr<Call>> transpSegments;
-    
+    /**
+     * @brief Container of virtualized regenerators used by the call request.
+     */
     std::vector<std::shared_ptr<Regenerator>> regenerators;
-    
+    /**
+     * @brief Information about the regeneration use.
+     */
     UseRegeneration useRegeneration;
     
+    /**
+     * @brief Container of BVTs used by the call request.
+     */
     std::vector<std::shared_ptr<BVT>> transponders;
 };
 
