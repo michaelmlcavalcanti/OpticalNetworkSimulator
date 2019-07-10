@@ -76,7 +76,7 @@ void CallDevices::SetTotalNumSlots() {
         }
         Call::SetTotalNumSlots(totalNumSlots);
     }
-    else   
+    else
         Call::SetTotalNumSlots();
 }
 

@@ -18,8 +18,8 @@ PARAMETERS
 Number of slots per fiber: 320
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 10
-Maximum load point(erlang): 30
+Minimum load point(erlang): 1
+Maximum load point(erlang): 2
 Number of points: 6
 Total number of requisitions: 100000
 Maximum blocked requests: 1000
@@ -27,27 +27,27 @@ Slot bandwidth (GHz): 12.5
 Maximum section length (km): 100
 
 DATA
-Simulation time:9955.54  Real simul time: 1.24384  Number of requests:100000
-Load point:10  PbReq:0.43813  PbSlots:0.43813  HopsMed:1.24687  NetOcc:0
+Simulation time:99555.4  Real simul time: 1.54371  Number of requests:100000
+Load point:1  PbReq:0.00308  PbSlots:0.00308  HopsMed:1.33179  NetOcc:0
 
 
-Simulation time:7174.95  Real simul time: 1.22291  Number of requests:100000
-Load point:14  PbReq:0.55833  PbSlots:0.55833  HopsMed:1.23966  NetOcc:0
+Simulation time:83707.8  Real simul time: 1.44734  Number of requests:100000
+Load point:1.2  PbReq:0.00534  PbSlots:0.00534  HopsMed:1.33182  NetOcc:0
 
 
-Simulation time:5552.06  Real simul time: 1.03956  Number of requests:100000
-Load point:18  PbReq:0.63542  PbSlots:0.63542  HopsMed:1.23633  NetOcc:0
+Simulation time:71383.7  Real simul time: 1.43887  Number of requests:100000
+Load point:1.4  PbReq:0.00856  PbSlots:0.00856  HopsMed:1.32975  NetOcc:0
 
 
-Simulation time:4557.19  Real simul time: 0.985576  Number of requests:100000
-Load point:22  PbReq:0.69218  PbSlots:0.69218  HopsMed:1.2341  NetOcc:0
+Simulation time:62661.3  Real simul time: 1.45926  Number of requests:100000
+Load point:1.6  PbReq:0.01316  PbSlots:0.01316  HopsMed:1.32877  NetOcc:0
 
 
-Simulation time:3845.26  Real simul time: 0.946528  Number of requests:100000
-Load point:26  PbReq:0.73401  PbSlots:0.73401  HopsMed:1.23719  NetOcc:0
+Simulation time:55542.7  Real simul time: 1.45368  Number of requests:100000
+Load point:1.8  PbReq:0.01877  PbSlots:0.01877  HopsMed:1.32644  NetOcc:0
 
 
-Simulation time:3324.22  Real simul time: 0.917251  Number of requests:100000
-Load point:30  PbReq:0.76424  PbSlots:0.76424  HopsMed:1.23651  NetOcc:0
+Simulation time:49863.3  Real simul time: 1.47812  Number of requests:100000
+Load point:2  PbReq:0.02516  PbSlots:0.02516  HopsMed:1.32793  NetOcc:0
 
 
