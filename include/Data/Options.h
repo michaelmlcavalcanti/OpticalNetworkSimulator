@@ -84,8 +84,9 @@ enum TrafficOption {
     Traffic_10_40_100_200_400,
     Traffic_40_100_200,
     Traffic_100_200,
+    Traffic_200,
     FirstTrafficOption = Traffic_100_200_400,
-    LastTrafficOption = Traffic_100_200
+    LastTrafficOption = Traffic_200
 };
 
 /**

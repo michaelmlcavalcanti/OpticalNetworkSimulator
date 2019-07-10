@@ -17,6 +17,7 @@
 #include "../../include/GeneralClasses/General.h"
 #include "../../include/Data/Options.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/ResourceAllocation/Resources.h"
 
 const boost::unordered_map<TypeModulation, unsigned int> 
 Modulation::mapNumBitsModulation = boost::assign::map_list_of
@@ -193,20 +194,46 @@ std::vector<double>& traffic) {
     unsigned int numSlots;
     TypeModulation mod;
     
-    for(mod = FirstModulation; mod <= LastModulation; 
-    mod = TypeModulation(mod+1)){
-        for(unsigned a = 0; a < traffic.size(); a++){
-            bitRate = traffic.at(a);
-            bandwidth = this->BandwidthQAM(mapNumBitsModulation.at(mod), 
-                                           bitRate);
-            numSlots = std::ceil(bandwidth/this->slotBandwidth);
-            
-            if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 
-            posSlots.end() ){
-                posSlots.push_back(numSlots);
+    if(!resourAlloc->IsOfflineRouting()){
+        for(mod = FirstModulation; mod <= LastModulation; 
+        mod = TypeModulation(mod+1)){
+            for(unsigned a = 0; a < traffic.size(); a++){
+                bitRate = traffic.at(a);
+                bandwidth = this->BandwidthQAM(mapNumBitsModulation.at(mod), 
+                                               bitRate);
+                numSlots = std::ceil(bandwidth/this->slotBandwidth);
+
+                if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 
+                posSlots.end() ){
+                    posSlots.push_back(numSlots);
+                }
             }
         }
     }
+    else{
+        Resources* resources = resourAlloc->GetResources();
+        bool alreadyInVector = false;
+        
+        for(auto routeIt: resources->numSlots){
+            for(auto nodeIt: routeIt){
+                for(auto routeIt: nodeIt){
+                    for(auto numSlots: routeIt){
+                        
+                        for(auto posSlotsIt: posSlots){
+                            if(posSlotsIt == numSlots){
+                                alreadyInVector = true;
+                                break;
+                            }
+                        }
+                        if(!alreadyInVector)
+                            posSlots.push_back(numSlots);
+                        alreadyInVector = false;
+                    }
+                }
+            }
+        }
+    }
+    
     std::sort(posSlots.begin(), posSlots.end());
     
     return posSlots;
