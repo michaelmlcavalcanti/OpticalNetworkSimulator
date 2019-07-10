@@ -98,12 +98,12 @@ void NodeDevices::SetNumTransponder(unsigned int numTransponder) {
 }
 
 bool NodeDevices::isThereFreeBVT(unsigned int numSlots) const {
-    unsigned int numFreeBVT = 0;
+    unsigned int numFreeSubcarriers = 0;
     
     for(auto it: transponders){
-        numFreeBVT += it->GetNumberFreeSubCarriers();
+        numFreeSubcarriers += it->GetNumberFreeSubCarriers();
         
-        if(numFreeBVT >= numSlots)
+        if(numFreeSubcarriers >= numSlots)
             return true;
     }
     

@@ -181,7 +181,7 @@ void SimulationType::InitializeAll() {
 void SimulationType::Simulate() {
     this->callGenerator->GenerateCall();
     
-    switch(this->GetOptions()->GetStopCriteria()){
+    switch(options->GetStopCriteria()){
         case NumCallRequestsMaximum:
             this->SimulateNumTotalReq();
             break;

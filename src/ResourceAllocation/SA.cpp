@@ -49,8 +49,14 @@ void SA::SpecAllocation(Call* call) {
 void SA::SpecAllocation(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     
-    for(auto it: calls)
-        this->SpecAllocation(it);
+    if(!calls.empty()){
+        for(auto it: calls)
+            this->SpecAllocation(it);
+    }
+    else{
+        Call* baseCall = dynamic_cast<Call*>(call);
+        this->SpecAllocation(baseCall);
+    }
 }
 
 std::vector<unsigned int> SA::SpecAllocation(unsigned int lastSlot) {

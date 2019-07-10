@@ -70,11 +70,14 @@ unsigned int CallDevices::GetTotalNumSlots() const {
 void CallDevices::SetTotalNumSlots() {
     unsigned int totalNumSlots = 0;
     
-    for(auto it: transpSegments){
-        totalNumSlots += it->GetTotalNumSlots();
+    if(!transpSegments.empty()){
+        for(auto it: transpSegments){
+            totalNumSlots += it->GetTotalNumSlots();
+        }
+        Call::SetTotalNumSlots(totalNumSlots);
     }
-    
-    Call::SetTotalNumSlots(totalNumSlots);
+    else   
+        Call::SetTotalNumSlots();
 }
 
 std::vector<std::shared_ptr<Regenerator> > CallDevices::GetRegenerators() const{

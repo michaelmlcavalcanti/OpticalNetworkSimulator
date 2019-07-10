@@ -448,10 +448,19 @@ bool Topology::IsValidLigthPath(Call* call) {
 bool Topology::IsValidLigthPath(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     
-    for(auto it: calls){
-        if(!this->IsValidLigthPath(it))
+    if(!calls.empty()){
+        for(auto it: calls){
+            if(!this->IsValidLigthPath(it))
+                return false;
+        }
+    }
+    else{
+        Call* baseCall = dynamic_cast<Call*>(call);
+        
+        if(!this->IsValidLigthPath(baseCall))
             return false;
     }
+    
     return true;
 }
 

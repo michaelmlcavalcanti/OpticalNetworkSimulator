@@ -60,9 +60,15 @@ void Modulation::SetModulationParam(Call* call) {
 void Modulation::SetModulationParam(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     
-    for(auto it: calls)
-        this->SetModulationParam(it);
-    call->SetTotalNumSlots();
+    if(!calls.empty()){
+        for(auto it: calls)
+            this->SetModulationParam(it);
+        call->SetTotalNumSlots();
+    }
+    else{
+        Call* baseCall = dynamic_cast<Call*>(call);
+        this->SetModulationParam(baseCall);
+    }
 }
 
 double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
