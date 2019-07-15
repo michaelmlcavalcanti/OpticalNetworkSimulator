@@ -193,7 +193,7 @@ void SimulationType::Simulate() {
             std::abort();
     }
     
-    this->GetData()->SetNumberReq(this->numberRequests-1);
+    this->GetData()->SetNumberReq(this->numberRequests);
     this->GetData()->SetSimulTime(this->callGenerator->GetSimulationTime());
 }
 
@@ -212,7 +212,7 @@ void SimulationType::CreateLoadResourceAlloc() {
 
 void SimulationType::SetNumberOfDevices() {
     unsigned int numTotalVirtReg = topology->GetNumNodes() * 10;
-    unsigned int numTotalTransponder = topology->GetNumNodes() * 2;
+    unsigned int numTotalTransponder = topology->GetNumNodes() * 1;
     
     if(options->GetRegenerationOption() == RegenerationVirtualized)
         topology->SetNumDevices(numTotalVirtReg, DeviceRegenerator);
@@ -223,13 +223,16 @@ void SimulationType::SetNumberOfDevices() {
 void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
     
-    while(this->numberRequests <= numReqMax){
+    //while(this->numberRequests <= numReqMax){
+    while(callGenerator->ThereStillEvents()){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
         switch(evt->GetEventType()){
             case CallRequest:
                 evt->ImplementCallRequest();
-                this->callGenerator->GenerateCall();
+                
+                if(this->numberRequests < numReqMax)
+                    this->callGenerator->GenerateCall();
                 break;
             case CallEnd:
                 evt->ImplementCallEnd();

@@ -14,7 +14,7 @@
 #include "../../../include/Structure/Devices/SBVT_TSS_ML.h"
 #include "../../../include/Calls/CallDevices.h"
 
-unsigned int SBVT_TSS_ML::numSubCarriers = 6;
+unsigned int SBVT_TSS_ML::numSubCarriers = 4;
 
 SBVT_TSS_ML::SBVT_TSS_ML(Topology* topology, NodeDevices* node)
 :BVT(topology, node, TypeBVT_TSS_ML), subCarriers(0), modulations(0), calls(0) {

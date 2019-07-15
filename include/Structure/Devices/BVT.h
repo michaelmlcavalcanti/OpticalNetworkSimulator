@@ -14,8 +14,6 @@
 #ifndef BVT_H
 #define BVT_H
 
-typedef bool CarrierState;
-
 enum TypeBVT {
     TypeInvalid,
     TypeBVT_TSS_ML
@@ -27,7 +25,7 @@ enum TypeBVT {
 
 /**
  * @brief Basic BVT class. This class has the parameters common to every BVT
- * type.
+ * device.
  */
 class BVT : public Device {
 public:

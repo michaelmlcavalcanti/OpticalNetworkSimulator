@@ -27,7 +27,6 @@ class Node {
     
     friend std::ostream& operator<<(std::ostream& ostream,
     Node* node);
-    
 public:
     /**
      * @brief Standard constructor for a Node object.
@@ -73,7 +72,10 @@ public:
      */
     void SetNodeState(bool NodeWorking);
     
-    
+    /**
+     * @brief Function to get the topology in which this node is inserted.
+     * @return Physical topology pointer.
+     */
     Topology* GetTopology() const;
 private:
     /**

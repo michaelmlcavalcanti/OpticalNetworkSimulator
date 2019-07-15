@@ -253,7 +253,12 @@ public:
      * @return True if the function found a possible list of regenerators.
      */
     bool CheckInsertFreeRegenerators(CallDevices* call);
-    
+    /**
+     * @brief Function to check if there is enough available BVTs to connect the 
+     * call request. Set the list of BVTs, if found, in the call parameters.
+     * @param call Call request with devices.
+     * @return True if the function found a possible list of BVTs.
+     */
     bool CheckInsertFreeBVTs(CallDevices* call);
     /**
      * @brief Function to get the number of occupied slots in all route links.

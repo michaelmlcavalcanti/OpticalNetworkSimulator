@@ -115,6 +115,8 @@ public:
      */
     void PushEvent(std::shared_ptr<Event> evt);
     
+    bool ThereStillEvents() const;
+    
     /**
      * @brief Get the simulation that owns this object.
      * @return Pointer to a SimulationType object.

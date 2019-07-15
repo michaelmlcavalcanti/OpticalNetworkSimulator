@@ -33,12 +33,10 @@ enum EventType{
     LastEventType = CallEnd
 };
 
-
 class Event : public std::enable_shared_from_this<Event> {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Event* event);
-    
 public:
     
     Event(CallGenerator* generator, std::shared_ptr<Call> call, 
@@ -91,7 +89,6 @@ public:
      * @brief Release a implemented call in the network.
      */
     void ImplementCallEnd();
-
 private:
     /**
      * @brief Pointer to a CallGenerator object that owns this object.

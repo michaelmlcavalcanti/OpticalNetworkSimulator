@@ -76,7 +76,7 @@ void Event::SetCall(std::shared_ptr<Call> call) {
 }
 
 void Event::ImplementCallRequest() {
-    //Functions for try call allocation.
+    //Function to try call allocation.
     this->parGenerator->GetResourceAlloc()->ResourAlloc(this->call.get());
     
     //Function to update data values

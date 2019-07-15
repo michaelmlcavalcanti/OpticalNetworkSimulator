@@ -17,9 +17,18 @@
 #include <random>
 #include <limits>
 
-#define occupied true
+typedef bool CarrierState;
 #define free false
+#define occupied true
 
+typedef bool ResAllocOrder; //Ainda falta usar
+#define r_sa false
+#define sa_r true
+
+/**
+ * @brief Class responsible to define constants, random engines and other
+ * parameters.
+ */
 class Def {
 public:
     /**

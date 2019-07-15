@@ -14,9 +14,6 @@
 #ifndef RESOURCES_H
 #define RESOURCES_H
 
-//#include <vector>
-//#include <memory>
-
 class ResourceAlloc;
 class Route;
 class Call;

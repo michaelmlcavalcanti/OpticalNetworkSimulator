@@ -22,6 +22,9 @@ typedef bool UseRegeneration;
 class Regenerator;
 class BVT;
 
+/**
+ * @brief Class that represents a call request that makes use of devices.
+ */
 class CallDevices : public Call {
 public:
     /**
@@ -68,21 +71,45 @@ public:
      * of slots of each transparent segment.
      */
     void SetTotalNumSlots() override;
-    
+    /**
+     * @brief Function to get the container of regenerators used to allocate
+     * this call request.
+     * @return Container of virtualized regenerators.
+     */
     std::vector<std::shared_ptr<Regenerator> > GetRegenerators() const;
-
+    /**
+     * @brief Function to get the container of regenerators that will be used to 
+     * allocate this call request.
+     * @param regenerators Container of virtualized regenerators.
+     */
     void SetRegenerators(std::vector<std::shared_ptr<Regenerator> > 
     regenerators);
-    
+    /**
+     * @brief Function to set the use of regeneration by this call request.
+     */
     void SetUseRegeneration();
-    
+    /**
+     * @brief Function to check if this call makes use of regeneration.
+     * @return True if the call makes use of regeneration.
+     */
     bool CheckUseRegeneration() const;
     
-    
+    /**
+     * @brief Function to get the container of BVTs used to allocate this call 
+     * request. 
+     * @return Container of BVTs.
+     */
     std::vector<std::shared_ptr<BVT>> GetTransponders() const;
-
+    /**
+     * @brief Function to get the container of BVTs that will be used to 
+     * allocate this call request.
+     * @param transponders Container of BVTs.
+     */
     void SetTransponders(std::vector<std::shared_ptr<BVT> > transponders);
-
+    /**
+     * @brief Function to clear the container of BVTs used to allocate this 
+     * call request.
+     */
     void ClearTransponders();
 private:
     /**

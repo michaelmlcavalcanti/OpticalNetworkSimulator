@@ -129,6 +129,11 @@ void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
 }
 
+bool CallGenerator::ThereStillEvents() const {
+    
+    return !queueEvents.empty();
+}
+
 SimulationType* CallGenerator::GetSimulType() const {
     return simulType;
 }

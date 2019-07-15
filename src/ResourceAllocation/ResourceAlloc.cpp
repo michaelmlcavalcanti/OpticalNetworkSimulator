@@ -25,6 +25,7 @@
 #include "../../include/Data/Options.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
+#include "../../include/GeneralClasses/Def.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
@@ -564,10 +565,10 @@ void ResourceAlloc::CreateRsaOrder() {
     
     switch(this->simulType->GetOptions()->GetOrderRSA()){
         case OrderRoutingSa:
-            this->resources->resourceAllocOrder.assign(numNodes*numNodes, false);
+            this->resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
             break;
         case OrderSaRouting:
-            this->resources->resourceAllocOrder.assign(numNodes*numNodes, true);
+            this->resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
             break;
         case MixedOrder:
             this->SetResourceAllocOrder();
