@@ -36,14 +36,14 @@ enum CallStatus{
     Blocked
 };
 
+/**
+ * @brief Class that represents a simulation call request.
+ */
 class Call {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
-    const Call* call);
-    
+    const Call* call);    
 public:
-    
-    Call();
     /**
      * @brief Standard constructor of a Call object.
      * @param orNode call origin node.
@@ -51,9 +51,9 @@ public:
      * @param bitRate call bit rate.
      */
     Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
-    
-    Call(const Call& orig);
-    
+    /**
+     * @brief Standard destructor of a simulation call request.
+     */
     virtual ~Call();
     
     /**
@@ -96,35 +96,65 @@ public:
      * @param deNode pointer to an Node object.
      */
     void SetDeNode(Node* deNode);
-    
+    /**
+     * @brief Function to get the first contiguous slot of the call request.
+     * @return Call request first slot.
+     */
     unsigned int GetFirstSlot() const;
-
+    /**
+     * @brief Function to set the first contiguous slot of the call request.
+     * @param firstSlot Call request first slot.
+     */
     void SetFirstSlot(unsigned int firstSlot);
-
+    /**
+     * @brief Function to get the last contiguous slot of the call request.
+     * @return Call request last slot.
+     */
     unsigned int GetLastSlot() const;
-
+    /**
+     * @brief Function to set the last contiguous slot of the call request.
+     * @param lastSlot Call request last slot.
+     */
     void SetLastSlot(unsigned int lastSlot);
     /**
-     * @brief Return the number of slots of this Call.
-     * @return Total amount of slots.
+     * @brief Function to get the number of contiguous slots of the call 
+     * request.
+     * @return Number of contiguous slots.
      */
     unsigned int GetNumberSlots() const;
     /**
-     * @brief Inputs the number of slots of this Call.
-     * @param numberSlots Amount of slots to input.
+     * @brief Function to set the number of contiguous slots of the call 
+     * request.
+     * @param numberSlots Number of contiguous slots.
      */
     void SetNumberSlots(unsigned int numberSlots);
-    
+    /**
+     * @brief Function to get the total number of slots (in the entire route) 
+     * occupied by the call request.
+     * @return Total number of slots.
+     */
     virtual unsigned int GetTotalNumSlots() const;
-    
+    /**
+     * @brief Function to calculate the total number of slots (in the entire 
+     * route) occupied by the call request.
+     */
     virtual void SetTotalNumSlots();
-    
+    /**
+     * @brief Function to set the total number of slots (in the entire 
+     * route) occupied by the call request.
+     * @param numSlots Total number of slots
+     */
     void SetTotalNumSlots(unsigned int numSlots);
-    
+    /**
+     * @brief Function to get the core index used by the call request.
+     * @return Core index.
+     */
     unsigned int GetCore() const;
-
+    /**
+     * @brief Function to set the core index used by the call request.
+     * @param core Core index.
+     */
     void SetCore(unsigned int core);
-
     /**
      * @brief Returns the value of OSNR of this Call.
      * @return OSNR value.
@@ -155,11 +185,16 @@ public:
      * @param bitRate Bitrate value.
      */
     void SetBitRate(double bitRate); 
-    
+    /**
+     * @brief Function to get the modulation format used by the call request.
+     * @return Call request modulation format.
+     */
     TypeModulation GetModulation() const;
-
+    /**
+     * @brief Function to set the modulation format used by the call request.
+     * @param modulation Call request modulation format.
+     */
     void SetModulation(TypeModulation modulation);
-
     /**
      * @brief Returns the deactivation time of this Call.
      * @return Value of deactivation time.
@@ -170,37 +205,73 @@ public:
      * @param deactivationTime Value of deactivation time.
      */
     void SetDeactivationTime(TIME deactivationTime);
-    
+    /**
+     * @brief Function to get the route allocated for the call request.
+     * @return Call request route.
+     */
     Route* GetRoute() const;
-    
+    /**
+     * @brief Function to get a specified route of the possible routes that
+     * can allocate the call request.
+     * @param index Route index.
+     * @return Call request possible route.
+     */
     std::shared_ptr<Route> GetRoute(unsigned int index) const;
-    
+    /**
+     * @brief Function to get the number of routes the call can be allocated.
+     * @return Number of routes.
+     */
     unsigned int GetNumRoutes() const;
-
+    /**
+     * @brief Function to set a route to allocate the call request.
+     * @param route Call request route.
+     */
     void SetRoute(std::shared_ptr<Route> route);
-    
+    /**
+     * @brief Function to set a route to allocate the call request from the set
+     * of possible routes.
+     * @param routeIndex Route index.
+     */
     void SetRoute(unsigned int routeIndex);
-
+    /**
+     * @brief Function to add a route to the container of possible routes to 
+     * allocate the call request.
+     * @param route Call request possible route.
+     */
     void PushTrialRoute(std::shared_ptr<Route> route);
-    
+    /**
+     * @brief Function to set a container of possible routes to allocate the
+     * call request.
+     * @param routes Call request possible routes.
+     */
     void PushTrialRoutes(std::vector<std::shared_ptr<Route>> routes);
-    
-    std::shared_ptr<Route> PopTrialRoute();
-    
-    bool IsThereTrialRoute() const;
-    
+    /**
+     * @brief Function to clear the container of possible routes to allocate
+     * the call request.
+     */
     void ClearTrialRoutes();
-    
+    /**
+     * @brief Function to set the modulation format container of possible
+     * modulation formats of the call request.
+     * @param modulations Modulation format container.
+     */
     void PushTrialModulations(std::vector<TypeModulation> modulations);
-    
+    /**
+     * @brief Function to add a modulation format to the container of possible
+     * modulation formats of the call requests.
+     * @param modulation Modulation format to add.
+     */
     void PushTrialModulation(TypeModulation modulation);
-    
-    TypeModulation PopTrialModulation();
-    
+    /**
+     * @brief Function to get a specified modulation format from the container 
+     * of possible modulation formats.
+     * @param index Modulation format index.
+     * @return Modulation format.
+     */
     TypeModulation GetModulation(unsigned int index);
-    
-    void UpdateTrialModulations();
-    
+    /**
+     * @brief Function to clear the container of possible modulation formats.
+     */
     void ClearTrialModulations();
 private:
     /**
@@ -217,9 +288,15 @@ private:
      * representing the destination node of this call.
      */
     Node* deNode;
-    
+    /**
+     * @brief First contiguous slot of the call request. If the request is not
+     * allocated, this value is the maximum unsigned integer.
+     */
     unsigned int firstSlot;
-    
+    /**
+     * @brief Last contiguous slot of the call request. If the request is not
+     * allocated, this value is the maximum unsigned integer.
+     */
     unsigned int lastSlot;
     /**
      * @brief Number of slots occupied by this call.
@@ -228,9 +305,16 @@ private:
      * the fibers.
      */
     unsigned int numberSlots;
-    
+    /**
+     * @brief Total number of slots occupied by the call request. This value 
+     * is calculated taking into account the entire route the call is allocated.
+     */
     unsigned int totalNumSlots;
-    
+    /**
+     * @brief Core index of the call request. If the call request is not 
+     * allocated or if the simulation presents only one core, this value is
+     * the maximum  integer possible value.
+     */
     unsigned int core;
     /**
      * @brief OSNr of the call calculated based 
@@ -247,18 +331,28 @@ private:
      * @brief Bitrate of this call.
      */
     double bitRate;
-    
+    /**
+     * @brief Modulation format used by the call request.
+     */
     TypeModulation modulation;
-    
+    /**
+     * @brief Container of possible modulation formats the call request can use.
+     * The size of the container has to be the same size of the routes
+     * container.
+     */
     std::deque<TypeModulation> trialModulation;
     /**
      * @brief Deactivation time of this Call.
      * Not used if the call is blocked.
      */
     TIME deactivationTime;
-    
+    /**
+     * @brief Route in which the call request is allocated.
+     */
     std::shared_ptr<Route> route;
-    
+    /**
+     * @brief Container of possible routes to allocate the call request.
+     */
     std::deque<std::shared_ptr<Route>> trialRoutes;
     
     /**

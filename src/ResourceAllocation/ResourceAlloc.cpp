@@ -128,27 +128,25 @@ void ResourceAlloc::RMSA(Call* call) {
 
 void ResourceAlloc::RoutingSpec(Call* call) {
     this->routing->RoutingCall(call);
-    call->UpdateTrialModulations();
+    unsigned int numRoutes = call->GetNumRoutes();
     
-    if(call->IsThereTrialRoute()){
-        do{
-            call->SetRoute(call->PopTrialRoute());
-            call->SetModulation(call->PopTrialModulation());
-            this->modulation->SetModulationParam(call);
+    for(unsigned int a = 0; a < numRoutes; a++){
+        call->SetRoute(call->GetRoute(a));
+        call->SetModulation(call->GetModulation(a));
+        this->modulation->SetModulationParam(call);
+        
+        if(!this->CheckOSNR(call))
+            continue;
             
-            if(!this->CheckOSNR(call))
-                continue;
+        this->specAlloc->SpecAllocation(call);
             
-            this->specAlloc->SpecAllocation(call);
-            
-                if(this->topology->IsValidLigthPath(call)){
-                    call->ClearTrialRoutes();
-                    call->ClearTrialModulations();
-                    call->SetStatus(Accepted);
-                    break;
-                }
-        }while(call->IsThereTrialRoute());
+        if(this->topology->IsValidLigthPath(call)){
+            call->SetStatus(Accepted);
+            break;
+        }
     }
+    call->ClearTrialRoutes();
+    call->ClearTrialModulations();
 }
 
 void ResourceAlloc::SpecRouting(Call* call) {

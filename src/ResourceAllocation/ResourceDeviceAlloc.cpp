@@ -80,29 +80,28 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
 
 void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
+    unsigned int numRoutes = call->GetNumRoutes();
     
-    if(call->IsThereTrialRoute()){
-        do{
-            call->ClearTransponders();
-            call->SetRoute(call->PopTrialRoute());
-            call->SetModulation(resources->GetSubRoutesMod(call, 0).front());
-            this->modulation->SetModulationParam(call);
+    for(unsigned int a = 0; a < numRoutes; a++){
+        call->ClearTransponders();
+        call->SetRoute(call->GetRoute(a));
+        call->SetModulation(resources->GetSubRoutesMod(call, 0).front());
+        this->modulation->SetModulationParam(call);
             
-            if(!topology->CheckInsertFreeBVTs(call))
-                continue;
+        if(!topology->CheckInsertFreeBVTs(call))
+            continue;
             
-            if(!this->CheckOSNR(call))
-                continue;
+        if(!this->CheckOSNR(call))
+            continue;
             
-            this->specAlloc->SpecAllocation(call);
+        this->specAlloc->SpecAllocation(call);
             
-            if(this->topology->IsValidLigthPath(call)){
-                call->ClearTrialRoutes();
-                call->SetStatus(Accepted);
-                break;
-            }
-        }while(call->IsThereTrialRoute());
+        if(this->topology->IsValidLigthPath(call)){
+            call->SetStatus(Accepted);
+            break;
+        }
     }
+    call->ClearTrialRoutes();
 }
 
 void ResourceDeviceAlloc::SetRegChoiceOrder(CallDevices* call, 

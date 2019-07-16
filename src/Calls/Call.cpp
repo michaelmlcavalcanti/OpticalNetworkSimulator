@@ -206,24 +206,6 @@ void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
     routes.clear();
 }
 
-std::shared_ptr<Route> Call::PopTrialRoute() {
-    std::shared_ptr<Route> route = nullptr;
-    
-    //Verify with and without reset function.
-    if(!this->trialRoutes.empty()){
-        route = this->trialRoutes.front();
-        this->trialRoutes.front().reset();
-        this->trialRoutes.pop_front();
-    }
-    
-    return route;
-}
-
-bool Call::IsThereTrialRoute() const {
-    
-    return !this->trialRoutes.empty();
-}
-
 void Call::ClearTrialRoutes() {
     
     while(!this->trialRoutes.empty()){
@@ -242,23 +224,6 @@ void Call::PushTrialModulations(std::vector<TypeModulation> modulations) {
 void Call::PushTrialModulation(TypeModulation modulation) {
     
     trialModulation.push_back(modulation);
-}
-
-TypeModulation Call::PopTrialModulation() {
-    TypeModulation modulation = InvalidModulation;
-    
-    if(!this->trialModulation.empty()){
-        modulation = this->trialModulation.front();
-        this->trialModulation.pop_front();
-    }
-    
-    return modulation;
-}
-
-void Call::UpdateTrialModulations() {
-    
-    while(trialModulation.size() < trialRoutes.size())
-        trialModulation.push_back(trialModulation.front());
 }
 
 void Call::ClearTrialModulations() {
