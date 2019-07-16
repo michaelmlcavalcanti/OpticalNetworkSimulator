@@ -16,6 +16,7 @@
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/SimulationType/SimulationType.h"
 
 const boost::unordered_map<EventType, std::string> 
 Event::mapEventType = boost::assign::map_list_of
@@ -76,6 +77,7 @@ void Event::SetCall(std::shared_ptr<Call> call) {
 }
 
 void Event::ImplementCallRequest() {
+    parGenerator->GetSimulType()->numberRequests++;
     //Function to try call allocation.
     this->parGenerator->GetResourceAlloc()->ResourAlloc(this->call.get());
     

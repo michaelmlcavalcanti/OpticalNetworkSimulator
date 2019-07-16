@@ -18,8 +18,8 @@ PARAMETERS
 Number of slots per fiber: 320
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 3
-Maximum load point(erlang): 4
+Minimum load point(erlang): 6
+Maximum load point(erlang): 7
 Number of points: 1
 Total number of requisitions: 100000
 Maximum blocked requests: 1000
@@ -27,7 +27,7 @@ Slot bandwidth (GHz): 12.5
 Maximum section length (km): 100
 
 DATA
-Simulation time:33186.7  Real simul time: 0.140296  Number of requests:100000
-Load point:3  PbReq:0.60903  PbSlots:0.60903  HopsMed:1.1417  NetOcc:0
+Simulation time:16592.6  Real simul time: 0.157234  Number of requests:100000
+Load point:6  PbReq:0.75415  PbSlots:0.75415  HopsMed:1.08953  NetOcc:0
 
 

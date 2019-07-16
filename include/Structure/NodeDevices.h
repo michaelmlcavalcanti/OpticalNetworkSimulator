@@ -20,6 +20,7 @@
 class Regenerator;
 class BVT;
 class Call;
+class CallDevices;
 
 #include "Node.h"
 #include "Devices/Regenerator.h"

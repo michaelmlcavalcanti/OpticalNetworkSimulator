@@ -73,7 +73,7 @@ void CallGenerator::Finalize() {
 }
 
 void CallGenerator::GenerateCall() {
-    this->simulType->numberRequests++;
+    //this->simulType->numberRequests++;
     std::shared_ptr<Call> newCall;
     unsigned int auxIndexOrNode = uniformNodeDistribution(random_generator);
     unsigned int auxIndexDeNode;
@@ -127,11 +127,6 @@ std::shared_ptr<Event> CallGenerator::GetNextEvent() {
 
 void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
-}
-
-bool CallGenerator::ThereStillEvents() const {
-    
-    return !queueEvents.empty();
 }
 
 SimulationType* CallGenerator::GetSimulType() const {

@@ -30,8 +30,9 @@ class ResourceAlloc;
 #include <queue>
 #include <ctime>
 
-#include "Event.h"
-
+/**
+ * @brief Class responsible for events generation.
+ */
 class CallGenerator {
 private:
     /**
@@ -48,7 +49,6 @@ private:
         bool operator()(const std::shared_ptr<Event> eventA,
                         const std::shared_ptr<Event> eventB) const;
     };
-    
 public:
     /**
      * @brief Standard constructor for a CallGenerator object.
@@ -114,8 +114,6 @@ public:
      * @param evt
      */
     void PushEvent(std::shared_ptr<Event> evt);
-    
-    bool ThereStillEvents() const;
     
     /**
      * @brief Get the simulation that owns this object.

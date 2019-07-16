@@ -25,6 +25,7 @@ class InputOutput;
 class Traffic;
 class CallGenerator;
 class ResourceAlloc;
+class Event;
 
 #include "../Kernel.h"
 
@@ -221,6 +222,11 @@ private:
      * requests.
      */
     void SimulateNumBlocReq();
+    /**
+     * @brief Function to implement an event, depending on the type.
+     * @param event Event to implement.
+     */
+    void ImplementEvent(Event* event);
 public:
     /**
      * @brief Actual number of request created.

@@ -15,6 +15,7 @@
 #define EVENT_H
 
 class CallGenerator;
+class Call;
 
 #include <memory>
 #include <boost/assign/list_of.hpp>
@@ -33,15 +34,25 @@ enum EventType{
     LastEventType = CallEnd
 };
 
+/**
+ * @brief Class that represents an event of a simulation.
+ */
 class Event : public std::enable_shared_from_this<Event> {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Event* event);
 public:
-    
+    /**
+     * @brief Standard constructor of a simulator event.
+     * @param generator Event generator of this event.
+     * @param call Call request of this event.
+     * @param time Simulation time for event occurrence.
+     */
     Event(CallGenerator* generator, std::shared_ptr<Call> call, 
           TIME time);
-
+    /**
+     * @brief Standard destructor of an simulation event.
+     */
     virtual ~Event();
     
     /**

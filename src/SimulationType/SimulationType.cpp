@@ -14,7 +14,6 @@
 #include <boost/make_unique.hpp>
 
 #include "../../include/SimulationType/SimulationType.h"
-
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Options.h"
 #include "../../include/Data/Data.h"
@@ -22,6 +21,7 @@
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/CallGenerator.h"
+#include "../../include/Calls/Event.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 
@@ -223,24 +223,10 @@ void SimulationType::SetNumberOfDevices() {
 void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
     
-    //while(this->numberRequests <= numReqMax){
-    while(callGenerator->ThereStillEvents()){
+    while(this->numberRequests < numReqMax){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
-        switch(evt->GetEventType()){
-            case CallRequest:
-                evt->ImplementCallRequest();
-                
-                if(this->numberRequests < numReqMax)
-                    this->callGenerator->GenerateCall();
-                break;
-            case CallEnd:
-                evt->ImplementCallEnd();
-                break;
-            default:
-                std::cerr << "Invalid event" << std::endl;
-                std::abort();
-        }
+        this->ImplementEvent(evt.get());
     }
 }
 
@@ -250,17 +236,22 @@ void SimulationType::SimulateNumBlocReq() {
     while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
-        switch(evt->GetEventType()){
-            case CallRequest:
-                evt->ImplementCallRequest();
-                this->callGenerator->GenerateCall();
-                break;
-            case CallEnd:
-                evt->ImplementCallEnd();
-                break;
-            default:
-                std::cerr << "Invalid event" << std::endl;
-                std::abort();
-        }
+        this->ImplementEvent(evt.get());
+    }
+}
+
+void SimulationType::ImplementEvent(Event* event) {
+    
+    switch(event->GetEventType()){
+        case CallRequest:
+            event->ImplementCallRequest();
+            callGenerator->GenerateCall();
+            break;
+        case CallEnd:
+            event->ImplementCallEnd();
+            break;
+        default:
+            std::cerr << "Invalid event" << std::endl;
+            std::abort();
     }
 }
