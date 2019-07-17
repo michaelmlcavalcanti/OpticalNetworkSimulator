@@ -153,6 +153,9 @@ enum DevicesOption {
     DevicesEnabled
 };
 
+/**
+ * @brief Option responsible to allow the use of transponder in the simulator.
+ */
 enum TransponderOption {
     TransponderDisabled,
     TransponderEnabled
@@ -479,17 +482,29 @@ private:
      * @brief Genetic algorithm option.
      */
     GAOption GaOption;
-    
+    /**
+     * @brief Option that allows the use of devices in the simulation.
+     */
     DevicesOption devicesOption;
-    
+    /**
+     * @brief Option that allows the use of transponders in the simulation.
+     */
     TransponderOption transponderOption;
-    
+    /**
+     * @brief Option to determine the use of regenerators in the simulation.
+     */
     RegenerationOption regenerationOption;
-    
+    /**
+     * @brief Option to determine the regenerator placement option.
+     */
     RegPlacementOption regPlacOption;
-    
+    /**
+     * @brief Option to determine the regenerator assignment option.
+     */
     RegAssignmentOption regAssOption;
-    
+    /**
+     * @brief Option to determine the simulation stop criteria. 
+     */
     StopCriteria stopCriteria;
     
     /**
@@ -553,22 +568,36 @@ private:
      */
     static const boost::unordered_map<GAOption,
     std::string> mapGaOption;
-    
+    /**
+     * @brief Map the device options and their respective names.
+     */
     static const boost::unordered_map<DevicesOption,
     std::string> mapDevicesOption;
-    
+    /**
+     * @brief Map the transponder options and their respective names.
+     */
     static const boost::unordered_map<TransponderOption,
     std::string> mapTransponderOption;
-    
+    /**
+     * @brief Map the regeneration options and their respective names.
+     */
     static const boost::unordered_map<RegenerationOption,
     std::string> mapRegenerationOption;
-    
+    /**
+     * @brief Map the regeneration placement options and their respective 
+     * names.
+     */
     static const boost::unordered_map<RegPlacementOption,
     std::string> mapRegPlacOption;
-    
+    /**
+     * @brief Map the regeneration assignment options and their respective 
+     * names.
+     */
     static const boost::unordered_map<RegAssignmentOption,
     std::string> mapRegAssOption;
-    
+    /**
+     * @brief Map the stop criteria options and their respective names.
+     */
     static const boost::unordered_map<StopCriteria,
     std::string> mapStopCriteria;
 };

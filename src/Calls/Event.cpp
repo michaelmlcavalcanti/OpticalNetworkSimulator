@@ -76,6 +76,22 @@ void Event::SetCall(std::shared_ptr<Call> call) {
     this->call = call;
 }
 
+void Event::ImplementEvent() {
+    
+    switch(this->eventType){
+        case CallRequest:
+            this->ImplementCallRequest();
+            this->parGenerator->GenerateCall();
+            break;
+        case CallEnd:
+            this->ImplementCallEnd();
+            break;
+        default:
+            std::cerr << "Invalid event" << std::endl;
+            std::abort();
+    }
+}
+
 void Event::ImplementCallRequest() {
     parGenerator->GetSimulType()->numberRequests++;
     //Function to try call allocation.

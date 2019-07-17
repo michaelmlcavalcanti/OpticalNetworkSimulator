@@ -226,7 +226,7 @@ void SimulationType::SimulateNumTotalReq() {
     while(this->numberRequests < numReqMax){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
-        this->ImplementEvent(evt.get());
+        evt->ImplementEvent();
     }
 }
 
@@ -236,22 +236,6 @@ void SimulationType::SimulateNumBlocReq() {
     while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
         std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
         
-        this->ImplementEvent(evt.get());
-    }
-}
-
-void SimulationType::ImplementEvent(Event* event) {
-    
-    switch(event->GetEventType()){
-        case CallRequest:
-            event->ImplementCallRequest();
-            callGenerator->GenerateCall();
-            break;
-        case CallEnd:
-            event->ImplementCallEnd();
-            break;
-        default:
-            std::cerr << "Invalid event" << std::endl;
-            std::abort();
+        evt->ImplementEvent();
     }
 }

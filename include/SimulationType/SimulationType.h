@@ -25,7 +25,6 @@ class InputOutput;
 class Traffic;
 class CallGenerator;
 class ResourceAlloc;
-class Event;
 
 #include "../Kernel.h"
 
@@ -209,7 +208,9 @@ private:
      * @brief Function to create a load the resource allocation object.
      */
     void CreateLoadResourceAlloc();
-    
+    /**
+     * @brief Function to set the number of devices in the simulation topology.
+     */
     void SetNumberOfDevices();
     
     /**
@@ -222,11 +223,6 @@ private:
      * requests.
      */
     void SimulateNumBlocReq();
-    /**
-     * @brief Function to implement an event, depending on the type.
-     * @param event Event to implement.
-     */
-    void ImplementEvent(Event* event);
 public:
     /**
      * @brief Actual number of request created.

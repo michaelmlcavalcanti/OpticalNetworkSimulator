@@ -184,11 +184,16 @@ public:
      * @param numberRoutes Number of routes.
      */
     void SetNumberRoutes(unsigned int numberRoutes);
-    
+    /**
+     * @brief Function to get the maximum possible section length.
+     * @return Maximum section length.
+     */
     double GetMaxSectionLegnth() const;
-
+    /**
+     * @brief Function to set the maximum possible section length.
+     * @param maxSectionLegnth Maximum section length.
+     */
     void SetMaxSectionLegnth(double maxSectionLegnth);
-
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -244,7 +249,10 @@ private:
      * per network node pair.
      */
     unsigned int numberRoutes;
-    
+    /**
+     * @brief Maximum possible section length. This parameter is used to 
+     * determine how many sections each link has.
+     */
     double maxSectionLegnth;
     
     /**

@@ -91,6 +91,12 @@ public:
      * @param call Pointer to a Call object
      */
     void SetCall(std::shared_ptr<Call> call);
+    
+    /**
+     * @brief Function to implement an event, depending on the type.
+     */
+    void ImplementEvent();
+private:
     /**
      * @brief Implements a Call request, resulting in a accepted or
      * blocked call.

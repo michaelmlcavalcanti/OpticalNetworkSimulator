@@ -170,24 +170,12 @@ void Data::SetNumberReq(double numReq) {
     this->numberReq.at(this->actualIndex) = numReq;
 }
 
-double Data::GetNumberReq(unsigned int index) const {
-    return this->numberReq.at(index);
-}
-
 double Data::GetNumberReq() const {
     return this->numberReq.at(this->actualIndex);
 }
 
-double Data::GetNumberBlocReq(unsigned int index) const {
-    return this->numberBlocReq.at(index);
-}
-
 double Data::GetNumberBlocReq() const {
     return this->numberBlocReq.at(this->actualIndex);
-}
-
-double Data::GetNumberAccReq(unsigned int index) const {
-    return this->numberAccReq.at(index);
 }
 
 double Data::GetNumberAccReq() const {
@@ -202,16 +190,8 @@ double Data::GetNumberSlotsReq() const {
     return this->numberSlotsReq.at(this->actualIndex);
 }
 
-double Data::GetNumberBlocSlots(unsigned int index) const {
-    return this->numberBlocSlots.at(index);
-}
-
 double Data::GetNumberBlocSlots() const {
     return this->numberBlocSlots.at(this->actualIndex);
-}
-
-double Data::GetNumberAccSlots(unsigned int index) const {
-    return this->numberAccSlots.at(index);
 }
 
 double Data::GetNumberAccSlots() const {
@@ -222,16 +202,8 @@ double Data::GetPbSlots() const {
     return this->GetNumberBlocSlots()/this->GetNumberSlotsReq();
 }
 
-double Data::GetNumHopsPerRoute(unsigned int index) const {
-    return this->numHopsPerRoute.at(index);
-}
-
 double Data::GetNumHopsPerRoute() const {
     return this->numHopsPerRoute.at(this->actualIndex);
-}
-
-double Data::GetNetOccupancy(unsigned int index) const {
-    return this->netOccupancy.at(index);
 }
 
 double Data::GetNetOccupancy() const {

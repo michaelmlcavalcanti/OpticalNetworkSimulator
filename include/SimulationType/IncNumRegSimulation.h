@@ -35,7 +35,10 @@ public:
      */
     virtual ~IncNumRegSimulation();
     
-    
+    /**
+     * @brief Function to run the simulation for a variable number of devices
+     * in the topology.
+     */
     void Run() override;
     /**
      * @brief Function used to call the Run function of the base class 

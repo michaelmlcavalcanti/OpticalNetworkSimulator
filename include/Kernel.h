@@ -92,7 +92,9 @@ private:
      * @brief Vector with all pointers to SimulationType objects.
      */
     std::vector<std::shared_ptr<SimulationType>> simulations;
-    
+    /**
+     * @brief Map the types of simulations and their respective names.
+     */
     static const boost::unordered_map<TypeSimulation, 
     std::string> mapSimulationType;
 };

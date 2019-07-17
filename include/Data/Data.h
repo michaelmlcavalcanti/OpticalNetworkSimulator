@@ -25,14 +25,12 @@ class GA_MO;
 #include "../Calls/CallGenerator.h"
 
 /**
- * @brief The Data class is responsible for storage the simulation
- * data.
+ * @brief The Data class is responsible to storage the simulation data.
  */
 class Data {
     
     friend std::ostream& operator<<(std::ostream& ostream, 
     const Data* data);
-
 public:
     /**
      * @brief Standard constructor for a Data object.
@@ -55,7 +53,11 @@ public:
      * number of load points. And sets all values to 0.
      */
     void Initialize();
-    
+    /**
+     * @brief Function to initialize the data containers for a specified number
+     * of points.
+     * @param numPos Number of points.
+     */
     void Initialize(unsigned int numPos);
     /**
      * @brief Update the data based on the call.
@@ -72,7 +74,11 @@ public:
      * @brief Saves the data values in the PBvLoad.txt file.
      */
     void SavePBvLoad();
-    
+    /**
+     * @brief Function to save the specified parameters with the main result(BP) 
+     * in and output file.
+     * @param vecParam Container of parameters.
+     */
     void SaveMainResults(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
@@ -87,91 +93,161 @@ public:
      */
     void SetNumberReq(double numReq);
     /**
-     * @brief Gets the number of requests for a specified load point.
-     * @param index Index of the load point.
-     * @return Number of requests.
-     */
-    double GetNumberReq(unsigned int index) const;
-    /**
      * @brief Gets the number of requests for the actual load point.
      * @return Number of requests.
      */
     double GetNumberReq() const;
     /**
-     * @brief Gets the number of blocked requests for a specified load point.
-     * @param index Index of the load point.
-     * @return Number of requests.
-     */
-    double GetNumberBlocReq(unsigned int index) const;
-    /**
-     * @brief Function that return the number of blocked call requests.
+     * @brief Function that return the number of blocked call requests for the
+     * actual point.
      * @return Number of blocked requests.
      */
     double GetNumberBlocReq() const;
-    
-    double GetNumberAccReq(unsigned int index) const;
-
+    /**
+     * @brief Function to get the number of accepted call requests for the 
+     * actual point.
+     * @return Number of accepted call requests.
+     */
     double GetNumberAccReq() const;
-    
+    /**
+     * @brief Function to get the network call request blocking probability for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
     double GetPbReq() const;
-    
+    /**
+     * @brief Function to get the total bandwidth used by the call requests in
+     * the actual simulation.
+     * @return Total bandwidth.
+     */
     double GetNumberSlotsReq() const;
-
-    double GetNumberBlocSlots(unsigned int index) const;
-    
+    /**
+     * @brief Function to get the accepted call requests bandwidth for the 
+     * actual simulation.
+     * @return Accepted bandwidth.
+     */
     double GetNumberBlocSlots() const;
-    
-    double GetNumberAccSlots(unsigned int index) const;
-    
+    /**
+     * @brief Function to get the blocked call requests bandwidth for the 
+     * actual simulation.
+     * @return Blocked bandwidth.
+     */
     double GetNumberAccSlots() const;
-    
+    /**
+     * @brief Function to get the network bandwidth blocking probability for
+     * the actual simulation.
+     * @return Bandwidth blocking probability.
+     */
     double GetPbSlots() const;
-
-    double GetNumHopsPerRoute(unsigned int index) const;
-    
+    /**
+     * @brief Function to get the mean of hops per route for the actual 
+     * simulation.
+     * @return Mean of hops per route.
+     */
     double GetNumHopsPerRoute() const;
-    
-    double GetNetOccupancy(unsigned int index) const;
-    
+    /**
+     * @brief Function to get the network occupancy for the actual simulation.
+     * @return Network occupancy.
+     */
     double GetNetOccupancy() const;
-    
+    /**
+     * @brief Function to get the simulation time for the actual simulation.
+     * @return Simulation time.
+     */
     TIME GetSimulTime() const;
-    
+    /**
+     * @brief Function to set the simulation time for the actual simulation.
+     * @param simulTime Simulation time.
+     */
     void SetSimulTime(const TIME simulTime);
-    
+    /**
+     * @brief Function to get the computer simulation time for the actual 
+     * simulation.
+     * @return Computer simulation time.
+     */
     TIME GetRealSimulTime() const;
-    
+    /**
+     * @brief Function to set the computer simulation time for the actual 
+     * simulation.
+     * @param simulTime Computer simulation time.
+     */
     void SetRealSimulTime(const TIME simulTime);
-    
+    /**
+     * @brief Function to get the index of the actual simulation point.
+     * @return Actual simulation point index.
+     */
     unsigned int GetActualIndex() const;
-
+    /**
+     * @brief Function to get the index of the actual simulation point.
+     * @param actualIndex Actual simulation point index.
+     */
     void SetActualIndex(unsigned int actualIndex);
-
 private:
     /**
      * @brief Saves the data in PBvLoad.txt.
      * @param ostream Stream that contain the PBvLoad file.
      */
     void SavePBvLoad(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save specified paramters with the main result(BP) to 
+     * a file.
+     * @param ostream Output file.
+     * @param vec Container of parameters.
+     */
     void SaveMainResults(std::ostream& ostream, std::vector<unsigned> vec);
-    
+    /**
+     * @brief Function to save all GA single objective data in the output files.
+     * @param logOfstream Output log file.
+     * @param initPop Output file for the initial population.
+     * @param bestInds Output file for the GA best individuals.
+     * @param worstInds Output file for the GA worst individuals.
+     * @param bestInd Output file for the GA best individual.
+     */
     void SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
     std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd);
-    
+    /**
+     * @brief Function to save the best and the worst individuals in their
+     * respective files and in the log file.
+     * @param ga GA single objective algorithm.
+     * @param logOfstream Output logo file.
+     * @param bestInds Output file for the GA best individuals.
+     * @param worstInds Output file for the GA worst individuals.
+     */
     void SaveBestWorstIndividuals(GA_SO* ga, std::ostream& logOfstream, 
     std::ostream& bestInds, std::ostream& worstInds);
-    
+    /**
+     * @brief Function to save the best individual (genes) in the output file.
+     * @param ga GA single objective algorithm.
+     * @param bestInd Output file for the GA best individual.
+     */
     void SaveBestIndividual(GA_SO* ga, std::ostream& bestInd);
-    
+    /**
+     * @brief Function to save the initial population in the output file.
+     * @param ga GA single objective algorithm.
+     * @param initPop Output file for the GA best individual.
+     */
     void SaveInitPopulation(GA_SO* ga, std::ostream& initPop);
-    
+    /**
+     * @brief Function to save all GA multi-objective data in the output files.
+     * @param logOfstream Output log file.
+     * @param bestInds Output file for the GA Pareto fronts.
+     * @param bestInd Output file for the GA last Pareto front individuals.
+     */
     void SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds, 
     std::ostream& bestInd);
-    
+    /**
+     * @brief Function to save the GA Pareto fronts in the output files.
+     * @param ga GA multi-objective algorithm.
+     * @param logOfstream Output log file.
+     * @param bestInds Output file for the GA Pareto fronts.
+     */
     void SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream, 
     std::ostream& bestInds);
-    
+    /**
+     * @brief Function to save the last GA Pareto front in the output file.
+     * @param ga GA multi-objective algorithm.
+     * @param bestInd Output file for the GA last Pareto front individuals.
+     */
     void SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd);
 private:
     /**
@@ -220,7 +296,9 @@ private:
      * @brief Vector that contain the simulation time of each load point.
      */
     std::vector<TIME> simulTime;
-    
+    /**
+     * @brief Container of computer simulation times.
+     */
     std::vector<TIME> realSimulTime;
     /**
      * @brief Index of the actual simulation. This is referred to multiload

@@ -84,6 +84,7 @@ void IncNumRegSimulation::Help() {
 }
 
 void IncNumRegSimulation::SetNumberOfDevices(unsigned int numDevices) {
+    //Switch for variate the type of device.
     DeviceType type = DeviceRegenerator;
     vecNumReg.push_back(numDevices);
     

@@ -68,8 +68,6 @@ public:
      * @brief Prints a description of the simulation.
      */
     void Help() override;
-private:
-    
 };
 
 #endif /* MULTILOADSIMULATION_H */

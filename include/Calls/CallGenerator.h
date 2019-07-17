@@ -155,12 +155,25 @@ public:
      * @param rsaAlgorithm ResourceAlloc pointer.
      */
     void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
-    
+    /**
+     * @brief Function to get the computer simulation time.
+     * @return Computer simulation time.
+     */
     TIME GetRealSimulationTime() const;
-
+    /**
+     * @brief Function to set the computer simulation time.
+     * @param realSimullationTime Computer simulation time.
+     */
     void SetRealSimulationTime(TIME realSimullationTime);
 private:
-    
+    /**
+     * @brief Function responsible to create a call request.
+     * @param orNodeIndex Source node index.
+     * @param deNodeIndex Destination node index.
+     * @param trafficIndex Traffic container index.
+     * @param deactTime Deactivation time.
+     * @return Generated call request.
+     */
     std::shared_ptr<Call> CreateCall(unsigned orNodeIndex, unsigned deNodeIndex, 
                                      unsigned trafficIndex, TIME deactTime);
 private:
@@ -222,7 +235,9 @@ private:
      * @brief Actual simulation time.
      */
     TIME simulationTime;
-    
+    /**
+     * @brief Computer simulation time.
+     */
     TIME realSimulationTime;
     /**
      * @brief List with the Event objects ordered based on those times.

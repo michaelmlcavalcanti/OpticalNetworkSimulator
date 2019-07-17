@@ -23,7 +23,6 @@ class SimulationType;
  * in simulation files.
  */
 class InputOutput {
-
 public:
     /**
      * @brief Standard constructor for a InputOutput object.
@@ -61,11 +60,20 @@ public:
      * @param traffic stream that operates in Traffic file.
      */
     void LoadTraffic(std::ifstream& traffic);
-    
+    /**
+     * @brief Function to load the basic GA parameters file.
+     * @param gaParam Input file.
+     */
     void LoadGA(std::ifstream& gaParam);
-    
+    /**
+     * @brief Function to load the GA single objective parameters file.
+     * @param gaSoParam Input file.
+     */
     void LoadGA_SO(std::ifstream& gaSoParam);
-    
+    /**
+     * @brief Function to load the GA multi-objective parameters file.
+     * @param gaMoParam Input file.
+     */
     void LoadGA_MO(std::ifstream& gaMoParam);
     /**
      * @brief Loads the RSA order input file from the first simulation made.
@@ -117,7 +125,13 @@ public:
      * @param max Progress total value.
      */
     void PrintProgressBar(unsigned int actual, unsigned int max);
-    
+    /**
+     * @brief Function to print the progress bar, based in the inputs 
+     * proportion.
+     * @param actual Progress actual value.
+     * @param min Progress minimum value.
+     * @param max Progress maximum value.
+     */
     void PrintProgressBar(unsigned actual, unsigned min, unsigned max);
 private:
     /**
@@ -140,7 +154,6 @@ private:
      */
     void LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
                      std::ofstream& worst, std::ofstream& iniPop);
-
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this object
@@ -154,13 +167,24 @@ private:
      * @brief Ofstream with the PBvLoad.txt file.
      */
     std::ofstream resultFile;
-    
+    /**
+     * @brief Output file to save the best individuals for a GA single 
+     * objective.
+     */
     std::ofstream bestIndividuals;
-    
+    /**
+     * @brief Output file to save the best individual for a GA single 
+     * objective.
+     */
     std::ofstream bestIndividual;
-    
+    /**
+     * @brief Output file to save the worst individuals for a GA single 
+     * objective.
+     */
     std::ofstream worstIndividuals;
-    
+    /**
+     * @brief Output file to save the initial population of a GA.
+     */
     std::ofstream initialPopulation;
     
     std::ofstream table;
@@ -168,7 +192,6 @@ private:
      * @brief Size of the progress bar.
      */
     static const int barWidth;
-    
 };
 
 #endif /* INPUTOUTPUT_H */

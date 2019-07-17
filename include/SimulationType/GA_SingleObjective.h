@@ -53,7 +53,10 @@ public:
      * @brief Load simulation inputs from files.
      */
     void LoadFile() override;
-    
+    /**
+     * @brief Function to apply the additional settings of the GA simulation.
+     * Also initialize the GA algorithm.
+     */
     void AdditionalSettings() override;
     /**
      * @brief Print this simulation
