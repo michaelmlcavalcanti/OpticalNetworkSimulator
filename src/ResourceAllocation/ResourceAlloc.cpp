@@ -64,8 +64,6 @@ void ResourceAlloc::Load() {
     
     unsigned int numNodes = this->topology->GetNumNodes();
     this->resources->allRoutes.resize(numNodes*numNodes);
-    
-    int x = 0;
 }
 
 void ResourceAlloc::AdditionalSettings() {
@@ -583,7 +581,6 @@ void ResourceAlloc::CreateRsaOrder() {
 }
 
 void ResourceAlloc::CreateRouting() {
-    int x = 0;
     RoutingOption option = this->simulType->GetOptions()->GetRoutingOption();
             
     this->routing = std::make_shared<Routing>(this, option, this->topology);
