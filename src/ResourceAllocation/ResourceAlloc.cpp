@@ -64,6 +64,8 @@ void ResourceAlloc::Load() {
     
     unsigned int numNodes = this->topology->GetNumNodes();
     this->resources->allRoutes.resize(numNodes*numNodes);
+    
+    int x = 0;
 }
 
 void ResourceAlloc::AdditionalSettings() {
