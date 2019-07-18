@@ -27,7 +27,7 @@ Slot bandwidth (GHz): 12.5
 Maximum section length (km): 100
 
 DATA
-Simulation time:1.65926e+06  Real simul time: 0.184415  Number of requests:100000
+Simulation time:1.65926e+06  Real simul time: 0.184228  Number of requests:100000
 Load point:0.06  PbReq:0.03157  PbSlots:0.03157  HopsMed:1.32449  NetOcc:0
 
 

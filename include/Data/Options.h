@@ -187,9 +187,10 @@ enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,
     RegAssMaxReg,
-    RegMetric01,
+    DRE2BR,
+    SCRA,
     FirstRegAss = RegAssInvalid,
-    LastRegAss = RegMetric01
+    LastRegAss = SCRA
 };
 
 enum StopCriteria {

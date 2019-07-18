@@ -72,9 +72,9 @@ public:
      * @param Rbps Bit rate to transmit.
      * @return Spectral bandwidth needed to transmit.
      */
-    double BandwidthQAM(unsigned int M, double Rbps);
+    double BandwidthQAM(TypeModulation M, double Rbps);
     
-    double GetOSNRQAM(unsigned int M, double Rbps);
+    double GetOSNRQAM(TypeModulation M, double Rbps);
     /**
      * @brief Function to get the SNRb value, in dB, depending on the modulation 
      * value and the BER used as reference.
@@ -99,6 +99,8 @@ public:
      * @return Container of possible slots.
      */
     std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
+    
+    double GetSlotBandwidth() const;
 private:
     /**
      * @brief Gets the possible slots set that the call requests can use with

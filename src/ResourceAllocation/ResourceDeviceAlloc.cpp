@@ -115,9 +115,10 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         case RegAssMaxReg:
             this->SetMaxRegChoiceOrder(call, vec);
             break;
-        case RegMetric01:
-            this->SetMetric01(call, vec);
-            break;;
+        case DRE2BR:
+        case SCRA:
+            this->SetCostMetric(call, vec);
+            break;
         default:
             std::cerr << "Invalid regenerator assignment option" << std::endl;
             std::abort();
@@ -176,28 +177,28 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     unsigned int posSize = 0;
     unsigned int auxRouteIndex = 0;
     unsigned int auxIndex = 0;
-    unsigned int auxRegInt;
-    unsigned int auxSlotsInt;
+    unsigned int auxNumReg;
+    unsigned int auxNumSlots;
     
     for(unsigned int a = 0; a < vecNumReg.size(); a++){
         posSize += vecNumReg.at(a).size();
     }
     
     while(vec.size() < posSize){
-        auxRegInt = 0;
-        auxSlotsInt = Def::Max_UnInt;
+        auxNumReg = Def::Max_UnInt;
+        auxNumSlots = Def::Max_UnInt;
         
         for(unsigned int a = 0; a < vecNumReg.size(); a++){
             for(unsigned int b = 0; b < vecNumReg.at(a).size(); b++){
                 
-                if(auxRegInt <= vecNumReg.at(a).at(b)){
-                    if(auxRegInt == vecNumReg.at(a).at(b) && 
-                    auxSlotsInt <= vecNumSlots.at(a).at(b)){
+                if(auxNumSlots >= vecNumSlots.at(a).at(b)){
+                    if(auxNumSlots == vecNumSlots.at(a).at(b) && 
+                    auxNumReg <= vecNumReg.at(a).at(b)){
                         continue;
                     }
                     else{
-                        auxRegInt = vecNumReg.at(a).at(b);
-                        auxSlotsInt = vecNumSlots.at(a).at(b);
+                        auxNumSlots = vecNumSlots.at(a).at(b);
+                        auxNumReg = vecNumReg.at(a).at(b);
                         auxRouteIndex = a;
                         auxIndex = b;
                     }
@@ -205,12 +206,12 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
             }
         }
         vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
-        vecNumReg.at(auxRouteIndex).at(auxIndex) = 0;
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
         vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
 }
 
-void ResourceDeviceAlloc::SetMetric01(CallDevices* call, 
+void ResourceDeviceAlloc::SetCostMetric(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
     std::vector<std::vector<unsigned>> vecNumReg = 
     resources->GetNumAllRegPos(call);
@@ -222,7 +223,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         vecCosts.at(a).resize(vecNumReg.at(a).size());
         
         for(unsigned b = 0; b < vecNumReg.at(a).size(); b++){
-            vecCosts.at(a).at(b) = this->CalcRegCost(call, a, b);
+            vecCosts.at(a).at(b) = this->CalcTupleCost(call, a, b);
         }
     }
     
@@ -255,8 +256,27 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     }
 }
 
-double ResourceDeviceAlloc::CalcRegCost(CallDevices* call, unsigned routeIndex, 
-unsigned subRouteIndex) {
+double ResourceDeviceAlloc::CalcTupleCost(CallDevices* call, 
+unsigned routeIndex, unsigned subRouteIndex) {
+    double tupleCost = 0.0;
+    
+    switch(options->GetRegAssOption()){
+        case DRE2BR:
+            tupleCost = this->DRE2BR_Cost(call, routeIndex, subRouteIndex);
+            break;
+        case SCRA:
+            tupleCost = this->SCRA_Cost(call, routeIndex, subRouteIndex);
+            break;
+        default:
+            std::cerr << "Invalid regenerator assignment option" << std::endl;
+            std::abort();
+    }
+    
+    return tupleCost;
+}
+
+double ResourceDeviceAlloc::DRE2BR_Cost(CallDevices* call, 
+unsigned routeIndex, unsigned subRouteIndex) {
     double cost = 0.0;
     double LU = 0.0, TU = 0.0;
     unsigned int totalNumSlots = 0;
@@ -294,6 +314,66 @@ unsigned subRouteIndex) {
            (alpha)*(LU + TU);
     
     return cost;
+}
+
+double ResourceDeviceAlloc::SCRA_Cost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    double totalCost = 0.0, cost = 0.0;
+    double alpha = -0.05;
+    double totalNumLinks = (double) call->GetRoute()->GetNumHops();
+    double auxNumLinks;
+    double totalNumSlots = this->GetN(call);
+    double auxNumSlots;
+    double totalFreeReg;
+    double numUsedReg;
+    std::vector<std::shared_ptr<Route>> vecSubRoutes = 
+    resources->GetVecSubRoute(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = resources->GetVecNumSlots(call, 
+    routeIndex, subRouteIndex);
+    
+    for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
+        cost = 0.0;
+        cost += alpha;
+        
+        auxRoute = vecSubRoutes.at(ind);
+        auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate())){
+            auxNumLinks = (double) auxRoute->GetNumHops();
+            auxNumSlots = vecNumSlots.at(ind);
+            cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
+        }
+        else{
+            totalCost = Def::Max_Double;
+            break;
+        }
+        
+        if(ind != vecSubRoutes.size() - 1){
+            numUsedReg = (double) auxNode->GetFreeRegenenerators
+                                           (call->GetBitRate()).size();
+            totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
+            cost += (numUsedReg/totalFreeReg);
+        }
+        
+        totalCost += cost;
+    }
+    
+    return totalCost;
+}
+
+unsigned int ResourceDeviceAlloc::GetN(CallDevices* call) {
+    double bandwidth = 0.0;
+    unsigned int numSlots = 0;
+    
+    bandwidth = modulation->BandwidthQAM(FirstModulation, call->GetBitRate());
+    if(modulation->isEON())
+        numSlots = std::ceil(bandwidth/modulation->GetSlotBandwidth());
+    else
+        numSlots = 1;
+    
+    return numSlots;
 }
 
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {

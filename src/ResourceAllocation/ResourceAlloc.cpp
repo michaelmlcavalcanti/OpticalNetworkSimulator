@@ -112,7 +112,7 @@ void ResourceAlloc::ResourAlloc(Call* call) {
 
 void ResourceAlloc::RSA(Call* call) {
     
-    if(!this->CheckResourceAllocOrder(call))
+    if(this->CheckResourceAllocOrder(call) == r_sa)
         this->RoutingSpec(call);
     else
         this->SpecRouting(call);

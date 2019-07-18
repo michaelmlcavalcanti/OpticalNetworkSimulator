@@ -27,7 +27,8 @@
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
 :allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0), 
 numSlotsTraffic(0), subRoutes(0), numReg(0), numSlots(0), 
-subRoutesModulation(0), resourceAlloc(resourceAlloc), modulation(modulation) {
+numSlotsPerSubRoute(0), subRoutesModulation(0), resourceAlloc(resourceAlloc), 
+modulation(modulation) {
     
 }
 
@@ -199,6 +200,17 @@ unsigned subRouteIndex) {
     return numSlots.at(trIndex).at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
+std::vector<unsigned> Resources::GetVecNumSlots(Call* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numSlotsPerSubRoute.at(trIndex).at(nodeIndex).at(routeIndex)
+                              .at(subRouteIndex);
+}
+
 std::vector<std::shared_ptr<Route>> Resources::GetVecSubRoute(Call* call, 
 unsigned int auxIndex) {
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
@@ -265,6 +277,7 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
     double auxTraffic, multiplier;
     numReg.resize(sizeTraffic);
     numSlots.resize(sizeTraffic);
+    numSlotsPerSubRoute.resize(sizeTraffic);
     subRoutesModulation.resize(sizeTraffic);
     
     //Loop for amount of traffics.
@@ -274,6 +287,7 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
         sizeNodes = subRoutes.size();
         numReg.at(trIndex).resize(sizeNodes);
         numSlots.at(trIndex).resize(sizeNodes);
+        numSlotsPerSubRoute.at(trIndex).resize(sizeNodes);
         subRoutesModulation.at(trIndex).resize(sizeNodes);
         
         //Loop for all node pairs in network.
@@ -282,6 +296,8 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
             sizeRoutes = subRoutes.at(nodePairIndex).size();
             numReg.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
             numSlots.at(trIndex).at(nodePairIndex).resize(sizeRoutes);
+            numSlotsPerSubRoute.at(trIndex).at(nodePairIndex)
+                               .resize(sizeRoutes);
             subRoutesModulation.at(trIndex).at(nodePairIndex)
                                .resize(sizeRoutes);
             
@@ -292,6 +308,8 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
                       .resize(sizeSubRoutes);
                 numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
                         .resize(sizeSubRoutes);
+                numSlotsPerSubRoute.at(trIndex).at(nodePairIndex).at(rouIndex)
+                                   .resize(sizeSubRoutes);
                 subRoutesModulation.at(trIndex).at(nodePairIndex).at(rouIndex)
                                    .resize(sizeSubRoutes);
                 
@@ -304,6 +322,9 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
                           .at(numSubRoIndex) = (sizeSubRo - 1) * multiplier;
                     numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
                             .at(numSubRoIndex) = 0;
+                    numSlotsPerSubRoute.at(trIndex).at(nodePairIndex)
+                                       .at(rouIndex).at(numSubRoIndex)
+                                       .resize(sizeSubRo, 0);
                     subRoutesModulation.at(trIndex).at(nodePairIndex)
                                        .at(rouIndex).at(numSubRoIndex)
                                        .resize(sizeSubRo, InvalidModulation);
@@ -352,6 +373,7 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
     std::shared_ptr<Route> route = subRoutes.at(nodeIndex).at(routeIndex)
     .at(numSubRoutesIndex).at(subRouteIndex);
     double bitRate = this->resourceAlloc->GetTraffic()->GetTraffic(trIndex);
+    unsigned int auxNumSlots;
     
     std::shared_ptr<Call> testCall = std::make_shared<Call>(route->GetOrNode(),
     route->GetDeNode(), bitRate, 0.0);
@@ -363,8 +385,11 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
         modulation->SetModulationParam(testCall.get());
         
         if(resourceAlloc->CheckOSNR(testCall.get())){
+            auxNumSlots = testCall->GetTotalNumSlots();
             numSlots.at(trIndex).at(nodeIndex).at(routeIndex)
-                    .at(numSubRoutesIndex) += (testCall->GetTotalNumSlots());
+                    .at(numSubRoutesIndex) += auxNumSlots;
+            numSlotsPerSubRoute.at(trIndex).at(nodeIndex).at(routeIndex)
+            .at(numSubRoutesIndex).at(subRouteIndex) = auxNumSlots;
             subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
             .at(numSubRoutesIndex).at(subRouteIndex) = testCall->GetModulation();
             break;

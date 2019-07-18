@@ -116,7 +116,8 @@ Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssInvalid, "Invalid")
     (RegAssMinReg, "Minimum regeneration")
     (RegAssMaxReg, "Maximum regeneration")
-    (RegMetric01, "Metric Walkowiak");
+    (DRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration (DRE2BR)")
+    (SCRA, "Shortest-cost regenerator assignment (SCRA)");
 
 const boost::unordered_map<StopCriteria, std::string>
 Options::mapStopCriteria = boost::assign::map_list_of

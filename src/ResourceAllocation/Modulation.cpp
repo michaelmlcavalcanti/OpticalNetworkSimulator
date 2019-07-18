@@ -41,10 +41,10 @@ Modulation::~Modulation() {
 void Modulation::SetModulationParam(Call* call) {
     double bandwidth, OSNRth;
     unsigned int numSlots;
-    unsigned int modValue = this->mapNumBitsModulation.at(call->GetModulation());
+    TypeModulation modulationFormat = call->GetModulation();
     double bitRate = call->GetBitRate();
     
-    bandwidth = this->BandwidthQAM(modValue, bitRate);
+    bandwidth = this->BandwidthQAM(modulationFormat, bitRate);
     call->SetBandwidth(bandwidth);
     
     if(this->isEON())
@@ -53,7 +53,7 @@ void Modulation::SetModulationParam(Call* call) {
         numSlots = 1;
     call->SetNumberSlots(numSlots);
     call->SetTotalNumSlots();
-    OSNRth = this->GetOSNRQAM(modValue, bitRate);
+    OSNRth = this->GetOSNRQAM(modulationFormat, bitRate);
     call->SetOsnrTh(OSNRth);
 }
 
@@ -71,14 +71,18 @@ void Modulation::SetModulationParam(CallDevices* call) {
     }
 }
 
-double Modulation::BandwidthQAM(unsigned int M, double Rbps) {
-    assert(M >= 2  && M <= 6);
+double Modulation::BandwidthQAM(TypeModulation M, double Rbps) {
+    assert(M >= FirstModulation && M <= LastModulation);
+    unsigned int value = mapNumBitsModulation.at(M);
     
-    return ((1.0+this->rollOff)*Rbps)/(this->polarization*M);
+    return ((1.0+this->rollOff)*Rbps)/(this->polarization*value);
 }
 
-double Modulation::GetOSNRQAM(unsigned int M, double Rbps) {
-    double snrb = this->GetsnrbQAM(M);
+double Modulation::GetOSNRQAM(TypeModulation M, double Rbps) {
+    assert(M >= FirstModulation && M <= LastModulation);
+    unsigned int value = mapNumBitsModulation.at(M);
+    
+    double snrb = this->GetsnrbQAM(value);
     
     return General::LinearTodB((Rbps*snrb) / (2*this->slotBandwidth));
 }
@@ -171,6 +175,10 @@ std::vector<unsigned int> Modulation::GetPossibleSlots(std::vector<double>
     return posSlots;
 }
 
+double Modulation::GetSlotBandwidth() const {
+    return slotBandwidth;
+}
+
 std::vector<unsigned int> Modulation::GetPossibleSlotsFixedMod(
 std::vector<double>& traffic) {
     std::vector<unsigned int> posSlots(0);
@@ -205,8 +213,7 @@ std::vector<double>& traffic) {
         mod = TypeModulation(mod+1)){
             for(unsigned a = 0; a < traffic.size(); a++){
                 bitRate = traffic.at(a);
-                bandwidth = this->BandwidthQAM(mapNumBitsModulation.at(mod), 
-                                               bitRate);
+                bandwidth = this->BandwidthQAM(mod, bitRate);
                 numSlots = std::ceil(bandwidth/this->slotBandwidth);
 
                 if( std::find(posSlots.begin(), posSlots.end(), numSlots) == 

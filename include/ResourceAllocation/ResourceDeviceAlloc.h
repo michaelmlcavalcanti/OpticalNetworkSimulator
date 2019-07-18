@@ -91,8 +91,11 @@ private:
      * @param vec Container of tuples of route and regeneration combination 
      * indexes.
      */
-    void SetMetric01(CallDevices* call, 
+    void SetCostMetric(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
+    
+    double CalcTupleCost(CallDevices* call, unsigned routeIndex,
+                              unsigned subRouteIndex);
     /**
      * @brief Function to calculate the tuple cost based on the DRE2BR 
      * metric (Walkowiak).
@@ -101,8 +104,13 @@ private:
      * @param subRouteIndex Regeneration combination index.
      * @return Cost of the tuple.
      */
-    double CalcRegCost(CallDevices* call, unsigned routeIndex, 
-                       unsigned subRouteIndex);
+    double DRE2BR_Cost(CallDevices* call, unsigned routeIndex, 
+                  unsigned subRouteIndex);
+    
+    double SCRA_Cost(CallDevices* call, unsigned routeIndex, 
+                unsigned subRouteIndex);
+    
+    unsigned int GetN(CallDevices* call);
     /**
      * @brief Function to check the OSNR for a call request with devices.
      * @param call Call to be analise.

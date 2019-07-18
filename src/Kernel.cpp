@@ -86,6 +86,7 @@ void Kernel::CreateSimulations() {
         }
         simulations.push_back(auxSimulation);
     }
+    std::cout << std::endl;
 }
 
 void Kernel::Pre_Simulation(SimulationType* simul) {

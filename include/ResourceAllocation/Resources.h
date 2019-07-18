@@ -52,6 +52,9 @@ public:
     unsigned int GetNumSlotsAllRegPos(Call* call, unsigned routeIndex, 
                                       unsigned subRouteIndex);
     
+    std::vector<unsigned> GetVecNumSlots(Call* call, unsigned routeIndex,
+                                         unsigned subRouteIndex);
+    
     std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
                                                        unsigned int auxIndex);
     
@@ -125,6 +128,9 @@ public:
      * node pairs in the network.
      */
     std::vector<std::vector<std::vector<std::vector<unsigned int>>>> numSlots;
+    
+    std::vector<std::vector<std::vector<std::vector<std::vector<
+    unsigned int>>>>> numSlotsPerSubRoute;
     /**
      * @brief Container with the best modulation format used in every 
      * transparent segments of all traffics of all routes of all 
