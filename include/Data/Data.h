@@ -73,13 +73,13 @@ public:
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
      */
-    void SavePBvLoad();
+    void SaveCallReqBP();
     /**
      * @brief Function to save the specified parameters with the main result(BP) 
      * in and output file.
      * @param vecParam Container of parameters.
      */
-    void SaveMainResults(std::vector<unsigned> vecParam);
+    void SaveCallReqBP(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -187,14 +187,18 @@ private:
      * @brief Saves the data in PBvLoad.txt.
      * @param ostream Stream that contain the PBvLoad file.
      */
-    void SavePBvLoad(std::ostream& ostream);
+    void SaveCallReqBP(std::ostream& ostream);
+    
+    void SaveBandwidthBP(std::ostream& ostream);
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.
      * @param ostream Output file.
      * @param vec Container of parameters.
      */
-    void SaveMainResults(std::ostream& ostream, std::vector<unsigned> vec);
+    void SaveCallReqBP(std::ostream& ostream, std::vector<unsigned> vec);
+    
+    void SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec);
     /**
      * @brief Function to save all GA single objective data in the output files.
      * @param logOfstream Output log file.

@@ -34,8 +34,11 @@ enum TopologyOption {
     TopologyEON_RT,
     TopologyItaly,
     Topogy3_Nodes,
+    TopologyCoreNet,
+    TopologySmallNet,
+    TopologyWaxman,
     FirstTopology = TopologyNSFNet,
-    LastTopology = Topogy3_Nodes
+    LastTopology = TopologyWaxman
 };
 
 /**

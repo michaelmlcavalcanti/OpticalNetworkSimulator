@@ -73,7 +73,7 @@ void IncNumRegSimulation::Print() {
 
 void IncNumRegSimulation::Save() {
     SimulationType::Save();
-    this->GetData()->SaveMainResults(vecNumReg);
+    this->GetData()->SaveCallReqBP(vecNumReg);
 }
 
 void IncNumRegSimulation::Help() {

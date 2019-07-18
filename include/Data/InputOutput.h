@@ -91,6 +91,8 @@ public:
      * @return ofstream containing the PBvLoad file.
      */
     std::ofstream& GetResultFile();
+    
+    std::ofstream& GetBandBpFile();
     /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
@@ -140,6 +142,8 @@ private:
      * @param results ofstream to the PBvLoad.txt.
      */
     void LoadResults(std::ofstream& pBvLoad);
+    
+    void LoadBandBP(std::ofstream& bandBP);
     /**
      * @brief Function to load the .txt file to output the simulation log.
      * @param results ofstream to the Log.txt.
@@ -167,6 +171,8 @@ private:
      * @brief Ofstream with the PBvLoad.txt file.
      */
     std::ofstream resultFile;
+    
+    std::ofstream bandBpFile;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.

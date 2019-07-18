@@ -133,18 +133,24 @@ void Data::SaveMultiloadLog() {
     }
 }
 
-void Data::SavePBvLoad() {
-    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
+void Data::SaveCallReqBP() {
+    std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetResultFile();
+    std::ofstream &bandwidthBP = simulType->GetInputOutput()
+                                          ->GetBandBpFile();
     
-    this->SavePBvLoad(resultOfstream);
+    this->SaveCallReqBP(callReqBP);
+    this->SaveBandwidthBP(bandwidthBP);
 }
 
-void Data::SaveMainResults(std::vector<unsigned> vecParam) {
-    std::ofstream &resultOfstream = this->simulType->GetInputOutput()
+void Data::SaveCallReqBP(std::vector<unsigned> vecParam) {
+    std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetResultFile();
+    std::ofstream &bandwidthBP = simulType->GetInputOutput()
+                                          ->GetBandBpFile();
     
-    this->SaveMainResults(resultOfstream, vecParam);
+    this->SaveCallReqBP(callReqBP, vecParam);
+    this->SaveBandwidthBP(bandwidthBP, vecParam);
 }
 
 void Data::SaveGaFiles() {
@@ -235,25 +241,45 @@ void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
 }
 
-void Data::SavePBvLoad(std::ostream& ostream) {
+void Data::SaveCallReqBP(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
     
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
-        ostream << this->simulType->GetParameters()->GetLoadPoint(this
-                   ->GetActualIndex()) << "\t" << this->GetNumberBlocReq()/
-                   this->GetNumberReq() << std::endl;
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetPbReq() 
+                << std::endl;
     }
 }
 
-void Data::SaveMainResults(std::ostream& ostream, std::vector<unsigned> vec) {
+void Data::SaveBandwidthBP(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetPbSlots() 
+                << std::endl;
+    }
+}
+
+void Data::SaveCallReqBP(std::ostream& ostream, std::vector<unsigned> vec) {
     assert(vec.size() == this->numberReq.size());
     
     for(unsigned int a = 0; a < vec.size(); a++){
         this->SetActualIndex(a);
-        ostream << vec.at(a) << "\t" << this->GetNumberBlocReq()/
-                   this->GetNumberReq() << std::endl;
+        ostream << vec.at(a) << "\t" << this->GetPbReq() << std::endl;
+    }
+}
+
+void Data::SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec) {
+    assert(vec.size() == this->numberReq.size());
+    
+    for(unsigned int a = 0; a < vec.size(); a++){
+        this->SetActualIndex(a);
+        ostream << vec.at(a) << "\t" << this->GetPbSlots() << std::endl;
     }
 }
 

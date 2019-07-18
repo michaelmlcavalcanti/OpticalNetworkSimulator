@@ -24,6 +24,7 @@ InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(this->logFile);
     this->LoadResults(this->resultFile);
+    this->LoadBandBP(this->bandBpFile);
     this->LoadGaFiles(this->bestIndividuals, this->bestIndividual, 
                       this->worstIndividuals, this->initialPopulation);
 }
@@ -208,6 +209,25 @@ void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     }while(!pBvLoad.is_open());
 }
 
+void InputOutput::LoadBandBP(std::ofstream& bandBP) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        bandBP.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/bandBP.txt");
+        
+        if(!bandBP.is_open()){
+            std::cerr << "Wrong result file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!bandBP.is_open());
+}
+
 void InputOutput::LoadLog(std::ofstream& log) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
@@ -298,6 +318,10 @@ std::ofstream& InputOutput::GetLogFile() {
 
 std::ofstream& InputOutput::GetResultFile() {
     return this->resultFile;
+}
+
+std::ofstream& InputOutput::GetBandBpFile() {
+    return bandBpFile;
 }
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
