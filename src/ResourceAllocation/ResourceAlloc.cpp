@@ -581,6 +581,7 @@ void ResourceAlloc::CreateRsaOrder() {
 }
 
 void ResourceAlloc::CreateRouting() {
+    int x = 0;
     RoutingOption option = this->simulType->GetOptions()->GetRoutingOption();
             
     this->routing = std::make_shared<Routing>(this, option, this->topology);
