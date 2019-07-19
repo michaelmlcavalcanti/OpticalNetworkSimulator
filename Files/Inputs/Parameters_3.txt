@@ -1,13 +1,13 @@
 320
 1
 1
-250
-400
+800
+1100
 6
 1E6
 1000
 3
-80
+70
 
 1-Number of slots per fiber
 2-Number of cores per link

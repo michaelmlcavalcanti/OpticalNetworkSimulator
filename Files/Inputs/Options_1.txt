@@ -24,6 +24,9 @@
     5 - EON-RT
     6 - Italy
     7 - 3 Nodes
+    8 - Core Net
+    9 - Small Net
+    10- Waxman
 2-Routing algorithm
     0 - Invalid
     1 - DJK
