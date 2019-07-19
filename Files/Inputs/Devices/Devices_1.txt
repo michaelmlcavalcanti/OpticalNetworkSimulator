@@ -1,0 +1,5 @@
+140
+0
+
+1 - Number of regenerators
+2 - Number of transponders

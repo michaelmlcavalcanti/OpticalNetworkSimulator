@@ -90,6 +90,9 @@ void Topology::LoadFile() {
     this->CreateNodes(auxIfstream);
     
     this->CreateLinks(auxIfstream);
+    
+    if(options->GetDevicesOption() != DevicesDisabled)
+        this->SetFixedNumberOfDevices();
 }
 
 void Topology::Initialize() {
@@ -690,6 +693,20 @@ void Topology::ReleaseWithDevices(Call* call) {
 
 SimulationType* Topology::GetSimulType() const {
     return simulType;
+}
+
+void Topology::SetFixedNumberOfDevices() {
+    std::ifstream devicesFile;
+    unsigned int auxInt;
+    simulType->GetInputOutput()->LoadDevicesFile(devicesFile);
+    
+    devicesFile >> auxInt;
+    if(options->GetRegenerationOption() == RegenerationVirtualized)
+        this->SetNumDevices(auxInt, DeviceRegenerator);
+    
+    devicesFile >> auxInt;
+    if(options->GetTransponderOption() != TransponderDisabled)
+        this->SetNumDevices(auxInt, DeviceTransponder);
 }
 
 void Topology::SetNumRegenerators(unsigned int numRegenerators) {

@@ -31,7 +31,7 @@ TypeSimulation typeSimulation)
 parameters(std::make_shared<Parameters> (this)),
 options(std::make_shared<Options> (this)), 
 data(boost::make_unique<Data>(this)),
-topology(std::make_shared<Topology> (this)),
+topology(std::make_shared<Topology>(this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
 callGenerator(std::make_shared<CallGenerator>(this)),
@@ -89,9 +89,6 @@ void SimulationType::Save() {
 void SimulationType::AdditionalSettings() {
     this->topology->SetAditionalSettings();
     this->resourceAlloc->AdditionalSettings();
-    
-    if(options->GetDevicesOption() != DevicesDisabled)
-        this->SetNumberOfDevices();
 }
 
 TypeSimulation SimulationType::GetTypeSimulation() const {
@@ -208,16 +205,6 @@ void SimulationType::CreateLoadResourceAlloc() {
         this->resourceAlloc = std::make_shared<ResourceDeviceAlloc>(this);
     
     this->resourceAlloc->Load();
-}
-
-void SimulationType::SetNumberOfDevices() {
-    unsigned int numTotalVirtReg = topology->GetNumNodes() * 10;
-    unsigned int numTotalTransponder = topology->GetNumNodes() * 1;
-    
-    if(options->GetRegenerationOption() == RegenerationVirtualized)
-        topology->SetNumDevices(numTotalVirtReg, DeviceRegenerator);
-    if(options->GetTransponderOption() != TransponderDisabled)
-        topology->SetNumDevices(numTotalTransponder, DeviceTransponder);
 }
 
 void SimulationType::SimulateNumTotalReq() {

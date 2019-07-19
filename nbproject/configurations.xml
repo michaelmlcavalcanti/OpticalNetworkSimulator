@@ -236,6 +236,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>Files/Inputs/Devices/Devices_1.txt</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -255,6 +256,8 @@
           <warningLevel>2</warningLevel>
         </ccTool>
       </compileType>
+      <item path="Files/Inputs/Devices/Devices_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/GA/GA_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/GA/GA_MO_1.txt" ex="false" tool="3" flavor2="0">
@@ -678,6 +681,8 @@
           <commandLine>-static -static-libstdc++ -static-libgcc</commandLine>
         </linkerTool>
       </compileType>
+      <item path="Files/Inputs/Devices/Devices_1.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/GA/GA_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/GA/GA_MO_1.txt" ex="false" tool="3" flavor2="0">

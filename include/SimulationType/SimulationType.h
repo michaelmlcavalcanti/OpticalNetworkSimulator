@@ -208,10 +208,6 @@ private:
      * @brief Function to create a load the resource allocation object.
      */
     void CreateLoadResourceAlloc();
-    /**
-     * @brief Function to set the number of devices in the simulation topology.
-     */
-    void SetNumberOfDevices();
     
     /**
      * @brief Function to simulate for a specified total number of call 

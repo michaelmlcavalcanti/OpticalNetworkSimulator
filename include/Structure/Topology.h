@@ -321,6 +321,10 @@ private:
     void SetLinksIniCost();
     
     /**
+     * @brief Function to set the number of devices in the simulation topology.
+     */
+    void SetFixedNumberOfDevices();
+    /**
      * @brief Function to set the number of virtualized regenerators in the 
      * network.
      * @param numRegenerators Number of virtualized regenerators.

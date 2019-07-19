@@ -80,6 +80,11 @@ public:
      * @param orderRsa Ifstream with the input file.
      */
     void LoadRsaOrderFirstSimul(std::ifstream& orderRsa);
+    /**
+     * @brief Function to load the devices file, with fixed number of each one.
+     * @param devicesFile Input devices file.
+     */
+    void LoadDevicesFile(std::ifstream& devicesFile);
     
     /**
      * @brief Get the Log.txt ofstream.
@@ -91,7 +96,11 @@ public:
      * @return ofstream containing the PBvLoad file.
      */
     std::ofstream& GetResultFile();
-    
+    /**
+     * @brief Function to get the file that storage the bandwidth blocking
+     * probabilities.
+     * @return Bandwidth blocking probability file.
+     */
     std::ofstream& GetBandBpFile();
     /**
      * @brief Get the output file that will contain the best individuals, with
@@ -142,7 +151,10 @@ private:
      * @param results ofstream to the PBvLoad.txt.
      */
     void LoadResults(std::ofstream& pBvLoad);
-    
+    /**
+     * @brief Function to load the bandwidth blocking probability file.
+     * @param bandBP Bandwidth blocking probability file.
+     */
     void LoadBandBP(std::ofstream& bandBP);
     /**
      * @brief Function to load the .txt file to output the simulation log.
@@ -171,7 +183,9 @@ private:
      * @brief Ofstream with the PBvLoad.txt file.
      */
     std::ofstream resultFile;
-    
+    /**
+     * @brief Bandwidth blocking probability outpput file.
+     */
     std::ofstream bandBpFile;
     /**
      * @brief Output file to save the best individuals for a GA single 

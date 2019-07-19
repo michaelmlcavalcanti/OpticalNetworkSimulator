@@ -190,6 +190,26 @@ void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     }while(!orderRsa.is_open());
 }
 
+void InputOutput::LoadDevicesFile(std::ifstream& devicesFile) {
+    int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        devicesFile.open("Files/Inputs/Devices/Devices_" + 
+        std::to_string(auxInt) + ".txt");
+        
+        if(!devicesFile.is_open()) {
+            std::cerr << "Wrong options file." << std::endl;
+            std::cerr << "The file required is: Devices" 
+                      << auxInt << ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+
+    }while(!devicesFile.is_open());
+}
+
 void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
