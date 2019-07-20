@@ -322,9 +322,9 @@ unsigned subRouteIndex) {
     NodeDevices* auxNode;
     double totalCost = 0.0, cost = 0.0;
     double alpha = -0.05;
-    double totalNumLinks = (double) call->GetRoute()->GetNumHops();
+    double totalNumLinks = 0.0;
     double auxNumLinks;
-    double totalNumSlots = this->GetN(call);
+    double totalNumSlots = (double) this->GetN(call);
     double auxNumSlots;
     double totalFreeReg;
     double numUsedReg;
@@ -333,6 +333,10 @@ unsigned subRouteIndex) {
     std::vector<unsigned> vecNumSlots = resources->GetVecNumSlots(call, 
     routeIndex, subRouteIndex);
     
+    for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
+        totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();
+    }
+    
     for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
         cost = 0.0;
         cost += alpha;
@@ -340,9 +344,10 @@ unsigned subRouteIndex) {
         auxRoute = vecSubRoutes.at(ind);
         auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
         
-        if(auxNode->isThereFreeRegenerators(call->GetBitRate())){
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
+           ind == vecSubRoutes.size() - 1){
             auxNumLinks = (double) auxRoute->GetNumHops();
-            auxNumSlots = vecNumSlots.at(ind);
+            auxNumSlots = (double) vecNumSlots.at(ind);
             cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
         }
         else{
