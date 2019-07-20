@@ -73,13 +73,13 @@ public:
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
      */
-    void SaveCallReqBP();
+    void SaveBP();
     /**
      * @brief Function to save the specified parameters with the main result(BP) 
      * in and output file.
      * @param vecParam Container of parameters.
      */
-    void SaveCallReqBP(std::vector<unsigned> vecParam);
+    void SaveBP(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last

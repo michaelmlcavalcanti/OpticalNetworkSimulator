@@ -1,0 +1,55 @@
+OPTIONS
+Topology: NSFNet
+Routing algorithm: Dijkstra
+Spectral allocation algorithm: First Fit
+Links cost type: Minimum hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RMSA
+Physical Layer: Enabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Virtualized
+Regeneration Placement: Uniform
+Regeneration Assignment: Shortest-cost regenerator assignment (SCRA)
+Stop criteria: Number of call requests
+
+PARAMETERS
+Number of slots per fiber: 320
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 800
+Maximum load point(erlang): 1100
+Number of points: 6
+Total number of requisitions: 1e+06
+Maximum blocked requests: 1000
+Slot bandwidth (GHz): 12.5
+Maximum section length (km): 70
+
+DATA
+Simulation time:1248.83  Real simul time: 4.49277  Number of requests:1e+06
+Load point:800  PbReq:0.000254  PbSlots:0.000435748  HopsMed:2.14189  NetOcc:5.66286e+06
+
+
+Simulation time:1161.94  Real simul time: 4.41976  Number of requests:1e+06
+Load point:860  PbReq:0.000748  PbSlots:0.0012818  HopsMed:2.14323  NetOcc:5.66869e+06
+
+
+Simulation time:1088.02  Real simul time: 4.85379  Number of requests:1e+06
+Load point:920  PbReq:0.00198  PbSlots:0.00339517  HopsMed:2.14044  NetOcc:5.63237e+06
+
+
+Simulation time:1020.94  Real simul time: 4.96232  Number of requests:1e+06
+Load point:980  PbReq:0.004454  PbSlots:0.00763413  HopsMed:2.14117  NetOcc:5.59234e+06
+
+
+Simulation time:960.859  Real simul time: 5.00762  Number of requests:1e+06
+Load point:1040  PbReq:0.008056  PbSlots:0.0137936  HopsMed:2.13704  NetOcc:5.52012e+06
+
+
+Simulation time:908.756  Real simul time: 4.64369  Number of requests:1e+06
+Load point:1100  PbReq:0.012205  PbSlots:0.020907  HopsMed:2.13242  NetOcc:5.43412e+06
+
+

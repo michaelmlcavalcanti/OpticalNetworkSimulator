@@ -133,7 +133,7 @@ void Data::SaveMultiloadLog() {
     }
 }
 
-void Data::SaveCallReqBP() {
+void Data::SaveBP() {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetResultFile();
     std::ofstream &bandwidthBP = simulType->GetInputOutput()
@@ -143,7 +143,7 @@ void Data::SaveCallReqBP() {
     this->SaveBandwidthBP(bandwidthBP);
 }
 
-void Data::SaveCallReqBP(std::vector<unsigned> vecParam) {
+void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetResultFile();
     std::ofstream &bandwidthBP = simulType->GetInputOutput()

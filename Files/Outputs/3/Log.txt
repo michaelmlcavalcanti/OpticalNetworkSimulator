@@ -29,27 +29,27 @@ Slot bandwidth (GHz): 12.5
 Maximum section length (km): 70
 
 DATA
-Simulation time:1250.66  Real simul time: 8.40134  Number of requests:1e+06
+Simulation time:1250.66  Real simul time: 7.30825  Number of requests:1e+06
 Load point:800  PbReq:5.8e-05  PbSlots:9.94411e-05  HopsMed:2.14369  NetOcc:5.67454e+06
 
 
-Simulation time:1164.71  Real simul time: 8.61442  Number of requests:1e+06
+Simulation time:1164.71  Real simul time: 7.48478  Number of requests:1e+06
 Load point:860  PbReq:0.000237  PbSlots:0.000406222  HopsMed:2.14441  NetOcc:5.66923e+06
 
 
-Simulation time:1087.06  Real simul time: 8.80481  Number of requests:1e+06
+Simulation time:1087.06  Real simul time: 8.47962  Number of requests:1e+06
 Load point:920  PbReq:0.000554  PbSlots:0.000949616  HopsMed:2.14175  NetOcc:5.65039e+06
 
 
-Simulation time:1020.48  Real simul time: 10.7287  Number of requests:1e+06
+Simulation time:1020.48  Real simul time: 7.88273  Number of requests:1e+06
 Load point:980  PbReq:0.001939  PbSlots:0.00331989  HopsMed:2.14173  NetOcc:5.62146e+06
 
 
-Simulation time:961.648  Real simul time: 12.8439  Number of requests:1e+06
+Simulation time:961.648  Real simul time: 7.84631  Number of requests:1e+06
 Load point:1040  PbReq:0.004318  PbSlots:0.00740097  HopsMed:2.13856  NetOcc:5.54955e+06
 
 
-Simulation time:909.632  Real simul time: 11.5903  Number of requests:1e+06
+Simulation time:909.632  Real simul time: 8.7051  Number of requests:1e+06
 Load point:1100  PbReq:0.007821  PbSlots:0.0134194  HopsMed:2.13674  NetOcc:5.4665e+06
 
 

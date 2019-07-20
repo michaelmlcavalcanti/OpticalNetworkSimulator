@@ -68,7 +68,7 @@ void MultiLoadSimulation::Print() {
 void MultiLoadSimulation::Save() {
     SimulationType::Save();
     this->GetData()->SaveMultiloadLog();
-    this->GetData()->SaveCallReqBP();
+    this->GetData()->SaveBP();
 }
 
 void MultiLoadSimulation::Help() {
