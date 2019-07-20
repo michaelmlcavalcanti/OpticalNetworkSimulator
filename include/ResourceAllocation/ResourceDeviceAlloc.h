@@ -93,7 +93,15 @@ private:
      */
     void SetCostMetric(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
+    /**
+     * @brief Function to calculate the cost of the tuple, that is composed by
+     * a route and a regeneration option. The cost depends on the cost metric
+     * chosen.
+     * @param call Call request to evaluate.
+     * @param routeIndex Route index of the container of possible routes.
+     * @param subRouteIndex Regeneration option index.
+     * @return Tuple cost.
+     */
     double CalcTupleCost(CallDevices* call, unsigned routeIndex,
                               unsigned subRouteIndex);
     /**
@@ -106,10 +114,21 @@ private:
      */
     double DRE2BR_Cost(CallDevices* call, unsigned routeIndex, 
                   unsigned subRouteIndex);
-    
+    /**
+     * @brief  Function to calculate the tuple cost based on the SCRA metric.
+     * @param call Call request to order.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration combination index.
+     * @return Cost of the tuple.
+     */
     double SCRA_Cost(CallDevices* call, unsigned routeIndex, 
                 unsigned subRouteIndex);
-    
+    /**
+     * @brief Function to get the call request number of slots using the 
+     * least efficient modulation format.
+     * @param call Call request.
+     * @return Number of slots.
+     */
     unsigned int GetN(CallDevices* call);
     /**
      * @brief Function to check the OSNR for a call request with devices.
