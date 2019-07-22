@@ -89,6 +89,13 @@ GetFreeRegenenerators(double bitRate) const {
     return vecReg;
 }
 
+unsigned int NodeDevices::GetNumRegRequired(double bitRate) {
+    unsigned int numReg = (unsigned int) std::ceil(bitRate / 
+                          Regenerator::GetTrafficSupported());
+    
+    return numReg;
+}
+
 unsigned int NodeDevices::GetNumTransponder() const {
     return numTransponder;
 }

@@ -91,6 +91,13 @@ public:
      */
     std::vector<std::shared_ptr<Regenerator>> GetFreeRegenenerators(
                                               double bitRate) const;
+    /**
+     * @brief Function to get the number of vitualized regenerators required 
+     * for call request regeneration.
+     * @param bitRate Call request bit rate.
+     * @return Number of regenerators.
+     */
+    static unsigned int GetNumRegRequired(double bitRate);
     
     /**
      * @brief Function to get the total number of transponders contained in this

@@ -356,8 +356,8 @@ unsigned subRouteIndex) {
         }
         
         if(ind != vecSubRoutes.size() - 1){
-            numUsedReg = (double) auxNode->GetFreeRegenenerators
-                                           (call->GetBitRate()).size();
+            numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
+                                                                 GetBitRate());
             totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
             cost += (numUsedReg/totalFreeReg);
         }
