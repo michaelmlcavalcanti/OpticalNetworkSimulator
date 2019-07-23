@@ -278,11 +278,8 @@ void Topology::SetLinksIniCost() {
             }
             break;
         default:
-            for(auto it : vecLinks){
-                if(it == nullptr)
-                    continue;
-                it->SetCost(Def::Max_Double);
-            }
+            std::cerr << "Invalid link cost type" << std::endl;
+            std::abort();
     }
 }
 

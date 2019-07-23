@@ -13,11 +13,15 @@
 
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/ResourceAllocation/Resources.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
+#include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Link.h"
-#include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Calls/Call.h"
+#include "../../include/Data/Data.h"
+#include "../../include/Data/Parameters.h"
 
 bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA, 
                               const std::shared_ptr<Route>& routeB) {
@@ -25,8 +29,10 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
     return (routeA->GetCost() > routeB->GetCost());
 }
 
-Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology)
-:resourceAlloc(rsa), routingOption(option), topology(topology), K(0) {
+Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology,
+Data* data, Parameters* parameters)
+:resourceAlloc(rsa), routingOption(option), topology(topology), data(data), 
+parameters(parameters), K(0) {
 
 }
 
@@ -34,6 +40,7 @@ Routing::~Routing() {
 }
 
 void Routing::RoutingCall(Call* call) {
+    
     switch(this->routingOption){
         case RoutingDJK:
         case RoutingYEN:
@@ -42,6 +49,7 @@ void Routing::RoutingCall(Call* call) {
             break;
         default:
             std::cerr << "Invalid routing option" << std::endl;
+            std::abort();
     }
 }
 
@@ -258,6 +266,98 @@ std::vector<std::shared_ptr<Route> > Routing::YEN(NodeId orNode,
     }
     
     return routesYEN;
+}
+
+void Routing::BSR() {
+    unsigned int numIt = 100;
+    const double alpha = 0.9999;
+    double bestBP = Def::Max_Double;
+    unsigned bestIt;
+    Resources* resources = this->resourceAlloc->GetResources();
+    std::vector<std::vector<std::shared_ptr<Route>>> bestRoutes(0);
+    data->SetActualIndex(0);
+    resourceAlloc->GetSimulType()->GetCallGenerator()->SetNetworkLoad(
+    parameters->GetMaxLoadPoint());
+    double numMaxReq = parameters->GetNumberReqMax();
+    parameters->SetNumberReqMax(1E5);
+    
+    for(unsigned int it = 1; it <= numIt; it++){
+        
+        //Update the links utilization and costs
+        if(it != 1)
+            this->UpdateLinksUtiCosts(alpha);
+        
+        this->Dijkstra();
+        resources->CreateOfflineModulation();
+        
+        //Calc the BP and keep the routes if it is better then the 
+        //previous best BP.
+        resourceAlloc->GetSimulType()->RunBase();
+        
+        if(data->GetPbReq() < bestBP){
+            bestBP = data->GetPbReq();
+            bestIt = it;
+            bestRoutes = resources->GetRoutes();
+        }
+        data->Initialize();
+    }
+    
+    //Set the best set of routes
+    resources->SetRoutes(bestRoutes);
+    //resources->CreateOfflineModulation();
+    parameters->SetNumberReqMax(numMaxReq);
+    std::cout << "Best iteration: " << bestIt << std::endl << std::endl;
+}
+
+void Routing::UpdateLinksUtiCosts(const double alpha) {
+    unsigned int numNodes = topology->GetNumNodes();
+    std::vector<std::shared_ptr<Route>> auxRoute;
+    Link* auxLink;
+    double auxCost;
+    
+    //Clear all links utilization
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxLink = topology->GetLink(orN, deN);
+            
+            if(auxLink != nullptr)
+                auxLink->SetUtilization(0);
+        }
+    }
+    
+    //Update links utilization
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxRoute = resourceAlloc->GetRoutes(orN, deN);
+            
+            for(unsigned int a = 0; a < auxRoute.front()->GetNumHops(); a++){
+                auxLink = auxRoute.front()->GetLink(a);
+                auxLink->SetUtilization(auxLink->GetUtilization() + 1);
+            }
+        }
+    }
+    
+    //Update links costs
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxLink = topology->GetLink(orN, deN);
+            
+            if(auxLink != nullptr){
+                auxCost = (alpha * (auxLink->GetCost())) +
+                          ((1-alpha) * ((double) auxLink->GetUtilization()));
+                auxLink->SetCost(auxCost);
+            }
+        }
+    }
 }
 
 ResourceAlloc* Routing::GetResourceAlloc() const {

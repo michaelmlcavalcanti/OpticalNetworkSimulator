@@ -36,6 +36,11 @@ public:
     
     void Save();
     
+    std::vector<std::vector<std::shared_ptr<Route> > > GetRoutes() const;
+
+    void SetRoutes(std::vector<std::vector<std::shared_ptr<Route> > > 
+                   allRoutes);
+    
     std::vector<TypeModulation> GetModulationFormat(Call* call);
     
     std::vector<unsigned int> GetNumRegenerators(Call* call);

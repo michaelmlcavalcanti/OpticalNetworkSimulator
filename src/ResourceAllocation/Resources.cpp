@@ -51,6 +51,9 @@ void Resources::CreateOfflineModulation() {
                                               GetVecTraffic().size();
     unsigned int sizeNumNodes = this->allRoutes.size();
     unsigned int sizeRoutes;
+    subRoutesModulation.clear();
+    numSlots.clear();
+    
     subRoutesModulation.resize(sizeTraffic);
     numSlots.resize(sizeTraffic);
     
@@ -121,6 +124,16 @@ void Resources::Save() {
             table << std::endl;
         }
     }
+}
+
+std::vector<std::vector<std::shared_ptr<Route> > > Resources::GetRoutes() 
+const {
+    return allRoutes;
+}
+
+void Resources::SetRoutes(std::vector<std::vector<
+std::shared_ptr<Route> > > allRoutes) {
+    this->allRoutes = allRoutes;
 }
 
 std::vector<TypeModulation> Resources::GetModulationFormat(Call* call) {

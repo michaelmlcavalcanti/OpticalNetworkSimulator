@@ -20,6 +20,8 @@ class ResourceAlloc;
 class Call;
 class Route;
 class Topology;
+class Data;
+class Parameters;
 
 #include "../Data/Options.h"
 #include "../../include/Structure/Node.h"
@@ -53,7 +55,8 @@ public:
      * @param option Routing option chosen for routing function selection.
      * @param topology Topology object used to routing.
      */
-    Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology);
+    Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology, 
+            Data* data, Parameters* parameters);
     /**
      * @brief Standard destructor for a Routing object.
      */
@@ -97,6 +100,10 @@ public:
      */
     std::vector<std::shared_ptr<Route>> YEN(NodeId orNode, NodeId deNode);
     
+    void BSR();
+    
+    void UpdateLinksUtiCosts(const double alpha);
+    
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.
@@ -137,7 +144,6 @@ public:
      * @param K Number of routes.
      */
     void SetK(unsigned int K);
-    
 private:
     /**
      * @brief ResourceAlloc object that owns this routing.
@@ -151,6 +157,10 @@ private:
      * @brief Topology used in this routing
      */
     Topology* topology;
+    
+    Data* data;
+    
+    Parameters* parameters;
     /**
      * @brief Number of routes for the k-shortest path algorithms.
      */

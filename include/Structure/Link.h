@@ -128,7 +128,11 @@ public:
      * @param NodeWorking Link state.
      */
     void SetLinkState(bool linkWorking);
-        
+    
+    unsigned int GetUtilization() const;
+
+    void SetUtilization(unsigned int utilization);
+    
     /**
      * @brief Update the signal power, ASE power and
      * nonlinear power crossing this link.
@@ -212,6 +216,8 @@ private:
      * @brief Boolean variable to indicate the  link state.
      */
     bool linkWorking;
+    
+    unsigned int utilization;
 };
 
 #endif /* LINK_H */

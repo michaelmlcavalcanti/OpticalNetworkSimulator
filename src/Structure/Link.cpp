@@ -37,7 +37,8 @@ unsigned int destinationNode, double length,
 unsigned int numberSections, unsigned int numberSlots) 
 :topPointer(topPointer), origimNode(origimNode), 
 destinationNode(destinationNode), length(length), 
-numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true) {
+numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true), 
+utilization(0) {
     slotsStatus.resize(numberSlots, SlotFree);
 }
 
@@ -104,6 +105,14 @@ bool Link::IsLinkWorking() const {
 
 void Link::SetLinkState(bool linkWorking) {
     this->linkWorking = linkWorking;
+}
+
+unsigned int Link::GetUtilization() const {
+    return utilization;
+}
+
+void Link::SetUtilization(unsigned int utilization) {
+    this->utilization = utilization;
 }
 
 void Link::CalcSignal(Signal* signal) const {

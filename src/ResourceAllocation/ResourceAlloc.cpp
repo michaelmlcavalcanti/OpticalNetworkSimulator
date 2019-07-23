@@ -67,6 +67,7 @@ void ResourceAlloc::Load() {
 }
 
 void ResourceAlloc::AdditionalSettings() {
+    this->CreateRsaOrder();
     
     if(this->IsOfflineRouting()){
         this->RoutingOffline();
@@ -85,10 +86,9 @@ void ResourceAlloc::AdditionalSettings() {
         }
         else if(options->GetResourAllocOption() == ResourAllocRMSA){
             this->resources->CreateOfflineModulation();
-            this->resources->Save(); //Retirar depois.
+            this->resources->Save(); //Retirar depois (Markov)
         }
     }
-    this->CreateRsaOrder();
 }
 
 void ResourceAlloc::ResourAlloc(Call* call) {
@@ -238,10 +238,6 @@ std::vector<std::shared_ptr<Route>> routes) {
 
 void ResourceAlloc::ClearRoutes(unsigned int orN, unsigned int deN) {
     
-    for(auto it : this->resources->allRoutes.at(
-    orN*this->topology->GetNumNodes() + deN))
-        it.reset();
-    
     this->resources->allRoutes.at(orN*this->topology->GetNumNodes() + deN).
                                clear();
 }
@@ -254,6 +250,7 @@ unsigned int deN) {
 }
 
 bool ResourceAlloc::IsOfflineRouting() {
+    
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
         case RoutingYEN:
@@ -265,6 +262,7 @@ bool ResourceAlloc::IsOfflineRouting() {
 }
 
 void ResourceAlloc::RoutingOffline() {
+    
     switch(this->routing->GetRoutingOption()){
         case RoutingDJK:
             this->routing->Dijkstra();
@@ -273,8 +271,11 @@ void ResourceAlloc::RoutingOffline() {
             this->routing->YEN();
             break;
         case RoutingBSR:
+            this->routing->BSR();
+            break;
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
+            std::abort();
     }
 }
 
@@ -370,15 +371,15 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
         for(unsigned int deNode = 0; deNode < numNodes; deNode++){
             
             if(orNode == deNode){
-                vecBool.push_back(false);
+                vecBool.push_back(r_sa);
                 continue;
             }
             auxRoute = this->GetRoutes(orNode, deNode).front().get();
             
             if(auxRoute->GetNumHops() <= maxNumHops)
-                vecBool.push_back(false);
+                vecBool.push_back(r_sa);
             else
-                vecBool.push_back(true);
+                vecBool.push_back(sa_r);
         }
     }
     
@@ -583,7 +584,8 @@ void ResourceAlloc::CreateRsaOrder() {
 void ResourceAlloc::CreateRouting() {
     RoutingOption option = this->simulType->GetOptions()->GetRoutingOption();
             
-    this->routing = std::make_shared<Routing>(this, option, this->topology);
+    this->routing = std::make_shared<Routing>(this, option, this->topology,
+    this->simulType->GetData(), this->simulType->GetParameters());
     
     if(option == RoutingYEN){
         this->routing->SetK(this->simulType->GetParameters()->
