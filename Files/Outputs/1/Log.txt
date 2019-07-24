@@ -1,6 +1,6 @@
 OPTIONS
 Topology: NSFNet
-Routing algorithm: BSR
+Routing algorithm: YEN
 Spectral allocation algorithm: First Fit
 Links cost type: Minimum hops
 Traffic requests(Gbps): 100-200-400
@@ -24,30 +24,31 @@ Number of points: 6
 Total number of requisitions: 1e+06
 Maximum blocked requests: 1000
 Slot bandwidth (GHz): 12.5
-Maximum section length (km): 70
+K: 3
+Maximum section length (km): 60
 
 DATA
-Simulation time:1249.3  Real simul time: 2.55223  Number of requests:1e+06
-Load point:800  PbReq:6e-06  PbSlots:1.02818e-05  HopsMed:2.1434  NetOcc:5.60084e+06
+Simulation time:1250.74  Real simul time: 3.05971  Number of requests:1e+06
+Load point:800  PbReq:0  PbSlots:0  HopsMed:2.14178  NetOcc:5.01411e+06
 
 
-Simulation time:1162.51  Real simul time: 2.87639  Number of requests:1e+06
-Load point:860  PbReq:7.2e-05  PbSlots:0.000123378  HopsMed:2.14435  NetOcc:5.60145e+06
+Simulation time:1162.42  Real simul time: 3.10467  Number of requests:1e+06
+Load point:860  PbReq:0  PbSlots:0  HopsMed:2.14327  NetOcc:5.01122e+06
 
 
-Simulation time:1087.58  Real simul time: 2.7757  Number of requests:1e+06
-Load point:920  PbReq:0.000322  PbSlots:0.000552068  HopsMed:2.14349  NetOcc:5.59351e+06
+Simulation time:1085.06  Real simul time: 2.88076  Number of requests:1e+06
+Load point:920  PbReq:0  PbSlots:0  HopsMed:2.14387  NetOcc:5.02402e+06
 
 
-Simulation time:1022.05  Real simul time: 2.6923  Number of requests:1e+06
-Load point:980  PbReq:0.001197  PbSlots:0.00205167  HopsMed:2.14365  NetOcc:5.57751e+06
+Simulation time:1022.14  Real simul time: 2.92357  Number of requests:1e+06
+Load point:980  PbReq:0  PbSlots:0  HopsMed:2.14447  NetOcc:5.01422e+06
 
 
-Simulation time:961.642  Real simul time: 2.77432  Number of requests:1e+06
-Load point:1040  PbReq:0.002691  PbSlots:0.00460669  HopsMed:2.1401  NetOcc:5.54131e+06
+Simulation time:961.907  Real simul time: 2.96391  Number of requests:1e+06
+Load point:1040  PbReq:1e-06  PbSlots:1.71457e-06  HopsMed:2.14245  NetOcc:5.00876e+06
 
 
-Simulation time:909.158  Real simul time: 2.90186  Number of requests:1e+06
-Load point:1100  PbReq:0.005583  PbSlots:0.00955297  HopsMed:2.13887  NetOcc:5.49566e+06
+Simulation time:907.646  Real simul time: 3.13805  Number of requests:1e+06
+Load point:1100  PbReq:1.2e-05  PbSlots:2.05783e-05  HopsMed:2.14415  NetOcc:5.01136e+06
 
 

@@ -263,6 +263,12 @@ public:
      */
     void PushTrialModulation(TypeModulation modulation);
     /**
+     * @brief Function to repeat the first trial modulation in the trial
+     * modulation container, in order to keep this container with the same
+     * size of the trial route container.
+     */
+    void RepeatModulation();
+    /**
      * @brief Function to get a specified modulation format from the container 
      * of possible modulation formats.
      * @param index Modulation format index.

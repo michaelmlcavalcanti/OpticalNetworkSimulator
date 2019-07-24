@@ -222,8 +222,14 @@ void Call::PushTrialModulations(std::vector<TypeModulation> modulations) {
 }
 
 void Call::PushTrialModulation(TypeModulation modulation) {
-    
     trialModulation.push_back(modulation);
+}
+
+void Call::RepeatModulation() {
+    
+    while(trialModulation.size() < trialRoutes.size()){
+        trialModulation.push_back(trialModulation.front());
+    }
 }
 
 void Call::ClearTrialModulations() {

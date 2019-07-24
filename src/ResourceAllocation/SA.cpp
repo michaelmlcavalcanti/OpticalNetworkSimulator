@@ -31,6 +31,7 @@ SA::~SA() {
 }
 
 void SA::SpecAllocation(Call* call) {
+    
     switch(this->specAllOption){
         case SpecAllRandom:
             this->Random(call);
@@ -43,6 +44,7 @@ void SA::SpecAllocation(Call* call) {
             break;
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
+            std::abort();
     }
 }
 
@@ -59,17 +61,16 @@ void SA::SpecAllocation(CallDevices* call) {
     }
 }
 
-std::vector<unsigned int> SA::SpecAllocation(unsigned int lastSlot) {
-    std::vector<unsigned int> vec(0);
+std::vector<unsigned int> SA::SpecAllocation() {
     
     switch(this->specAllOption){
         case SpecAllRandom:
-            return this->RandomSlots(lastSlot);
+            return this->RandomSlots();
         case SpecAllFF:
-            return this->FirstFitSlots(lastSlot);
+            return this->FirstFitSlots();
         default:
             std::cerr << "Invalid spectrum allocation option" << std::endl;
-            return vec;
+            std::abort();
     }
 }
 
@@ -200,37 +201,8 @@ Topology* SA::GetTopology() {
     return topology;
 }
 
-/*unsigned int SA::CalcNumFormAloc(unsigned int reqSize, bool* dispVec) {
-    unsigned int sum = 0;
-    unsigned int si, se;
-    unsigned int numSlots = this->topology->GetNumSlots();
-    
-    for(si = 0; si < numSlots - reqSize; si++){
-        for(se = si; se < si + reqSize; se++){
-            
-            if(dispVec[se] == false){
-                si = se;
-                break;
-            }
-        }
-        
-        if(se == si + reqSize)
-            sum++;
-    }
-    
-    return sum;
-}*/
-
-unsigned int SA::CalcNumFormAloc(unsigned int reqSize, 
-                                 std::vector<bool>& dispVec) {
-    std::vector<unsigned int> freeSlotsBlocks = 
-    this->GetBlocksFreeSlots(reqSize, dispVec);
-    unsigned int sum = 0;
-    
-    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
-        sum += freeSlotsBlocks.at(a) - reqSize + 1;
-    
-    return sum;
+ResourceAlloc* SA::GetResourceAlloc(){
+    return this->resourceAlloc;
 }
 
 int SA::CalcNumFormAloc(int L, bool* Disp,int tam) { 
@@ -267,23 +239,20 @@ int SA::CalcNumFormAloc(int L, bool* Disp,int tam) {
     return sum;
 }
 
-ResourceAlloc* SA::GetResourceAlloc(){
-    return this->resourceAlloc;
-}
-
-std::vector<unsigned int> SA::RandomSlots(Call* call) {
-    std::vector<unsigned int> vecSlots(0);
-    vecSlots = this->FirstFitSlots(call);
+std::vector<unsigned int> SA::RandomSlots() {
+    std::vector<unsigned int> vecSlots = this->FirstFitSlots();
     
     std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
     
     return vecSlots;
 }
 
-std::vector<unsigned int> SA::RandomSlots(unsigned int lastSlot) {
-    std::vector<unsigned int> vecSlots = this->FirstFitSlots(lastSlot);
+std::vector<unsigned int> SA::FirstFitSlots() {
+    std::vector<unsigned int> vecSlots(0);
+    unsigned int numSlots = topology->GetNumSlots();
     
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
+    for(unsigned int a = 0; a < numSlots; a++)
+        vecSlots.push_back(a);
     
     return vecSlots;
 }
@@ -303,13 +272,16 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     return slots;
 }
 
-std::vector<unsigned int> SA::FirstFitSlots(unsigned int lastSlot) {
-    std::vector<unsigned int> vecSlots(0);
+unsigned int SA::CalcNumFormAloc(unsigned int reqSize, 
+                                 std::vector<bool>& dispVec) {
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(reqSize, dispVec);
+    unsigned int sum = 0;
     
-    for(unsigned int a = 0; a <= lastSlot; a++)
-        vecSlots.push_back(a);
+    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
+        sum += freeSlotsBlocks.at(a) - reqSize + 1;
     
-    return vecSlots;
+    return sum;
 }
 
 std::vector<unsigned int> SA::GetBlocksFreeSlots(unsigned int reqSize, 

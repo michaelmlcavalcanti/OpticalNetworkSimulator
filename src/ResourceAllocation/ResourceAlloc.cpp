@@ -128,6 +128,7 @@ void ResourceAlloc::RMSA(Call* call) {
 
 void ResourceAlloc::RoutingSpec(Call* call) {
     this->routing->RoutingCall(call);
+    call->RepeatModulation();
     unsigned int numRoutes = call->GetNumRoutes();
     
     for(unsigned int a = 0; a < numRoutes; a++){
@@ -151,14 +152,14 @@ void ResourceAlloc::RoutingSpec(Call* call) {
 
 void ResourceAlloc::SpecRouting(Call* call) {
     this->routing->RoutingCall(call);
+    call->RepeatModulation();
     
     bool allocFound = false;
-    unsigned int lastPossibleSlot = this->topology->GetNumSlots() - 
-                                    call->GetNumberSlots();
     unsigned int numRoutes = call->GetNumRoutes();
+    const unsigned int topNumSlots = topology->GetNumSlots();
     std::vector<unsigned int> possibleSlots(0);
     //Corrigir essa parte, que depende da modulação já escolhida.
-    possibleSlots = this->specAlloc->SpecAllocation(lastPossibleSlot);
+    possibleSlots = this->specAlloc->SpecAllocation();
     unsigned int auxSlot;
     
     for(unsigned int a = 0; a < possibleSlots.size(); a++){
@@ -168,6 +169,9 @@ void ResourceAlloc::SpecRouting(Call* call) {
             call->SetRoute(call->GetRoute(b));
             call->SetModulation(call->GetModulation(b));
             this->modulation->SetModulationParam(call);
+            
+            if(auxSlot + call->GetNumberSlots() - 1 >= topNumSlots)
+                continue;
             
             if(!this->CheckOSNR(call))
                 continue;

@@ -272,7 +272,6 @@ void Routing::BSR() {
     unsigned int numIt = 100;
     const double alpha = 0.9999;
     double bestBP = Def::Max_Double;
-    unsigned bestIt;
     Resources* resources = this->resourceAlloc->GetResources();
     std::vector<std::vector<std::shared_ptr<Route>>> bestRoutes(0);
     data->SetActualIndex(0);
@@ -290,13 +289,13 @@ void Routing::BSR() {
         this->Dijkstra();
         resources->CreateOfflineModulation();
         
-        //Calc the BP and keep the routes if it is better then the 
-        //previous best BP.
+        //Run a simulation with the routes of this iteration
         resourceAlloc->GetSimulType()->RunBase();
         
+        //Calc the BP and keep the routes if it is better then the 
+        //previous best BP.
         if(data->GetPbReq() < bestBP){
             bestBP = data->GetPbReq();
-            bestIt = it;
             bestRoutes = resources->GetRoutes();
         }
         data->Initialize();
@@ -304,9 +303,7 @@ void Routing::BSR() {
     
     //Set the best set of routes
     resources->SetRoutes(bestRoutes);
-    //resources->CreateOfflineModulation();
     parameters->SetNumberReqMax(numMaxReq);
-    std::cout << "Best iteration: " << bestIt << std::endl << std::endl;
 }
 
 void Routing::UpdateLinksUtiCosts(const double alpha) {
