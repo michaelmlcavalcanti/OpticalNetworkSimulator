@@ -20,7 +20,6 @@
 #include "../../include/Structure/Node.h"
 #include "../../include/Structure/Devices/Regenerator.h"
 #include "../../include/GeneralClasses/Def.h"
-
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 
@@ -120,6 +119,42 @@ void Resources::Save() {
             table << std::endl;
         }
     }
+}
+
+void Resources::SetRoute(unsigned int orN, unsigned int deN, 
+std::shared_ptr<Route> route) {
+    this->ClearRoutes(orN, deN);
+    this->AddRoute(orN, deN, route);
+}
+
+void Resources::SetRoutes(unsigned int orN, unsigned int deN, 
+std::vector<std::shared_ptr<Route> > routes) {
+    this->ClearRoutes(orN, deN);
+    
+    for(auto it : routes)
+        this->AddRoute(orN, deN, it);
+}
+
+void Resources::AddRoute(unsigned int orN, unsigned int deN, 
+std::shared_ptr<Route> route) {
+    allRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes() + deN)
+             .push_back(route);
+}
+
+void Resources::AddRoutes(unsigned int orN, unsigned int deN, 
+std::vector<std::shared_ptr<Route> > routes) {
+    
+    for(auto it : routes)
+        this->AddRoute(orN, deN, it);
+}
+
+void Resources::ClearRoutes(unsigned int orN, unsigned int deN) {
+    allRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes() + deN).clear();
+}
+
+std::vector<std::shared_ptr<Route> > Resources::GetRoutes(unsigned int orN, 
+unsigned int deN) {
+    return allRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes() + deN);
 }
 
 std::vector<std::vector<std::shared_ptr<Route> > > Resources::GetRoutes() 

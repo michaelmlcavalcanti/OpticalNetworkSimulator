@@ -70,58 +70,6 @@ public:
     virtual void ResourAlloc(Call* call);
     
     /**
-     * @brief Function to input one route to the container of all routes for a 
-     * specified node pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     * @param route Route that will be keep.
-     */
-    void SetRoute(unsigned int orN, unsigned int deN, 
-                  std::shared_ptr<Route> route);
-    /**
-     * @brief Function to input a set of routes to the container of all routes 
-     * for a specified node pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     * @param routes Set of routes that will be keep.
-     */
-    void SetRoutes(unsigned int orN, unsigned int deN, 
-                   std::vector<std::shared_ptr<Route>> routes);
-    /**
-     * @brief Function that add a route in the container of all routes 
-     * for a specified node pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     * @param route Route that will be added.
-     */
-    void AddRoute(unsigned int orN, unsigned int deN, 
-                  std::shared_ptr<Route> route);
-    /**
-     * @brief Function that add a set of routes in the container of all routes 
-     * for a specified node pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     * @param routes Set of routes that will be added.
-     */
-    void AddRoutes(unsigned int orN, unsigned int deN,
-                   std::vector<std::shared_ptr<Route>> routes);
-    /**
-     * @brief Clear all routes in the container of all routes for a specified 
-     * node pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     */
-    void ClearRoutes(unsigned int orN, unsigned int deN);
-    /**
-     * @brief Function that returns a container of routes of a specified node
-     * pair.
-     * @param orN Source node.
-     * @param deN Destination node.
-     * @return Vector of routes.
-     */
-    std::vector<std::shared_ptr<Route>> GetRoutes(unsigned int orN,
-                                                  unsigned int deN);
-    /**
      * @brief Check if the routing chosen is offline type.
      * @return True if the routing is offline.
      */
@@ -161,20 +109,10 @@ public:
      */
     SimulationType* GetSimulType() const;
     /**
-     * @brief Set the SimulationType object that owns this object.
-     * @param simulType SimulationType object.
-     */
-    void SetSimulType(SimulationType* simulType);
-    /**
      * @brief Get the Topology object this object will use.
      * @return Topology object.
      */
     Topology* GetTopology() const;
-    /**
-     * @brief Set the Topology object this object will use.
-     * @param topology Topology object.
-     */
-    void SetTopology(Topology* topology);
     /**
      * @brief Function to get the resource pointer.
      * @return Resource pointer.
@@ -215,6 +153,7 @@ public:
     void SetResourceAllocOrder();
     
     void SetResAllocOrderHeuristicsRing();
+    
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
      * and route of this pair.
@@ -223,7 +162,8 @@ public:
      * @param pos Route index of the node pair.
      * @return Interfering routes.
      */
-    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori,int des,int pos);
+    std::vector<std::shared_ptr<Route>> GetInterRoutes(int ori, int des, 
+                                                       int pos);
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
      * and route of this pair.
@@ -265,8 +205,17 @@ public:
      */
     void SetNumInterRoutesToCheck(std::vector<std::vector<unsigned int>> 
     numInterRoutesToCheck);
-    
+    /**
+     * @brief Function to get the container with the number of slots possible 
+     * call requests.
+     * @return Container of number of slots.
+     */
     std::vector<unsigned int> GetNumSlotsTraffic() const;
+    /**
+     * @brief Function to set the container with the possible number of slots
+     * a connection request could have.
+     */
+    void SetNumSlotsTraffic();
 private:
     /**
      * @brief Function to apply resource allocation without modulation 
@@ -317,11 +266,6 @@ private:
      * option chosen.
      */
     void CreateSpecAllocation();
-    /**
-     * @brief Function to set the container with the possible number of slots
-     * a connection request could have.
-     */
-    void SetNumSlotsTraffic();
     /**
      * @brief Update the cost values for all routes in container. Used for
      * offline routing.

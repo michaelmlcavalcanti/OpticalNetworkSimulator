@@ -99,15 +99,6 @@ std::vector<int> Route::GetPath() const {
 }
 
 double Route::GetCost() const {
-    /*Link *link;
-    double cost = 0.0;
-    
-    for(unsigned int a = 0; a < this->GetNumHops(); a++){
-        link = this->topology->GetLink(this->path.at(a), this->path.at(a+1));
-        cost += link->GetCost();
-    }
-    
-    return cost;*/
     return this->cost;
 }
 
@@ -115,6 +106,18 @@ void Route::SetCost(double cost) {
     assert(cost >= 0.0);
     
     this->cost = cost;
+}
+
+void Route::SetCost() {
+    Link *link;
+    double cost = 0.0;
+    
+    for(unsigned int a = 0; a < this->GetNumHops(); a++){
+        link = this->topology->GetLink(this->path.at(a), this->path.at(a+1));
+        cost += link->GetCost();
+    }
+    
+    this->SetCost(cost);
 }
 
 Link* Route::GetLink(unsigned int index) const {
@@ -151,16 +154,4 @@ std::shared_ptr<Route> Route::AddRoute(std::shared_ptr<Route>& route) {
     }
     
     return std::make_shared<Route>(this->resourceAlloc, newPath);
-}
-
-void Route::SetCost() {
-    Link *link;
-    double cost = 0.0;
-    
-    for(unsigned int a = 0; a < this->GetNumHops(); a++){
-        link = this->topology->GetLink(this->path.at(a), this->path.at(a+1));
-        cost += link->GetCost();
-    }
-    
-    this->SetCost(cost);
 }

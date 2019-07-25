@@ -41,13 +41,71 @@ public:
     
     void Save();
     
-    
-    
-    
+    /**
+     * @brief Function to input one route to the container of all routes for a 
+     * specified node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @param route Route that will be keep.
+     */
+    void SetRoute(unsigned int orN, unsigned int deN, 
+                  std::shared_ptr<Route> route);
+    /**
+     * @brief Function to input a set of routes to the container of all routes 
+     * for a specified node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @param routes Set of routes that will be keep.
+     */
+    void SetRoutes(unsigned int orN, unsigned int deN, 
+                   std::vector<std::shared_ptr<Route>> routes);
+    /**
+     * @brief Function that add a route in the container of all routes 
+     * for a specified node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @param route Route that will be added.
+     */
+    void AddRoute(unsigned int orN, unsigned int deN, 
+                  std::shared_ptr<Route> route);
+    /**
+     * @brief Function that add a set of routes in the container of all routes 
+     * for a specified node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @param routes Set of routes that will be added.
+     */
+    void AddRoutes(unsigned int orN, unsigned int deN,
+                   std::vector<std::shared_ptr<Route>> routes);
+    /**
+     * @brief Clear all routes in the container of all routes for a specified 
+     * node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     */
+    void ClearRoutes(unsigned int orN, unsigned int deN);
+    /**
+     * @brief Function that returns a container of routes of a specified node
+     * pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @return Vector of routes.
+     */
+    std::vector<std::shared_ptr<Route>> GetRoutes(unsigned int orN,
+                                                  unsigned int deN);
+    /**
+     * @brief Function to get the container of routes of all network node
+     * pairs.
+     * @return Container with all routes.
+     */
     std::vector<std::vector<std::shared_ptr<Route>>> GetRoutes() const;
-
-    void SetRoutes(std::vector<std::vector<std::shared_ptr<Route> > > 
-                   allRoutes);
+    /**
+     * @brief Function to get the container of routes of all network node
+     * pairs.
+     * @param allRoutes Container with all routes.
+     */
+    void SetRoutes(std::vector<std::vector<std::shared_ptr<Route>>> allRoutes);
+    
     
     std::vector<TypeModulation> GetModulationFormat(Call* call);
     

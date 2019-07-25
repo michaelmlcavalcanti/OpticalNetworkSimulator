@@ -25,6 +25,7 @@ class Parameters;
 
 #include "../Data/Options.h"
 #include "../../include/Structure/Node.h"
+#include "Resources.h"
 
 /**
  * @brief Structure to compare the routes cost.
@@ -55,12 +56,14 @@ public:
      * @param option Routing option chosen for routing function selection.
      * @param topology Topology object used to routing.
      */
-    Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology, 
-            Data* data, Parameters* parameters);
+    Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
+            Parameters* parameters);
     /**
      * @brief Standard destructor for a Routing object.
      */
     virtual ~Routing();
+    
+    void Load();
     /**
      * @brief Apply the routing algorithm for a call. If it is a offline 
      * routing, this function set the routes already chosen to the call.
@@ -134,6 +137,7 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
+private:
     /**
      * @brief Get the number k of shortest routes used in YEN.
      * @return Number of routes.
@@ -161,6 +165,8 @@ private:
     Data* data;
     
     Parameters* parameters;
+    
+    Resources* resources;
     /**
      * @brief Number of routes for the k-shortest path algorithms.
      */

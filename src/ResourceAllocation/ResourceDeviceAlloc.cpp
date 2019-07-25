@@ -384,11 +384,22 @@ unsigned int ResourceDeviceAlloc::GetN(CallDevices* call) {
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     
-    if(phyLayerOption == PhyLayerEnabled)
-        for(auto it: calls){
-            if(!topology->CheckOSNR(it->GetRoute(), it->GetOsnrTh()))
+    if(phyLayerOption == PhyLayerEnabled){
+        if(!calls.empty()){
+            for(auto it: calls){
+                
+                if(!topology->CheckOSNR(it->GetRoute(), it->GetOsnrTh()))
+                    return false;
+            }
+        }
+        else{
+            Call* callBase = dynamic_cast<Call*>(call);
+            
+            if(!topology->CheckOSNR(callBase->GetRoute(), 
+                                    callBase->GetOsnrTh()))
                 return false;
         }
+    }   
     
     return true;
 }

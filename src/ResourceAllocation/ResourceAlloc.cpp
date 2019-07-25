@@ -47,23 +47,25 @@ ResourceAlloc::~ResourceAlloc() {
 }
 
 void ResourceAlloc::Load() {
-    this->topology = this->simulType->GetTopology();
-    this->traffic = this->simulType->GetTraffic();
-    this->options = this->simulType->GetOptions();
+    topology = simulType->GetTopology();
+    traffic = simulType->GetTraffic();
+    options = simulType->GetOptions();
     
     this->CreateRouting();
     this->CreateSpecAllocation();
     
-    this->modulation = std::make_shared<Modulation>(this, 
-    this->simulType->GetParameters()->GetSlotBandwidth());
+    modulation = std::make_shared<Modulation>(this,simulType->GetParameters()
+                                              ->GetSlotBandwidth());
     
-    this->resources = std::make_shared<Resources>(this, modulation.get());
+    resources = std::make_shared<Resources>(this, modulation.get());
     
-    this->resourAllocOption = this->options->GetResourAllocOption();
-    this->phyLayerOption = this->options->GetPhyLayerOption();
+    resourAllocOption = this->options->GetResourAllocOption();
+    phyLayerOption = this->options->GetPhyLayerOption();
     
     unsigned int numNodes = this->topology->GetNumNodes();
-    this->resources->allRoutes.resize(numNodes*numNodes);
+    resources->allRoutes.resize(numNodes*numNodes);
+    
+    routing->Load();
 }
 
 void ResourceAlloc::AdditionalSettings() {
@@ -213,46 +215,6 @@ void ResourceAlloc::OfflineModulationRSA(Call* call) {
     this->RSA(call);
 }
 
-void ResourceAlloc::SetRoute(unsigned int orN, unsigned int deN, 
-std::shared_ptr<Route> route) {
-    this->ClearRoutes(orN, deN);
-    this->AddRoute(orN, deN, route);
-}
-
-void ResourceAlloc::SetRoutes(unsigned int orN, unsigned int deN, 
-std::vector<std::shared_ptr<Route>> routes) {
-    this->ClearRoutes(orN, deN);
-    
-    for(auto it : routes)
-        this->AddRoute(orN, deN, it);
-}
-
-void ResourceAlloc::AddRoute(unsigned int orN, unsigned int deN, 
-std::shared_ptr<Route> route) {
-    this->resources->allRoutes.at(orN*this->topology->GetNumNodes() + deN)
-                   .push_back(route);
-}
-
-void ResourceAlloc::AddRoutes(unsigned int orN, unsigned int deN, 
-std::vector<std::shared_ptr<Route>> routes) {
-    
-    for(auto it : routes)
-        this->AddRoute(orN, deN, it);
-}
-
-void ResourceAlloc::ClearRoutes(unsigned int orN, unsigned int deN) {
-    
-    this->resources->allRoutes.at(orN*this->topology->GetNumNodes() + deN).
-                               clear();
-}
-
-std::vector<std::shared_ptr<Route>> ResourceAlloc::GetRoutes(unsigned int orN, 
-unsigned int deN) {
-    unsigned int numNodes = this->topology->GetNumNodes();
-    
-    return this->resources->allRoutes.at(orN*numNodes + deN);
-}
-
 bool ResourceAlloc::IsOfflineRouting() {
     
     switch(this->routing->GetRoutingOption()){
@@ -311,16 +273,8 @@ SimulationType* ResourceAlloc::GetSimulType() const {
     return simulType;
 }
 
-void ResourceAlloc::SetSimulType(SimulationType* simulType) {
-    this->simulType = simulType;
-}
-
 Topology* ResourceAlloc::GetTopology() const {
     return topology;
-}
-
-void ResourceAlloc::SetTopology(Topology* topology) {
-    this->topology = topology;
 }
 
 Resources* ResourceAlloc::GetResources() const {
@@ -378,7 +332,7 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
                 vecBool.push_back(r_sa);
                 continue;
             }
-            auxRoute = this->GetRoutes(orNode, deNode).front().get();
+            auxRoute = resources->GetRoutes(orNode, deNode).front().get();
             
             if(auxRoute->GetNumHops() <= maxNumHops)
                 vecBool.push_back(r_sa);
@@ -399,8 +353,8 @@ int des, int pos) {
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(
 unsigned int orNode, unsigned int deNode, Route* route){
-    std::vector<std::shared_ptr<Route>> routes = this->GetRoutes(orNode, 
-                                                                 deNode);
+    std::vector<std::shared_ptr<Route>> routes = resources->GetRoutes(orNode, 
+                                                                      deNode);
     unsigned int numRoutes = routes.size();
     
     for(unsigned int pos = 0; pos < numRoutes; pos++){
@@ -545,33 +499,40 @@ std::vector<unsigned int> ResourceAlloc::GetNumSlotsTraffic() const {
     return resources->numSlotsTraffic;
 }
 
-void ResourceAlloc::UpdateRoutesCosts() {
-    
-    for(auto it: this->resources->allRoutes){
-        for(auto it2: it){
-            
-            if(it2 == nullptr)
-                continue;
-            it2->SetCost();
-        }
-    }
-}
-
 void ResourceAlloc::SetNumSlotsTraffic() {
     this->resources->numSlotsTraffic = this->modulation->GetPossibleSlots(
     this->traffic->GetVecTraffic());
 }
 
+void ResourceAlloc::CreateRouting() {
+    RoutingOption option = simulType->GetOptions()->GetRoutingOption();
+            
+    routing = std::make_shared<Routing>(this, option, simulType->GetData(), 
+                                        simulType->GetParameters());
+}
+
+void ResourceAlloc::CreateSpecAllocation() {
+    SpectrumAllocationOption option = this->simulType->GetOptions()->
+                                      GetSpecAllOption();
+    
+    if(this->topology->GetNumCores() == 1){
+        this->specAlloc = std::make_shared<SA>(this, option, this->topology);
+    }
+    else{
+        this->specAlloc = std::make_shared<CSA>(this, option, this->topology);
+    }
+}
+
 void ResourceAlloc::CreateRsaOrder() {
     unsigned int numNodes = this->topology->GetNumNodes();
-    this->resources->resourceAllocOrder.resize(numNodes * numNodes);
+    resources->resourceAllocOrder.resize(numNodes * numNodes);
     
     switch(this->simulType->GetOptions()->GetOrderRSA()){
         case OrderRoutingSa:
-            this->resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
+            resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
             break;
         case OrderSaRouting:
-            this->resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
+            resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
             break;
         case MixedOrder:
             this->SetResourceAllocOrder();
@@ -585,26 +546,14 @@ void ResourceAlloc::CreateRsaOrder() {
     }
 }
 
-void ResourceAlloc::CreateRouting() {
-    RoutingOption option = this->simulType->GetOptions()->GetRoutingOption();
+void ResourceAlloc::UpdateRoutesCosts() {
+    
+    for(auto it: this->resources->allRoutes){
+        for(auto it2: it){
             
-    this->routing = std::make_shared<Routing>(this, option, this->topology,
-    this->simulType->GetData(), this->simulType->GetParameters());
-    
-    if(option == RoutingYEN){
-        this->routing->SetK(this->simulType->GetParameters()->
-                            GetNumberRoutes());
-    }
-}
-
-void ResourceAlloc::CreateSpecAllocation() {
-    SpectrumAllocationOption option = this->simulType->GetOptions()->
-                                      GetSpecAllOption();
-    
-    if(this->topology->GetNumCores() == 1){
-        this->specAlloc = std::make_shared<SA>(this, option, this->topology);
-    }
-    else{
-        this->specAlloc = std::make_shared<CSA>(this, option, this->topology);
+            if(it2 == nullptr)
+                continue;
+            it2->SetCost();
+        }
     }
 }

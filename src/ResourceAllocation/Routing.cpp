@@ -29,14 +29,22 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
     return (routeA->GetCost() > routeB->GetCost());
 }
 
-Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Topology* topology,
-Data* data, Parameters* parameters)
-:resourceAlloc(rsa), routingOption(option), topology(topology), data(data), 
-parameters(parameters), K(0) {
-
+Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
+Parameters* parameters)
+:resourceAlloc(rsa), routingOption(option), topology(nullptr), 
+data(data), parameters(parameters), resources(nullptr), K(0) {
+    
 }
 
 Routing::~Routing() {
+}
+
+void Routing::Load() {
+    topology = resourceAlloc->GetTopology();
+    resources = resourceAlloc->GetResources();
+    
+    if(routingOption == RoutingYEN)
+        this->SetK(parameters->GetNumberRoutes());
 }
 
 void Routing::RoutingCall(Call* call) {
@@ -57,7 +65,7 @@ void Routing::SetOfflineRouting(Call* call) {
     NodeId orNode = call->GetOrNode()->GetNodeId();
     NodeId deNode = call->GetDeNode()->GetNodeId();
 
-    call->PushTrialRoutes(this->resourceAlloc->GetRoutes(orNode, deNode));
+    call->PushTrialRoutes(resources->GetRoutes(orNode, deNode));
 }
 
 void Routing::Dijkstra() {
@@ -72,7 +80,7 @@ void Routing::Dijkstra() {
             else{
                 route = nullptr;
             }
-            this->resourceAlloc->SetRoute(orN, deN, route);
+            resources->SetRoute(orN, deN, route);
         }
     }
 }
@@ -188,7 +196,7 @@ void Routing::YEN() {
             else{
                 routes.resize(this->GetK(), nullptr);
             }
-            this->resourceAlloc->SetRoutes(orN, deN, routes);
+            resources->SetRoutes(orN, deN, routes);
             routes.clear();
         }
     }
@@ -331,7 +339,7 @@ void Routing::UpdateLinksUtiCosts(const double alpha) {
             
             if(orN == deN)
                 continue;
-            auxRoute = resourceAlloc->GetRoutes(orN, deN);
+            auxRoute = resources->GetRoutes(orN, deN);
             
             for(unsigned int a = 0; a < auxRoute.front()->GetNumHops(); a++){
                 auxLink = auxRoute.front()->GetLink(a);
