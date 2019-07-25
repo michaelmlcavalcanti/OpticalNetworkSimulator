@@ -82,7 +82,7 @@ void ResourceAlloc::AdditionalSettings() {
         if(this->options->GetRegenerationOption() != RegenerationDisabled){
             assert(options->GetPhyLayerOption() == PhyLayerEnabled);
             assert(options->GetResourAllocOption() == ResourAllocRMSA);
-            this->resources->CreateRegResources();
+            this->resources->CreateRegenerationResources();
         }
         else if(options->GetResourAllocOption() == ResourAllocRMSA){
             this->resources->CreateOfflineModulation();

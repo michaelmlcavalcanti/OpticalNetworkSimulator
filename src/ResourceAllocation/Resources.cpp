@@ -25,10 +25,10 @@
 #include "../../include/Data/InputOutput.h"
 
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
-:allRoutes(0), interRoutes(0), resourceAllocOrder(0), numInterRoutesToCheck(0), 
-numSlotsTraffic(0), subRoutes(0), numReg(0), numSlots(0), 
-numSlotsPerSubRoute(0), subRoutesModulation(0), resourceAlloc(resourceAlloc), 
-modulation(modulation) {
+:allRoutes(0), interRoutes(0), numInterRoutesToCheck(0), 
+subRoutes(0), numReg(0), numSlots(0), numSlotsPerSubRoute(0), 
+subRoutesModulation(0), resourceAllocOrder(0), numSlotsTraffic(0), 
+resourceAlloc(resourceAlloc), modulation(modulation) {
     
 }
 
@@ -36,14 +36,10 @@ Resources::~Resources() {
     
 }
 
-ResourceAlloc* Resources::GetResourceAlloc() const {
-    return resourceAlloc;
-}
-
-void Resources::CreateRegResources() {
-    this->SetRegSubRoutes();
-    this->SetSubRoutesNumRegSlotsMod();
-    this->RemoveInvalidRegOptions();
+void Resources::CreateRegenerationResources() {
+    this->CreateRoutesTranspSegments();
+    this->CreateRoutesTranspSegmentsParameters();
+    this->RemoveInvalidTranspSegmentsSets();
 }
 
 void Resources::CreateOfflineModulation() {
@@ -263,8 +259,9 @@ unsigned int auxIndex) {
                               .at(auxIndex);
 }
 
-void Resources::SetRegSubRoutes() {
+void Resources::CreateRoutesTranspSegments() {
     unsigned int sizeNumNodes = this->allRoutes.size();
+    subRoutes.clear();
     this->subRoutes.resize(sizeNumNodes*sizeNumNodes);
     unsigned int sizeNumRoutes;
     
@@ -277,17 +274,50 @@ void Resources::SetRegSubRoutes() {
             if(this->allRoutes.at(a).at(b) == nullptr)
                 continue;
             
-            this->MakeSubRoutes(this->allRoutes.at(a).at(b), 0, a, b);
+            this->MakePartialRoutes(this->allRoutes.at(a).at(b), 0, a, b);
             this->subRoutes.at(a).at(b).pop_back();
         }
     }
 }
 
-void Resources::SetSubRoutesNumRegSlotsMod() {
+void Resources::MakePartialRoutes(std::shared_ptr<Route> totalRoute, 
+unsigned int curNode, unsigned index1, unsigned int index2) {
+    std::shared_ptr<Route> auxRoute;
+    
+    for(unsigned int a = curNode; a < totalRoute->GetNumHops(); a++){
+        auxRoute = totalRoute->CreatePartialRoute(curNode, a+1);
+        std::vector<std::shared_ptr<Route>> auxVecRoute(0);
+        auxVecRoute.push_back(auxRoute);
+        
+        if(this->subRoutes.at(index1).at(index2).empty())
+            this->subRoutes.at(index1).at(index2)
+                                      .push_back(auxVecRoute);
+        else
+            this->subRoutes.at(index1).at(index2).back()
+                                      .push_back(auxRoute);
+        
+        if(a+1 < totalRoute->GetNumHops())
+            this->MakePartialRoutes(totalRoute, a+1, index1, index2);
+        else{
+            auxVecRoute = this->subRoutes.at(index1).at(index2).back();
+            this->subRoutes.at(index1).at(index2).push_back(auxVecRoute);
+        }
+        this->subRoutes.at(index1).at(index2).back().pop_back();
+    }
+}
+
+void Resources::CreateRoutesTranspSegmentsParameters() {
     unsigned int sizeTraffic = resourceAlloc->GetTraffic()->
                                               GetVecTraffic().size();
     unsigned int sizeNodes, sizeRoutes, sizeSubRoutes, sizeSubRo;
     double auxTraffic, multiplier;
+    //Clear all containers
+    numReg.clear();
+    numSlots.clear();
+    numSlotsPerSubRoute.clear();
+    subRoutesModulation.clear();
+    
+    //Resize all containers
     numReg.resize(sizeTraffic);
     numSlots.resize(sizeTraffic);
     numSlotsPerSubRoute.resize(sizeTraffic);
@@ -326,11 +356,14 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
                 subRoutesModulation.at(trIndex).at(nodePairIndex).at(rouIndex)
                                    .resize(sizeSubRoutes);
                 
-                //Loop for the number of sub-routes sets.
+                //Loop for the number of set of transparent segments of the 
+                //route.
                 for(unsigned numSubRoIndex = 0; numSubRoIndex < sizeSubRoutes; 
                 numSubRoIndex++){
                     sizeSubRo = subRoutes.at(nodePairIndex).at(rouIndex)
                                          .at(numSubRoIndex).size();
+                    //Change the function below to depend on the type of 
+                    //regeneration
                     numReg.at(trIndex).at(nodePairIndex).at(rouIndex)
                           .at(numSubRoIndex) = (sizeSubRo - 1) * multiplier;
                     numSlots.at(trIndex).at(nodePairIndex).at(rouIndex)
@@ -350,34 +383,6 @@ void Resources::SetSubRoutesNumRegSlotsMod() {
                 }
             }
         }
-    }
-}
-
-void Resources::MakeSubRoutes(std::shared_ptr<Route> totalRoute, 
-unsigned int curNode, unsigned index1, unsigned int index2) {
-    std::shared_ptr<Route> auxRoute;
-    
-    for(unsigned int a = curNode; a < totalRoute->GetNumHops(); a++){
-        auxRoute = totalRoute->CreatePartialRoute(curNode, a+1);
-        std::vector<std::shared_ptr<Route>> auxVecRoute(0);
-        auxVecRoute.push_back(auxRoute);
-        
-        if(this->subRoutes.at(index1).at(index2).empty())
-            this->subRoutes.at(index1).at(index2)
-                                      .push_back(auxVecRoute);
-        else
-            this->subRoutes.at(index1).at(index2).back()
-                                      .push_back(auxRoute);
-        
-        if(a+1 < totalRoute->GetNumHops())
-            this->MakeSubRoutes(totalRoute, a+1, index1, index2);
-        else{
-            auxVecRoute = this->subRoutes.at(index1).at(index2)
-                                                    .back();
-            this->subRoutes.at(index1).at(index2)
-                                      .push_back(auxVecRoute);
-        }
-        this->subRoutes.at(index1).at(index2).back().pop_back();
     }
 }
 
@@ -410,39 +415,7 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
     }
 }
 
-void Resources::TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
-unsigned routeIndex) {
-    std::shared_ptr<Route> route = allRoutes.at(nodeIndex).at(routeIndex);
-    double bitRate = this->resourceAlloc->GetTraffic()->GetTraffic(trIndex);
-    
-    std::shared_ptr<Call> testCall = std::make_shared<Call>(route->GetOrNode(),
-    route->GetDeNode(), bitRate, 0.0);
-    testCall->SetRoute(route);
-    
-    for(TypeModulation mod = LastModulation; mod >= FirstModulation; 
-    mod = TypeModulation(mod-1)){
-        testCall->SetModulation(mod);
-        modulation->SetModulationParam(testCall.get());
-        
-        if(resourceAlloc->CheckOSNR(testCall.get())){
-            subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
-                               .front() = testCall->GetModulation();
-            numSlots.at(trIndex).at(nodeIndex).at(routeIndex).front() = 
-                    testCall->GetNumberSlots();
-            break;
-        }
-    }
-    
-    if(subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
-                          .front() == InvalidModulation){
-        std::cerr << "Invalid modulation format for node pair: " 
-                  << route->GetOrNode()->GetNodeId() << "->"
-                  << route->GetDeNode()->GetNodeId() << std::endl;
-        std::abort();
-    }
-}
-
-void Resources::RemoveInvalidRegOptions() {
+void Resources::RemoveInvalidTranspSegmentsSets() {
     unsigned int trSize, nodeSize, routeSize, subRouteSize, segSize;
     TypeModulation auxMod;
     unsigned int index;
@@ -487,6 +460,10 @@ void Resources::RemoveInvalidRegOptions() {
                     numSlots.at(trIndex).at(nodeIndex).at(routeIndex).begin() + 
                     index);
                     
+                    numSlotsPerSubRoute.at(trIndex).at(nodeIndex).at(routeIndex)
+                    .erase(numSlotsPerSubRoute.at(trIndex).at(nodeIndex)
+                    .at(routeIndex).begin() + index);
+                    
                     subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
                     .erase(subRoutesModulation.at(trIndex).at(nodeIndex)
                     .at(routeIndex).begin() + index);
@@ -494,6 +471,38 @@ void Resources::RemoveInvalidRegOptions() {
                 invalidIndexes.clear();
             }
         }
+    }
+}
+
+void Resources::TestBestModulation(unsigned trIndex, unsigned nodeIndex, 
+unsigned routeIndex) {
+    std::shared_ptr<Route> route = allRoutes.at(nodeIndex).at(routeIndex);
+    double bitRate = this->resourceAlloc->GetTraffic()->GetTraffic(trIndex);
+    
+    std::shared_ptr<Call> testCall = std::make_shared<Call>(route->GetOrNode(),
+    route->GetDeNode(), bitRate, 0.0);
+    testCall->SetRoute(route);
+    
+    for(TypeModulation mod = LastModulation; mod >= FirstModulation; 
+    mod = TypeModulation(mod-1)){
+        testCall->SetModulation(mod);
+        modulation->SetModulationParam(testCall.get());
+        
+        if(resourceAlloc->CheckOSNR(testCall.get())){
+            subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
+                               .front() = testCall->GetModulation();
+            numSlots.at(trIndex).at(nodeIndex).at(routeIndex).front() = 
+                    testCall->GetNumberSlots();
+            break;
+        }
+    }
+    
+    if(subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex).front()
+                          .front() == InvalidModulation){
+        std::cerr << "Invalid modulation format for node pair: " 
+                  << route->GetOrNode()->GetNodeId() << "->"
+                  << route->GetDeNode()->GetNodeId() << std::endl;
+        std::abort();
     }
 }
 
