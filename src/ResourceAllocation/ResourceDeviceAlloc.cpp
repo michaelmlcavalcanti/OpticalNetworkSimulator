@@ -52,7 +52,7 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     //Tuple with route index and set of subRoutes index.
     std::vector<std::tuple<unsigned, unsigned>> routeSubIndexes(0);
     
-    this->SetRegChoiceOrder(call, routeSubIndexes);
+    this->OrderRegenerationOptions(call, routeSubIndexes);
     
     for(unsigned int a = 0; a < routeSubIndexes.size(); a++){
         call->SetRoute(std::get<0>(routeSubIndexes.at(a)));
@@ -104,7 +104,7 @@ void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
     call->ClearTrialRoutes();
 }
 
-void ResourceDeviceAlloc::SetRegChoiceOrder(CallDevices* call, 
+void ResourceDeviceAlloc::OrderRegenerationOptions(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
     vec.clear();
     
@@ -392,14 +392,11 @@ bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
                     return false;
             }
         }
-        else{
-            Call* callBase = dynamic_cast<Call*>(call);
-            
-            if(!topology->CheckOSNR(callBase->GetRoute(), 
-                                    callBase->GetOsnrTh()))
+        else{            
+            if(!ResourceAlloc::CheckOSNR(call))
                 return false;
         }
-    }   
+    }
     
     return true;
 }

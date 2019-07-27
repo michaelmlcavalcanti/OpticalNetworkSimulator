@@ -64,7 +64,7 @@ private:
      * @param vec Container of tuples of route and regeneration combination 
      * indexes.
      */
-    void SetRegChoiceOrder(CallDevices* call, 
+    void OrderRegenerationOptions(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
     /**
      * @brief Function to order the tuples of route and regeneration combination 
