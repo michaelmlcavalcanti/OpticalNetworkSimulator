@@ -113,7 +113,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
             this->SetMinRegChoiceOrder(call, vec);
             break;
         case RegAssMaxReg:
-            this->SetMaxRegChoiceOrder(call, vec);
+            this->SetMinSlotsChoiceOrder(call, vec);
             break;
         case DRE2BR:
         case SCRA:
@@ -168,7 +168,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     }
 }
 
-void ResourceDeviceAlloc::SetMaxRegChoiceOrder(CallDevices* call, 
+void ResourceDeviceAlloc::SetMinSlotsChoiceOrder(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
     std::vector<std::vector<unsigned>> vecNumReg = 
     resources->GetNumAllRegPos(call);
@@ -213,7 +213,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
 
 void ResourceDeviceAlloc::SetCostMetric(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
-    std::vector<std::vector<unsigned>> vecNumReg = 
+        std::vector<std::vector<unsigned>> vecNumReg = 
     resources->GetNumAllRegPos(call);
     std::vector<std::vector<double>> vecCosts(0);
     
@@ -235,7 +235,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     //Order the regeneration options, based on the cost.
     while(foundOption){
         foundOption = false;
-        bestCost = Def::Max_UnInt;
+        bestCost = Def::Max_Double;
         
         for(unsigned a = 0; a < vecCosts.size(); a++){
             for(unsigned b = 0; b < vecCosts.at(a).size(); b++){
@@ -251,7 +251,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         
         if(foundOption){
             vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
-            vecCosts.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+            vecCosts.at(auxRouteIndex).at(auxIndex) = Def::Max_Double;
         }
     }
 }

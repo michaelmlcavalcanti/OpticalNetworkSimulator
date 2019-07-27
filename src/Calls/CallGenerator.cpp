@@ -56,6 +56,7 @@ void CallGenerator::Load() {
 }
 
 void CallGenerator::Initialize() {
+    CallGenerator::random_generator = std::default_random_engine{0};
     this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
     (this->networkLoad);
@@ -73,7 +74,6 @@ void CallGenerator::Finalize() {
 }
 
 void CallGenerator::GenerateCall() {
-    //this->simulType->numberRequests++;
     std::shared_ptr<Call> newCall;
     unsigned int auxIndexOrNode = uniformNodeDistribution(random_generator);
     unsigned int auxIndexDeNode;
