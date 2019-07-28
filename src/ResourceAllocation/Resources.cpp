@@ -167,7 +167,7 @@ std::shared_ptr<Route> > > allRoutes) {
     this->allRoutes = allRoutes;
 }
 
-std::vector<TypeModulation> Resources::GetModulationFormat(Call* call) {
+std::vector<TypeModulation> Resources::GetOfflineModulationFormats(Call* call) {
     std::vector<TypeModulation> vecMod(0);
     unsigned trIndex = this->resourceAlloc->GetTraffic()->GetTrafficIndex(
                        call->GetBitRate());
@@ -184,18 +184,25 @@ std::vector<TypeModulation> Resources::GetModulationFormat(Call* call) {
     return vecMod;
 }
 
-std::vector<unsigned int> Resources::GetNumRegenerators(Call* call) {
+std::vector<std::vector<unsigned> > Resources::GetNumberRegSet(Call* call) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
     GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
-    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
-    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
     
-    return numReg.at(trIndex).at(nodeIndex).at(routeIndex);
+    return numReg.at(trIndex).at(nodeIndex);
 }
 
-unsigned int Resources::GetNumRegenerators(Call* call, unsigned routeIndex, 
+std::vector<std::vector<unsigned> > Resources::GetNumberSlotsSet(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numSlots.at(trIndex).at(nodeIndex);
+}
+
+unsigned int Resources::GetNumberReg(Call* call, unsigned routeIndex, 
 unsigned subRouteIndex) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
@@ -205,36 +212,7 @@ unsigned subRouteIndex) {
     return numReg.at(trIndex).at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
-std::vector<std::vector<unsigned> > Resources::GetNumAllRegPos(Call* call) {
-    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
-                       GetBitRate());
-    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
-    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
-    
-    return numReg.at(trIndex).at(nodeIndex);
-}
-
-std::vector<unsigned int> Resources::GetNumSlotsRegenerators(Call* call) {
-    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
-                       GetBitRate());
-    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
-    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
-    unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
-    GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
-    
-    return numSlots.at(trIndex).at(nodeIndex).at(routeIndex);
-}
-
-std::vector<std::vector<unsigned> > Resources::GetNumSlotsAllRegPos(Call* call) {
-    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
-                       GetBitRate());
-    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
-    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
-    
-    return numSlots.at(trIndex).at(nodeIndex);
-}
-
-unsigned int Resources::GetNumSlotsAllRegPos(Call* call, unsigned routeIndex, 
+unsigned int Resources::GetNumberSlots(Call* call, unsigned routeIndex, 
 unsigned subRouteIndex) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
@@ -244,8 +222,8 @@ unsigned subRouteIndex) {
     return numSlots.at(trIndex).at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
-std::vector<unsigned> Resources::GetVecNumSlots(Call* call, unsigned routeIndex, 
-unsigned subRouteIndex) {
+std::vector<unsigned> Resources::GetNumSlotsPerTranspSegments(Call* call, 
+unsigned routeIndex, unsigned subRouteIndex) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
@@ -255,17 +233,17 @@ unsigned subRouteIndex) {
                               .at(subRouteIndex);
 }
 
-std::vector<std::shared_ptr<Route>> Resources::GetVecSubRoute(Call* call, 
-unsigned int auxIndex) {
+std::vector<std::shared_ptr<Route>> Resources::GetRoutesTranspSegments(Call* call, 
+unsigned int subRouteIndex) {
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
     GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
     unsigned routeIndex = this->GetRouteIndex(call->GetRoute(), call->
     GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
     
-    return subRoutes.at(nodeIndex).at(routeIndex).at(auxIndex);
+    return subRoutes.at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
-std::vector<std::shared_ptr<Route> > Resources::GetVecSubRoute(Call* call, 
+std::vector<std::shared_ptr<Route> > Resources::GetRoutesTranspSegments(Call* call, 
 unsigned int routeIndex, unsigned int subRouteIndex) {
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
     GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
@@ -273,16 +251,8 @@ unsigned int routeIndex, unsigned int subRouteIndex) {
     return subRoutes.at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
-std::vector<std::vector<std::vector<std::shared_ptr<Route> > > > 
-Resources::GetVecSubRoute(Call* call) {
-    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
-    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
-    
-    return subRoutes.at(nodeIndex);
-}
-
-std::vector<TypeModulation> Resources::GetSubRoutesMod(Call* call, 
-unsigned int auxIndex) {
+std::vector<TypeModulation> Resources::GetTranspSegmentsModulation(Call* call, 
+unsigned int subRouteIndex) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
                        GetBitRate());
     unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
@@ -291,7 +261,7 @@ unsigned int auxIndex) {
     GetOrNode()->GetNodeId(), call->GetDeNode()->GetNodeId());
     
     return subRoutesModulation.at(trIndex).at(nodeIndex).at(routeIndex)
-                              .at(auxIndex);
+                              .at(subRouteIndex);
 }
 
 void Resources::CreateRoutesTranspSegments() {

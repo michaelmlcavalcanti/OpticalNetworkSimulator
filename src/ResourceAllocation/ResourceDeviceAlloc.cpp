@@ -57,11 +57,13 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     for(unsigned int a = 0; a < routeSubIndexes.size(); a++){
         call->SetRoute(std::get<0>(routeSubIndexes.at(a)));
         unsigned int auxIndex = std::get<1>(routeSubIndexes.at(a));
-        call->CreateTranspSegments(resources->GetVecSubRoute(call, auxIndex));
+        call->CreateTranspSegments(resources->GetRoutesTranspSegments(call, 
+        auxIndex));
         
         if(!topology->CheckInsertFreeRegenerators(call))
             continue;
-        call->SetTranspSegModulation(resources->GetSubRoutesMod(call,auxIndex));
+        call->SetTranspSegModulation(resources->GetTranspSegmentsModulation(
+        call, auxIndex));
         this->modulation->SetModulationParam(call);
         
         if(!this->CheckOSNR(call))
@@ -85,7 +87,8 @@ void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
     for(unsigned int a = 0; a < numRoutes; a++){
         call->ClearTransponders();
         call->SetRoute(call->GetRoute(a));
-        call->SetModulation(resources->GetSubRoutesMod(call, 0).front());
+        call->SetModulation(resources->GetTranspSegmentsModulation(call, 0)
+        .front());
         this->modulation->SetModulationParam(call);
             
         if(!topology->CheckInsertFreeBVTs(call))
@@ -128,9 +131,9 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
 void ResourceDeviceAlloc::SetMinRegChoiceOrder(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
     std::vector<std::vector<unsigned>> vecNumReg = 
-    resources->GetNumAllRegPos(call);
+    resources->GetNumberRegSet(call);
     std::vector<std::vector<unsigned>> vecNumSlots = 
-    resources->GetNumSlotsAllRegPos(call);
+    resources->GetNumberSlotsSet(call);
     unsigned int posSize = 0;
     unsigned int auxRouteIndex = 0;
     unsigned int auxIndex = 0;
@@ -171,9 +174,9 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
 void ResourceDeviceAlloc::SetMinSlotsChoiceOrder(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
     std::vector<std::vector<unsigned>> vecNumReg = 
-    resources->GetNumAllRegPos(call);
+    resources->GetNumberRegSet(call);
     std::vector<std::vector<unsigned>> vecNumSlots = 
-    resources->GetNumSlotsAllRegPos(call);
+    resources->GetNumberSlotsSet(call);
     unsigned int posSize = 0;
     unsigned int auxRouteIndex = 0;
     unsigned int auxIndex = 0;
@@ -214,7 +217,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
 void ResourceDeviceAlloc::SetCostMetric(CallDevices* call, 
 std::vector<std::tuple<unsigned, unsigned> >& vec) {
         std::vector<std::vector<unsigned>> vecNumReg = 
-    resources->GetNumAllRegPos(call);
+    resources->GetNumberRegSet(call);
     std::vector<std::vector<double>> vecCosts(0);
     
     //Calculate the cost of each possible regeneration option.
@@ -284,12 +287,12 @@ unsigned routeIndex, unsigned subRouteIndex) {
     unsigned int totalNumReg = 0;
     unsigned int usedNumReg = 0;
     const double alpha = 0.5;
-    unsigned int numReg = resources->GetNumRegenerators(call, routeIndex,
+    unsigned int numReg = resources->GetNumberReg(call, routeIndex,
                                                         subRouteIndex);
-    unsigned int numSlots = resources->GetNumSlotsAllRegPos(call, routeIndex,
+    unsigned int numSlots = resources->GetNumberSlots(call, routeIndex,
                                                             subRouteIndex);
     std::vector<std::shared_ptr<Route>> vecRoutes = 
-    resources->GetVecSubRoute(call, routeIndex, subRouteIndex);
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
     std::shared_ptr<Route> auxRoute;
     NodeDevices* auxNode;
     
@@ -329,9 +332,9 @@ unsigned subRouteIndex) {
     double totalFreeReg;
     double numUsedReg;
     std::vector<std::shared_ptr<Route>> vecSubRoutes = 
-    resources->GetVecSubRoute(call, routeIndex, subRouteIndex);
-    std::vector<unsigned> vecNumSlots = resources->GetVecNumSlots(call, 
-    routeIndex, subRouteIndex);
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = 
+    resources->GetNumSlotsPerTranspSegments(call, routeIndex, subRouteIndex);
     
     for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
         totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();

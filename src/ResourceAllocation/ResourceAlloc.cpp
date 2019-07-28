@@ -211,7 +211,7 @@ void ResourceAlloc::OnlineModulationRSA(Call* call) {
 
 void ResourceAlloc::OfflineModulationRSA(Call* call) {
     
-    call->PushTrialModulations(resources->GetModulationFormat(call));
+    call->PushTrialModulations(resources->GetOfflineModulationFormats(call));
     this->RSA(call);
 }
 

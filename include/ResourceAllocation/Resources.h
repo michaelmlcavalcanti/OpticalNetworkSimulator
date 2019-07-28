@@ -21,11 +21,21 @@ class Call;
 #include "Modulation.h"
 #include "../GeneralClasses/Def.h"
 
+/**
+ * @brief Class that represents the control plane resources, such as routes (of
+ * all network node pairs), regeneration parameters, RSA order and others.
+ */
 class Resources {
 public:
-    
+    /**
+     * @brief Standard constructor of Resources class.
+     * @param resourceAlloc ResourceAlloc object that owns this Resources.
+     * @param modulation Modulation object.
+     */
     Resources(ResourceAlloc* resourceAlloc, Modulation* modulation);
-    
+    /**
+     * @@brief Standard destructor of Resources class. 
+     */
     virtual ~Resources();
     
     /**
@@ -106,37 +116,93 @@ public:
      */
     void SetRoutes(std::vector<std::vector<std::shared_ptr<Route>>> allRoutes);
     
-    
-    std::vector<TypeModulation> GetModulationFormat(Call* call);
-    
-    std::vector<unsigned int> GetNumRegenerators(Call* call);
-    
-    unsigned int GetNumRegenerators(Call* call, unsigned routeIndex, 
+    /**
+     * @brief Function to get the offline set of modulation formats for each
+     * possible route to allocate the call request.
+     * @param call Call request.
+     * @return Container off modulation formats.
+     */
+    std::vector<TypeModulation> GetOfflineModulationFormats(Call* call);
+    /**
+     * @brief Function to get the container with the number of regenerators
+     * used by each possible route and each regeneration combination of those
+     * routes of a call request.
+     * @param call Call request.
+     * @return Container with the number of regenerators.
+     */
+    std::vector<std::vector<unsigned>> GetNumberRegSet(Call* call);
+    /**
+     * @brief Function to get the container with the number of slots used by 
+     * each possible route and each regeneration combination of those routes
+     * of a call request.
+     * @param call Call request.
+     * @return Container with the number of slots.
+     */
+    std::vector<std::vector<unsigned>> GetNumberSlotsSet(Call* call);
+    /**
+     * @brief Function to get the number of regeneratos for a specified call
+     * request (With predefined bit rate and node pairs), a route index and a
+     * possible regeneration option index.
+     * @param call Call request.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration option index.
+     * @return Number of regenerators this option uses.
+     */
+    unsigned int GetNumberReg(Call* call, unsigned routeIndex, 
                                     unsigned subRouteIndex);
-    
-    std::vector<std::vector<unsigned>> GetNumAllRegPos(Call* call);
-    
-    std::vector<unsigned int> GetNumSlotsRegenerators(Call* call);
-    
-    std::vector<std::vector<unsigned>> GetNumSlotsAllRegPos(Call* call);
-    
-    unsigned int GetNumSlotsAllRegPos(Call* call, unsigned routeIndex, 
+    /**
+     * @brief Function to get the number of slots for a specified call request 
+     * (With predefined bit rate and node pairs), a route index and a
+     * possible regeneration option index.
+     * @param call Call request.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration option index.
+     * @return Number of slots this option uses.
+     */
+    unsigned int GetNumberSlots(Call* call, unsigned routeIndex, 
                                       unsigned subRouteIndex);
-    
-    std::vector<unsigned> GetVecNumSlots(Call* call, unsigned routeIndex,
-                                         unsigned subRouteIndex);
-    
-    std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
-                                                       unsigned int auxIndex);
-    
-    std::vector<std::shared_ptr<Route>> GetVecSubRoute(Call* call, 
+    /**
+     * @brief Function to get the number of slots per transparent segment for a 
+     * specified call request (With predefined bit rate and node pairs), a 
+     * route index and a possible regeneration option index.
+     * @param call Call request.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration option index.
+     * @return Container with the number of slots per transparent segment.
+     */
+    std::vector<unsigned> GetNumSlotsPerTranspSegments(Call* call, 
+    unsigned routeIndex, unsigned subRouteIndex);
+    /**
+     * @brief Function to get the routes of the transparent segments that 
+     * compose the total route for a specified call request (With predefined 
+     * route and node pair) for a specified regeneration combination.
+     * @param call Call request.
+     * @param subRouteIndex Regeneration option index.
+     * @return Container of routes of each transparent segment.
+     */
+    std::vector<std::shared_ptr<Route>> GetRoutesTranspSegments(Call* call, 
+    unsigned int subRouteIndex);
+    /**
+     * @brief Function to get the routes of the transparent segments that 
+     * compose the total route for a specified call request (With predefined 
+     * node pair) for a specified route and regeneration combination.
+     * @param call Call request.
+     * @param routeIndex Route index.
+     * @param subRouteIndex Regeneration option index.
+     * @return Container of routes of each transparent segment.
+     */
+    std::vector<std::shared_ptr<Route>> GetRoutesTranspSegments(Call* call, 
     unsigned int routeIndex, unsigned int subRouteIndex);
-    
-    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> 
-    GetVecSubRoute(Call* call);
-    
-    std::vector<TypeModulation> GetSubRoutesMod(Call* call,
-                                                unsigned int auxIndex);
+    /**
+     * @brief Function to get the modulation formats of each transparent segment
+     * for a call request (With predefined bit rate, node pair and route) for
+     * a specified regeneration combination.
+     * @param call Call request.
+     * @param subRouteIndex Regeneration option index.
+     * @return Container of modulation formats.
+     */
+    std::vector<TypeModulation> GetTranspSegmentsModulation(Call* call,
+                                                unsigned int subRouteIndex);
 private:
     /**
      * @brief Function to create the sets of possible transparent segments for
