@@ -69,7 +69,6 @@ void ResourceAlloc::Load() {
 }
 
 void ResourceAlloc::AdditionalSettings() {
-    this->CreateRsaOrder();
     
     if(this->IsOfflineRouting()){
         this->RoutingOffline();
@@ -91,6 +90,7 @@ void ResourceAlloc::AdditionalSettings() {
             this->resources->Save(); //Retirar depois (Markov)
         }
     }
+    this->CreateRsaOrder();
 }
 
 void ResourceAlloc::ResourAlloc(Call* call) {
@@ -237,6 +237,7 @@ void ResourceAlloc::RoutingOffline() {
             this->routing->YEN();
             break;
         case RoutingBSR:
+            this->CreateRsaOrder();
             this->routing->BSR();
             break;
         default:
