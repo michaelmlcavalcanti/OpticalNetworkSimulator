@@ -47,7 +47,8 @@ public:
      * @param resourAlloc Resource allocation object pointer.
      * @param slotBand Slot bandwidth size, used to calculate the parameters.
      */
-    Modulation(ResourceAlloc* resourAlloc, double slotBand);
+    Modulation(ResourceAlloc* resourAlloc, double slotBand, 
+               unsigned int numPolarization);
     /**
      * @brief Default destructor of a modulation object.
      */

@@ -194,6 +194,11 @@ public:
      * @param maxSectionLegnth Maximum section length.
      */
     void SetMaxSectionLegnth(double maxSectionLegnth);
+    
+    unsigned int GetNumberPolarizations() const;
+
+    void SetNumberPolarizations(unsigned int numberPolarizations);
+
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -254,6 +259,8 @@ private:
      * determine how many sections each link has.
      */
     double maxSectionLegnth;
+    
+    unsigned int numberPolarizations;
     
     /**
      * @brief Calculate the load step.

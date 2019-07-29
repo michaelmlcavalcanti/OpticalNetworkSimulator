@@ -8,6 +8,7 @@
 1000
 3
 70
+2
 
 1-Number of slots per fiber
 2-Number of cores per link
@@ -19,3 +20,4 @@
 8-Maximum  number of blocked requests
 9-Value for k-shortest routes
 10-Maximum section length(km)
+11-Number of polarizations

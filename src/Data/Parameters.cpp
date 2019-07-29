@@ -43,6 +43,8 @@ const Parameters* parameters) {
         ostream << "K: " << parameters->GetNumberRoutes() << std::endl;
     ostream << "Maximum section length (km): "
             << parameters->GetMaxSectionLegnth()/1E3 << std::endl;
+    ostream << "Number of polarizations: " 
+            << parameters->GetNumberPolarizations() << std::endl;
     
     return ostream;
 }
@@ -94,6 +96,9 @@ void Parameters::Load() {
     std::cout << "Insert the  maximum section length (km): ";
     std::cin >> auxDouble;
     this->SetMaxSectionLegnth(auxDouble);
+    std::cout << "Insert the  number of polarizations: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberPolarizations(auxUnsInt);
     
     this->SetLoadPointUniform();
     
@@ -126,6 +131,8 @@ void Parameters::LoadFile() {
     this->SetNumberRoutes(auxInt);
     auxIfstream >> auxDouble;
     this->SetMaxSectionLegnth(auxDouble);
+    auxIfstream >> auxInt;
+    this->SetNumberPolarizations(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -273,4 +280,13 @@ double Parameters::GetMaxSectionLegnth() const {
 void Parameters::SetMaxSectionLegnth(double maxSectionLegnth) {
     assert(maxSectionLegnth > 0.0);
     this->maxSectionLegnth = maxSectionLegnth*1E3;
+}
+
+unsigned int Parameters::GetNumberPolarizations() const {
+    return numberPolarizations;
+}
+
+void Parameters::SetNumberPolarizations(unsigned int numberPolarizations) {
+    assert(numberPolarizations > 0);
+    this->numberPolarizations = numberPolarizations;
 }

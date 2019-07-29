@@ -264,6 +264,26 @@ unsigned int subRouteIndex) {
                               .at(subRouteIndex);
 }
 
+std::vector<std::vector<std::vector<TypeModulation> > > 
+Resources::GetSetsTranpSegmentsModulation(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return subRoutesModulation.at(trIndex).at(nodeIndex);
+}
+
+std::vector<std::vector<std::vector<unsigned int> > > 
+Resources::GetSetsTranspSegmentsNumSlots(Call* call) {
+    unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
+                       GetBitRate());
+    unsigned nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return numSlotsPerSubRoute.at(trIndex).at(nodeIndex);
+}
+
 void Resources::CreateRoutesTranspSegments() {
     unsigned int sizeNumNodes = this->allRoutes.size();
     subRoutes.clear();
@@ -418,6 +438,8 @@ unsigned routeIndex, unsigned numSubRoutesIndex, unsigned subRouteIndex) {
             break;
         }
     }
+    
+    testCall.reset();
 }
 
 void Resources::RemoveInvalidTranspSegmentsSets() {

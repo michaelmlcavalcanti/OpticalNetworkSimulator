@@ -203,6 +203,12 @@ public:
      */
     std::vector<TypeModulation> GetTranspSegmentsModulation(Call* call,
                                                 unsigned int subRouteIndex);
+    
+    std::vector<std::vector<std::vector<TypeModulation>>> 
+    GetSetsTranpSegmentsModulation(Call* call);
+    
+    std::vector<std::vector<std::vector<unsigned  int>>>
+    GetSetsTranspSegmentsNumSlots(Call* call);
 private:
     /**
      * @brief Function to create the sets of possible transparent segments for

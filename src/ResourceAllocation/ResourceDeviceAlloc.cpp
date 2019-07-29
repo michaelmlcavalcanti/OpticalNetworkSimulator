@@ -177,6 +177,10 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     resources->GetNumberRegSet(call);
     std::vector<std::vector<unsigned>> vecNumSlots = 
     resources->GetNumberSlotsSet(call);
+    std::vector<std::vector<std::vector<TypeModulation>>> modulations =
+    resources->GetSetsTranpSegmentsModulation(call);
+    std::vector<std::vector<std::vector<unsigned int>>> numSlots =
+    resources->GetSetsTranspSegmentsNumSlots(call);
     unsigned int posSize = 0;
     unsigned int auxRouteIndex = 0;
     unsigned int auxIndex = 0;

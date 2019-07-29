@@ -54,8 +54,8 @@ void ResourceAlloc::Load() {
     this->CreateRouting();
     this->CreateSpecAllocation();
     
-    modulation = std::make_shared<Modulation>(this,simulType->GetParameters()
-                                              ->GetSlotBandwidth());
+    modulation = std::make_shared<Modulation>(this, simulType->GetParameters()
+    ->GetSlotBandwidth(), simulType->GetParameters()->GetNumberPolarizations());
     
     resources = std::make_shared<Resources>(this, modulation.get());
     
@@ -160,7 +160,6 @@ void ResourceAlloc::SpecRouting(Call* call) {
     unsigned int numRoutes = call->GetNumRoutes();
     const unsigned int topNumSlots = topology->GetNumSlots();
     std::vector<unsigned int> possibleSlots(0);
-    //Corrigir essa parte, que depende da modulação já escolhida.
     possibleSlots = this->specAlloc->SpecAllocation();
     unsigned int auxSlot;
     

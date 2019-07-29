@@ -28,9 +28,10 @@ Modulation::mapNumBitsModulation = boost::assign::map_list_of
     (QAM_32, 5)
     (QAM_64, 6);
 
-Modulation::Modulation(ResourceAlloc* resourAlloc, double slotBand)
-:resourAlloc(resourAlloc), slotBandwidth(slotBand), BER(1E-3), polarization(2),
-rollOff(0.0) {
+Modulation::Modulation(ResourceAlloc* resourAlloc, double slotBand,
+unsigned int numPolarization)
+:resourAlloc(resourAlloc), slotBandwidth(slotBand), BER(1E-3), 
+polarization(numPolarization), rollOff(0.0) {
     
 }
 
