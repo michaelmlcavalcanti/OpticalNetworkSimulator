@@ -56,7 +56,6 @@ public:
     /**
      * @brief Function that gets the possible first slots for spectral 
      * allocation based on the last possible first slot.
-     * @param lastSlot Last possible first slot.
      * @return Container of possible first slots.
      */
     std::vector<unsigned int> SpecAllocation();

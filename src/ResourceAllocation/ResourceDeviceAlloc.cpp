@@ -56,14 +56,14 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     
     for(unsigned int a = 0; a < routeSubIndexes.size(); a++){
         call->SetRoute(std::get<0>(routeSubIndexes.at(a)));
-        unsigned int auxIndex = std::get<1>(routeSubIndexes.at(a));
+        unsigned int regOptionIndex = std::get<1>(routeSubIndexes.at(a));
         call->CreateTranspSegments(resources->GetRoutesTranspSegments(call, 
-        auxIndex));
+        regOptionIndex));
         
         if(!topology->CheckInsertFreeRegenerators(call))
             continue;
         call->SetTranspSegModulation(resources->GetTranspSegmentsModulation(
-        call, auxIndex));
+        call, regOptionIndex));
         this->modulation->SetModulationParam(call);
         
         if(!this->CheckOSNR(call))
