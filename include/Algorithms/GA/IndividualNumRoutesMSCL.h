@@ -17,7 +17,7 @@
 class GA_NumInterRoutesMSCL;
 
 #include "Individual.h"
-#include "../../Calls/CallGenerator.h"
+#include "../../Calls/EventGenerator.h"
 
 /**
  * @brief Specific individual for GA_NumInterRoutesMSCL, 

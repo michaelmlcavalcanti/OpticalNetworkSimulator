@@ -11,7 +11,7 @@
  * Created on August 17, 2018, 10:53 PM
  */
 
-#include "../../include/Calls/CallGenerator.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/CallDevices.h"
@@ -22,26 +22,26 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Data/Options.h"
 
-std::default_random_engine CallGenerator::random_generator(0);
+std::default_random_engine EventGenerator::random_generator(0);
 
-bool CallGenerator::EventCompare::operator()(
+bool EventGenerator::EventCompare::operator()(
 const std::shared_ptr<Event> eventA,
 const std::shared_ptr<Event> eventB) const {
     
     return (eventA->GetEventTime() > eventB->GetEventTime());
 }
 
-CallGenerator::CallGenerator(SimulationType* simulType) 
+EventGenerator::EventGenerator(SimulationType* simulType) 
 :simulType(simulType), topology(nullptr), data(nullptr), traffic(nullptr),
 networkLoad(0.0), simulationTime(0.0) {
     
 }
 
-CallGenerator::~CallGenerator() {
+EventGenerator::~EventGenerator() {
     
 }
 
-void CallGenerator::Load() {
+void EventGenerator::Load() {
     this->topology = this->GetSimulType()->GetTopology();
     this->data = this->GetSimulType()->GetData();
     this->traffic = this->GetSimulType()->GetTraffic();
@@ -55,15 +55,15 @@ void CallGenerator::Load() {
     (1.0L / this->simulType->GetParameters()->GetMu());
 }
 
-void CallGenerator::Initialize() {
-    CallGenerator::random_generator = std::default_random_engine{0};
+void EventGenerator::Initialize() {
+    EventGenerator::random_generator = std::default_random_engine{0};
     this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
     (this->networkLoad);
     this->SetRealSimulationTime((TIME) std::clock() / CLOCKS_PER_SEC);
 }
 
-void CallGenerator::Finalize() {
+void EventGenerator::Finalize() {
     this->SetRealSimulationTime(((TIME) std::clock() / CLOCKS_PER_SEC) -
     this->GetRealSimulationTime());
     this->data->SetRealSimulTime(this->GetRealSimulationTime());
@@ -73,7 +73,7 @@ void CallGenerator::Finalize() {
     }
 }
 
-void CallGenerator::GenerateCall() {
+void EventGenerator::GenerateCall() {
     std::shared_ptr<Call> newCall;
     unsigned int auxIndexOrNode = uniformNodeDistribution(random_generator);
     unsigned int auxIndexDeNode;
@@ -99,25 +99,25 @@ void CallGenerator::GenerateCall() {
     this->PushEvent(newEvent);
 }
 
-double CallGenerator::GetNetworkLoad() const {
+double EventGenerator::GetNetworkLoad() const {
     return networkLoad;
 }
 
-void CallGenerator::SetNetworkLoad(const double networkLoad) {
+void EventGenerator::SetNetworkLoad(const double networkLoad) {
     assert(networkLoad >= 0.0);
     this->networkLoad = networkLoad;
 }
 
-TIME CallGenerator::GetSimulationTime() const {
+TIME EventGenerator::GetSimulationTime() const {
     return simulationTime;
 }
 
-void CallGenerator::SetSimulationTime(const TIME simulationTime) {
+void EventGenerator::SetSimulationTime(const TIME simulationTime) {
     assert(this->simulationTime <= simulationTime);
     this->simulationTime = simulationTime;
 }
 
-std::shared_ptr<Event> CallGenerator::GetNextEvent() {
+std::shared_ptr<Event> EventGenerator::GetNextEvent() {
     std::shared_ptr<Event> nextEvent = this->queueEvents.top();
     this->queueEvents.pop();
     this->SetSimulationTime(nextEvent->GetEventTime());
@@ -125,53 +125,36 @@ std::shared_ptr<Event> CallGenerator::GetNextEvent() {
     return nextEvent;
 }
 
-void CallGenerator::PushEvent(std::shared_ptr<Event> evt) {
+void EventGenerator::PushEvent(std::shared_ptr<Event> evt) {
     this->queueEvents.push(evt);
 }
 
-SimulationType* CallGenerator::GetSimulType() const {
+SimulationType* EventGenerator::GetSimulType() const {
     return simulType;
 }
 
-void CallGenerator::SetSimulType(SimulationType* const simulType) {
-    assert(simulType != nullptr);
-    this->simulType = simulType;
-}
-
-Topology* CallGenerator::GetTopology() const {
+Topology* EventGenerator::GetTopology() const {
     return topology;
 }
 
-void CallGenerator::SetTopology(Topology* topology) {
-    this->topology = topology;
-}
-
-Data* CallGenerator::GetData() const {
+Data* EventGenerator::GetData() const {
     return data;
 }
 
-void CallGenerator::SetData(Data* data) {
-    this->data = data;
-}
-
-ResourceAlloc* CallGenerator::GetResourceAlloc() const {
+ResourceAlloc* EventGenerator::GetResourceAlloc() const {
     return resourceAlloc;
 }
 
-void CallGenerator::SetResourceAlloc(ResourceAlloc* rsaAlgorithm) {
-    this->resourceAlloc = rsaAlgorithm;
-}
-
-TIME CallGenerator::GetRealSimulationTime() const {
+TIME EventGenerator::GetRealSimulationTime() const {
     return realSimulationTime;
 }
 
-void CallGenerator::SetRealSimulationTime(TIME realSimullationTime) {
+void EventGenerator::SetRealSimulationTime(TIME realSimullationTime) {
     assert(realSimullationTime > 0.0);
     this->realSimulationTime = realSimullationTime;
 }
 
-std::shared_ptr<Call> CallGenerator::CreateCall(unsigned orNodeIndex, 
+std::shared_ptr<Call> EventGenerator::CreateCall(unsigned orNodeIndex, 
 unsigned deNodeIndex, unsigned trafficIndex, TIME deactTime) {
     std::shared_ptr<Call> newCall;
     Node* orNode = this->topology->GetNode(orNodeIndex);

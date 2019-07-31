@@ -22,7 +22,7 @@ class GA_MO;
 #include <vector>
 #include <ostream>
 
-#include "../Calls/CallGenerator.h"
+#include "../Calls/EventGenerator.h"
 
 /**
  * @brief The Data class is responsible to storage the simulation data.

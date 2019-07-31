@@ -5,14 +5,14 @@
  */
 
 /* 
- * File:   MultiLoadSimulation.h
- * Author: bruno
+ * File:   SimulationMultiLoad.h
+ * Author: brunovacorreia
  *
- * Created on August 8, 2018, 7:18 PM
+ * Created on July 31, 2019, 2:13 PM
  */
 
-#ifndef MULTILOADSIMULATION_H
-#define MULTILOADSIMULATION_H
+#ifndef SIMULATIONMULTILOAD_H
+#define SIMULATIONMULTILOAD_H
 
 #include "SimulationType.h"
 
@@ -21,22 +21,17 @@
  * This type of simulation runs for a specified number 
  * of load points, simulating for each one.
  */
-class MultiLoadSimulation : public SimulationType {
+class SimulationMultiLoad : public SimulationType {
 public:
     /**
-     * @brief Standard constructor for a MultiLoadSimulation object.
-     * @param simulIndex index of this simulation.
+     * @brief Standard constructor for a multi-load simulation object.
+     * @param simulIndex Index of this simulation.
      */
-    MultiLoadSimulation(unsigned int simulIndex, TypeSimulation typeSimulation);
+    SimulationMultiLoad(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
-     * @brief Copy constructor for a MultiLoadSimulation object.
-     * @param orig original MultiLoadSimulation object.
+     * @brief Destructor of a multi-load simulation object.
      */
-    MultiLoadSimulation(const MultiLoadSimulation& orig);
-    /**
-     * @brief Destructor of a MultiLoadSimulation object.
-     */
-    virtual ~MultiLoadSimulation();
+    virtual ~SimulationMultiLoad();
     
     /**
      * @brief Runs a multiple load simulation with specified parameters.
@@ -70,5 +65,5 @@ public:
     void Help() override;
 };
 
-#endif /* MULTILOADSIMULATION_H */
+#endif /* SIMULATIONMULTILOAD_H */
 

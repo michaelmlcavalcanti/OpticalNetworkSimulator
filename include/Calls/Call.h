@@ -24,7 +24,7 @@ class Route;
 class Topology;
 
 #include "../Structure/Link.h"
-#include "CallGenerator.h"
+#include "EventGenerator.h"
 #include "../ResourceAllocation/Modulation.h"
 
 /**

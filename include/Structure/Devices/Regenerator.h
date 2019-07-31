@@ -15,7 +15,7 @@
 #define REGENERATOR_H
 
 #include "Device.h"
-#include "../../Calls/CallGenerator.h"
+#include "../../Calls/EventGenerator.h"
 
 /**
  * @brief Class that represents a virtualized electronic regenerator.

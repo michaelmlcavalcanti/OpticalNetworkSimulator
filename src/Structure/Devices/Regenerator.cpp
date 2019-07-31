@@ -15,7 +15,7 @@
 #include "../../../include/Structure/Topology.h"
 #include "../../../include/Structure/NodeDevices.h"
 #include "../../../include/SimulationType/SimulationType.h"
-#include "../../../include/Calls/CallGenerator.h"
+#include "../../../include/Calls/EventGenerator.h"
 
 const double Regenerator::trafficSupported = 100E9;
 

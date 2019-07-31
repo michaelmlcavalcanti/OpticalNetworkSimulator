@@ -12,11 +12,10 @@
  */
 
 #include "../include/Kernel.h"
-
 #include "../include/SimulationType/SimulationType.h"
-#include "../include/SimulationType/MultiLoadSimulation.h"
-#include "../include/SimulationType/GA_SingleObjective.h"
-#include "../include/SimulationType/IncNumRegSimulation.h"
+#include "../include/SimulationType/SimulationMultiLoad.h"
+#include "../include/SimulationType/SimulationGA.h"
+#include "../include/SimulationType/SimulationMultiNumDevices.h"
 
 const boost::unordered_map<TypeSimulation, std::string> 
 Kernel::mapSimulationType = boost::assign::map_list_of
@@ -50,6 +49,7 @@ void Kernel::Run() {
 void Kernel::CreateSimulations() {
     unsigned int auxIndex;
     TypeSimulation typeSimul;
+    std::shared_ptr<SimulationType> auxSimulation;
     
     std::cout << "Type the number of simulations to perform: ";
     std::cin >> this->numberSimulations;
@@ -65,19 +65,18 @@ void Kernel::CreateSimulations() {
         std::cout << "Enter the simulation type " << a << ":";
         std::cin >> auxIndex;
         typeSimul = (TypeSimulation) auxIndex;
-        std::shared_ptr<SimulationType> auxSimulation;
         
         switch(typeSimul){
             case MultiLoadSimulationType:
-                auxSimulation = std::make_shared<MultiLoadSimulation>(a, 
+                auxSimulation = std::make_shared<SimulationMultiLoad>(a, 
                                       typeSimul);
                 break;
             case IncNumRegType:
-                auxSimulation = std::make_shared<IncNumRegSimulation>(a, 
+                auxSimulation = std::make_shared<SimulationMultiNumDevices>(a, 
                                       typeSimul);
                 break;
             case GaSimulationType:
-                auxSimulation = std::make_shared<GA_SingleObjective>(a, 
+                auxSimulation = std::make_shared<SimulationGA>(a, 
                                       typeSimul);
                 break;
             default:

@@ -16,7 +16,7 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Options.h"
 #include "../../include/SimulationType/SimulationType.h"
-#include "../../include/SimulationType/GA_SingleObjective.h"
+#include "../../include/SimulationType/SimulationGA.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Algorithms/GA/GA.h"
@@ -285,7 +285,7 @@ void Data::SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec) {
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
 std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {
-    GA_SO* ga = dynamic_cast<GA_SO*>( dynamic_cast<GA_SingleObjective*>
+    GA_SO* ga = dynamic_cast<GA_SO*>( dynamic_cast<SimulationGA*>
                                       (this->simulType)->GetGA() );
     
     ga->printParameters(logOfstream);
@@ -331,7 +331,7 @@ void Data::SaveInitPopulation(GA_SO* ga, std::ostream& initPop) {
 
 void Data::SaveGaMoFiles(std::ostream& logOfstream, std::ostream& bestInds, 
 std::ostream& bestInd) {
-    GA_MO* ga = dynamic_cast<GA_MO*>( dynamic_cast<GA_SingleObjective*>
+    GA_MO* ga = dynamic_cast<GA_MO*>( dynamic_cast<SimulationGA*>
                                       (this->simulType)->GetGA() );
     
     ga->printParameters(logOfstream);

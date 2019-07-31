@@ -5,38 +5,36 @@
  */
 
 /* 
- * File:   GA_SingleObjective.h
- * Author: BrunoVinicius
+ * File:   SimulationGA.h
+ * Author: brunovacorreia
  *
- * Created on February 11, 2019, 10:53 PM
+ * Created on July 31, 2019, 1:32 PM
  */
 
-#ifndef GA_SINGLEOBJECTIVE_H
-#define GA_SINGLEOBJECTIVE_H
+#ifndef SIMULATIONGA_H
+#define SIMULATIONGA_H
 
 #include "SimulationType.h"
 
 class GA;
-
-#include <iostream>
 
 /**
  * @brief Derived class from SimulationType.
  * This type of simulation runs a genetic algorithm, single or multiple 
  * objectives, for a specified load point.
  */
-class GA_SingleObjective : public SimulationType {
+class SimulationGA : public SimulationType {
 public:
     /**
-     * @brief Standard constructor for a GA_SingleObjective object.
+     * @brief Standard constructor for a GA simulation object.
      * @param simulIndex Index of this simulation.
      */
-    GA_SingleObjective(unsigned int simulIndex, TypeSimulation typeSimulation);
+    SimulationGA(unsigned int simulIndex, TypeSimulation typeSimulation);
     /**
-     * @brief Destructor of a GA_SingleObjective object.
+     * @brief Destructor of a GA simulation object.
      */
-    virtual ~GA_SingleObjective();
-    
+    virtual ~SimulationGA();
+        
     /**
      * @brief Runs the genetic algorithm simulation for a fixed load point.
      */
@@ -88,5 +86,5 @@ private:
     std::shared_ptr<GA> gaAlgorithm;
 };
 
-#endif /* GA_SINGLEOBJECTIVE_H */
+#endif /* SIMULATIONGA_H */
 

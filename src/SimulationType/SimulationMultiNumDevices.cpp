@@ -5,31 +5,31 @@
  */
 
 /* 
- * File:   IncNumRegSimulation.cpp
- * Author: BrunoVinicius
+ * File:   SimulationMultiNumDevices.cpp
+ * Author: brunovacorreia
  * 
- * Created on April 30, 2019, 4:47 PM
+ * Created on July 31, 2019, 2:37 PM
  */
 
-#include "../../include/SimulationType/IncNumRegSimulation.h"
-#include "../../include/Structure/Topology.h"
-#include "../../include/Calls/CallGenerator.h"
+#include "../../include/SimulationType/SimulationMultiNumDevices.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Devices/Device.h"
 
-IncNumRegSimulation::IncNumRegSimulation(unsigned int simulIndex, 
+SimulationMultiNumDevices::SimulationMultiNumDevices(unsigned int simulIndex, 
 TypeSimulation typeSimulation)
 :SimulationType(simulIndex, typeSimulation), vecNumReg(0) {
 
 }
 
-IncNumRegSimulation::~IncNumRegSimulation() {
+SimulationMultiNumDevices::~SimulationMultiNumDevices() {
 
 }
 
-void IncNumRegSimulation::Run() {
+void SimulationMultiNumDevices::Run() {
     unsigned int numNodes = this->GetTopology()->GetNumNodes();
     unsigned int minNumReg = 0 * numNodes;
     unsigned int maxNumReg = 1000 * numNodes;
@@ -55,36 +55,36 @@ void IncNumRegSimulation::Run() {
     }
 }
 
-void IncNumRegSimulation::RunBase() {
+void SimulationMultiNumDevices::RunBase() {
     SimulationType::Run();
 }
 
-void IncNumRegSimulation::Load() {
+void SimulationMultiNumDevices::Load() {
     SimulationType::Load();
 }
 
-void IncNumRegSimulation::LoadFile() {
+void SimulationMultiNumDevices::LoadFile() {
     SimulationType::LoadFile();
 }
 
-void IncNumRegSimulation::Print() {
+void SimulationMultiNumDevices::Print() {
     this->Help();
     SimulationType::Print();
 }
 
-void IncNumRegSimulation::Save() {
+void SimulationMultiNumDevices::Save() {
     SimulationType::Save();
     this->GetData()->SaveBP(vecNumReg);
 }
 
-void IncNumRegSimulation::Help() {
+void SimulationMultiNumDevices::Help() {
     std::cout << "INCREASE NUMBER OF REGENERATORS SIMULATION" << std::endl
               << "This type of simulation increase the total number of "
               << "regenerators in the network and analyzes its performance. " 
               << std::endl << std::endl;
 }
 
-void IncNumRegSimulation::SetNumberOfDevices(unsigned int numDevices) {
+void SimulationMultiNumDevices::SetNumberOfDevices(unsigned int numDevices) {
     //Switch for variate the type of device.
     DeviceType type = DeviceRegenerator;
     vecNumReg.push_back(numDevices);

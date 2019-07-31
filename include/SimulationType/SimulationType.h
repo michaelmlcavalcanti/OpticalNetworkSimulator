@@ -23,7 +23,7 @@ class Data;
 class Topology;
 class InputOutput;
 class Traffic;
-class CallGenerator;
+class EventGenerator;
 class ResourceAlloc;
 
 #include "../Kernel.h"
@@ -166,13 +166,13 @@ public:
      * used in this simulation.
      * @return pointer to a CallGenerator object.
      */
-    CallGenerator* GetCallGenerator() const;
+    EventGenerator* GetCallGenerator() const;
     /**
      * @brief Sets a pointer to the CallGenerator object 
      * in this simulation (share ownership).
      * @param traffic pointer to a CallGenerator object.
      */
-    void SetCallGenerator(std::shared_ptr<CallGenerator> callGenerator);
+    void SetCallGenerator(std::shared_ptr<EventGenerator> callGenerator);
     /**
      * @brief Returns a pointer to a ResourceAlloc object
      * used in this simulation.
@@ -262,7 +262,7 @@ private:
     /**
      * @brief pointer to a CallGenerator object.
      */
-    std::shared_ptr<CallGenerator> callGenerator;
+    std::shared_ptr<EventGenerator> callGenerator;
     /**
      * @brief Pointer to the ResourceAlloc object of this simulation.
      */

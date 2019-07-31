@@ -21,7 +21,7 @@ typedef bool CarrierState;
 #define free false
 #define occupied true
 
-typedef bool ResAllocOrder; //Ainda falta usar
+typedef bool ResAllocOrder;
 #define r_sa false
 #define sa_r true
 

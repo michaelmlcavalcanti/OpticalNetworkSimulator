@@ -41,11 +41,11 @@ void GA_RsaOrder::InitializePopulation() {
         
         if(a == 0){
             this->selectedPopulation.push_back(std::make_shared
-                                               <IndividualBool>(this, false));
+                                               <IndividualBool>(this, r_sa));
         }
         else if(a == 1){
             this->selectedPopulation.push_back(std::make_shared
-                                               <IndividualBool>(this, true));
+                                               <IndividualBool>(this, sa_r));
         }
         else{
             this->selectedPopulation.push_back(std::make_shared

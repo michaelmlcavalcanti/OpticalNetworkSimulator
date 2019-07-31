@@ -33,7 +33,7 @@ class ResourceAlloc;
 /**
  * @brief Class responsible for events generation.
  */
-class CallGenerator {
+class EventGenerator {
 private:
     /**
      * @brief Structure to compare the events time.
@@ -55,11 +55,11 @@ public:
      * @param simulType SimulationType object that owns 
      * this data.
      */
-    CallGenerator(SimulationType* simulType);
+    EventGenerator(SimulationType* simulType);
     /**
      * @brief Virtual destructor of a CallGenerator object.
      */
-    virtual ~CallGenerator();
+    virtual ~EventGenerator();
     /**
      * @brief Load the parameters of the generator. Pointers of topology, data, 
      * traffic and resource allocation. Define the range of the node, traffic 
@@ -121,40 +121,20 @@ public:
      */
     SimulationType* GetSimulType() const;
     /**
-     * @brief Set the simulation that owns this object.
-     * @param simulType Pointer to a SimulationType object.
-     */
-    void SetSimulType(SimulationType* const simulType);
-    /**
      * @brief Get the topology used by this object.
      * @return Topology pointer.
      */
     Topology* GetTopology() const;
-    /**
-     * @brief Set the topology used by this object.
-     * @param topology Topology pointer.
-     */
-    void SetTopology(Topology* topology);
     /**
      * @brief Get the data used by this object.
      * @return Data pointer.
      */
     Data* GetData() const;
     /**
-     * @brief Set the data used by this object.
-     * @param data Data pointer.
-     */
-    void SetData(Data* data);
-    /**
      * @brief Get the resource allocation used by this object.
      * @return ResourceAlloc pointer.
      */
     ResourceAlloc* GetResourceAlloc() const;
-    /**
-     * @brief Set the resource allocation used by this object.
-     * @param rsaAlgorithm ResourceAlloc pointer.
-     */
-    void SetResourceAlloc(ResourceAlloc* rsaAlgorithm);
     /**
      * @brief Function to get the computer simulation time.
      * @return Computer simulation time.

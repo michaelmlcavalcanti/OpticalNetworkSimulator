@@ -23,7 +23,7 @@ IndividualBool::IndividualBool(GA_RsaOrder* ga)
     }
 }
 
-IndividualBool::IndividualBool(GA_RsaOrder* ga, bool gene)
+IndividualBool::IndividualBool(GA_RsaOrder* ga, ResAllocOrder gene)
 :Individual(ga), ga(ga), genes(0), blockProb(0.0) {
     const unsigned int numNodes = this->ga->GetNumNodes();
     
@@ -49,16 +49,17 @@ IndividualBool::~IndividualBool() {
     
 }
 
-bool IndividualBool::GetGene(unsigned int orNode, unsigned int deNode) const {
+ResAllocOrder IndividualBool::GetGene(unsigned int orNode, 
+unsigned int deNode) const {
     return this->genes.at(orNode*this->ga->GetNumNodes()+deNode);
 }
 
-std::vector<bool> IndividualBool::GetGenes() const {
+std::vector<ResAllocOrder> IndividualBool::GetGenes() const {
     return genes;
 }
 
 void IndividualBool::SetGene(unsigned int orNode, unsigned int deNode, 
-                             bool value) {
+                             ResAllocOrder value) {
     this->genes.at(orNode*this->ga->GetNumNodes()+deNode) = value;
 }
 

@@ -20,7 +20,7 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
-#include "../../include/Calls/CallGenerator.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/Calls/Event.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
@@ -34,7 +34,7 @@ data(boost::make_unique<Data>(this)),
 topology(std::make_shared<Topology>(this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
-callGenerator(std::make_shared<CallGenerator>(this)),
+callGenerator(std::make_shared<EventGenerator>(this)),
 resourceAlloc(nullptr) {
     
 }
@@ -151,11 +151,11 @@ traffic) {
     this->traffic = traffic;
 }
 
-CallGenerator* SimulationType::GetCallGenerator() const {
+EventGenerator* SimulationType::GetCallGenerator() const {
     return callGenerator.get();
 }
 
-void SimulationType::SetCallGenerator(std::shared_ptr<CallGenerator> 
+void SimulationType::SetCallGenerator(std::shared_ptr<EventGenerator> 
 callGenerator) {
     this->callGenerator = callGenerator;
 }

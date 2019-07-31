@@ -5,32 +5,31 @@
  */
 
 /* 
- * File:   MultiLoadSimulation.cpp
- * Author: bruno
+ * File:   SimulationMultiLoad.cpp
+ * Author: brunovacorreia
  * 
- * Created on August 8, 2018, 7:18 PM
+ * Created on July 31, 2019, 2:13 PM
  */
 
-#include "../../include/SimulationType/MultiLoadSimulation.h"
-
+#include "../../include/SimulationType/SimulationMultiLoad.h"
 #include "../../include/Data/Parameters.h"
-#include "../../include/Calls/CallGenerator.h"
-#include "../../include/Calls/Traffic.h"
-#include "../../include/Structure/Topology.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/Calls/EventGenerator.h"
+#include "../../include/Calls/Traffic.h"
+#include "../../include/Structure/Topology.h"
 
-MultiLoadSimulation::MultiLoadSimulation(unsigned int simulIndex, 
+SimulationMultiLoad::SimulationMultiLoad(unsigned int simulIndex, 
 TypeSimulation typeSimulation)
-:SimulationType(simulIndex, typeSimulation){
-    
+:SimulationType(simulIndex, typeSimulation) {
+
 }
 
-MultiLoadSimulation::~MultiLoadSimulation() {
-    
+SimulationMultiLoad::~SimulationMultiLoad() {
+
 }
 
-void MultiLoadSimulation::Run() {
+void SimulationMultiLoad::Run() {
     unsigned int numLoadPoints = this->GetParameters()->
     GetNumberLoadPoints();
     
@@ -48,30 +47,30 @@ void MultiLoadSimulation::Run() {
     this->GetInputOutput()->PrintProgressBar(numLoadPoints, numLoadPoints);
 }
 
-void MultiLoadSimulation::RunBase() {
+void SimulationMultiLoad::RunBase() {
     SimulationType::Run();
 }
 
-void MultiLoadSimulation::Load() {
+void SimulationMultiLoad::Load() {
     SimulationType::Load();
 }
 
-void MultiLoadSimulation::LoadFile() {
+void SimulationMultiLoad::LoadFile() {
     SimulationType::LoadFile();
 }
 
-void MultiLoadSimulation::Print() {
+void SimulationMultiLoad::Print() {
     this->Help();
     SimulationType::Print();
 }
 
-void MultiLoadSimulation::Save() {
+void SimulationMultiLoad::Save() {
     SimulationType::Save();
     this->GetData()->SaveMultiloadLog();
     this->GetData()->SaveBP();
 }
 
-void MultiLoadSimulation::Help() {
+void SimulationMultiLoad::Help() {
     std::cout << "MULTIPLE LOADS SIMULATION" << std::endl
               << "This type of simulation varies the network load "
               << "and analyzes the network performance. "

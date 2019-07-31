@@ -15,12 +15,12 @@
 #define INDIVIDUALBOOL_H
 
 #include <vector>
-#include <memory>
 #include <iostream>
 
 class GA_RsaOrder;
 
 #include "Individual.h"
+#include "../../GeneralClasses/Def.h"
 
 /**
  * @brief Specific individual for RSA order, composed by boolean genes.
@@ -38,7 +38,7 @@ public:
      * @param ga GA_RsaOrder pointer that owns this individual.
      * @param gene Gene value for the individual.
      */
-    IndividualBool(GA_RsaOrder* ga, bool gene);
+    IndividualBool(GA_RsaOrder* ga, ResAllocOrder gene);
     /**
      * @brief Copy constructor for this individual.
      * @param orig Original individual to be copied.
@@ -59,13 +59,13 @@ public:
      * @param deNode Destination node, used to find the container position.
      * @return Gene, in boolean value, of this individual.
      */
-    bool GetGene(unsigned int orNode, unsigned int deNode) const;
+    ResAllocOrder GetGene(unsigned int orNode, unsigned int deNode) const;
     /**
      * @brief Gets the container of boolean values, genetical representation 
      * of this individual.
      * @return Genes of this individual.
      */
-    std::vector<bool> GetGenes() const;
+    std::vector<ResAllocOrder> GetGenes() const;
     /**
      * @brief Sets the gene of  this individual, for a specified node pair, 
      * used to find the container position.
@@ -73,7 +73,7 @@ public:
      * @param deNode Destination node, used to find the container position.
      * @param value Gene, in boolean value, of this individual.
      */
-    void SetGene(unsigned int orNode, unsigned int deNode, bool value);
+    void SetGene(unsigned int orNode, unsigned int deNode, ResAllocOrder value);
     /**
      * @brief Gets the blocking probability of this individual.
      * @return Blocking probability.
@@ -102,7 +102,7 @@ private:
     /**
      * @brief Genes of this individual, with boolean values.
      */
-    std::vector<bool> genes;
+    std::vector<ResAllocOrder> genes;
     /**
      * @brief Blocking probability of this individual.
      */

@@ -5,35 +5,38 @@
  */
 
 /* 
- * File:   IncNumRegSimulation.h
- * Author: BrunoVinicius
+ * File:   SimulationMultiNumDevices.h
+ * Author: brunovacorreia
  *
- * Created on April 30, 2019, 4:47 PM
+ * Created on July 31, 2019, 2:37 PM
  */
 
-#ifndef INCNUMREGSIMULATION_H
-#define INCNUMREGSIMULATION_H
+#ifndef SIMULATIONMULTINUMDEVICES_H
+#define SIMULATIONMULTINUMDEVICES_H
 
 #include "SimulationType.h"
 #include "../Structure/Devices/Device.h"
 
 /**
- * @brief Type of simulation that increase the number of regenerators in the
+ * @brief Type of simulation that increase the number of devices in the
  * network and evaluate the performance.
  */
-class IncNumRegSimulation : public SimulationType {
+class SimulationMultiNumDevices : public SimulationType {
 public:
     /**
-     * @brief Default constructor of the IncNumRegSimulation object.
+     * @brief Default constructor of the multi number of devices simulation
+     * object.
      * @param simulIndex Index of this simulation.
      * @param typeSimulation Type of this simulation, used to create the base 
-     * class. For this class, the type is IncNumRegType.
+     * class.
      */
-    IncNumRegSimulation(unsigned int simulIndex, TypeSimulation typeSimulation);
+    SimulationMultiNumDevices(unsigned int simulIndex, 
+    TypeSimulation typeSimulation);
     /**
-     * @brief Default destructor of the IncNumRegSimulation object.
+     * @brief Default destructor of the multi number of devices simulation
+     * object.
      */
-    virtual ~IncNumRegSimulation();
+    virtual ~SimulationMultiNumDevices();
     
     /**
      * @brief Function to run the simulation for a variable number of devices
@@ -80,5 +83,5 @@ private:
     std::vector<unsigned> vecNumReg;
 };
 
-#endif /* INCNUMREGSIMULATION_H */
+#endif /* SIMULATIONMULTINUMDEVICES_H */
 

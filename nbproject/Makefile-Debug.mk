@@ -48,8 +48,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallDevices.o \
-	${OBJECTDIR}/src/Calls/CallGenerator.o \
 	${OBJECTDIR}/src/Calls/Event.o \
+	${OBJECTDIR}/src/Calls/EventGenerator.o \
 	${OBJECTDIR}/src/Calls/Traffic.o \
 	${OBJECTDIR}/src/Data/Data.o \
 	${OBJECTDIR}/src/Data/InputOutput.o \
@@ -67,9 +67,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/Routing.o \
 	${OBJECTDIR}/src/ResourceAllocation/SA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Signal.o \
-	${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o \
-	${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o \
-	${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o \
+	${OBJECTDIR}/src/SimulationType/SimulationGA.o \
+	${OBJECTDIR}/src/SimulationType/SimulationMultiLoad.o \
+	${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
 	${OBJECTDIR}/src/Structure/Devices/BVT.o \
@@ -172,15 +172,15 @@ ${OBJECTDIR}/src/Calls/CallDevices.o: src/Calls/CallDevices.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/CallDevices.o src/Calls/CallDevices.cpp
 
-${OBJECTDIR}/src/Calls/CallGenerator.o: src/Calls/CallGenerator.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Calls
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/CallGenerator.o src/Calls/CallGenerator.cpp
-
 ${OBJECTDIR}/src/Calls/Event.o: src/Calls/Event.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/Event.o src/Calls/Event.cpp
+
+${OBJECTDIR}/src/Calls/EventGenerator.o: src/Calls/EventGenerator.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Calls
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Calls/EventGenerator.o src/Calls/EventGenerator.cpp
 
 ${OBJECTDIR}/src/Calls/Traffic.o: src/Calls/Traffic.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -267,20 +267,20 @@ ${OBJECTDIR}/src/ResourceAllocation/Signal.o: src/ResourceAllocation/Signal.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Signal.o src/ResourceAllocation/Signal.cpp
 
-${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o: src/SimulationType/GA_SingleObjective.cpp
+${OBJECTDIR}/src/SimulationType/SimulationGA.o: src/SimulationType/SimulationGA.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/GA_SingleObjective.o src/SimulationType/GA_SingleObjective.cpp
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationGA.o src/SimulationType/SimulationGA.cpp
 
-${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o: src/SimulationType/IncNumRegSimulation.cpp
+${OBJECTDIR}/src/SimulationType/SimulationMultiLoad.o: src/SimulationType/SimulationMultiLoad.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/IncNumRegSimulation.o src/SimulationType/IncNumRegSimulation.cpp
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationMultiLoad.o src/SimulationType/SimulationMultiLoad.cpp
 
-${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o: src/SimulationType/MultiLoadSimulation.cpp
+${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o: src/SimulationType/SimulationMultiNumDevices.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/MultiLoadSimulation.o src/SimulationType/MultiLoadSimulation.cpp
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o src/SimulationType/SimulationMultiNumDevices.cpp
 
 ${OBJECTDIR}/src/SimulationType/SimulationType.o: src/SimulationType/SimulationType.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

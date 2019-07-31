@@ -5,33 +5,33 @@
  */
 
 /* 
- * File:   GA_SingleObjective.cpp
- * Author: BrunoVinicius
+ * File:   SimulationGA.cpp
+ * Author: brunovacorreia
  * 
- * Created on February 11, 2019, 10:53 PM
+ * Created on July 31, 2019, 1:32 PM
  */
 
-#include "../../include/SimulationType/GA_SingleObjective.h"
+#include "../../include/SimulationType/SimulationGA.h"
 #include "../../include/Algorithms/GA/GA_RsaOrder.h"
 #include "../../include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
-#include "../../include/Calls/CallGenerator.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Data/Options.h"
 
-GA_SingleObjective::GA_SingleObjective(unsigned int simulIndex, 
-TypeSimulation typeSimulation) 
+SimulationGA::SimulationGA(unsigned int simulIndex, 
+TypeSimulation typeSimulation)
 :SimulationType(simulIndex, typeSimulation) {
-    
+
 }
 
-GA_SingleObjective::~GA_SingleObjective() {
-    
+SimulationGA::~SimulationGA() {
+
 }
 
-void GA_SingleObjective::Run() {
+void SimulationGA::Run() {
     this->GetCallGenerator()->SetNetworkLoad(this->gaAlgorithm->GetLoadPoint());
     unsigned int numGenerations = this->gaAlgorithm->GetNumberGenerations();
     
@@ -54,39 +54,39 @@ void GA_SingleObjective::Run() {
     }
 }
 
-void GA_SingleObjective::RunBase() {
+void SimulationGA::RunBase() {
     SimulationType::Run();
 }
 
-void GA_SingleObjective::Load() {
+void SimulationGA::Load() {
     SimulationType::Load();
     this->CreateGA();
     this->gaAlgorithm->LoadFile();
 }
 
-void GA_SingleObjective::LoadFile() {
+void SimulationGA::LoadFile() {
     SimulationType::LoadFile();
     this->CreateGA();
     this->gaAlgorithm->LoadFile();
 }
 
-void GA_SingleObjective::AdditionalSettings() {
+void SimulationGA::AdditionalSettings() {
     SimulationType::AdditionalSettings();
     this->gaAlgorithm->Initialize();
 }
 
-void GA_SingleObjective::Print() {
+void SimulationGA::Print() {
     this->Help();
     SimulationType::Print();
     this->gaAlgorithm->printParameters(std::cout);
 }
 
-void GA_SingleObjective::Save() {
+void SimulationGA::Save() {
     SimulationType::Save();
     this->GetData()->SaveGaFiles();
 }
 
-void GA_SingleObjective::Help() {
+void SimulationGA::Help() {
     std::cout << "GA SIMULATION" << std::endl
               << "This type of simulation applies the genetic algorithm." 
               << std::endl;
@@ -94,11 +94,11 @@ void GA_SingleObjective::Help() {
               << std::endl << std::endl;
 }
 
-GA* GA_SingleObjective::GetGA() const {
+GA* SimulationGA::GetGA() const {
     return this->gaAlgorithm.get();
 }
 
-void GA_SingleObjective::CreateGA() {
+void SimulationGA::CreateGA() {
     assert(this->GetOptions()->GetGaOption() != GaOptionDisabled);
     
     switch(this->GetOptions()->GetGaOption()){

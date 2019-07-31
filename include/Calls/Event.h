@@ -14,7 +14,7 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-class CallGenerator;
+class EventGenerator;
 class Call;
 
 #include <memory>
@@ -48,7 +48,7 @@ public:
      * @param call Call request of this event.
      * @param time Simulation time for event occurrence.
      */
-    Event(CallGenerator* generator, std::shared_ptr<Call> call, 
+    Event(EventGenerator* generator, std::shared_ptr<Call> call, 
           TIME time);
     /**
      * @brief Standard destructor of an simulation event.
@@ -110,7 +110,7 @@ private:
     /**
      * @brief Pointer to a CallGenerator object that owns this object.
      */
-    CallGenerator* parGenerator;
+    EventGenerator* parGenerator;
     /**
      * @brief Type of event.
      * The event can be a call request or a call end.
