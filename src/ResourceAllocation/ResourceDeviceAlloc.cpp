@@ -115,11 +115,14 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         case RegAssMinReg:
             this->SetMinRegChoiceOrder(call, vec);
             break;
-        case RegAssMaxReg:
+        case RegAssMinSlots:
             this->SetMinSlotsChoiceOrder(call, vec);
             break;
-        case DRE2BR:
-        case SCRA:
+        case RegAssMaxReg:
+            this->SetMaxRegChoiceOrder(call, vec);
+            break;
+        case RegAssDRE2BR:
+        case RegAssSCRA:
             this->SetCostMetric(call, vec);
             break;
         default:
@@ -177,10 +180,6 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     resources->GetNumberRegSet(call);
     std::vector<std::vector<unsigned>> vecNumSlots = 
     resources->GetNumberSlotsSet(call);
-    std::vector<std::vector<std::vector<TypeModulation>>> modulations =
-    resources->GetSetsTranpSegmentsModulation(call);
-    std::vector<std::vector<std::vector<unsigned int>>> numSlots =
-    resources->GetSetsTranspSegmentsNumSlots(call);
     unsigned int posSize = 0;
     unsigned int auxRouteIndex = 0;
     unsigned int auxIndex = 0;
@@ -206,6 +205,49 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
                     else{
                         auxNumSlots = vecNumSlots.at(a).at(b);
                         auxNumReg = vecNumReg.at(a).at(b);
+                        auxRouteIndex = a;
+                        auxIndex = b;
+                    }
+                }
+            }
+        }
+        vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+        vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+    }
+}
+
+void ResourceDeviceAlloc::SetMaxRegChoiceOrder(CallDevices* call, 
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<unsigned>> vecNumReg = 
+    resources->GetNumberRegSet(call);
+    std::vector<std::vector<unsigned>> vecNumSlots = 
+    resources->GetNumberSlotsSet(call);
+    unsigned int posSize = 0;
+    unsigned int auxRouteIndex = 0;
+    unsigned int auxIndex = 0;
+    unsigned int auxRegInt;
+    unsigned int auxSlotsInt;
+    
+    for(unsigned int a = 0; a < vecNumReg.size(); a++){
+        posSize += vecNumReg.at(a).size();
+    }
+    
+    while(vec.size() < posSize){
+        auxRegInt = Def::Max_UnInt;
+        auxSlotsInt = Def::Max_UnInt;
+        
+        for(unsigned int a = 0; a < vecNumReg.size(); a++){
+            for(unsigned int b = 0; b < vecNumReg.at(a).size(); b++){
+                
+                if(auxRegInt <= vecNumReg.at(a).at(b)){
+                    if(auxRegInt == vecNumReg.at(a).at(b) && 
+                    auxSlotsInt <= vecNumSlots.at(a).at(b)){
+                        continue;
+                    }
+                    else{
+                        auxRegInt = vecNumReg.at(a).at(b);
+                        auxSlotsInt = vecNumSlots.at(a).at(b);
                         auxRouteIndex = a;
                         auxIndex = b;
                     }
@@ -268,10 +310,10 @@ unsigned routeIndex, unsigned subRouteIndex) {
     double tupleCost = 0.0;
     
     switch(options->GetRegAssOption()){
-        case DRE2BR:
+        case RegAssDRE2BR:
             tupleCost = this->DRE2BR_Cost(call, routeIndex, subRouteIndex);
             break;
-        case SCRA:
+        case RegAssSCRA:
             tupleCost = this->SCRA_Cost(call, routeIndex, subRouteIndex);
             break;
         default:

@@ -39,9 +39,9 @@
     3 - MSCL
 4-Link cost type
     0 - Invalid
-    1 - MinHops
-    2 - MinLegnth
-    3 - MinLength Normalized
+    1 - Hops
+    2 - Length
+    3 - Length Normalized
 5-Traffic option
     0 - Invalid
     1 - 100-200-400
@@ -87,9 +87,10 @@
 15-Regenerator Assignment Option
     0 - Invalid
     1 - Minimum regeneration
-    2 - Maximum regeneration
-    3 - DRE2BR
-    4 - SCRA
+    2 - Minimum slots
+    3 - Maximum regeneration
+    4 - DRE2BR
+    5 - SCRA
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests

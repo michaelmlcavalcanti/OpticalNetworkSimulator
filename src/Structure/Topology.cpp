@@ -256,21 +256,21 @@ void Topology::SetAllLinksWorking() {
 void Topology::SetLinksIniCost() {
     
     switch(options->GetLinkCostType()){
-        case MinHops:
+        case LinkCostHop:
             for(auto it : vecLinks){
                 if(it == nullptr)
                     continue;
                 it->SetCost(1.0);
             }
             break;
-        case MinLength:
+        case LinkCostLength:
             for(auto it : vecLinks){
                 if(it == nullptr)
                     continue;
                 it->SetCost(it->GetLength());
             }
             break;
-        case MinLengthNormalized:
+        case LinkCostNormLength:
             for(auto it : vecLinks){
                 if(it == nullptr)
                     continue;

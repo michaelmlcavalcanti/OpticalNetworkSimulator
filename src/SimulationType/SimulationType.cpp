@@ -209,9 +209,10 @@ void SimulationType::CreateLoadResourceAlloc() {
 
 void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
+    std::shared_ptr<Event> evt;
     
     while(this->numberRequests < numReqMax){
-        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
+        evt = this->callGenerator->GetNextEvent();
         
         evt->ImplementEvent();
     }
@@ -219,9 +220,10 @@ void SimulationType::SimulateNumTotalReq() {
 
 void SimulationType::SimulateNumBlocReq() {
     double numBlocReqMax = this->parameters->GetNumberBloqMax();
+    std::shared_ptr<Event> evt;
     
     while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
-        std::shared_ptr<Event> evt = this->callGenerator->GetNextEvent();
+        evt = this->callGenerator->GetNextEvent();
         
         evt->ImplementEvent();
     }

@@ -48,9 +48,9 @@ Options::mapSpecAlgOptions = boost::assign::map_list_of
 const boost::unordered_map<LinkCostType, std::string>
 Options::mapLinkCostType = boost::assign::map_list_of
     (Invalid, "Invalid cost type")
-    (MinHops, "Minimum hops")
-    (MinLength, "Minimum length")
-    (MinLengthNormalized, "Minimum length normalized");
+    (LinkCostHop, "Hops")
+    (LinkCostLength, "Length")
+    (LinkCostNormLength, "Normalized length");
 
 const boost::unordered_map<TrafficOption, std::string>
 Options::mapTrafficOptions = boost::assign::map_list_of
@@ -118,9 +118,12 @@ const boost::unordered_map<RegAssignmentOption, std::string>
 Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssInvalid, "Invalid")
     (RegAssMinReg, "Minimum regeneration")
+    (RegAssMinSlots, "Minimum slots")
     (RegAssMaxReg, "Maximum regeneration")
-    (DRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration (DRE2BR)")
-    (SCRA, "Shortest-cost regenerator assignment (SCRA)");
+    (RegAssDRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration "
+    "(DRE2BR)")
+    (RegAssSCRA, "Shortest-cost regenerator assignment (SCRA)")
+    (RegAssOpaque, "Opaque");
 
 const boost::unordered_map<StopCriteria, std::string>
 Options::mapStopCriteria = boost::assign::map_list_of

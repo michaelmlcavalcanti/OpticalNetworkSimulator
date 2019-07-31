@@ -70,11 +70,11 @@ enum SpectrumAllocationOption {
  */
 enum LinkCostType {
     Invalid,
-    MinHops,
-    MinLength,
-    MinLengthNormalized,
-    FirstLinkCostType = MinHops,
-    LastLinkCostType = MinLengthNormalized
+    LinkCostHop,
+    LinkCostLength,
+    LinkCostNormLength,
+    FirstLinkCostType = LinkCostHop,
+    LastLinkCostType = LinkCostNormLength
 };
 
 /**
@@ -189,11 +189,13 @@ enum RegPlacementOption {
 enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,
+    RegAssMinSlots,
     RegAssMaxReg,
-    DRE2BR,
-    SCRA,
+    RegAssDRE2BR,
+    RegAssSCRA,
+    RegAssOpaque,
     FirstRegAss = RegAssInvalid,
-    LastRegAss = SCRA
+    LastRegAss = RegAssOpaque
 };
 
 enum StopCriteria {

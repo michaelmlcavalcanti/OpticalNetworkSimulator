@@ -77,12 +77,23 @@ private:
     std::vector<std::tuple<unsigned, unsigned>>& vec);
     /**
      * @brief Function to order the tuples of route and regeneration combination 
-     * indexes based on the metric of maximum regeneration combination.
+     * indexes based on the metric of minimum slots combination. If there is
+     * a draw, the function will favor the one with less used regenerators.
      * @param call Call request to order.
      * @param vec Container of tuples of route and regeneration combination 
      * indexes.
      */
     void SetMinSlotsChoiceOrder(CallDevices* call, 
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    /**
+     * @brief Function to order the tuples of route and regeneration combination 
+     * indexes based on the metric of maximum regeneration combination. If 
+     * there is a draw, the function will favor the one with less used slots.
+     * @param call Call request to order.
+     * @param vec Container of tuples of route and regeneration combination 
+     * indexes.
+     */
+    void SetMaxRegChoiceOrder(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
     /**
      * @brief Function to order the tuples of route and regeneration combination 
