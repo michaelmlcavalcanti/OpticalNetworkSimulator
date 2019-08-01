@@ -234,7 +234,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     }
     
     while(vec.size() < posSize){
-        auxRegInt = Def::Max_UnInt;
+        auxRegInt = 0;
         auxSlotsInt = Def::Max_UnInt;
         
         for(unsigned int a = 0; a < vecNumReg.size(); a++){
@@ -255,7 +255,7 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
             }
         }
         vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
-        vecNumReg.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = 0;
         vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
 }
