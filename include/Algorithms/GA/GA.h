@@ -25,6 +25,7 @@ class SimulationType;
 
 #include "Individual.h"
 #include "../../Data/InputOutput.h"
+#include "../../GeneralClasses/Def.h"
 
 /**
  * @brief Generic genetic algorithm class. This class contain the similar 

@@ -75,7 +75,7 @@ public:
      * @brief Gets a randomly boolean value.
      * @return Boolean value.
      */
-    bool GetBoolDistribution();
+    ResAllocOrder GetBoolDistribution();
     
     /**
      * @brief Apply the genes of a specified individual in the network RSA 

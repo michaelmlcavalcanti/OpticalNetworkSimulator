@@ -20,9 +20,9 @@ Core* core) {
     return ostream;
 }
 
-Core::Core(CoreId cId, NumSlots nSlots)
+Core::Core(CoreIndex cId, unsigned int nSlots)
 :coreId(cId), slotsStatus(0) {
-    this->slotsStatus.assign(nSlots, SlotFree);
+    this->slotsStatus.assign(nSlots, free);
 }
 
 Core::~Core() {
@@ -30,33 +30,33 @@ Core::~Core() {
 }
 
 void Core::Initialize() {
-    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);
+    this->slotsStatus.assign(this->slotsStatus.size(), free);
 }
 
-CoreId Core::GetCoreId(){
+CoreIndex Core::GetCoreId(){
     return this->coreId;
 }
 
-bool Core::IsSlotOccupied(unsigned int sPosition){
-    if(this->slotsStatus.at(sPosition) == SlotUsed)
+bool Core::IsSlotOccupied(SlotIndex sPosition){
+    if(this->slotsStatus.at(sPosition) == occupied)
         return true;
     return false;
 }
 
-bool Core::IsSlotFree(unsigned int sPosition) {
+bool Core::IsSlotFree(SlotIndex sPosition) {
     return !this->IsSlotOccupied(sPosition);
 }
 
-void Core::OccupySlot(unsigned int sPosition){
+void Core::OccupySlot(SlotIndex sPosition){
     assert(sPosition < this->slotsStatus.size());
-    assert(this->slotsStatus.at(sPosition) == SlotFree);
+    assert(this->slotsStatus.at(sPosition) == free);
     
-    this->slotsStatus.at(sPosition) = SlotUsed;
+    this->slotsStatus.at(sPosition) = occupied;
 }
 
-void Core::ReleaseSlot(unsigned int sPosition){
+void Core::ReleaseSlot(SlotIndex sPosition){
     assert(sPosition < this->slotsStatus.size());
-    assert(this->slotsStatus.at(sPosition) == SlotUsed);
+    assert(this->slotsStatus.at(sPosition) == occupied);
     
-    this->slotsStatus.at(sPosition) = SlotFree;
+    this->slotsStatus.at(sPosition) = free;
 }

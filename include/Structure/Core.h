@@ -21,9 +21,6 @@
 
 #include "Link.h"
 
-typedef unsigned int CoreId;
-typedef unsigned int NumSlots;
-
 /**
  * @brief Core Class represents a core inside a Fiber. 
  */
@@ -31,7 +28,6 @@ class Core {
     
     friend std::ostream& operator<<(std::ostream& ostream,
     Core* core);
-    
 public:
     /**
      * @brief Standard constructor for a Core object.
@@ -40,7 +36,7 @@ public:
      * @param nSlots represents the total numbr of slots
      * in a core.
      */
-    Core(CoreId cId, NumSlots nSlots);
+    Core(CoreIndex cId, unsigned int nSlots);
     /**
      * @brief Default destructor of Core object.
      */
@@ -54,40 +50,40 @@ public:
      * @brief Get Id of the core.
      * @return Id of the core.
      */
-    CoreId GetCoreId();
+    CoreIndex GetCoreId();
     /**
      * @brief Check if a specified slot is occupied in this core.
      * @param sPosition Represents the position of the slot in the core.
      * @return True if the slot is occupied.
      */
-    bool IsSlotOccupied(unsigned int sPosition);
+    bool IsSlotOccupied(SlotIndex sPosition);
     /**
      * @brief Check if a specified slot is free in this core.
      * @param sPosition Represents the position of the slot in the core.
      * @return True if the slot is free.
      */
-    bool IsSlotFree(unsigned int sPosition);
+    bool IsSlotFree(SlotIndex sPosition);
     /**
      * @brief Occupy the slot position.
      * @param Represents the position of the slot
      * in the core. 
      */
-    void OccupySlot(unsigned int sPosition);
+    void OccupySlot(SlotIndex sPosition);
      /**
      * @brief Release the slot position.
      * @param Represents the position of the slot
      * in the core. 
      */
-    void ReleaseSlot(unsigned int sPosition);
+    void ReleaseSlot(SlotIndex sPosition);
 private:
     /**
      * @brief Index of the core.
      */
-    CoreId coreId;
+    CoreIndex coreId;
     /**
      * @brief Vector of slots of this core.
      */
-    std::vector<SlotStatus> slotsStatus;
+    std::vector<SlotState> slotsStatus;
 };
 
 #endif /* CORE_H */

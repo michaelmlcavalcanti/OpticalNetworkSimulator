@@ -14,7 +14,7 @@
 #ifndef CALLGENERATOR_H
 #define CALLGENERATOR_H
 
-typedef double TIME;
+#include "../GeneralClasses/Def.h"
 
 class SimulationType;
 class Call;

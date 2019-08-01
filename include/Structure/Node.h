@@ -16,9 +16,9 @@
 
 #include <iostream>
 
-typedef unsigned int NodeId;
-
 class Topology;
+
+#include "../GeneralClasses/Def.h"
 
 /**
  * @brief Class Node represents a node inside a topology.
@@ -34,7 +34,7 @@ public:
      * owns this node.
      * @param nodeId node index.
      */
-    Node(Topology* topPointer,  NodeId nodeId);
+    Node(Topology* topPointer,  NodeIndex nodeId);
     /**
      * @brief Copy constructor for a Node object.
      * @param orig original Node object.
@@ -55,12 +55,7 @@ public:
      * @brief Get the node index.
      * @return Node index.
      */
-    NodeId GetNodeId() const;
-    /**
-     * @brief Set the node index.
-     * @param nodeId node index.
-     */
-    void SetNodeId(NodeId nodeId);
+    NodeIndex GetNodeId() const;
     /**
      * @brief Checks if the node is functional.
      * @return True if the node is working.
@@ -86,7 +81,7 @@ private:
     /**
      * @brief Node index.
      */
-    NodeId nodeId;
+    const NodeIndex nodeId;
     /**
      * @brief Boolean variable to indicate the node state.
      */

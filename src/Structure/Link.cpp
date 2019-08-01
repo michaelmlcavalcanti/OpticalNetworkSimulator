@@ -32,14 +32,14 @@ Link* link) {
     return ostream;
 }
 
-Link::Link(Topology* topPointer, unsigned int origimNode, 
-unsigned int destinationNode, double length, 
+Link::Link(Topology* topPointer, NodeIndex origimNode, 
+NodeIndex destinationNode, double length, 
 unsigned int numberSections, unsigned int numberSlots) 
 :topPointer(topPointer), origimNode(origimNode), 
 destinationNode(destinationNode), length(length), 
 numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true), 
 utilization(0) {
-    slotsStatus.resize(numberSlots, SlotFree);
+    slotsStatus.assign(numberSlots, free);
 }
 
 Link::~Link() {
@@ -56,39 +56,23 @@ bool Link::operator==(const Link& right) const {
 
 void Link::Initialize() {
     //Make all slots status for free
-    this->slotsStatus.assign(this->slotsStatus.size(), SlotFree);
+    this->slotsStatus.assign(this->slotsStatus.size(), free);
 }
 
-unsigned int Link::GetOrigimNode() const {
+NodeIndex Link::GetOrigimNode() const {
     return origimNode;
 }
 
-void Link::SetOrigimNode(unsigned int origimNode) {
-    this->origimNode = origimNode;
-}
-
-unsigned int Link::GetDestinationNode() const {
+NodeIndex Link::GetDestinationNode() const {
     return destinationNode;
-}
-
-void Link::SetDestinationNode(unsigned int destinationNode) {
-    this->destinationNode = destinationNode;
 }
 
 double Link::GetLength() const {
     return length;
 }
 
-void Link::SetLength(double length) {
-    this->length = length;
-}
-
 unsigned int Link::GetNumberSections() const {
     return numberSections;
-}
-
-void Link::SetNumberSections(unsigned int numberSections) {
-    this->numberSections = numberSections;
 }
 
 double Link::GetCost() const {
@@ -141,28 +125,28 @@ void Link::CalcSignal(Signal* signal) const {
     signal->SetNonLinearPower(nonLinearPower);
 }
 
-void Link::OccupySlot(const unsigned int index) {
+void Link::OccupySlot(const SlotIndex index) {
     assert(this->IsSlotFree(index));
     
-    this->slotsStatus.at(index) = SlotUsed;
+    this->slotsStatus.at(index) = occupied;
 }
 
-void Link::ReleaseSlot(const unsigned int index) {
+void Link::ReleaseSlot(const SlotIndex index) {
     assert(this->IsSlotOccupied(index));
     
-    this->slotsStatus.at(index) = SlotFree;
+    this->slotsStatus.at(index) = free;
 }
 
-bool Link::IsSlotOccupied(unsigned int index) const {
+bool Link::IsSlotOccupied(const SlotIndex index) const {
     
-    if(this->slotsStatus.at(index) == SlotUsed)
+    if(this->slotsStatus.at(index) == occupied)
         return true;
     return false;
 }
 
-bool Link::IsSlotFree(unsigned int index) const {
+bool Link::IsSlotFree(const SlotIndex index) const {
     
-    if(this->slotsStatus.at(index) == SlotFree)
+    if(this->slotsStatus.at(index) == free)
         return true;
     return false;
 }

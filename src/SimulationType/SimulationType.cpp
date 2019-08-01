@@ -25,7 +25,7 @@
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 
-SimulationType::SimulationType(unsigned int simulIndex, 
+SimulationType::SimulationType(SimulIndex simulIndex, 
 TypeSimulation typeSimulation)
 :typeSimulation(typeSimulation), simulationIndex(simulIndex),
 parameters(std::make_shared<Parameters> (this)),
@@ -95,78 +95,36 @@ TypeSimulation SimulationType::GetTypeSimulation() const {
     return typeSimulation;
 }
 
-const unsigned int SimulationType::GetSimulationIndex() const {
+const SimulIndex SimulationType::GetSimulationIndex() const {
     return simulationIndex;
 }
 
 Parameters* SimulationType::GetParameters() const {
     return parameters.get();
 }
-
-void SimulationType::SetParameters(std::shared_ptr<Parameters> 
-parameters) {
-    this->parameters = parameters;
-}
-
 Options* SimulationType::GetOptions() const {
     return options.get();
-}
-
-void SimulationType::SetOptions(std::shared_ptr<Options> options) {
-    this->options = options;
 }
 
 Data* SimulationType::GetData() const {
     return data.get();
 }
-
-void SimulationType::SetData(std::unique_ptr<Data> data) {
-    std::swap(this->data, data);
-}
-
 Topology* SimulationType::GetTopology() const {
     return topology.get();
-}
-
-void SimulationType::SetTopology(std::shared_ptr<Topology> 
-topology) {
-    this->topology = topology;
 }
 
 InputOutput* SimulationType::GetInputOutput() const {
     return inputOutput.get();
 }
-
-void SimulationType::SetInputOutput(std::unique_ptr<InputOutput> 
-inputOutput) {
-    this->inputOutput = std::move(inputOutput);
-}
-
 Traffic* SimulationType::GetTraffic() const {
     return traffic.get();
-}
-
-void SimulationType::SetTraffic(std::shared_ptr<Traffic> 
-traffic) {
-    this->traffic = traffic;
 }
 
 EventGenerator* SimulationType::GetCallGenerator() const {
     return callGenerator.get();
 }
-
-void SimulationType::SetCallGenerator(std::shared_ptr<EventGenerator> 
-callGenerator) {
-    this->callGenerator = callGenerator;
-}
-
 ResourceAlloc* SimulationType::GetResourceAlloc() const {
     return this->resourceAlloc.get();
-}
-
-void SimulationType::SetResourceAlloc(std::shared_ptr<ResourceAlloc> 
-rsaAlgorithm) {
-    this->resourceAlloc = rsaAlgorithm;
 }
 
 void SimulationType::InitializeAll() {

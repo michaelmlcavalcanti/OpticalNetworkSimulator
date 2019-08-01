@@ -15,21 +15,14 @@
 #define LINK_H
 
 #include <iostream>
-
-/**
- * @brief Numerate the possible slot status.
- */
-enum SlotStatus{
-    SlotFree,
-    SlotUsed
-};
-
 #include <vector>
 #include <limits>
 #include <iostream>
 
 class Topology;
 class Signal;
+
+#include "../GeneralClasses/Def.h"
 
 /**
  * @brief Class Link represents a link inside a topology. 
@@ -49,9 +42,8 @@ public:
      * @param numberSections total number of sections 
      * of the link.
      */
-    Link(Topology* topPointer, unsigned int origimNode, 
-    unsigned int destinationNode, double length, 
-    unsigned int numberSections, unsigned int numberSlots);
+    Link(Topology* topPointer, NodeIndex origimNode, NodeIndex destinationNode, 
+    double length, unsigned int numberSections, unsigned int numberSlots);
     /**
      * @brief Virtual destructor of a Link object.
      */
@@ -72,42 +64,22 @@ public:
      * @brief Get the origin node of the link.
      * @return Origin node index of this link.
      */
-    unsigned int GetOrigimNode() const;
-    /**
-     * @brief Set the origin node of the link.
-     * @param origimNode origin node index of this link.
-     */
-    void SetOrigimNode(unsigned int origimNode);
+    NodeIndex GetOrigimNode() const;
     /**
      * @brief Get the destination node of the link.
      * @return Destination node index of this link.
      */
-    unsigned int GetDestinationNode() const;
-    /**
-     * @brief Set the destination node of the link.
-     * @param destinationNode Destination node index of this link.
-     */
-    void SetDestinationNode(unsigned int destinationNode);
+    NodeIndex GetDestinationNode() const;
     /**
      * @brief Get the length of the link.
      * @return Length of the link.
      */
     double GetLength() const;
     /**
-     * @brief Set the length of the link.
-     * @param length length of the link.
-     */
-    void SetLength(double length);
-    /**
      * @brief Get the number of sections of the link.
      * @return Number of sections of the link.
      */
     unsigned int GetNumberSections() const;
-    /**
-     * @brief Set the number of sections of the link.
-     * @param numberSections number of sections of the link.
-     */
-    void SetNumberSections(unsigned int numberSections);
     /**
      * @brief Get the cost of the link.
      * @return Cost of the link.
@@ -143,26 +115,26 @@ public:
      * @brief Occupy an specified slot in this link.
      * @param index Slot index.
      */
-    void OccupySlot(const unsigned int index);
+    void OccupySlot(const SlotIndex index);
     /**
      * @brief Release an specified slot in this link.
      * @param index Slot index.
      */
-    void ReleaseSlot(const unsigned int index);
+    void ReleaseSlot(const SlotIndex index);
     /**
      * @brief Check if an specified slot is occupied in
      * the link.
      * @param index Slot index.
      * @return True if the slot is occupied.
      */
-    bool IsSlotOccupied(unsigned int index) const;
+    bool IsSlotOccupied(const SlotIndex index) const;
     /**
      * @brief Check if an specified slot is free in
      * the link.
      * @param index Slot index.
      * @return True if the slot is free.
      */
-    bool IsSlotFree(unsigned int index) const;
+    bool IsSlotFree(const SlotIndex index) const;
     
     unsigned int GetNumSlots() const;
     /**
@@ -189,19 +161,19 @@ private:
     /**
      * @brief Origin node of the link
      */
-    unsigned int origimNode;
+    const NodeIndex origimNode;
     /**
      * @brief Destination node of the link
      */
-    unsigned int destinationNode;
+    const NodeIndex destinationNode;
     /**
      * @brief Length of this link (meters)
      */
-    double length;
+    const double length;
     /**
      * @brief Number of sections of this link
      */
-    unsigned int numberSections;
+    const unsigned int numberSections;
     /**
      * @brief Cost of this link, based in the 
      * selected metric
@@ -211,7 +183,7 @@ private:
      * @brief Vector with slots status, free or occupied,
      * in this link
      */
-    std::vector<SlotStatus> slotsStatus;
+    std::vector<SlotState> slotsStatus;
     /**
      * @brief Boolean variable to indicate the  link state.
      */

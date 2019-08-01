@@ -20,7 +20,7 @@ Node* node) {
     return ostream;
 }
 
-Node::Node(Topology* topPointer, NodeId nodeId) :
+Node::Node(Topology* topPointer, NodeIndex nodeId) :
 topology(topPointer), nodeId(nodeId), nodeWorking(true) {
     
 }
@@ -33,12 +33,8 @@ void Node::Initialize() {
     
 }
 
-NodeId Node::GetNodeId() const {
+NodeIndex Node::GetNodeId() const {
     return nodeId;
-}
-
-void Node::SetNodeId(NodeId nodeId) {
-    this->nodeId = nodeId;
 }
 
 void Node::SetNodeState(bool NodeWorking) {

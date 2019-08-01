@@ -27,6 +27,7 @@ class EventGenerator;
 class ResourceAlloc;
 
 #include "../Kernel.h"
+#include "../GeneralClasses/Def.h"
 
 /**
  * @brief Base class for Simulations objects.
@@ -37,7 +38,7 @@ public:
      * @brief Standard constructor for a SimulationType object.
      * @param simulIndex index of this simulation.
      */
-    SimulationType(unsigned int simulIndex, TypeSimulation typeSimulation);
+    SimulationType(SimulIndex simulIndex, TypeSimulation typeSimulation);
     /**
      * @brief Virtual destructor of a SimulationType object.
      */
@@ -88,7 +89,7 @@ public:
      * @brief Returns the simulation index
      * @return Simulation index
      */
-    const unsigned int GetSimulationIndex() const;
+    const SimulIndex GetSimulationIndex() const;
     /**
      * @brief Returns a pointer to a Parameters object 
      * in this simulation
@@ -96,23 +97,11 @@ public:
      */
     Parameters* GetParameters() const;
     /**
-     * @brief Sets a pointer to the Parameters object 
-     * in this simulation with ownership 
-     * @param parameters smart point for Parameters object
-     */
-    void SetParameters(std::shared_ptr<Parameters> parameters);
-    /**
      * @brief Returns a pointer to a Options object 
      * in this simulation
      * @return pointer to a Options object
      */
     Options* GetOptions() const;
-    /**
-     * @brief Sets a pointer to the Options object 
-     * in this simulation with ownership
-     * @param options smart point for Options object
-     */
-    void SetOptions(std::shared_ptr<Options> options);
     /**
      * @brief Returns a pointer to a Data object 
      * in this simulation
@@ -120,23 +109,11 @@ public:
      */
     Data* GetData() const;
     /**
-     * @brief Sets a pointer to the Options object 
-     * in this simulation (object ownership transfered)
-     * @param data pointer to a Data object
-     */
-    void SetData(std::unique_ptr<Data> data);
-    /**
      * @brief Returns a pointer to a Topology object 
      * used in this simulation
      * @return pointer to a Topology object
      */
     Topology* GetTopology() const;
-    /**
-     * @brief Sets a pointer to the Topology object 
-     * used in this simulation (with ownership)
-     * @param topology pointer to a Topology object
-     */
-    void SetTopology(std::shared_ptr<Topology> topology);
     /**
      * @brief Returns a pointer to a InputOutput object 
      * used in this simulation.
@@ -144,23 +121,11 @@ public:
      */
     InputOutput* GetInputOutput() const;
     /**
-     * @brief Sets a pointer to the InputOutput object 
-     * in this simulation (object ownership transfered).
-     * @param inputOutput pointer to a InputOutput object.
-     */
-    void SetInputOutput(std::unique_ptr<InputOutput> inputOutput);
-    /**
      * @brief Returns a pointer to a Traffic object
      * used in this simulation.
      * @return pointer to a Traffic object.
      */
     Traffic* GetTraffic() const;
-    /**
-     * @brief Sets a pointer to the Traffic object 
-     * in this simulation (share ownership).
-     * @param traffic pointer to a Traffic object.
-     */
-    void SetTraffic(std::shared_ptr<Traffic> traffic);
     /**
      * @brief Returns a pointer to a CallGenerator object
      * used in this simulation.
@@ -168,23 +133,11 @@ public:
      */
     EventGenerator* GetCallGenerator() const;
     /**
-     * @brief Sets a pointer to the CallGenerator object 
-     * in this simulation (share ownership).
-     * @param traffic pointer to a CallGenerator object.
-     */
-    void SetCallGenerator(std::shared_ptr<EventGenerator> callGenerator);
-    /**
      * @brief Returns a pointer to a ResourceAlloc object
      * used in this simulation.
      * @return pointer to a ResourceAlloc object.
      */
     ResourceAlloc* GetResourceAlloc() const;
-    /**
-     * @brief Sets a pointer to the ResourceAlloc object 
-     * in this simulation (share ownership).
-     * @param traffic pointer to a ResourceAlloc object.
-     */
-    void SetResourceAlloc(std::shared_ptr<ResourceAlloc> rsaAlgorithm);
 private:
     /**
      * @brief Initialize all the simulation parameters, such as
@@ -234,7 +187,7 @@ private:
     /**
      * @brief Index of the simulation
      */
-    const unsigned int simulationIndex;
+    const SimulIndex simulationIndex;
     /**
      * @brief pointer to an Parameters object used in this simulation
      */

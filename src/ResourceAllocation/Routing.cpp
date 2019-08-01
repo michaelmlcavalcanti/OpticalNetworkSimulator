@@ -62,8 +62,8 @@ void Routing::RoutingCall(Call* call) {
 }
 
 void Routing::SetOfflineRouting(Call* call) {
-    NodeId orNode = call->GetOrNode()->GetNodeId();
-    NodeId deNode = call->GetDeNode()->GetNodeId();
+    NodeIndex orNode = call->GetOrNode()->GetNodeId();
+    NodeIndex deNode = call->GetDeNode()->GetNodeId();
 
     call->PushTrialRoutes(resources->GetRoutes(orNode, deNode));
 }
@@ -85,7 +85,7 @@ void Routing::Dijkstra() {
     }
 }
 
-std::shared_ptr<Route> Routing::Dijkstra(NodeId orNode, NodeId deNode) {
+std::shared_ptr<Route> Routing::Dijkstra(NodeIndex orNode, NodeIndex deNode) {
     assert(orNode != deNode);
     
     int k = -1, h, hops;
@@ -202,8 +202,8 @@ void Routing::YEN() {
     }
 }
 
-std::vector<std::shared_ptr<Route> > Routing::YEN(NodeId orNode, 
-                                                  NodeId deNode) {
+std::vector<std::shared_ptr<Route> > Routing::YEN(NodeIndex orNode, 
+                                                  NodeIndex deNode) {
     assert(orNode != deNode);
     std::vector<std::shared_ptr<Route>> routesYEN;
     std::priority_queue<std::shared_ptr<Route>, 

@@ -31,7 +31,7 @@ GA_RsaOrder::~GA_RsaOrder() {
 void GA_RsaOrder::Initialize() {
     GA_SO::Initialize();
     this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
-    this->boolDistribution = std::uniform_int_distribution<int>(0, 1);
+    this->boolDistribution = std::uniform_int_distribution<int>(r_sa, sa_r);
 }
 
 void GA_RsaOrder::InitializePopulation() {
@@ -96,8 +96,8 @@ void GA_RsaOrder::SetNumNodes(unsigned int numNodes) {
     this->numNodes = numNodes;
 }
 
-bool GA_RsaOrder::GetBoolDistribution() {
-    return (bool) boolDistribution(this->random_generator);
+ResAllocOrder GA_RsaOrder::GetBoolDistribution() {
+    return (ResAllocOrder) boolDistribution(this->random_generator);
 }
 
 void GA_RsaOrder::ApplyIndividual(Individual* ind) {

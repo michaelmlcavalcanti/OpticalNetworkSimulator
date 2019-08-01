@@ -16,7 +16,7 @@
 #include "../../include/Structure/Devices/SBVT_TSS_ML.h"
 #include "../../include/Calls/CallDevices.h"
 
-NodeDevices::NodeDevices(Topology* topPointer, NodeId nodeId)
+NodeDevices::NodeDevices(Topology* topPointer, NodeIndex nodeId)
 :Node(topPointer, nodeId), numRegenerator(0), numFreeRegenerators(0),
 regenerators(0), numTransponder(0), transponders(0) {
     

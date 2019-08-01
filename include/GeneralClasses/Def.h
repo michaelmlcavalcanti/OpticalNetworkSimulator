@@ -18,12 +18,22 @@
 #include <limits>
 
 typedef bool CarrierState;
+typedef bool SlotState;
 #define free false
 #define occupied true
 
 typedef bool ResAllocOrder;
 #define r_sa false
 #define sa_r true
+
+typedef double TIME;
+
+typedef bool UseRegeneration;
+
+typedef unsigned int SimulIndex;
+typedef unsigned int NodeIndex;
+typedef unsigned int CoreIndex;
+typedef unsigned int SlotIndex;
 
 /**
  * @brief Class responsible to define constants, random engines and other

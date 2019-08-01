@@ -35,7 +35,7 @@ public:
      * @param topPointer Topology in which this node is inserted.
      * @param nodeId Node index.
      */
-    NodeDevices(Topology* topPointer, NodeId nodeId);
+    NodeDevices(Topology* topPointer, NodeIndex nodeId);
     /**
      * @brief Standard destructor of a optical node with devices.
      */

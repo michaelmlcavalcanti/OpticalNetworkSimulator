@@ -14,8 +14,6 @@
 #ifndef CALLDEVICES_H
 #define CALLDEVICES_H
 
-typedef bool UseRegeneration;
-
 #include "Call.h"
 #include "../ResourceAllocation/Modulation.h"
 

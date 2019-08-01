@@ -88,7 +88,7 @@ public:
      * @param deNode Destination node Id.
      * @return Route of this node pair.
      */
-    std::shared_ptr<Route> Dijkstra(NodeId orNode, NodeId deNode);
+    std::shared_ptr<Route> Dijkstra(NodeIndex orNode, NodeIndex deNode);
     /**
      * @brief YEN(k-shortest path) routing algorithm for all source/destination 
      * node pairs in the topology used.
@@ -101,7 +101,7 @@ public:
      * @param deNode Destination node Id.
      * @return Routes of this node pair.
      */
-    std::vector<std::shared_ptr<Route>> YEN(NodeId orNode, NodeId deNode);
+    std::vector<std::shared_ptr<Route>> YEN(NodeIndex orNode, NodeIndex deNode);
     
     void BSR();
     
