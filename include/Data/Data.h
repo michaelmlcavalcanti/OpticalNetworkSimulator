@@ -70,6 +70,8 @@ public:
      * @brief Saves the data values in the Log.txt file.
      */
     void SaveMultiloadLog();
+    
+    void SaveLog(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
      */

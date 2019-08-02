@@ -21,7 +21,7 @@
 
 SimulationMultiNumDevices::SimulationMultiNumDevices(unsigned int simulIndex, 
 TypeSimulation typeSimulation)
-:SimulationType(simulIndex, typeSimulation), vecNumReg(0) {
+:SimulationType(simulIndex, typeSimulation), vecNumDevices(0) {
 
 }
 
@@ -32,7 +32,7 @@ SimulationMultiNumDevices::~SimulationMultiNumDevices() {
 void SimulationMultiNumDevices::Run() {
     unsigned int numNodes = this->GetTopology()->GetNumNodes();
     unsigned int minNumReg = 0 * numNodes;
-    unsigned int maxNumReg = 1000 * numNodes;
+    unsigned int maxNumReg = 1500 * numNodes;
     unsigned int stepNumReg = 25 * numNodes;
     unsigned int numPoints = ((maxNumReg - minNumReg) / stepNumReg) + 1;
     unsigned int actualPoint = 0;
@@ -40,8 +40,8 @@ void SimulationMultiNumDevices::Run() {
     this->GetCallGenerator()->SetNetworkLoad(this->GetParameters()
                                                  ->GetMaxLoadPoint());
     this->GetData()->Initialize(numPoints);
+    this->GetInputOutput()->PrintProgressBar(actualPoint, numPoints);
     
-    this->GetInputOutput()->PrintProgressBar(0, numPoints);
     for(unsigned a = minNumReg; a <= maxNumReg; a += stepNumReg){
         this->GetData()->SetActualIndex(actualPoint);
         
@@ -74,7 +74,8 @@ void SimulationMultiNumDevices::Print() {
 
 void SimulationMultiNumDevices::Save() {
     SimulationType::Save();
-    this->GetData()->SaveBP(vecNumReg);
+    this->GetData()->SaveLog(vecNumDevices);
+    this->GetData()->SaveBP(vecNumDevices);
 }
 
 void SimulationMultiNumDevices::Help() {
@@ -87,7 +88,7 @@ void SimulationMultiNumDevices::Help() {
 void SimulationMultiNumDevices::SetNumberOfDevices(unsigned int numDevices) {
     //Switch for variate the type of device.
     DeviceType type = DeviceRegenerator;
-    vecNumReg.push_back(numDevices);
+    vecNumDevices.push_back(numDevices);
     
     switch(type){
         case DeviceRegenerator:

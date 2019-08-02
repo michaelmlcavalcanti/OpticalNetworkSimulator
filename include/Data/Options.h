@@ -189,7 +189,8 @@ enum RegPlacementOption {
 enum RegAssignmentOption {
     RegAssInvalid,
     RegAssMinReg,
-    RegAssMinSlots,
+    RegAssMinSlotsMinReg,
+    RegAssMinSlotsMaxReg,
     RegAssMaxReg,
     RegAssDRE2BR,
     RegAssSCRA,

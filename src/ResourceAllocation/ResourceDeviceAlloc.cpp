@@ -115,8 +115,11 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         case RegAssMinReg:
             this->SetMinRegChoiceOrder(call, vec);
             break;
-        case RegAssMinSlots:
+        case RegAssMinSlotsMinReg:
             this->SetMinSlotsChoiceOrder(call, vec);
+            break;
+        case RegAssMinSlotsMaxReg:
+            this->SetMinSlotsMaxRegChoiceOrder(call, vec);
             break;
         case RegAssMaxReg:
             this->SetMaxRegChoiceOrder(call, vec);
@@ -200,6 +203,49 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
                 if(auxNumSlots >= vecNumSlots.at(a).at(b)){
                     if(auxNumSlots == vecNumSlots.at(a).at(b) && 
                     auxNumReg <= vecNumReg.at(a).at(b)){
+                        continue;
+                    }
+                    else{
+                        auxNumSlots = vecNumSlots.at(a).at(b);
+                        auxNumReg = vecNumReg.at(a).at(b);
+                        auxRouteIndex = a;
+                        auxIndex = b;
+                    }
+                }
+            }
+        }
+        vec.push_back(std::make_tuple(auxRouteIndex, auxIndex));
+        vecNumReg.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+        vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
+    }
+}
+
+void ResourceDeviceAlloc::SetMinSlotsMaxRegChoiceOrder(CallDevices* call,
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<unsigned>> vecNumReg = 
+    resources->GetNumberRegSet(call);
+    std::vector<std::vector<unsigned>> vecNumSlots = 
+    resources->GetNumberSlotsSet(call);
+    unsigned int posSize = 0;
+    unsigned int auxRouteIndex = 0;
+    unsigned int auxIndex = 0;
+    unsigned int auxNumReg;
+    unsigned int auxNumSlots;
+    
+    for(unsigned int a = 0; a < vecNumReg.size(); a++){
+        posSize += vecNumReg.at(a).size();
+    }
+    
+    while(vec.size() < posSize){
+        auxNumReg = Def::Max_UnInt;
+        auxNumSlots = Def::Max_UnInt;
+        
+        for(unsigned int a = 0; a < vecNumReg.size(); a++){
+            for(unsigned int b = 0; b < vecNumReg.at(a).size(); b++){
+                
+                if(auxNumSlots >= vecNumSlots.at(a).at(b)){
+                    if(auxNumSlots == vecNumSlots.at(a).at(b) && 
+                    auxNumReg >= vecNumReg.at(a).at(b)){
                         continue;
                     }
                     else{
@@ -396,7 +442,7 @@ unsigned subRouteIndex) {
         if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
            ind == vecSubRoutes.size() - 1){
             auxNumLinks = (double) auxRoute->GetNumHops();
-            auxNumSlots = (double) vecNumSlots.at(ind);
+            auxNumSlots = ((double) vecNumSlots.at(ind)) / auxNumLinks;
             cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
         }
         else{
@@ -421,6 +467,8 @@ unsigned int ResourceDeviceAlloc::GetN(CallDevices* call) {
     double bandwidth = 0.0;
     unsigned int numSlots = 0;
     
+    //Se precisar modificar, pegar a modulação da última combinação de 
+    //segmentos transparentes.
     bandwidth = modulation->BandwidthQAM(FirstModulation, call->GetBitRate());
     if(modulation->isEON())
         numSlots = std::ceil(bandwidth/modulation->GetSlotBandwidth());

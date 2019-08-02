@@ -87,10 +87,11 @@
 15-Regenerator Assignment Option
     0 - Invalid
     1 - Minimum regeneration
-    2 - Minimum slots
-    3 - Maximum regeneration
-    4 - DRE2BR
-    5 - SCRA
+    2 - Minimum slots (Minimum regeneration)
+    3 - Minimum slots (Maximum regeneration)
+    4 - Maximum regeneration
+    5 - DRE2BR
+    6 - SCRA
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests

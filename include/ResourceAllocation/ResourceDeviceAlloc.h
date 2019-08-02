@@ -85,6 +85,9 @@ private:
      */
     void SetMinSlotsChoiceOrder(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
+    
+    void SetMinSlotsMaxRegChoiceOrder(CallDevices* call,
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
     /**
      * @brief Function to order the tuples of route and regeneration combination 
      * indexes based on the metric of maximum regeneration combination. If 

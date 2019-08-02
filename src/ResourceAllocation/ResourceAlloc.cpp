@@ -297,7 +297,8 @@ std::vector<bool> ResourceAlloc::GetResourceAllocOrder() const {
     return resources->resourceAllocOrder;
 }
 
-void ResourceAlloc::SetResourceAllocOrder(std::vector<bool> resourceAllocOrder) {
+void ResourceAlloc::SetResourceAllocOrder(std::vector<ResAllocOrder> 
+resourceAllocOrder) {
     assert(resourceAllocOrder.size() == this->resources->
                                         resourceAllocOrder.size());
     

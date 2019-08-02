@@ -133,6 +133,20 @@ void Data::SaveMultiloadLog() {
     }
 }
 
+void Data::SaveLog(std::vector<unsigned> vecParam) {
+    std::ofstream &logOfstream = this->simulType->GetInputOutput()
+                                     ->GetLogFile();
+    unsigned int numPoints = vecParam.size();
+    
+    logOfstream << "DATA" << std::endl;
+    
+    for(unsigned int a = 0; a < numPoints; a++){
+        this->SetActualIndex(a);
+        logOfstream << "Number regenerators: " << vecParam.at(a) << std::endl;
+        logOfstream << this << std::endl;
+    }
+}
+
 void Data::SaveBP() {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetResultFile();

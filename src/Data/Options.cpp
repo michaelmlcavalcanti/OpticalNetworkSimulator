@@ -118,7 +118,8 @@ const boost::unordered_map<RegAssignmentOption, std::string>
 Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssInvalid, "Invalid")
     (RegAssMinReg, "Minimum regeneration")
-    (RegAssMinSlots, "Minimum slots")
+    (RegAssMinSlotsMinReg, "Minimum slots (Minimum regeneration)")
+    (RegAssMinSlotsMaxReg, "Minimum slots (Maximum regeneration)")
     (RegAssMaxReg, "Maximum regeneration")
     (RegAssDRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration "
     "(DRE2BR)")

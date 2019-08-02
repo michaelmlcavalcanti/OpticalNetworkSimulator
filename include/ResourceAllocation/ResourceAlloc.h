@@ -30,6 +30,7 @@ class Resources;
 class Options;
 
 #include "../Data/Options.h"
+#include "../GeneralClasses/Def.h"
 
 /**
  * @brief Class responsible for resource allocation, at least routing and 
@@ -145,7 +146,7 @@ public:
      * each node pair in the network.
      * @param resourceAllocOrder Container of RSA order for all node pairs.
      */
-    void SetResourceAllocOrder(std::vector<bool> resourceAllocOrder);
+    void SetResourceAllocOrder(std::vector<ResAllocOrder> resourceAllocOrder);
     /**
      * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network of the output of the first simulation.

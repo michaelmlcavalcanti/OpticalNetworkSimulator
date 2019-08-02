@@ -80,7 +80,7 @@ private:
     /**
      * @brief Container with the total number of regenerators of each iteration.
      */
-    std::vector<unsigned> vecNumReg;
+    std::vector<unsigned> vecNumDevices;
 };
 
 #endif /* SIMULATIONMULTINUMDEVICES_H */
