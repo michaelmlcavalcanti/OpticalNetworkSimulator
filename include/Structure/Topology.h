@@ -320,6 +320,8 @@ private:
      */
     void SetLinksIniCost();
     
+    void SetNodesNeighbors();
+    
     /**
      * @brief Function to set the number of devices in the simulation topology.
      */

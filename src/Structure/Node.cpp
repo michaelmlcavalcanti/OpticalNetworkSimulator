@@ -21,12 +21,20 @@ Node* node) {
 }
 
 Node::Node(Topology* topPointer, NodeIndex nodeId) :
-topology(topPointer), nodeId(nodeId), nodeWorking(true) {
+topology(topPointer), nodeId(nodeId), nodeWorking(true), neighborNodes(0) {
     
 }
 
 Node::~Node() {
 
+}
+
+bool Node::operator==(const Node& right) const {
+    
+    if(this->nodeId == right.nodeId)
+        return true;
+    
+    return false;
 }
 
 void Node::Initialize() {
@@ -43,6 +51,14 @@ void Node::SetNodeState(bool NodeWorking) {
 
 bool Node::IsNodeWorking() const {
     return nodeWorking;
+}
+
+void Node::AddNeighborNode(Node* node) {
+    neighborNodes.push_back(node);
+}
+
+unsigned int Node::GetNodeDegree() {
+    return neighborNodes.size();
 }
 
 Topology* Node::GetTopology() const {

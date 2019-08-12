@@ -36,15 +36,15 @@ public:
      */
     Node(Topology* topPointer,  NodeIndex nodeId);
     /**
-     * @brief Copy constructor for a Node object.
-     * @param orig original Node object.
-     */
-    Node(const Node& orig);
-    /**
      * @brief Virtual destructor of a Node object.
      */
     virtual ~Node();
-    
+    /**
+     * @brief Function to compare two nodes.
+     * @param right Node in the right side of the operator.
+     * @return True if the nodes are the same.
+     */
+    bool operator==(const Node& right) const;
     /**
      * @brief Initialize the node, setting the start values
      * contained in it.
@@ -66,6 +66,17 @@ public:
      * @param NodeWorking Node state.
      */
     void SetNodeState(bool NodeWorking);
+    /**
+     * @brief Function to add a node to the neighbor nodes container.
+     * @param node Node to add.
+     */
+    void AddNeighborNode(Node* node);
+    /**
+     * @brief Function to get thee node degree. The degree indicates how many
+     * nodes this node is connected.
+     * @return Node degree.
+     */
+    unsigned int GetNodeDegree();
     
     /**
      * @brief Function to get the topology in which this node is inserted.
@@ -86,6 +97,10 @@ private:
      * @brief Boolean variable to indicate the node state.
      */
     bool nodeWorking;
+    /**
+     * @brief Container of nodes this node is connected.
+     */
+    std::vector<Node*> neighborNodes;
 };
 
 #endif /* NODE_H */

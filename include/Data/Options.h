@@ -37,8 +37,10 @@ enum TopologyOption {
     TopologyCoreNet,
     TopologySmallNet,
     TopologyWaxman,
+    TopologyUS_Backbone,
+    TopologyEuropean,
     FirstTopology = TopologyNSFNet,
-    LastTopology = TopologyWaxman
+    LastTopology = TopologyEuropean
 };
 
 /**

@@ -27,6 +27,8 @@
     8 - Core Net
     9 - Small Net
     10- Waxman
+    11- US Backbone
+    12- European
 2-Routing algorithm
     0 - Invalid
     1 - DJK

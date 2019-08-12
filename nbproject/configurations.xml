@@ -18,12 +18,14 @@
           <itemPath>Files/Inputs/Topologies/3_Nodes.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/CoreNet.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/EON_RT.txt</itemPath>
+          <itemPath>Files/Inputs/Topologies/European.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Germany.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Italy.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/NSFNet.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Ring.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/SmallNet.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Toroidal.txt</itemPath>
+          <itemPath>Files/Inputs/Topologies/US_Backbone.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/Waxman.txt</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
@@ -304,6 +306,11 @@
       </item>
       <item path="Files/Inputs/Topologies/EON_RT.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Topologies/European.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
             tool="3"
@@ -321,6 +328,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Toroidal.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Topologies/US_Backbone.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -737,6 +749,11 @@
       </item>
       <item path="Files/Inputs/Topologies/EON_RT.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Topologies/European.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="Files/Inputs/Topologies/Germany.txt"
             ex="false"
             tool="3"
@@ -754,6 +771,11 @@
             flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/Toroidal.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Topologies/US_Backbone.txt"
             ex="false"
             tool="3"
             flavor2="0">

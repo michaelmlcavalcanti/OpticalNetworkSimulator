@@ -242,6 +242,7 @@ void Topology::SetMaxLength() {
 void Topology::SetAditionalSettings() {
     this->SetMaxLength();
     this->SetLinksIniCost();
+    this->SetNodesNeighbors();
 }
 
 void Topology::SetAllLinksWorking() {
@@ -280,6 +281,24 @@ void Topology::SetLinksIniCost() {
         default:
             std::cerr << "Invalid link cost type" << std::endl;
             std::abort();
+    }
+}
+
+void Topology::SetNodesNeighbors() {
+    Link* auxLink;
+    
+    for(auto node1: vecNodes){
+        
+        for(auto node2: vecNodes) {
+            
+            if(node1 == node2)
+                continue;
+            auxLink = this->GetLink(node1->GetNodeId(), node2->GetNodeId());
+            
+            if(auxLink == nullptr)
+                continue;
+            node1->AddNeighborNode(node2.get());
+        }
     }
 }
 
