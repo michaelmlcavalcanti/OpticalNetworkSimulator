@@ -201,6 +201,10 @@ enum RegAssignmentOption {
     LastRegAss = RegAssOpaque
 };
 
+/**
+ * @brief Enumerate the possible stop criteria for the simulations.
+ * Total number of call requests or number of blocked call requests. 
+ */
 enum StopCriteria {
     NumCallRequestsMaximum,
     NumCallRequestsBlocked,

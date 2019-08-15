@@ -45,7 +45,9 @@ public:
      * @brief Default destructor of a GA algorithm.
      */
     virtual ~GA();
-    
+    /**
+     * @brief Function to load the GA parameters of an input file.
+     */
     virtual void LoadFile();
     
     /**
@@ -84,35 +86,53 @@ public:
      * @return Number of generations.
      */
     const unsigned int GetNumberGenerations() const;
-    
+    /**
+     * @brief Function to set the GA total number of generations.
+     * @param numberGenerations Total number fo generations.
+     */
     void SetNumberGenerations(unsigned int numberGenerations);
     /**
      * @brief Gets the number of individuals of this GA algorithm.
      * @return Number of individuals.
      */
     const unsigned int GetNumberIndividuals() const;
-    
+    /**
+     * @brief Function to set the GA total number of individuals. This value is
+     * the number of individuals that will be selected at the end of each
+     * generation.
+     * @param numberIndividuals Total number of individuals.
+     */
     void SetNumberIndividuals(unsigned int numberIndividuals);
     /**
      * @brief Gets the crossover probability of this GA algorithm.
      * @return Crossover probability.
      */
     const double GetProbCrossover() const;
-    
+    /**
+     * @brief Function to set the crossover probability value.
+     * @param probCrossover Crossover probability.
+     */
     void SetProbCrossover(double probCrossover);
     /**
      * @brief Gets the mutation probability of this GA algorithm.
      * @return Mutation probability.
      */
     const double GetProbMutation() const;
-    
+    /**
+     * @brief Function to set the mutation probability value.
+     * @param probMutation Mtation probability.
+     */
     void SetProbMutation(double probMutation);
     /**
      * @brief Gets the maximum number of simulations per individual.
      * @return Maximum number of simulations.
      */
     const unsigned int GetMaxNumSimulation() const;
-    
+    /**
+     * @brief Function to set the maximum number of simulations a individual
+     * need to perform.
+     * @param maxNumSimulation Maximum  number of simulations.
+     */
     void SetMaxNumSimulation(unsigned int maxNumSimulation);
 
     /**
@@ -135,9 +155,15 @@ public:
      * @param actualGeneration Actual generation.
      */
     void SetActualGeneration(unsigned int actualGeneration);
-    
+    /**
+     * @brief Function to get the GA network load point.
+     * @return Network load.
+     */
     double GetLoadPoint() const;
-
+    /**
+     * @brief Function to get the GA network load point.
+     * @param loadPoint Network load.
+     */
     void SetLoadPoint(double loadPoint);
 
     /**
@@ -154,9 +180,18 @@ public:
      */
     virtual void CheckMinSimul() = 0;
     
-    
+    /**
+     * @brief Function to print the GA data of the actual generation into a
+     * output stream.
+     * @param ostream Output stream.
+     */
     virtual void print(std::ostream& ostream) const = 0;
-    
+    /**
+     * @brief Function to print the GA parameters into a stream or save then 
+     * into a output file.
+     * @param ostream Output stream.
+     * @return Output stream.
+     */
     virtual std::ostream& printParameters(std::ostream& ostream) const;
 private:
     /**
@@ -187,7 +222,9 @@ private:
      * @brief Number of maximum simulation each individual will do.
      */
     unsigned int maxNumSimulation;
-    
+    /**
+     * @brief Network load poiint.
+     */
     double loadPoint;
     /**
      * @brief Probability distribution used in this GA algorithm for crossover

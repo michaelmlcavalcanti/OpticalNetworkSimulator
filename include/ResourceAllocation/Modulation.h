@@ -74,7 +74,13 @@ public:
      * @return Spectral bandwidth needed to transmit.
      */
     double BandwidthQAM(TypeModulation M, double Rbps);
-    
+    /**
+     * @brief Function to get the Optical Signal-Noise Ratio (OSNR) threshold 
+     * for a specified modulation format and bit rate.
+     * @param M Modulation format.
+     * @param Rbps Bit rate.
+     * @return OSNR threshold.
+     */
     double GetOSNRQAM(TypeModulation M, double Rbps);
     /**
      * @brief Function to get the SNRb value, in dB, depending on the modulation 
@@ -100,7 +106,10 @@ public:
      * @return Container of possible slots.
      */
     std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
-    
+    /**
+     * @brief Function to get the slot bandwidth used as reference.
+     * @return Slot bandwidth.
+     */
     double GetSlotBandwidth() const;
 private:
     /**

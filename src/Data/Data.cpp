@@ -142,7 +142,7 @@ void Data::SaveLog(std::vector<unsigned> vecParam) {
     
     for(unsigned int a = 0; a < numPoints; a++){
         this->SetActualIndex(a);
-        logOfstream << "Number regenerators: " << vecParam.at(a) << std::endl;
+        logOfstream << "Number of devices: " << vecParam.at(a) << std::endl;
         logOfstream << this << std::endl;
     }
 }
@@ -357,7 +357,7 @@ void Data::SaveParetoFronts(GA_MO* ga, std::ostream& logOfstream,
 std::ostream& bestInds) {
     std::vector<Individual*> auxVecInd(0);
     unsigned int numGen = ga->GetNumberGenerations();
-    unsigned int passo = ga->GetSavePasso();
+    unsigned int passo = ga->GetSaveStep();
     
     for(unsigned int a = 0; a <= numGen; a++){  
         ga->SetActualGeneration(a);

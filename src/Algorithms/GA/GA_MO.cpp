@@ -16,7 +16,7 @@
 #include "../../../include/Data/Data.h"
 
 GA_MO::GA_MO(SimulationType* simul)
-:GA(simul), initialPopulation(0), firstParetoFronts(0), savePasso(5), 
+:GA(simul), initialPopulation(0), firstParetoFronts(0), saveStep(5), 
 actualParetoFronts(0), totalPopulation(0) {
     
 }
@@ -33,7 +33,7 @@ void GA_MO::LoadFile() {
     this->GetSimul()->GetInputOutput()->LoadGA_SO(auxIfstream);
     
     auxIfstream >> auxInt;
-    this->SetSavePasso(auxInt);
+    this->SetSaveStep(auxInt);
 }
 
 void GA_MO::Initialize() {
@@ -191,12 +191,12 @@ std::vector<Individual*> GA_MO::GetIniPopulation() const {
     return auxVecInd;
 }
 
-void GA_MO::SetSavePasso(unsigned int savePasso) {
-    this->savePasso = savePasso;
+void GA_MO::SetSaveStep(unsigned int saveStep) {
+    this->saveStep = saveStep;
 }
 
-unsigned int GA_MO::GetSavePasso() const {
-    return savePasso;
+unsigned int GA_MO::GetSaveStep() const {
+    return saveStep;
 }
 
 void GA_MO::print(std::ostream& ostream) const {
@@ -210,7 +210,7 @@ std::ostream& GA_MO::printParameters(std::ostream& ostream) const {
     GA::printParameters(ostream);
     
     ostream << "GA MO PARAMETERS" << std::endl;
-    ostream << "Step of generation to save: " << this->GetSavePasso()
+    ostream << "Step of generation to save: " << this->GetSaveStep()
             << std::endl << std::endl;
     
     return ostream;

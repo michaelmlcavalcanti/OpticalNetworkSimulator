@@ -319,7 +319,9 @@ private:
      * topology, based in the selected option.
      */
     void SetLinksIniCost();
-    
+    /**
+     * @brief Function to set the neighbors nodes for all nodes in the topology.
+     */
     void SetNodesNeighbors();
     
     /**

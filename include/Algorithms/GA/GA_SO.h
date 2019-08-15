@@ -46,7 +46,10 @@ public:
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
     };
-    
+    /**
+     * @brief Function to load the GA single-objective parameters of a inout 
+     * file.
+     */
     void LoadFile() override;
     
     /**
@@ -90,6 +93,8 @@ public:
      * individuals fitness.
      */
     void SetSumFitnessSelectedPop();
+    
+    void SetNumBestIndividuals(unsigned int numBestIndividuals);
     
     /**
      * @brief Gets the worst individual of the actual generation.
@@ -153,10 +158,6 @@ public:
     void print(std::ostream& ostream) const override;
     
     std::ostream& printParameters(std::ostream& ostream) const override;
-    
-    
-    void SetNumBestIndividuals(unsigned int numBestIndividuals);
-
 private:
     /**
      * @brief Number of best individuals the process of selection will choose.
