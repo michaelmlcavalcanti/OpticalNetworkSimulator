@@ -23,6 +23,7 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Options.h"
+#include "../../include/Data/Data.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/GeneralClasses/Def.h"
@@ -305,7 +306,7 @@ resourceAllocOrder) {
     this->resources->resourceAllocOrder = resourceAllocOrder;
 }
 
-void ResourceAlloc::SetResourceAllocOrder() {
+void ResourceAlloc::SetResourceAllocOrderGA() {
     std::ifstream auxIfstream;
     std::vector<bool> vecBool;
     bool auxBool;
@@ -317,6 +318,52 @@ void ResourceAlloc::SetResourceAllocOrder() {
         vecBool.push_back(auxBool);
     }
     this->SetResourceAllocOrder(vecBool);
+}
+
+bool ResourceAlloc::RsaOrderTopology() {
+    unsigned int numNodes = topology->GetNumNodes();
+    TopologyOption RsaTopology = options->GetTopologyOption();
+    bool rsaOrder; 
+    if(RsaTopology != TopologyRing){
+        resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
+        rsaOrder = sa_r;
+    }
+    else {
+        resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
+        rsaOrder = r_sa;
+    }
+    return rsaOrder;
+}
+
+void ResourceAlloc::SetResourceAllocOrderHE() {
+    unsigned int numNodes = topology->GetNumNodes();
+    bool flag = true;
+    this->RsaOrderTopology();
+    simulType->RunBase();
+    double bestBP = simulType->GetData()->GetPbReq();
+    double currentBP;
+    bool rsaOrder =  this->RsaOrderTopology();   
+    unsigned int bestIndex = Def::Max_UnInt;
+    while (flag){
+        flag = false; 
+        for (unsigned int a = 0; a < numNodes*numNodes; a++){
+            if(resources->resourceAllocOrder.at(a) != rsaOrder){
+                continue;                
+            }
+            resources->resourceAllocOrder.at(a) = !rsaOrder;
+            simulType->RunBase();
+            currentBP = simulType->GetData()->GetPbReq();
+            if(currentBP < bestBP){
+                bestBP = simulType->GetData()->GetPbReq();
+                bestIndex = a;
+                flag = true;
+            }
+            resources->resourceAllocOrder.at(a) = rsaOrder;
+        }
+        if(flag){
+            resources->resourceAllocOrder.at(bestIndex) = !rsaOrder;
+        }
+    }
 }
 
 void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
@@ -535,9 +582,12 @@ void ResourceAlloc::CreateRsaOrder() {
         case OrderSaRouting:
             resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
             break;
-        case MixedOrder:
-            this->SetResourceAllocOrder();
+        case MixedOrderGA:
+            this->SetResourceAllocOrderGA();
             break;
+        case MixedOrderHE:
+            this->SetResourceAllocOrderHE();
+            break;    
         case HeuristicsOrder:
             this->SetResAllocOrderHeuristicsRing();
             break;

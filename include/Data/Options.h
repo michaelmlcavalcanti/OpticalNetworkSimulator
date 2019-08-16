@@ -126,13 +126,14 @@ enum NetworkOption {
 };
 
 /**
- * @brief Numerate the resource allocation choice order, R-SA, SA-R or GA found 
+ * @brief Numerate the resource allocation choice order, R-SA, SA-R, HE or GA found 
  * order.
  */
 enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
-    MixedOrder,
+    MixedOrderGA,
+    MixedOrderHE,
     HeuristicsOrder,
     FirstOrderRSA = OrderRoutingSa,
     LastOrderRSA = HeuristicsOrder

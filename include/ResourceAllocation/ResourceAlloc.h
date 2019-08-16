@@ -151,7 +151,10 @@ public:
      * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network of the output of the first simulation.
      */
-    void SetResourceAllocOrder();
+    void SetResourceAllocOrderGA();
+    bool RsaOrderTopology();
+    void SetResourceAllocOrderHE();
+    void Fucntion();
     
     void SetResAllocOrderHeuristicsRing();
     
