@@ -125,7 +125,11 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
             this->SetMaxRegChoiceOrder(call, vec);
             break;
         case RegAssDRE2BR:
-        case RegAssSCRA:
+        case RegAssSCRA1:
+        case RegAssSCRA2:
+        case RegAssSCRA3:
+        case RegAssSCRA4:
+        case RegAssSCRA5:
             this->SetCostMetric(call, vec);
             break;
         default:
@@ -359,8 +363,20 @@ unsigned routeIndex, unsigned subRouteIndex) {
         case RegAssDRE2BR:
             tupleCost = this->DRE2BR_Cost(call, routeIndex, subRouteIndex);
             break;
-        case RegAssSCRA:
-            tupleCost = this->SCRA_Cost(call, routeIndex, subRouteIndex);
+        case RegAssSCRA1:
+            tupleCost = this->SCRA1_Cost(call, routeIndex, subRouteIndex);
+            break;
+        case RegAssSCRA2:
+            tupleCost = this->SCRA2_Cost(call, routeIndex, subRouteIndex);
+            break;
+        case RegAssSCRA3:
+            tupleCost = this->SCRA3_Cost(call, routeIndex, subRouteIndex);
+            break;
+        case RegAssSCRA4:
+            tupleCost = this->SCRA4_Cost(call, routeIndex, subRouteIndex);
+            break;
+        case RegAssSCRA5:
+            tupleCost = this->SCRA5_Cost(call, routeIndex, subRouteIndex);
             break;
         default:
             std::cerr << "Invalid regenerator assignment option" << std::endl;
@@ -411,7 +427,7 @@ unsigned routeIndex, unsigned subRouteIndex) {
     return cost;
 }
 
-double ResourceDeviceAlloc::SCRA_Cost(CallDevices* call, unsigned routeIndex, 
+double ResourceDeviceAlloc::SCRA1_Cost(CallDevices* call, unsigned routeIndex, 
 unsigned subRouteIndex) {
     std::shared_ptr<Route> auxRoute;
     NodeDevices* auxNode;
@@ -455,6 +471,209 @@ unsigned subRouteIndex) {
                                                                  GetBitRate());
             totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
             cost += (numUsedReg/totalFreeReg);
+        }
+        
+        totalCost += cost;
+    }
+    
+    return totalCost;
+}
+
+double ResourceDeviceAlloc::SCRA2_Cost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    double totalCost = 0.0, cost = 0.0;
+    double alpha = 0.0;
+    double totalNumLinks = 0.0;
+    double auxNumLinks;
+    double totalNumSlots = (double) this->GetN(call);
+    double auxNumSlots;
+    double totalFreeReg;
+    double numUsedReg;
+    std::vector<std::shared_ptr<Route>> vecSubRoutes = 
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = 
+    resources->GetNumSlotsPerTranspSegments(call, routeIndex, subRouteIndex);
+    
+    for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
+        totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();
+    }
+    
+    for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
+        cost = 0.0;
+        cost += alpha;
+        
+        auxRoute = vecSubRoutes.at(ind);
+        auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
+           ind == vecSubRoutes.size() - 1){
+            auxNumLinks = (double) auxRoute->GetNumHops();
+            auxNumSlots = ((double) vecNumSlots.at(ind)) / auxNumLinks;
+            cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
+        }
+        else{
+            totalCost = Def::Max_Double;
+            break;
+        }
+        
+        if(ind != vecSubRoutes.size() - 1){
+            numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
+                                                                 GetBitRate());
+            totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
+            cost += (numUsedReg/totalFreeReg);
+        }
+        
+        totalCost += cost;
+    }
+    
+    return totalCost;
+}
+
+double ResourceDeviceAlloc::SCRA3_Cost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    double totalCost = 0.0, cost = 0.0;
+    double alpha = -1.0;
+    double epslon = 1E-6;
+    double totalNumLinks = 0.0;
+    double auxNumLinks;
+    double totalNumSlots = (double) this->GetN(call);
+    double auxNumSlots;
+    std::vector<std::shared_ptr<Route>> vecSubRoutes = 
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = 
+    resources->GetNumSlotsPerTranspSegments(call, routeIndex, subRouteIndex);
+    
+    for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
+        totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();
+    }
+    
+    for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
+        cost = 0.0;
+        cost += alpha;
+        
+        auxRoute = vecSubRoutes.at(ind);
+        auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
+           ind == vecSubRoutes.size() - 1){
+            auxNumLinks = (double) auxRoute->GetNumHops();
+            auxNumSlots = ((double) vecNumSlots.at(ind)) / auxNumLinks;
+            cost += (epslon*auxNumSlots*auxNumLinks)/
+                    (totalNumSlots*totalNumLinks);
+        }
+        else{
+            totalCost = Def::Max_Double;
+            break;
+        }
+        
+        totalCost += cost;
+    }
+    
+    return totalCost;
+}
+
+double ResourceDeviceAlloc::SCRA4_Cost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    double totalCost = 0.0, cost = 0.0;
+    double alpha = 0.0;
+    double epslon = 1E-6;
+    double totalNumLinks = 0.0;
+    double auxNumLinks;
+    double totalNumSlots = (double) this->GetN(call);
+    double auxNumSlots;
+    double totalFreeReg;
+    double numUsedReg;
+    std::vector<std::shared_ptr<Route>> vecSubRoutes = 
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = 
+    resources->GetNumSlotsPerTranspSegments(call, routeIndex, subRouteIndex);
+    
+    for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
+        totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();
+    }
+    
+    for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
+        cost = 0.0;
+        cost += alpha;
+        
+        auxRoute = vecSubRoutes.at(ind);
+        auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
+           ind == vecSubRoutes.size() - 1){
+            auxNumLinks = (double) auxRoute->GetNumHops();
+            auxNumSlots = ((double) vecNumSlots.at(ind)) / auxNumLinks;
+            cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
+        }
+        else{
+            totalCost = Def::Max_Double;
+            break;
+        }
+        
+        if(ind != vecSubRoutes.size() - 1){
+            numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
+                                                                 GetBitRate());
+            totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
+            cost -= (epslon*numUsedReg/totalFreeReg);
+        }
+        
+        totalCost += cost;
+    }
+    
+    return totalCost;
+}
+
+double ResourceDeviceAlloc::SCRA5_Cost(CallDevices* call, unsigned routeIndex, 
+unsigned subRouteIndex) {
+    std::shared_ptr<Route> auxRoute;
+    NodeDevices* auxNode;
+    double totalCost = 0.0, cost = 0.0;
+    double alpha = 0.0;
+    double epslon = 1E-6;
+    double totalNumLinks = 0.0;
+    double auxNumLinks;
+    double totalNumSlots = (double) this->GetN(call);
+    double auxNumSlots;
+    double totalFreeReg;
+    double numUsedReg;
+    std::vector<std::shared_ptr<Route>> vecSubRoutes = 
+    resources->GetRoutesTranspSegments(call, routeIndex, subRouteIndex);
+    std::vector<unsigned> vecNumSlots = 
+    resources->GetNumSlotsPerTranspSegments(call, routeIndex, subRouteIndex);
+    
+    for(unsigned int a = 0; a < vecSubRoutes.size(); a++){
+        totalNumLinks += (double) vecSubRoutes.at(a)->GetNumHops();
+    }
+    
+    for(unsigned int ind = 0; ind < vecSubRoutes.size(); ind++){
+        cost = 0.0;
+        cost += alpha;
+        
+        auxRoute = vecSubRoutes.at(ind);
+        auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
+        
+        if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
+           ind == vecSubRoutes.size() - 1){
+            auxNumLinks = (double) auxRoute->GetNumHops();
+            auxNumSlots = ((double) vecNumSlots.at(ind)) / auxNumLinks;
+            cost += (auxNumSlots*auxNumLinks)/(totalNumSlots*totalNumLinks);
+        }
+        else{
+            totalCost = Def::Max_Double;
+            break;
+        }
+        
+        if(ind != vecSubRoutes.size() - 1){
+            numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
+                                                                 GetBitRate());
+            totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
+            cost += (epslon*numUsedReg/totalFreeReg);
         }
         
         totalCost += cost;

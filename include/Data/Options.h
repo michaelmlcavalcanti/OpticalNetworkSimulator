@@ -195,10 +195,13 @@ enum RegAssignmentOption {
     RegAssMinSlotsMaxReg,
     RegAssMaxReg,
     RegAssDRE2BR,
-    RegAssSCRA,
-    RegAssOpaque,
-    FirstRegAss = RegAssInvalid,
-    LastRegAss = RegAssOpaque
+    RegAssSCRA1,
+    RegAssSCRA2,
+    RegAssSCRA3,
+    RegAssSCRA4,
+    RegAssSCRA5,
+    FirstRegAss = RegAssMinReg,
+    LastRegAss = RegAssSCRA5
 };
 
 enum StopCriteria {

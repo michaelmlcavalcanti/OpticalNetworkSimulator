@@ -135,7 +135,19 @@ private:
      * @param subRouteIndex Regeneration combination index.
      * @return Cost of the tuple.
      */
-    double SCRA_Cost(CallDevices* call, unsigned routeIndex, 
+    double SCRA1_Cost(CallDevices* call, unsigned routeIndex, 
+                unsigned subRouteIndex);
+    
+    double SCRA2_Cost(CallDevices* call, unsigned routeIndex, 
+                unsigned subRouteIndex);
+    
+    double SCRA3_Cost(CallDevices* call, unsigned routeIndex, 
+                unsigned subRouteIndex);
+    
+    double SCRA4_Cost(CallDevices* call, unsigned routeIndex, 
+                unsigned subRouteIndex);
+    
+    double SCRA5_Cost(CallDevices* call, unsigned routeIndex, 
                 unsigned subRouteIndex);
     /**
      * @brief Function to get the call request number of slots using the 

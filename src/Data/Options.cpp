@@ -125,8 +125,11 @@ Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssMaxReg, "Maximum regeneration")
     (RegAssDRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration "
     "(DRE2BR)")
-    (RegAssSCRA, "Shortest-cost regenerator assignment (SCRA)")
-    (RegAssOpaque, "Opaque");
+    (RegAssSCRA1, "SCRA: -0.05 + nl/NL + r/R")
+    (RegAssSCRA2, "SCRA:  0.00 + nl/NL + r/R")
+    (RegAssSCRA3, "SCRA: -1.00 + e*(nl/NL)")
+    (RegAssSCRA4, "SCRA:  0.00 + nl/NL - e*(r/R)")
+    (RegAssSCRA5, "SCRA:  0.00 + nl/NL + e*(r/R)");
 
 const boost::unordered_map<StopCriteria, std::string>
 Options::mapStopCriteria = boost::assign::map_list_of
