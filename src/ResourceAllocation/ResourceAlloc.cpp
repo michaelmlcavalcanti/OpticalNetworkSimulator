@@ -323,45 +323,61 @@ void ResourceAlloc::SetResourceAllocOrderGA() {
 bool ResourceAlloc::RsaOrderTopology() {
     unsigned int numNodes = topology->GetNumNodes();
     TopologyOption RsaTopology = options->GetTopologyOption();
-    bool rsaOrder; 
+    
     if(RsaTopology != TopologyRing){
         resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
-        rsaOrder = sa_r;
+        return sa_r;
     }
-    else {
+    else{
         resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
-        rsaOrder = r_sa;
+        return r_sa;
     }
-    return rsaOrder;
 }
 
 void ResourceAlloc::SetResourceAllocOrderHE() {
     unsigned int numNodes = topology->GetNumNodes();
-    bool flag = true;
-    this->RsaOrderTopology();
+    bool foundBetterOption = true;
+    double currentBP;
+    unsigned int bestIndex1 = Def::Max_UnInt;
+    unsigned int bestIndex2 = Def::Max_UnInt;
+    unsigned int auxIndex1, auxIndex2;
+    
+    ResAllocOrder rsaOrder =  this->RsaOrderTopology();
     simulType->RunBase();
     double bestBP = simulType->GetData()->GetPbReq();
-    double currentBP;
-    bool rsaOrder =  this->RsaOrderTopology();   
-    unsigned int bestIndex = Def::Max_UnInt;
-    while (flag){
-        flag = false; 
-        for (unsigned int a = 0; a < numNodes*numNodes; a++){
-            if(resources->resourceAllocOrder.at(a) != rsaOrder){
-                continue;                
+    
+    while (foundBetterOption){
+        foundBetterOption = false;
+        
+        for(unsigned int sourNode = 0; sourNode < numNodes; sourNode++){
+            for(unsigned desNode = 0; desNode < numNodes; desNode++){
+                
+                if(sourNode == desNode)
+                    continue;
+                auxIndex1 = sourNode*numNodes + desNode;
+                auxIndex2 = desNode*numNodes + sourNode;
+                
+                if(resources->resourceAllocOrder.at(auxIndex1) != rsaOrder)
+                    continue;
+                resources->resourceAllocOrder.at(auxIndex1) = !rsaOrder;
+                resources->resourceAllocOrder.at(auxIndex2) = !rsaOrder;
+                simulType->RunBase();
+                currentBP = simulType->GetData()->GetPbReq();
+
+                if(currentBP < bestBP){
+                    bestBP = simulType->GetData()->GetPbReq();
+                    bestIndex1 = auxIndex1;
+                    bestIndex2 = auxIndex2;
+                    foundBetterOption = true;
+                }
+                resources->resourceAllocOrder.at(auxIndex1) = rsaOrder;
+                resources->resourceAllocOrder.at(auxIndex2) = rsaOrder;
             }
-            resources->resourceAllocOrder.at(a) = !rsaOrder;
-            simulType->RunBase();
-            currentBP = simulType->GetData()->GetPbReq();
-            if(currentBP < bestBP){
-                bestBP = simulType->GetData()->GetPbReq();
-                bestIndex = a;
-                flag = true;
-            }
-            resources->resourceAllocOrder.at(a) = rsaOrder;
         }
-        if(flag){
-            resources->resourceAllocOrder.at(bestIndex) = !rsaOrder;
+        
+        if(foundBetterOption){
+            resources->resourceAllocOrder.at(bestIndex1) = !rsaOrder;
+            resources->resourceAllocOrder.at(bestIndex2) = !rsaOrder;
         }
     }
 }
@@ -587,7 +603,7 @@ void ResourceAlloc::CreateRsaOrder() {
             break;
         case MixedOrderHE:
             this->SetResourceAllocOrderHE();
-            break;    
+            break;
         case HeuristicsOrder:
             this->SetResAllocOrderHeuristicsRing();
             break;
