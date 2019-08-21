@@ -98,6 +98,12 @@ private:
      */
     void SetMaxRegChoiceOrder(CallDevices* call, 
     std::vector<std::tuple<unsigned, unsigned>>& vec);
+    
+    void SetRegChoiceOrderFLR(CallDevices* call,
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
+    
+    void SetRegChoiceOrderFNS(CallDevices* call,
+    std::vector<std::tuple<unsigned, unsigned>>& vec);
     /**
      * @brief Function to order the tuples of route and regeneration combination 
      * indexes based on a cost metric.

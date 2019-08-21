@@ -194,6 +194,8 @@ enum RegAssignmentOption {
     RegAssMinSlotsMinReg,
     RegAssMinSlotsMaxReg,
     RegAssMaxReg,
+    RegAssFLR,
+    RegAssFNS,
     RegAssDRE2BR,
     RegAssSCRA1,
     RegAssSCRA2,

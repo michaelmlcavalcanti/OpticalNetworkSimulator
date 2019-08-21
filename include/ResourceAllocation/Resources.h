@@ -193,6 +193,9 @@ public:
      */
     std::vector<std::shared_ptr<Route>> GetRoutesTranspSegments(Call* call, 
     unsigned int routeIndex, unsigned int subRouteIndex);
+    
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> 
+    GetRoutesTranspSegments(Call* call);
     /**
      * @brief Function to get the modulation formats of each transparent segment
      * for a call request (With predefined bit rate, node pair and route) for

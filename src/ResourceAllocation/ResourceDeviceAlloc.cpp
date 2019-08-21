@@ -124,6 +124,12 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         case RegAssMaxReg:
             this->SetMaxRegChoiceOrder(call, vec);
             break;
+        case RegAssFLR:
+            this->SetRegChoiceOrderFLR(call, vec);
+            break;
+        case RegAssFNS:
+            this->SetRegChoiceOrderFNS(call, vec);
+            break;
         case RegAssDRE2BR:
         case RegAssSCRA1:
         case RegAssSCRA2:
@@ -308,6 +314,39 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
         vecNumReg.at(auxRouteIndex).at(auxIndex) = 0;
         vecNumSlots.at(auxRouteIndex).at(auxIndex) = Def::Max_UnInt;
     }
+}
+
+void ResourceDeviceAlloc::SetRegChoiceOrderFLR(CallDevices* call, 
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> vecRoutes =
+    resources->GetRoutesTranspSegments(call);
+    
+    unsigned int sizeRoutes = vecRoutes.size();
+    unsigned int auxRegOpIndex;
+    
+    for(unsigned routeIndex = 0; routeIndex < sizeRoutes; routeIndex++){
+        
+        while(!vecRoutes.at(routeIndex).empty()){
+            auxRegOpIndex = vecRoutes.at(routeIndex).size() - 1;
+            vec.push_back(std::make_tuple(routeIndex, auxRegOpIndex));
+            vecRoutes.at(routeIndex).pop_back();
+        }
+    }
+}
+
+void ResourceDeviceAlloc::SetRegChoiceOrderFNS(CallDevices* call, 
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> vecRoutes =
+    resources->GetRoutesTranspSegments(call);
+    std::vector<std::vector<std::vector<TypeModulation>>>
+    vecModulation = resources->GetSetsTranpSegmentsModulation(call);
+    
+    unsigned int sizeRoutes = vecRoutes.size();
+    
+    for(unsigned int routeIndex = 0; routeIndex < sizeRoutes; routeIndex++) {
+        
+    }
+
 }
 
 void ResourceDeviceAlloc::SetCostMetric(CallDevices* call, 

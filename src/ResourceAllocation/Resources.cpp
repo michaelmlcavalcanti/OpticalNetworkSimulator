@@ -251,6 +251,14 @@ unsigned int routeIndex, unsigned int subRouteIndex) {
     return subRoutes.at(nodeIndex).at(routeIndex).at(subRouteIndex);
 }
 
+std::vector<std::vector<std::vector<std::shared_ptr<Route> > > >
+Resources::GetRoutesTranspSegments(Call* call) {
+    unsigned int nodeIndex = (call->GetOrNode()->GetNodeId() * resourceAlloc->
+    GetTopology()->GetNumNodes()) + call->GetDeNode()->GetNodeId();
+    
+    return subRoutes.at(nodeIndex);
+}
+
 std::vector<TypeModulation> Resources::GetTranspSegmentsModulation(Call* call, 
 unsigned int subRouteIndex) {
     unsigned trIndex = resourceAlloc->GetTraffic()->GetTrafficIndex(call->
