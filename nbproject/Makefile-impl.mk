@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=OpticalNetworkSimulator
+PROJECTNAME=SimulatorOpticalNetwork
 
 # Active Configuration
 DEFAULTCONF=Debug
