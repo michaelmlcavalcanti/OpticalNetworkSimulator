@@ -31,6 +31,8 @@ class Options;
 
 #include "../Data/Options.h"
 #include "../GeneralClasses/Def.h"
+#include "../Data/Parameters.h"
+
 
 /**
  * @brief Class responsible for resource allocation, at least routing and 
@@ -297,6 +299,11 @@ protected:
      * owns this RSA.
      */
     SimulationType* simulType;
+       /**
+     * @breif Pointer to the Parameters object of this simulation.
+     */
+    Parameters* parameters;
+    
     /**
      * @brief Resource allocation option chosen.
      */

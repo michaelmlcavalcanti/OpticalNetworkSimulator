@@ -30,7 +30,7 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
-routing(nullptr), specAlloc(nullptr) {
+routing(nullptr), specAlloc(nullptr), parameters(nullptr) {
     
 }
 
@@ -51,6 +51,7 @@ void ResourceAlloc::Load() {
     topology = simulType->GetTopology();
     traffic = simulType->GetTraffic();
     options = simulType->GetOptions();
+    parameters = simulType->GetParameters();
     
     this->CreateRouting();
     this->CreateSpecAllocation();
@@ -341,11 +342,12 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
     unsigned int bestIndex1 = Def::Max_UnInt;
     unsigned int bestIndex2 = Def::Max_UnInt;
     unsigned int auxIndex1, auxIndex2;
-    
     ResAllocOrder rsaOrder =  this->RsaOrderTopology();
+    this->GetSimulType()->GetCallGenerator()->SetNetworkLoad(parameters->GetMidLoadPoint());
+    double numMaxReq = parameters->GetNumberReqMax();
+    parameters->SetNumberReqMax(1E5);
     simulType->RunBase();
     double bestBP = simulType->GetData()->GetPbReq();
-    
     while (foundBetterOption){
         foundBetterOption = false;
         
@@ -380,6 +382,7 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
             resources->resourceAllocOrder.at(bestIndex2) = !rsaOrder;
         }
     }
+parameters->SetNumberReqMax(numMaxReq);
 }
 
 void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
