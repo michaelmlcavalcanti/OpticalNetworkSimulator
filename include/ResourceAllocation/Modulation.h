@@ -89,6 +89,8 @@ public:
      * @return SNRb value.
      */
     double GetsnrbQAM(unsigned int M);
+    
+    unsigned int GetNumSlots(double bitRate, TypeModulation modulation);
     /**
      * @brief Check if the simulation is EON, based on the slot bandwidth.
      * @return True if it is an EON simulation.
@@ -102,6 +104,10 @@ public:
     std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
     
     double GetSlotBandwidth() const;
+    
+    static unsigned int GetNumBits(TypeModulation modulation);
+    
+    static std::vector<TypeModulation> GetModulationFormats();
 private:
     /**
      * @brief Gets the possible slots set that the call requests can use with

@@ -16,6 +16,7 @@
 
 #include "ResourceAlloc.h"
 #include "../Data/Options.h"
+#include "Modulation.h"
 
 class Call;
 class CallDevices;
@@ -46,6 +47,8 @@ public:
      */
     void ResourAlloc(Call* call) override;
 private:
+    
+    void RoutingVirtRegSpecAlloc(CallDevices* call);
     /**
      * @brief Function to apply the resource allocation with virtualized 
      * regeneration option. First apply the routing, than try one possible
@@ -53,9 +56,11 @@ private:
      * is decided based on the metric chosen.
      * @param call Call request the function will try to allocate.
      */
-    void RoutingVirtRegSpecAlloc(CallDevices* call);
+    void RoutingOffVirtRegSpecAlloc(CallDevices* call);
     
-    void RoutingTranspSpecAlloc(CallDevices* call);
+    void RoutingOnVirtRegSpecAlloc(CallDevices* call);
+    
+    void RoutingTransponderSpecAlloc(CallDevices* call);
     
     /**
      * @brief Function to order the tuples of route and regeneration combination
@@ -162,12 +167,31 @@ private:
      * @return Number of slots.
      */
     unsigned int GetN(CallDevices* call);
+    
+    bool CreateRegOption(CallDevices* call, unsigned routeInd, 
+    std::vector<std::shared_ptr<Route>> &routes, 
+    std::vector<TypeModulation> &modulations);
+    
+    bool SetRegChoiceOrderFLR(CallDevices* call, unsigned routeInd,
+    std::vector<std::shared_ptr<Route>> &routes, 
+    std::vector<TypeModulation> &modulations);
+    
+    bool SetRegChoiceOrderFNS(CallDevices* call, unsigned routeInd,
+    std::vector<std::shared_ptr<Route>> &routes, 
+    std::vector<TypeModulation> &modulations);
     /**
      * @brief Function to check the OSNR for a call request with devices.
      * @param call Call to be analise.
      * @return True if the OSNR is acceptable.
      */
     bool CheckOSNR(CallDevices* call);
+    
+    bool CheckSpectrumAndOSNR(const double bitRate, Route* route, 
+    TypeModulation modulation);
+    
+    bool CheckSpectrumAndOSNR(const double bitRate, Route* route);
+    
+    TypeModulation GetBestModulation(const double bitRate, Route* route);
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

@@ -102,6 +102,7 @@ const SimulIndex SimulationType::GetSimulationIndex() const {
 Parameters* SimulationType::GetParameters() const {
     return parameters.get();
 }
+
 Options* SimulationType::GetOptions() const {
     return options.get();
 }
@@ -109,6 +110,7 @@ Options* SimulationType::GetOptions() const {
 Data* SimulationType::GetData() const {
     return data.get();
 }
+
 Topology* SimulationType::GetTopology() const {
     return topology.get();
 }
@@ -116,6 +118,7 @@ Topology* SimulationType::GetTopology() const {
 InputOutput* SimulationType::GetInputOutput() const {
     return inputOutput.get();
 }
+
 Traffic* SimulationType::GetTraffic() const {
     return traffic.get();
 }
@@ -123,6 +126,7 @@ Traffic* SimulationType::GetTraffic() const {
 EventGenerator* SimulationType::GetCallGenerator() const {
     return callGenerator.get();
 }
+
 ResourceAlloc* SimulationType::GetResourceAlloc() const {
     return this->resourceAlloc.get();
 }

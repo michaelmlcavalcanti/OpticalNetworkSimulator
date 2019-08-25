@@ -145,6 +145,17 @@ double Modulation::GetSNRbQAM(unsigned int M) {
     std::abort();
 }
 
+unsigned int Modulation::GetNumSlots(double bitRate, TypeModulation modulation){
+    double bandwidth;
+    
+    bandwidth = this->BandwidthQAM(modulation, bitRate);
+    
+    if(!this->isEON())
+        return 1;
+    
+    return std::ceil(bandwidth/this->slotBandwidth);
+}
+
 bool Modulation::isEON() const {
     if(this->slotBandwidth <= 12.5*1E9)
         return true;
@@ -178,6 +189,24 @@ std::vector<unsigned int> Modulation::GetPossibleSlots(std::vector<double>
 
 double Modulation::GetSlotBandwidth() const {
     return slotBandwidth;
+}
+
+unsigned int Modulation::GetNumBits(TypeModulation modulation) {
+    return mapNumBitsModulation.at(modulation);
+}
+
+std::vector<TypeModulation> Modulation::GetModulationFormats() {
+    std::vector<TypeModulation> vecModulations(0);
+    TypeModulation mod = LastModulation;
+    
+    while(mod != InvalidModulation){
+        vecModulations.push_back(mod);
+        mod = TypeModulation(mod - 1);
+    }
+    
+    vecModulations.push_back(InvalidModulation);
+    
+    return vecModulations;
 }
 
 std::vector<unsigned int> Modulation::GetPossibleSlotsFixedMod(

@@ -1,19 +1,19 @@
 1
 1
 2
-1
-1
 2
 1
 2
+1
+2
 0
 0
 1
 0
 1
 1
-3
-0
+7
+1
 
 1-Topology
     0 - Invalid
@@ -92,8 +92,15 @@
     2 - Minimum slots (Minimum regeneration)
     3 - Minimum slots (Maximum regeneration)
     4 - Maximum regeneration
-    5 - DRE2BR
-    6 - SCRA
+    5 - FLR
+    6 - FLR online
+    7 - FNS
+    8 - DRE2BR
+    9 - SCRA 1
+    10- SCRA 2
+    11- SCRA 3
+    12- SCRA 4
+    13- SCRA 5
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests

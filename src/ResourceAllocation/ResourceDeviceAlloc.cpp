@@ -40,13 +40,25 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     if(options->GetRegenerationOption() != RegenerationDisabled)
         this->RoutingVirtRegSpecAlloc(callDev);
     else if(options->GetTransponderOption() == TransponderEnabled)
-        this->RoutingTranspSpecAlloc(callDev);
+        this->RoutingTransponderSpecAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
 }
 
 void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
+    
+    switch(options->GetRegAssOption()){
+        case RegAssFLRonline:
+        case RegAssFNS:
+            this->RoutingOnVirtRegSpecAlloc(call);
+            break;
+        default:
+            this->RoutingOffVirtRegSpecAlloc(call);
+    }
+}
+
+void ResourceDeviceAlloc::RoutingOffVirtRegSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
     
     //Tuple with route index and set of subRoutes index.
@@ -80,7 +92,41 @@ void ResourceDeviceAlloc::RoutingVirtRegSpecAlloc(CallDevices* call) {
     }
 }
 
-void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
+void ResourceDeviceAlloc::RoutingOnVirtRegSpecAlloc(CallDevices* call) {
+    this->routing->RoutingCall(call);
+    
+    unsigned int numRoutes = call->GetNumRoutes();
+    std::vector<std::shared_ptr<Route>> vecRoutes(0);
+    std::vector<TypeModulation> vecModulation(0);
+    
+    for(unsigned int routeIndex = 0; routeIndex < numRoutes; routeIndex++){
+        call->SetRoute(call->GetRoute(routeIndex));
+        
+        if(this->CreateRegOption(call, routeIndex, vecRoutes, vecModulation)){
+            call->CreateTranspSegments(vecRoutes);
+            
+            if(!topology->CheckInsertFreeRegenerators(call))
+                continue;
+            call->SetTranspSegModulation(vecModulation);
+            this->modulation->SetModulationParam(call);
+            
+            //Retirar???
+            if(!this->CheckOSNR(call))
+                continue;
+            
+            this->specAlloc->SpecAllocation(call);
+            
+            if(topology->IsValidLigthPath(call)){
+                call->ClearTrialRoutes();
+                call->SetStatus(Accepted);
+                call->SetUseRegeneration();
+                break;
+            }
+        }
+    }
+}
+
+void ResourceDeviceAlloc::RoutingTransponderSpecAlloc(CallDevices* call) {
     this->routing->RoutingCall(call);
     unsigned int numRoutes = call->GetNumRoutes();
     
@@ -126,9 +172,6 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
             break;
         case RegAssFLR:
             this->SetRegChoiceOrderFLR(call, vec);
-            break;
-        case RegAssFNS:
-            this->SetRegChoiceOrderFNS(call, vec);
             break;
         case RegAssDRE2BR:
         case RegAssSCRA1:
@@ -340,13 +383,15 @@ std::vector<std::tuple<unsigned, unsigned> >& vec) {
     resources->GetRoutesTranspSegments(call);
     std::vector<std::vector<std::vector<TypeModulation>>>
     vecModulation = resources->GetSetsTranpSegmentsModulation(call);
+    unsigned int numPos = 0;
     
-    unsigned int sizeRoutes = vecRoutes.size();
+    for(auto routeIt: vecRoutes){
+        numPos += routeIt.size();
+    }
     
-    for(unsigned int routeIndex = 0; routeIndex < sizeRoutes; routeIndex++) {
+    while(vec.size() < numPos){
         
     }
-
 }
 
 void ResourceDeviceAlloc::SetCostMetric(CallDevices* call, 
@@ -736,6 +781,158 @@ unsigned int ResourceDeviceAlloc::GetN(CallDevices* call) {
     return numSlots;
 }
 
+bool ResourceDeviceAlloc::CreateRegOption(CallDevices* call, unsigned routeInd,
+std::vector<std::shared_ptr<Route> >& routes, 
+std::vector<TypeModulation>& modulations) {
+    
+    switch(options->GetRegAssOption()){
+        case RegAssFLRonline:
+            return this->SetRegChoiceOrderFLR(call, routeInd, routes, 
+            modulations);
+        case RegAssFNS:
+            return this->SetRegChoiceOrderFNS(call, routeInd, routes, 
+            modulations);
+        default:
+            std::cerr << "Invalid regeneration option" << std::endl;
+            std::abort();
+    }
+}
+
+bool ResourceDeviceAlloc::SetRegChoiceOrderFLR(CallDevices* call, 
+unsigned routeInd, std::vector<std::shared_ptr<Route> >& routes, 
+std::vector<TypeModulation>& modulations) {
+    std::shared_ptr<Route> orRoute = call->GetRoute(routeInd);
+    unsigned numRouteNodes = orRoute->GetNumNodes();
+    double bitRate = call->GetBitRate();
+    std::vector<NodeDevices*> nodes(0);
+    std::shared_ptr<Route> auxRoute;
+    unsigned numReg = NodeDevices::GetNumRegRequired(call->GetBitRate());
+    
+    for(unsigned a = 0; a < numRouteNodes; a++)
+        nodes.push_back(dynamic_cast<NodeDevices*>(orRoute->GetNode(a)));
+    
+    unsigned curNodeIndex = 0;
+    
+    for(unsigned sourIndex = 0; sourIndex < numRouteNodes; sourIndex++){
+        for(unsigned testIndex = sourIndex + 1; testIndex < numRouteNodes; 
+        testIndex++){
+            auxRoute = orRoute->CreatePartialRoute(sourIndex, testIndex);
+            
+            if((nodes.at(testIndex)->GetNumFreeRegenerators() >= numReg) ||
+            auxRoute->GetDeNode() == orRoute->GetDeNode()){
+                
+                if(this->CheckSpectrumAndOSNR(bitRate, auxRoute.get())){
+                    
+                    if(auxRoute->GetDeNode() == orRoute->GetDeNode()){
+                        routes.push_back(auxRoute);
+                        modulations.push_back(this->GetBestModulation(bitRate, 
+                        auxRoute.get()));
+                        return true;
+                    }
+                    else
+                        curNodeIndex = testIndex;
+                }
+                else{
+                    if(curNodeIndex != sourIndex){
+                        auxRoute = orRoute->CreatePartialRoute(sourIndex, 
+                        curNodeIndex);
+                        routes.push_back(auxRoute);
+                        modulations.push_back(this->GetBestModulation(bitRate,
+                        auxRoute.get()));
+                        sourIndex = curNodeIndex;
+                        testIndex = curNodeIndex;
+                    }
+                    else{
+                        routes.clear();
+                        modulations.clear();
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    
+    routes.clear();
+    modulations.clear();
+    return false;
+}
+
+bool ResourceDeviceAlloc::SetRegChoiceOrderFNS(CallDevices* call, 
+unsigned routeInd, std::vector<std::shared_ptr<Route> >& routes, 
+std::vector<TypeModulation>& modulations) {
+    std::shared_ptr<Route> orRoute = call->GetRoute(routeInd);
+    unsigned numRouteNodes = orRoute->GetNumNodes();
+    double bitRate = call->GetBitRate();
+    std::vector<NodeDevices*> nodes(0);
+    std::shared_ptr<Route> auxRoute;
+    std::vector<TypeModulation> auxVecModulations = 
+    Modulation::GetModulationFormats();
+    TypeModulation scheme = auxVecModulations.front();
+    unsigned numReg = NodeDevices::GetNumRegRequired(call->GetBitRate());
+    
+    for(unsigned a = 0; a < numRouteNodes; a++)
+        nodes.push_back(dynamic_cast<NodeDevices*>(orRoute->GetNode(a)));
+    
+    unsigned curNodeIndex = 0;
+    
+    for(unsigned sourIndex = 0; sourIndex < numRouteNodes; sourIndex++){
+        for(unsigned testIndex = sourIndex + 1; testIndex < numRouteNodes; 
+        testIndex++){
+            auxRoute = orRoute->CreatePartialRoute(sourIndex, testIndex);
+            
+            if((nodes.at(testIndex)->GetNumFreeRegenerators() >= numReg) ||
+            auxRoute->GetDeNode() == orRoute->GetDeNode()){
+                
+                if(this->CheckSpectrumAndOSNR(bitRate, auxRoute.get(), scheme)){
+                    
+                    if(auxRoute->GetDeNode() == orRoute->GetDeNode()){
+                        routes.push_back(auxRoute);
+                        modulations.push_back(scheme);
+                        return true;
+                    }
+                    else{
+                        if(scheme != auxVecModulations.front()){
+                            routes.push_back(auxRoute);
+                            modulations.push_back(scheme);
+                            sourIndex = testIndex;
+                            curNodeIndex = testIndex;
+                            scheme = auxVecModulations.front();
+                        }
+                        else{
+                            curNodeIndex = testIndex;
+                        }
+                        //Colocar a expressão "curNodeIndex = testIndex" aqui?
+                    }
+                }
+                else{
+                    if(curNodeIndex != sourIndex){
+                        auxRoute = orRoute->CreatePartialRoute(sourIndex, 
+                        curNodeIndex);
+                        routes.push_back(auxRoute);
+                        modulations.push_back(scheme);
+                        sourIndex = curNodeIndex;
+                        testIndex = curNodeIndex;
+                    }
+                    else{
+                        testIndex--;
+                        scheme = TypeModulation(scheme - 1);
+                        
+                        if(scheme == auxVecModulations.back()){
+                            routes.clear();
+                            modulations.clear();
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    routes.clear();
+    modulations.clear();
+    return false;
+}
+
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     
@@ -754,4 +951,60 @@ bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
     }
     
     return true;
+}
+
+bool ResourceDeviceAlloc::CheckSpectrumAndOSNR(const double bitRate, 
+Route* route, TypeModulation modulation) {
+    double osnrThreshold = this->modulation->GetOSNRQAM(modulation, bitRate);
+    unsigned numSlots = this->modulation->GetNumSlots(bitRate, modulation);
+    
+    if(!topology->CheckOSNR(route, osnrThreshold))
+        return false;
+    
+    if(!topology->CheckBlockSlotsDisp(route, numSlots))
+        return false;
+    
+    return true;
+}
+
+bool ResourceDeviceAlloc::CheckSpectrumAndOSNR(const double bitRate, 
+Route* route) {
+    std::vector<TypeModulation> auxVecModulations = 
+    Modulation::GetModulationFormats();
+    TypeModulation auxMod;
+    
+    for(unsigned a = 0; a < auxVecModulations.size(); a++){
+        auxMod = auxVecModulations.at(a);
+        
+        if(auxMod != InvalidModulation){
+            if(this->CheckSpectrumAndOSNR(bitRate, route, auxMod))
+                return true;
+        }
+    }
+    
+    return false;
+}
+
+TypeModulation ResourceDeviceAlloc::GetBestModulation(const double bitRate, 
+Route* route) {
+    std::vector<TypeModulation> auxVecModulations = 
+    Modulation::GetModulationFormats();
+    TypeModulation auxMod;
+    double osnrThreshold;
+    unsigned numSlots;
+    
+    for(unsigned a = 0; a < auxVecModulations.size(); a++){
+        auxMod = auxVecModulations.at(a);
+        
+        if(auxMod != InvalidModulation){
+            osnrThreshold = this->modulation->GetOSNRQAM(auxMod, bitRate);
+            numSlots = this->modulation->GetNumSlots(bitRate, auxMod);
+
+            if(topology->CheckOSNR(route, osnrThreshold) && 
+            topology->CheckBlockSlotsDisp(route, numSlots))
+                return auxMod;
+        }
+    }
+    
+    return auxVecModulations.back();
 }

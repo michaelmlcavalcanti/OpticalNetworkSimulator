@@ -86,6 +86,8 @@ public:
      * @return Node pointer.
      */
     Node* GetNode(unsigned int index) const;
+    
+    std::vector<Node*> GetNodes() const;
     /**
      * @brief Get the number of hops of this route.
      * @return Number of hops.

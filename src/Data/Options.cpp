@@ -124,6 +124,7 @@ Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssMinSlotsMaxReg, "Minimum slots (Maximum regeneration)")
     (RegAssMaxReg, "Maximum regeneration")
     (RegAssFLR, "First Longest Reach (FLR)")
+    (RegAssFLRonline, "First Longest Reach Online (FLR)")
     (RegAssFNS, "First Narrowest Spectrum (FNS)")
     (RegAssDRE2BR, "Dynamic Routing in EONs with Back-to-Back Regeneration "
     "(DRE2BR)")
