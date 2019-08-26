@@ -60,6 +60,15 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Kernel.o \
 	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/DRE2BR.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
@@ -231,6 +240,51 @@ ${OBJECTDIR}/src/ResourceAllocation/Modulation.o: src/ResourceAllocation/Modulat
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Modulation.o src/ResourceAllocation/Modulation.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/DRE2BR.o: src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/DRE2BR.o src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.o: src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.o src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.o: src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.o src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.o: src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.o src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.o: src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.o src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.o: src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.o src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.o: src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.o src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.o: src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.o src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o: src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/ResourceAlloc.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

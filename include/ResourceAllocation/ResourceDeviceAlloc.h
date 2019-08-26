@@ -17,9 +17,11 @@
 #include "ResourceAlloc.h"
 #include "../Data/Options.h"
 #include "Modulation.h"
+#include "RegeneratorAssignment/RegeneratorAssignment.h"
 
 class Call;
 class CallDevices;
+class RegeneratorAssignment;
 
 /**
  * @brief Class responsible to apply the resource allocation with devices.
@@ -46,9 +48,6 @@ public:
      * @param call Call request to apply resource allocation.
      */
     void ResourAlloc(Call* call) override;
-private:
-    
-    void RoutingVirtRegSpecAlloc(CallDevices* call);
     /**
      * @brief Function to apply the resource allocation with virtualized 
      * regeneration option. First apply the routing, than try one possible
@@ -61,124 +60,7 @@ private:
     void RoutingOnVirtRegSpecAlloc(CallDevices* call);
     
     void RoutingTransponderSpecAlloc(CallDevices* call);
-    
-    /**
-     * @brief Function to order the tuples of route and regeneration combination
-     * for a call request.
-     * @param call Call request to order.
-     * @param vec Container of tuples of route and regeneration combination 
-     * indexes.
-     */
-    void OrderRegenerationOptions(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    /**
-     * @brief Function to order the tuples of route and regeneration combination 
-     * indexes based on the metric of minimum regeneration combination.
-     * @param call Call request to order.
-     * @param vec Container of tuples of route and regeneration combination 
-     * indexes.
-     */
-    void SetMinRegChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    /**
-     * @brief Function to order the tuples of route and regeneration combination 
-     * indexes based on the metric of minimum slots combination. If there is
-     * a draw, the function will favor the one with less used regenerators.
-     * @param call Call request to order.
-     * @param vec Container of tuples of route and regeneration combination 
-     * indexes.
-     */
-    void SetMinSlotsChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetMinSlotsMaxRegChoiceOrder(CallDevices* call,
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    /**
-     * @brief Function to order the tuples of route and regeneration combination 
-     * indexes based on the metric of maximum regeneration combination. If 
-     * there is a draw, the function will favor the one with less used slots.
-     * @param call Call request to order.
-     * @param vec Container of tuples of route and regeneration combination 
-     * indexes.
-     */
-    void SetMaxRegChoiceOrder(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetRegChoiceOrderFLR(CallDevices* call,
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    
-    void SetRegChoiceOrderFNS(CallDevices* call,
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    /**
-     * @brief Function to order the tuples of route and regeneration combination 
-     * indexes based on a cost metric.
-     * @param call Call request to order.
-     * @param vec Container of tuples of route and regeneration combination 
-     * indexes.
-     */
-    void SetCostMetric(CallDevices* call, 
-    std::vector<std::tuple<unsigned, unsigned>>& vec);
-    /**
-     * @brief Function to calculate the cost of the tuple, that is composed by
-     * a route and a regeneration option. The cost depends on the cost metric
-     * chosen.
-     * @param call Call request to evaluate.
-     * @param routeIndex Route index of the container of possible routes.
-     * @param subRouteIndex Regeneration option index.
-     * @return Tuple cost.
-     */
-    double CalcTupleCost(CallDevices* call, unsigned routeIndex,
-                              unsigned subRouteIndex);
-    /**
-     * @brief Function to calculate the tuple cost based on the DRE2BR 
-     * metric (Walkowiak).
-     * @param call Call request to order.
-     * @param routeIndex Route index.
-     * @param subRouteIndex Regeneration combination index.
-     * @return Cost of the tuple.
-     */
-    double DRE2BR_Cost(CallDevices* call, unsigned routeIndex, 
-                  unsigned subRouteIndex);
-    /**
-     * @brief  Function to calculate the tuple cost based on the SCRA metric.
-     * @param call Call request to order.
-     * @param routeIndex Route index.
-     * @param subRouteIndex Regeneration combination index.
-     * @return Cost of the tuple.
-     */
-    double SCRA1_Cost(CallDevices* call, unsigned routeIndex, 
-                unsigned subRouteIndex);
-    
-    double SCRA2_Cost(CallDevices* call, unsigned routeIndex, 
-                unsigned subRouteIndex);
-    
-    double SCRA3_Cost(CallDevices* call, unsigned routeIndex, 
-                unsigned subRouteIndex);
-    
-    double SCRA4_Cost(CallDevices* call, unsigned routeIndex, 
-                unsigned subRouteIndex);
-    
-    double SCRA5_Cost(CallDevices* call, unsigned routeIndex, 
-                unsigned subRouteIndex);
-    /**
-     * @brief Function to get the call request number of slots using the 
-     * least efficient modulation format.
-     * @param call Call request.
-     * @return Number of slots.
-     */
-    unsigned int GetN(CallDevices* call);
-    
-    bool CreateRegOption(CallDevices* call, unsigned routeInd, 
-    std::vector<std::shared_ptr<Route>> &routes, 
-    std::vector<TypeModulation> &modulations);
-    
-    bool SetRegChoiceOrderFLR(CallDevices* call, unsigned routeInd,
-    std::vector<std::shared_ptr<Route>> &routes, 
-    std::vector<TypeModulation> &modulations);
-    
-    bool SetRegChoiceOrderFNS(CallDevices* call, unsigned routeInd,
-    std::vector<std::shared_ptr<Route>> &routes, 
-    std::vector<TypeModulation> &modulations);
+private:
     /**
      * @brief Function to check the OSNR for a call request with devices.
      * @param call Call to be analise.
@@ -186,12 +68,10 @@ private:
      */
     bool CheckOSNR(CallDevices* call);
     
-    bool CheckSpectrumAndOSNR(const double bitRate, Route* route, 
-    TypeModulation modulation);
+    void CreateRegeneratorAssignment();
+private:
     
-    bool CheckSpectrumAndOSNR(const double bitRate, Route* route);
-    
-    TypeModulation GetBestModulation(const double bitRate, Route* route);
+    std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

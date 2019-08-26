@@ -97,6 +97,20 @@
         <itemPath>include/GeneralClasses/General.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="RegeneratorAssignment"
+                       projectFiles="true">
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/DRE2BR.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/RegAssAlgorithms.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/SCRA.h</itemPath>
+        </logicalFolder>
         <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
         <itemPath>include/ResourceAllocation/ResourceAlloc.h</itemPath>
@@ -168,6 +182,19 @@
         <itemPath>src/GeneralClasses/General.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="RegeneratorAssignment"
+                       projectFiles="true">
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp</itemPath>
+        </logicalFolder>
         <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
         <itemPath>src/ResourceAllocation/ResourceAlloc.cpp</itemPath>
@@ -470,6 +497,56 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/DRE2BR.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/RegAssAlgorithms.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -606,6 +683,51 @@
       <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -913,6 +1035,56 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/DRE2BR.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/RegAssAlgorithms.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -1049,6 +1221,51 @@
       <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/FirstNarrowestSpectrum.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MaximumRegeneration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumRegeneration.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMaxReg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp"
             ex="false"
             tool="1"
             flavor2="0">

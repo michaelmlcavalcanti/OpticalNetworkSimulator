@@ -293,7 +293,7 @@ ResourceAllocOption ResourceAlloc::GetResourAllocOption() const {
     return resourAllocOption;
 }
 
-std::vector<bool> ResourceAlloc::GetResourceAllocOrder() const {
+std::vector<ResAllocOrder> ResourceAlloc::GetResourceAllocOrder() const {
     return resources->resourceAllocOrder;
 }
 

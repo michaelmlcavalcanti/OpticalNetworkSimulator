@@ -140,7 +140,7 @@ public:
      * each node pair in the network.
      * @return Container of RSA order for all node pairs.
      */
-    std::vector<bool> GetResourceAllocOrder() const;
+    std::vector<ResAllocOrder> GetResourceAllocOrder() const;
     /**
      * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network.
@@ -276,7 +276,7 @@ private:
      * @brief Function to create the container of RSA order per node pair.
      */
     void CreateRsaOrder();
-protected:
+public:
     /**
      * @brief Pointer to the Topology object of this simulation.
      */
