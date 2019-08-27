@@ -31,19 +31,18 @@ Kernel::Kernel()
 
 Kernel::~Kernel() {
     
-    for(auto it : simulations)
-        it.reset();
+    simulations.clear();
 }
 
 void Kernel::Run() {
     
     this->CreateSimulations();
     
-    for(auto it: this->simulations){
-        this->Pre_Simulation(it.get());
-        this->Simulation(it.get());
-        this->Pos_Simulation(it.get());
-        it.reset();
+    for(unsigned int a = 0; a < simulations.size(); a++){
+        this->Pre_Simulation(simulations.at(a).get());
+        this->Simulation(simulations.at(a).get());
+        this->Pos_Simulation(simulations.at(a).get());
+        simulations.at(a).reset();
     }
 }
 

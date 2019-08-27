@@ -81,6 +81,7 @@ void Routing::Dijkstra() {
                 route = nullptr;
             }
             resources->SetRoute(orN, deN, route);
+            route.reset();
         }
     }
 }

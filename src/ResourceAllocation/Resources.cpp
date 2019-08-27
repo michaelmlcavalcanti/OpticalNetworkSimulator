@@ -130,9 +130,7 @@ std::shared_ptr<Route> route) {
 void Resources::SetRoutes(unsigned int orN, unsigned int deN, 
 std::vector<std::shared_ptr<Route> > routes) {
     this->ClearRoutes(orN, deN);
-    
-    for(auto it : routes)
-        this->AddRoute(orN, deN, it);
+    this->AddRoutes(orN, deN, routes);
 }
 
 void Resources::AddRoute(unsigned int orN, unsigned int deN, 
