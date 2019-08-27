@@ -29,21 +29,15 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
-routing(nullptr), specAlloc(nullptr) {
+routing(nullptr), specAlloc(nullptr), modulation(nullptr), resources(nullptr) {
     
 }
 
 ResourceAlloc::~ResourceAlloc() {
-    
-    for(auto it1 : this->resources->allRoutes){
-        for(auto it2 : it1){
-            it2.reset();
-        }
-    }
-    this->resources->allRoutes.clear();
-    
-    this->routing.reset();
-    this->specAlloc.reset();
+    routing.reset();
+    specAlloc.reset();
+    modulation.reset();
+    resources.reset();
 }
 
 void ResourceAlloc::Load() {

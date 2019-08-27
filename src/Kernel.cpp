@@ -43,6 +43,7 @@ void Kernel::Run() {
         this->Pre_Simulation(it.get());
         this->Simulation(it.get());
         this->Pos_Simulation(it.get());
+        it.reset();
     }
 }
 
