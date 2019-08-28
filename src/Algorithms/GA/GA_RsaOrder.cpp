@@ -199,8 +199,7 @@ void GA_RsaOrder::UniformCrossover(const IndividualBool* const ind1,
 }
 
 void GA_RsaOrder::Mutation() {
-    assert(this->totalPopulation.size() == this->GetNumberIndividuals());    
-    //this->DuplicateTotalPop();
+    assert(this->totalPopulation.size() == this->GetNumberIndividuals());
     
     for(auto it: this->totalPopulation){
         this->MutateIndividual(dynamic_cast<IndividualBool*>(it.get()));
@@ -222,16 +221,5 @@ void GA_RsaOrder::MutateIndividual(IndividualBool* const ind) {
             if(auxProb < this->GetProbMutation())
                 ind->SetGene(a, b, !ind->GetGene(a, b));
         }
-    }
-}
-
-void GA_RsaOrder::DuplicateTotalPop() {
-    unsigned int popSize = this->totalPopulation.size();
-    std::shared_ptr<IndividualBool> newInd;
-    
-    for(unsigned int a = 0; a < popSize; a++){
-        newInd = std::make_shared<IndividualBool>(std::static_pointer_cast
-        <IndividualBool>(this->totalPopulation.at(a)), 0.0);
-        this->totalPopulation.push_back(newInd);
     }
 }

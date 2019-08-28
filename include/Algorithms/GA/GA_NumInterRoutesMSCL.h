@@ -162,7 +162,10 @@ private:
      * @param ind Specified individual.
      */
     void MutateIndividual(IndividualNumRoutesMSCL* const ind);
-    
+    /**
+     * @brief Function to update the total number of interfering routes to check
+     * for all individuals of the population.
+     */
     void UpdateNumInterRoutes();
 private:
     /**

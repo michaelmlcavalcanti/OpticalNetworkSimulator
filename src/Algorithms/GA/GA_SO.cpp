@@ -97,6 +97,11 @@ void GA_SO::SetSumFitnessSelectedPop() {
     this->SetSumFitness(sum);
 }
 
+void GA_SO::SetNumBestIndividuals(unsigned int numBestIndividuals) {
+    assert(numBestIndividuals <= this->GetNumberIndividuals());
+    this->numBestIndividuals = numBestIndividuals;
+}
+
 Individual* GA_SO::GetWorstIndividual() const {
     return this->worstIndividuals.at(this->GetActualGeneration()-1).get();
 }
@@ -185,9 +190,4 @@ std::ostream& GA_SO::printParameters(std::ostream& ostream) const {
             << this->numBestIndividuals << std::endl << std::endl;
     
     return ostream;
-}
-
-void GA_SO::SetNumBestIndividuals(unsigned int numBestIndividuals) {
-    assert(numBestIndividuals <= this->GetNumberIndividuals());
-    this->numBestIndividuals = numBestIndividuals;
 }
