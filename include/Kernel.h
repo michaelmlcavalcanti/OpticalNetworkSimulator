@@ -28,7 +28,7 @@ class SimulationType;
 enum TypeSimulation{
     InvalidSimulation,
     MultiLoadSimulationType,
-    IncNumRegType,
+    IncNumDevType,
     GaSimulationType,
     FirstSimulation = MultiLoadSimulationType,
     LastSimulation = GaSimulationType

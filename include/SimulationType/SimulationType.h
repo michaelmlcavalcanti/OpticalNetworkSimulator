@@ -77,8 +77,9 @@ public:
     virtual void Save();
     /**
      * @brief Prints a description of the simulation.
+     * @param ostream Output stream.
      */
-    virtual void Help() = 0;
+    virtual std::ostream& Help(std::ostream& ostream) = 0;
     
     /**
      * @brief Function to get the type of simulation.

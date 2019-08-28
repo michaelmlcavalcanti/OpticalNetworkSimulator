@@ -68,7 +68,7 @@ void SimulationMultiNumDevices::LoadFile() {
 }
 
 void SimulationMultiNumDevices::Print() {
-    this->Help();
+    this->Help(std::cout);
     SimulationType::Print();
 }
 
@@ -78,11 +78,13 @@ void SimulationMultiNumDevices::Save() {
     this->GetData()->SaveBP(vecNumDevices);
 }
 
-void SimulationMultiNumDevices::Help() {
-    std::cout << "INCREASE NUMBER OF REGENERATORS SIMULATION" << std::endl
-              << "This type of simulation increase the total number of "
-              << "regenerators in the network and analyzes its performance. " 
-              << std::endl << std::endl;
+std::ostream& SimulationMultiNumDevices::Help(std::ostream& ostream) {
+    ostream << "INCREASE NUMBER OF DEVICES SIMULATION" << std::endl
+            << "This type of simulation increase the total number of "
+            << "regenerators in the network and analyzes its performance. " 
+            << std::endl << std::endl;
+    
+    return ostream;
 }
 
 void SimulationMultiNumDevices::SetNumberOfDevices(unsigned int numDevices) {

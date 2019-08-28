@@ -61,8 +61,9 @@ public:
     void Save() override;
     /**
      * @brief Prints a description of the simulation.
+     * @param ostream Output stream.
      */
-    void Help() override;
+    std::ostream& Help(std::ostream& ostream) override;
 };
 
 #endif /* SIMULATIONMULTILOAD_H */

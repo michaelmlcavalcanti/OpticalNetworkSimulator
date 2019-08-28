@@ -82,6 +82,8 @@ void SimulationType::Print() {
 }
 
 void SimulationType::Save() {
+    std::ofstream& auxOfstream = GetInputOutput()->GetLogFile();
+    this->Help(auxOfstream);
     this->options->Save();
     this->parameters->Save();
 }

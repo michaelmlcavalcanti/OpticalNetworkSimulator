@@ -60,7 +60,7 @@ void SimulationMultiLoad::LoadFile() {
 }
 
 void SimulationMultiLoad::Print() {
-    this->Help();
+    this->Help(std::cout);
     SimulationType::Print();
 }
 
@@ -70,9 +70,11 @@ void SimulationMultiLoad::Save() {
     this->GetData()->SaveBP();
 }
 
-void SimulationMultiLoad::Help() {
-    std::cout << "MULTIPLE LOADS SIMULATION" << std::endl
-              << "This type of simulation varies the network load "
-              << "and analyzes the network performance. "
-              << std::endl << std::endl;
+std::ostream& SimulationMultiLoad::Help(std::ostream& ostream) {
+    ostream << "MULTIPLE LOADS SIMULATION" << std::endl
+            << "This type of simulation varies the network load "
+            << "and analyzes the network performance. " 
+            << std::endl << std::endl;
+    
+    return ostream;
 }

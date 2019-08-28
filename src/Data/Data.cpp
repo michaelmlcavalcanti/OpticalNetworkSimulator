@@ -37,7 +37,7 @@ const Data* data) {
             ostream << "Load point:" << data->simulType->GetParameters()->
             GetLoadPoint(data->GetActualIndex());
             break;
-        case IncNumRegType:
+        case IncNumDevType:
             ostream << "Load point:" << data->simulType->GetParameters()->
             GetMaxLoadPoint();
             break;

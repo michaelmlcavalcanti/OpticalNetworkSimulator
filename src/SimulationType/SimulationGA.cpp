@@ -76,7 +76,7 @@ void SimulationGA::AdditionalSettings() {
 }
 
 void SimulationGA::Print() {
-    this->Help();
+    this->Help(std::cout);
     SimulationType::Print();
     this->gaAlgorithm->printParameters(std::cout);
 }
@@ -86,12 +86,12 @@ void SimulationGA::Save() {
     this->GetData()->SaveGaFiles();
 }
 
-void SimulationGA::Help() {
-    std::cout << "GA SIMULATION" << std::endl
-              << "This type of simulation applies the genetic algorithm." 
-              << std::endl;
-    std::cout << "The specific GA is determined by the option chosen."
-              << std::endl << std::endl;
+std::ostream& SimulationGA::Help(std::ostream& ostream) {
+    ostream << "GA SIMULATION" << std::endl
+            << "This type of simulation applies the genetic algorithm." 
+            << std::endl << std::endl;
+    
+    return ostream;
 }
 
 GA* SimulationGA::GetGA() const {

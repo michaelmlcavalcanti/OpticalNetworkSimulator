@@ -21,7 +21,7 @@ const boost::unordered_map<TypeSimulation, std::string>
 Kernel::mapSimulationType = boost::assign::map_list_of
     (InvalidSimulation, "Invalid")
     (MultiLoadSimulationType, "Multiple Load Simulation")
-    (IncNumRegType, "Increase Number of Regenerators")
+    (IncNumDevType, "Increase Number of Devices")
     (GaSimulationType, "GA Simulation");
 
 Kernel::Kernel()
@@ -71,7 +71,7 @@ void Kernel::CreateSimulations() {
                 auxSimulation = std::make_shared<SimulationMultiLoad>(a, 
                                       typeSimul);
                 break;
-            case IncNumRegType:
+            case IncNumDevType:
                 auxSimulation = std::make_shared<SimulationMultiNumDevices>(a, 
                                       typeSimul);
                 break;
