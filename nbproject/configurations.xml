@@ -30,6 +30,7 @@
         </logicalFolder>
         <logicalFolder name="f2" displayName="Traffics" projectFiles="true">
           <itemPath>Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt</itemPath>
+          <itemPath>Files/Inputs/Traffics/Traffic_100-200-300-400-500.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200-400.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_100-200.txt</itemPath>
           <itemPath>Files/Inputs/Traffics/Traffic_200.txt</itemPath>
@@ -367,6 +368,11 @@
       <item path="Files/Inputs/Topologies/Waxman.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_100-200-300-400-500.txt"
             ex="false"
             tool="3"
             flavor2="0">
@@ -905,6 +911,11 @@
       <item path="Files/Inputs/Topologies/Waxman.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Traffics/Traffic_10-40-100-200-400.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Files/Inputs/Traffics/Traffic_100-200-300-400-500.txt"
             ex="false"
             tool="3"
             flavor2="0">

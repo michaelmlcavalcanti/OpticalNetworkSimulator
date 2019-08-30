@@ -52,6 +52,7 @@
     4 - 40-100-200
     5 - 100-200
     6 - 200
+    7 - 100-200-300-400-500
 6-Resource Allocation Option
     0 - Invalid
     1 - RSA

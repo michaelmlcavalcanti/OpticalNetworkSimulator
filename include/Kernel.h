@@ -20,6 +20,8 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/unordered_map.hpp>
 
+#include "GeneralClasses/Def.h"
+
 class SimulationType;
 
 /**
@@ -47,11 +49,6 @@ public:
      * simulations for this Kernel.
      */
     Kernel();
-    /**
-     * @brief Copy constructor for a Kernel object.
-     * @param orig original Kernel object.
-     */
-    Kernel(const Kernel& orig);
     /**
      * @brief Default destructor of a Kernel object
      */
@@ -83,6 +80,8 @@ private:
      * @param simul Simulation object.
      */
     void Pos_Simulation(SimulationType* simul);
+    
+    void CreateSimulation(SimulIndex index, TypeSimulation type);
 private:
     /**
      * @brief Total number of simulations in this kernel.
