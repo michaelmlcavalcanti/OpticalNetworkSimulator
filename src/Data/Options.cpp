@@ -62,7 +62,8 @@ Options::mapTrafficOptions = boost::assign::map_list_of
     (Traffic_10_40_100_200_400, "10-40-100-200-400")
     (Traffic_40_100_200, "40-100-200")
     (Traffic_100_200, "100-200")
-    (Traffic_200, "200");
+    (Traffic_200, "200")
+    (Traffic_100_200_300_400_500, "100-200-300-400-500");
 
 const boost::unordered_map<ResourceAllocOption, std::string>
 Options::mapResourAllocOption = boost::assign::map_list_of
