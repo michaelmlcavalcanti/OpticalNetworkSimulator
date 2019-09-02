@@ -134,6 +134,12 @@ Options::mapStopCriteria = boost::assign::map_list_of
     (NumCallRequestsMaximum, "Number of call requests")
     (NumCallRequestsBlocked, "Number of blocked call requests");
 
+const boost::unordered_map<RandomGenerationOption, std::string>
+Options::mapRandomGeneration = boost::assign::map_list_of
+    (GenerationSame, "Same pseudo-random generation")
+    (GenerationPseudoRandom, "Different pseudo-random generation")
+    (GenerationRandom, "Random generation");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -172,6 +178,8 @@ const Options* options) {
     }
     ostream << "Stop criteria: " << options->GetStopCriteriaName()
             << std::endl;
+    ostream << "Random generation: " << options->GetGenerationOptionName()
+            << std::endl;
     
     return ostream;
 }
@@ -185,7 +193,7 @@ networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
 transponderOption(TransponderDisabled), regenerationOption(RegenerationDisabled), 
 regPlacOption(RegPlacInvalid), regAssOption(RegAssInvalid), 
-stopCriteria(NumCallRequestsMaximum) {
+stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame) {
     
 }
 
@@ -341,6 +349,15 @@ void Options::Load() {
     std::cin >> auxInt;
     this->SetStopCriteria((StopCriteria) auxInt);
     
+    std::cout << "Random Generation Options" << std::endl;
+    for(RandomGenerationOption a = FirstGeneration; a <= LastGeneration;
+    a = RandomGenerationOption(a+1)){
+        std::cout << a << "-" << this->mapRandomGeneration.at(a) << std::endl;
+    }
+    std::cout << "Insert the Random Generation option: ";
+    std::cin >> auxInt;
+    this->SetGenerationOption((RandomGenerationOption) auxInt);
+    
     std::cout << std::endl;
 }
 
@@ -381,6 +398,8 @@ void Options::LoadFile() {
     this->SetRegAssOption((RegAssignmentOption) auxInt);
     auxIfstream >> auxInt;
     this->SetStopCriteria((StopCriteria) auxInt);
+    auxIfstream >> auxInt;
+    this->SetGenerationOption((RandomGenerationOption) auxInt);
 }
 
 void Options::Save() {
@@ -629,4 +648,18 @@ void Options::SetStopCriteria(StopCriteria stopCriteria) {
     assert(stopCriteria >= FirstStopCriteria && 
            stopCriteria <= LastStopCriteria);
     this->stopCriteria = stopCriteria;
+}
+
+RandomGenerationOption Options::GetGenerationOption() const {
+    return generationOption;
+}
+
+std::string Options::GetGenerationOptionName() const {
+    return mapRandomGeneration.at(generationOption);
+}
+
+void Options::SetGenerationOption(RandomGenerationOption generationOption) {
+    assert(generationOption >= FirstGeneration && 
+    generationOption  <= LastGeneration);
+    this->generationOption = generationOption;
 }

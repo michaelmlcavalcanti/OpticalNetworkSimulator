@@ -156,6 +156,10 @@ private:
      */
     std::shared_ptr<Call> CreateCall(unsigned orNodeIndex, unsigned deNodeIndex, 
                                      unsigned trafficIndex, TIME deactTime);
+    
+    void LoadRandomGenerator();
+    
+    void InitializeGenerator();
 private:
     /**
      * @breif Pointer to a SimulationType object that
