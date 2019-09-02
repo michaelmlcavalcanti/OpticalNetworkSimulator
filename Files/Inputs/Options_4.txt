@@ -8,12 +8,13 @@
 2
 0
 0
-1
 0
-1
-1
-7
-1
+0
+0
+0
+0
+0
+0
 
 1-Topology
     0 - Invalid
@@ -105,3 +106,7 @@
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests
+17-Random Generation
+    0 - Same request for all points
+    1 - Pseudo random generation
+    2 - Random generation

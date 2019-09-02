@@ -219,6 +219,14 @@ enum StopCriteria {
     LastStopCriteria = NumCallRequestsBlocked
 };
 
+enum RandomGenerationOption {
+    GenerationSame,
+    GenerationPseudoRandom,
+    GenerationRandom,
+    FirstGeneration = GenerationSame,
+    LastGeneration = GenerationRandom
+};
+        
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -457,6 +465,12 @@ public:
     std::string GetStopCriteriaName() const;
     
     void SetStopCriteria(StopCriteria stopCriteria);
+    
+    RandomGenerationOption GetGenerationOption() const;
+    
+    std::string GetGenerationOptionName() const;
+
+    void SetGenerationOption(RandomGenerationOption generationOption);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -526,6 +540,8 @@ private:
      * @brief Option to determine the simulation stop criteria. 
      */
     StopCriteria stopCriteria;
+    
+    RandomGenerationOption generationOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -620,6 +636,9 @@ private:
      */
     static const boost::unordered_map<StopCriteria,
     std::string> mapStopCriteria;
+    
+    static const boost::unordered_map<RandomGenerationOption,
+    std::string> mapRandomGeneration;
 };
 
 #endif /* OPTIONS_H */
