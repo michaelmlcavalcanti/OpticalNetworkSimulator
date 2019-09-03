@@ -46,7 +46,7 @@ public:
      * for a specified call request.
      * @param call Call request.
      */
-    void SpecAllocation(Call* call);
+    virtual void SpecAllocation(Call* call);
     /**
      * @brief Function to apply the spectrum allocation for a call request with
      * devices.
@@ -139,7 +139,7 @@ private:
      */
     std::vector<unsigned int> GetBlocksFreeSlots(unsigned int reqSize, 
                                                  std::vector<bool>& dispVec);
-private:
+protected:
     /**
      * @brief RourceAlloc that own this object.
      */

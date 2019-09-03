@@ -22,7 +22,12 @@ Core* core) {
 
 Core::Core(CoreIndex cId, unsigned int nSlots)
 :coreId(cId), slotsStatus(0) {
-    this->slotsStatus.assign(nSlots, free);
+    slotsStatus.assign(nSlots, free);
+}
+
+Core::Core(Link* link, CoreIndex coreId, unsigned int numSlots)
+:link(link), coreId(coreId), slotsStatus(0), coreWorking(true) {
+    slotsStatus.assign(numSlots, free);
 }
 
 Core::~Core() {
@@ -30,15 +35,16 @@ Core::~Core() {
 }
 
 void Core::Initialize() {
-    this->slotsStatus.assign(this->slotsStatus.size(), free);
+    slotsStatus.assign(slotsStatus.size(), free);
 }
 
 CoreIndex Core::GetCoreId(){
-    return this->coreId;
+    return coreId;
 }
 
 bool Core::IsSlotOccupied(SlotIndex sPosition){
-    if(this->slotsStatus.at(sPosition) == occupied)
+    
+    if(slotsStatus.at(sPosition) == occupied)
         return true;
     return false;
 }
@@ -48,15 +54,26 @@ bool Core::IsSlotFree(SlotIndex sPosition) {
 }
 
 void Core::OccupySlot(SlotIndex sPosition){
-    assert(sPosition < this->slotsStatus.size());
-    assert(this->slotsStatus.at(sPosition) == free);
+    assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
     
-    this->slotsStatus.at(sPosition) = occupied;
+    slotsStatus.at(sPosition) = occupied;
 }
 
 void Core::ReleaseSlot(SlotIndex sPosition){
-    assert(sPosition < this->slotsStatus.size());
-    assert(this->slotsStatus.at(sPosition) == occupied);
+    assert(sPosition < slotsStatus.size() && 
+    slotsStatus.at(sPosition) == occupied);
     
-    this->slotsStatus.at(sPosition) = free;
+    slotsStatus.at(sPosition) = free;
+}
+
+bool Core::IsCoreWorking() {
+    return coreWorking;
+}
+
+void Core::SetCoreState(bool state) {
+    coreWorking = state;
+}
+
+unsigned int Core::GetNumSlots() {
+    return slotsStatus.size();
 }

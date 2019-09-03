@@ -28,6 +28,7 @@ class CallDevices;
 class Options;
 
 #include "Devices/Device.h"
+#include "../GeneralClasses/Def.h"
 
 /**
  * @brief Class Topology represents the physical topology of the simulation.
@@ -230,7 +231,9 @@ public:
      * @param index Index of the slot.
      * @return True if the slot is valid.
      */
-    bool IsValidSlot(unsigned int index);
+    bool IsValidSlot(SlotIndex index);
+    
+    bool IsValidCore(CoreIndex index);
     /**
      * @brief Check if the lightpath is valid. This function checks the route, 
      * the first and the last slot of the call.

@@ -77,7 +77,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Structure/Devices/Regenerator.o \
 	${OBJECTDIR}/src/Structure/Devices/SBVT_TSS_ML.o \
 	${OBJECTDIR}/src/Structure/Link.o \
-	${OBJECTDIR}/src/Structure/MultiCoreLink.o \
 	${OBJECTDIR}/src/Structure/Node.o \
 	${OBJECTDIR}/src/Structure/NodeDevices.o \
 	${OBJECTDIR}/src/Structure/Topology.o
@@ -316,11 +315,6 @@ ${OBJECTDIR}/src/Structure/Link.o: src/Structure/Link.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/Link.o src/Structure/Link.cpp
-
-${OBJECTDIR}/src/Structure/MultiCoreLink.o: src/Structure/MultiCoreLink.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/Structure
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Structure/MultiCoreLink.o src/Structure/MultiCoreLink.cpp
 
 ${OBJECTDIR}/src/Structure/Node.o: src/Structure/Node.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Structure

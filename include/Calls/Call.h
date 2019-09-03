@@ -298,12 +298,12 @@ private:
      * @brief First contiguous slot of the call request. If the request is not
      * allocated, this value is the maximum unsigned integer.
      */
-    unsigned int firstSlot;
+    SlotIndex firstSlot;
     /**
      * @brief Last contiguous slot of the call request. If the request is not
      * allocated, this value is the maximum unsigned integer.
      */
-    unsigned int lastSlot;
+    SlotIndex lastSlot;
     /**
      * @brief Number of slots occupied by this call.
      * This value is calculate based in modulation used 
@@ -321,7 +321,7 @@ private:
      * allocated or if the simulation presents only one core, this value is
      * the maximum  integer possible value.
      */
-    unsigned int core;
+    CoreIndex core;
     /**
      * @brief OSNr of the call calculated based 
      * in the distance of origin and destination node,

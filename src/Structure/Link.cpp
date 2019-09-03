@@ -15,10 +15,11 @@
 #include "../../include/Structure/Topology.h"
 #include "../../include/ResourceAllocation/Signal.h"
 #include "../../include/GeneralClasses/General.h"
+#include "../../include/Structure/Core.h"
 
 std::ostream& operator<<(std::ostream& ostream,
 Link* link) {
-    ostream << "Origim node: " << link->GetOrigimNode()
+    ostream << "Source node: " << link->GetOrigimNode()
             << std::endl;
     ostream << "Destination node: " << link->GetDestinationNode()
             << std::endl;
@@ -28,18 +29,22 @@ Link* link) {
             << std::endl;
     ostream << "Cost: " << link->GetCost()
             << std::endl;
+    ostream << "Number of cores: " << link->GetNumberCores()
+            << std::endl;
     
     return ostream;
 }
 
 Link::Link(Topology* topPointer, NodeIndex origimNode, 
-NodeIndex destinationNode, double length, 
-unsigned int numberSections, unsigned int numberSlots) 
+NodeIndex destinationNode, double length, unsigned int numberSections, 
+unsigned int numberCores, unsigned int numberSlots)
 :topPointer(topPointer), origimNode(origimNode), 
 destinationNode(destinationNode), length(length), 
-numberSections(numberSections), cost(0.0), slotsStatus(0), linkWorking(true), 
+numberSections(numberSections), cost(0.0), cores(0), linkWorking(true), 
 utilization(0) {
-    slotsStatus.assign(numberSlots, free);
+    
+    for(unsigned int a = 0; a < numberCores; a++)
+        cores.push_back(std::make_shared<Core>(this, a, numberSlots));
 }
 
 Link::~Link() {
@@ -55,8 +60,10 @@ bool Link::operator==(const Link& right) const {
 }
 
 void Link::Initialize() {
-    //Make all slots status for free
-    this->slotsStatus.assign(this->slotsStatus.size(), free);
+    
+    for(auto it: cores){
+        it->Initialize();
+    }
 }
 
 NodeIndex Link::GetOrigimNode() const {
@@ -99,6 +106,10 @@ void Link::SetUtilization(unsigned int utilization) {
     this->utilization = utilization;
 }
 
+unsigned int Link::GetNumberCores() const {
+    return cores.size();
+}
+
 void Link::CalcSignal(Signal* signal) const {
     double signalPower = signal->GetSignalPower();
     double asePower = signal->GetAsePower();
@@ -126,41 +137,82 @@ void Link::CalcSignal(Signal* signal) const {
 }
 
 void Link::OccupySlot(const SlotIndex index) {
-    assert(this->IsSlotFree(index));
+    assert(cores.front()->IsSlotFree(index));
     
-    this->slotsStatus.at(index) = occupied;
+    cores.front()->OccupySlot(index);
+}
+
+void Link::OccupySlot(const CoreIndex coreId, const SlotIndex slotId) {
+    assert(coreId < cores.size());
+    assert(cores.at(coreId)->IsSlotFree(slotId));
+    
+    cores.at(coreId)->OccupySlot(slotId);
 }
 
 void Link::ReleaseSlot(const SlotIndex index) {
-    assert(this->IsSlotOccupied(index));
+    assert(cores.front()->IsSlotOccupied(index));
     
-    this->slotsStatus.at(index) = free;
+    cores.front()->ReleaseSlot(index);
+}
+
+void Link::ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId) {
+    assert(coreId < cores.size());
+    assert(cores.at(coreId)->IsSlotOccupied(slotId));
+    
+    cores.at(coreId)->ReleaseSlot(slotId);
 }
 
 bool Link::IsSlotOccupied(const SlotIndex index) const {
     
-    if(this->slotsStatus.at(index) == occupied)
-        return true;
-    return false;
+    return cores.front()->IsSlotOccupied(index);
+}
+
+bool Link::IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId) {
+    assert(coreId < cores.size());
+    
+    return cores.at(coreId)->IsSlotOccupied(slotId);
 }
 
 bool Link::IsSlotFree(const SlotIndex index) const {
     
-    if(this->slotsStatus.at(index) == free)
-        return true;
-    return false;
+    return cores.front()->IsSlotFree(index);
+}
+
+bool Link::IsSlotFree(const CoreIndex coreId, const SlotIndex slotId) {
+    assert(coreId < cores.size());
+    
+    return cores.at(coreId)->IsSlotFree(slotId);
 }
 
 unsigned int Link::GetNumSlots() const {
-    return slotsStatus.size();
+    return cores.front()->GetNumSlots();
+}
+
+unsigned int Link::GetNumSlots(const CoreIndex coreId) const {
+    assert(coreId < cores.size());
+    
+    return cores.at(coreId)->GetNumSlots();
 }
 
 unsigned int Link::GetNumberFreeSlots() const {
     unsigned int numFreeSlots = 0;
-    unsigned int numSlots = this->topPointer->GetNumSlots();
+    unsigned int numSlots = cores.front()->GetNumSlots();
     
     for(unsigned int a = 0; a < numSlots; a++){
-        if(this->IsSlotFree(a))
+        if(cores.front()->IsSlotFree(a))
+            numFreeSlots++;
+    }
+    
+    return numFreeSlots;
+}
+
+unsigned int Link::GetNumberFreeSlots(const CoreIndex coreId) const {
+    assert(coreId < cores.size());
+    unsigned int numFreeSlots = 0;
+    unsigned int numSlots = cores.at(coreId)->GetNumSlots();
+    
+    for(unsigned int a = 0; a < numSlots; a++){
+        if(cores.at(coreId)->IsSlotFree(a))
             numFreeSlots++;
     }
     
@@ -169,13 +221,21 @@ unsigned int Link::GetNumberFreeSlots() const {
 
 unsigned int Link::GetNumberOccupiedSlots() const {
     unsigned int numOccupiedSlots = 0;
-    unsigned int numSlots = this->topPointer->GetNumSlots();
+    unsigned int numSlots = cores.front()->GetNumSlots();
     numOccupiedSlots = numSlots - this->GetNumberFreeSlots();
     
     return numOccupiedSlots;
-    
 }
 
-Topology* Link::GetTopology() const{
+unsigned int Link::GetNumberOccupiedSlots(const CoreIndex coreId) const {
+    assert(coreId < cores.size());
+    unsigned int numOccupiedSlots = 0;
+    unsigned int numSlots = cores.at(coreId)->GetNumSlots();
+    numOccupiedSlots = numSlots - this->GetNumberFreeSlots();
+    
+    return numOccupiedSlots;
+}
+
+Topology* Link::GetTopology() const {
     return this->topPointer;
 }
