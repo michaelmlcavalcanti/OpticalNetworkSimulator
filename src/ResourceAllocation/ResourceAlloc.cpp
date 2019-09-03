@@ -50,12 +50,13 @@ void ResourceAlloc::Load() {
     topology = simulType->GetTopology();
     traffic = simulType->GetTraffic();
     options = simulType->GetOptions();
+    Parameters* par = simulType->GetParameters();
     
     this->CreateRouting();
     this->CreateSpecAllocation();
     
-    modulation = std::make_shared<Modulation>(this, simulType->GetParameters()
-    ->GetSlotBandwidth(), simulType->GetParameters()->GetNumberPolarizations());
+    modulation = std::make_shared<Modulation>(this, par->GetSlotBandwidth(), 
+    par->GetNumberPolarizations(), par->GetGuardBand());
     
     resources = std::make_shared<Resources>(this, modulation.get());
     

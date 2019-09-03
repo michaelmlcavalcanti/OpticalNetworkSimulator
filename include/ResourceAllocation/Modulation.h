@@ -48,7 +48,7 @@ public:
      * @param slotBand Slot bandwidth size, used to calculate the parameters.
      */
     Modulation(ResourceAlloc* resourAlloc, double slotBand, 
-               unsigned int numPolarization);
+    unsigned int numPolarization, unsigned int guardBand);
     /**
      * @brief Default destructor of a modulation object.
      */
@@ -66,6 +66,24 @@ public:
      * @param call Call request to be analyzed.
      */
     void SetModulationParam(CallDevices* call);
+    /**
+     * @brief Gets the possible slots set that the call requests can use.
+     * @param traffic Container with all possible traffics.
+     * @return Container of possible slots.
+     */
+    std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
+    /**
+     * @brief Function to get the slot bandwidth used as reference.
+     * @return Slot bandwidth.
+     */
+    double GetSlotBandwidth() const;
+    
+    unsigned int GetNumberSlots(const TypeModulation modulation, 
+    const double bitRate);
+    
+    unsigned int GetNumberSlots(const TypeModulation modulation, 
+    const double bitRate, double &bandwidth);
+private:
     /**
      * @brief Function to calculate the spectral bandwidth of a optical signal, 
      * based on the modulation format and the bit rate.
@@ -101,18 +119,6 @@ public:
      */
     bool isEON() const;
     /**
-     * @brief Gets the possible slots set that the call requests can use.
-     * @param traffic Container with all possible traffics.
-     * @return Container of possible slots.
-     */
-    std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
-    /**
-     * @brief Function to get the slot bandwidth used as reference.
-     * @return Slot bandwidth.
-     */
-    double GetSlotBandwidth() const;
-private:
-    /**
      * @brief Gets the possible slots set that the call requests can use with
      * a fixed modulation format allowed.
      * @param traffic Container with all possible traffics.
@@ -147,6 +153,8 @@ private:
     const unsigned int polarization;
     
     const double rollOff;
+    
+    const unsigned int guardBand;
     /**
      * @brief Map composed by the modulation format options and its respective
      * amount of bits to represent the signal.

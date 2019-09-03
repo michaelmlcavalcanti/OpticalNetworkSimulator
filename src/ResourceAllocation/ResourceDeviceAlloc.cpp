@@ -464,16 +464,11 @@ unsigned subRouteIndex) {
 }
 
 unsigned int ResourceDeviceAlloc::GetN(CallDevices* call) {
-    double bandwidth = 0.0;
-    unsigned int numSlots = 0;
+    unsigned int numSlots;
     
     //Se precisar modificar, pegar a modulação da última combinação de 
     //segmentos transparentes.
-    bandwidth = modulation->BandwidthQAM(FirstModulation, call->GetBitRate());
-    if(modulation->isEON())
-        numSlots = std::ceil(bandwidth/modulation->GetSlotBandwidth());
-    else
-        numSlots = 1;
+    numSlots = modulation->GetNumberSlots(FirstModulation, call->GetBitRate());
     
     return numSlots;
 }
