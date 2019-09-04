@@ -81,17 +81,10 @@ unsigned routeIndex, unsigned subRouteIndex) {
 }
 
 unsigned int RegeneratorAssignment::GetN(CallDevices* call) {
-    double bandwidth = 0.0;
-    unsigned int numSlots = 0;
-    bandwidth = resDevAlloc->modulation->BandwidthQAM(FirstModulation, 
-    call->GetBitRate());
+    unsigned int numSlots;
     
-    if(resDevAlloc->modulation->isEON()){
-        numSlots = std::ceil(bandwidth/resDevAlloc->modulation
-                                                  ->GetSlotBandwidth());
-    }
-    else
-        numSlots = 1;
+    numSlots = resDevAlloc->modulation->GetNumberSlots(FirstModulation,
+    call->GetBitRate());
     
     return numSlots;
 }
@@ -100,8 +93,8 @@ bool RegeneratorAssignment::CheckSpectrumAndOSNR(const double bitRate,
 Route* route, TypeModulation modulation) {
     double osnrThreshold = resDevAlloc->modulation->GetOSNRQAM(modulation, 
                                                                bitRate);
-    unsigned numSlots = resDevAlloc->modulation->GetNumSlots(bitRate, 
-                                                             modulation);
+    unsigned numSlots = resDevAlloc->modulation->GetNumberSlots(modulation,
+                                                                bitRate);
     
     if(!resDevAlloc->topology->CheckOSNR(route, osnrThreshold))
         return false;
@@ -144,7 +137,7 @@ Route* route) {
         if(auxMod != InvalidModulation){
             osnrThreshold = resDevAlloc->modulation->GetOSNRQAM(auxMod, 
                                                                 bitRate);
-            numSlots = resDevAlloc->modulation->GetNumSlots(bitRate, auxMod);
+            numSlots = resDevAlloc->modulation->GetNumberSlots(auxMod, bitRate);
 
             if(resDevAlloc->topology->CheckOSNR(route, osnrThreshold) && 
             resDevAlloc->topology->CheckBlockSlotsDisp(route, numSlots))

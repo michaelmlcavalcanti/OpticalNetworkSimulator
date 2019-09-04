@@ -137,7 +137,6 @@
         </logicalFolder>
         <itemPath>include/Structure/Core.h</itemPath>
         <itemPath>include/Structure/Link.h</itemPath>
-        <itemPath>include/Structure/MultiCoreLink.h</itemPath>
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/NodeDevices.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
@@ -221,7 +220,6 @@
         </logicalFolder>
         <itemPath>src/Structure/Core.cpp</itemPath>
         <itemPath>src/Structure/Link.cpp</itemPath>
-        <itemPath>src/Structure/MultiCoreLink.cpp</itemPath>
         <itemPath>src/Structure/Node.cpp</itemPath>
         <itemPath>src/Structure/NodeDevices.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
@@ -620,8 +618,6 @@
       </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/NodeDevices.h" ex="false" tool="3" flavor2="0">
@@ -798,8 +794,6 @@
             flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Structure/MultiCoreLink.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1163,8 +1157,6 @@
       </item>
       <item path="include/Structure/Link.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/Structure/MultiCoreLink.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/NodeDevices.h" ex="false" tool="3" flavor2="0">
@@ -1341,8 +1333,6 @@
             flavor2="0">
       </item>
       <item path="src/Structure/Link.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/Structure/MultiCoreLink.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Structure/Node.cpp" ex="false" tool="1" flavor2="0">
       </item>

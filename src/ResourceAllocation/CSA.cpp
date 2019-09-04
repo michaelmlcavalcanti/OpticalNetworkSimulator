@@ -27,6 +27,21 @@ CSA::~CSA() {
     
 }
 
+void CSA::SpecAllocation(Call* call) {
+    
+    switch(specAllOption){
+        case SpecAllFF:
+            this->FirstFit(call);
+            break;
+        case SpecAllMSCL:
+            this->MSCL(call);
+            break;
+        default:
+            std::cerr << "Invalid spectrum allocation option" << std::endl;
+            std::abort();
+    }
+}
+
 void CSA::FirstFit(Call* call){
     Route* route = call->GetRoute();
     bool flag = false;

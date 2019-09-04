@@ -45,15 +45,17 @@ const Parameters* parameters) {
             << parameters->GetMaxSectionLegnth()/1E3 << std::endl;
     ostream << "Number of polarizations: " 
             << parameters->GetNumberPolarizations() << std::endl;
+    ostream << "Guard band size (slots): " << parameters->GetGuardBand()
+            << std::endl;
     
     return ostream;
 }
 
 Parameters::Parameters(SimulationType* simulType)
-:simulType(simulType), loadPoint(0), minLoadPoint(0.0),
-maxLoadPoint(0.0), loadPasso(0.0), numberLoadPoints(0),
-numberReqMax(0.0), mu(0.0), numberBloqMax(0),
-slotBandwidth(0.0), numberSlots(0), numberCores(0), maxSectionLegnth(0.0) {
+:simulType(simulType), loadPoint(0), minLoadPoint(0.0), maxLoadPoint(0.0), 
+loadPasso(0.0), numberLoadPoints(0), numberReqMax(0.0), mu(0.0), 
+numberBloqMax(0), slotBandwidth(0.0), numberSlots(0), numberCores(0), 
+maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0) {
     
 }
 
@@ -93,12 +95,15 @@ void Parameters::Load() {
     std::cout << "Insert the value for K: ";
     std::cin >> auxUnsInt;
     this->SetNumberRoutes(auxUnsInt);
-    std::cout << "Insert the  maximum section length (km): ";
+    std::cout << "Insert the maximum section length (km): ";
     std::cin >> auxDouble;
     this->SetMaxSectionLegnth(auxDouble);
-    std::cout << "Insert the  number of polarizations: ";
+    std::cout << "Insert the number of polarizations: ";
     std::cin >> auxUnsInt;
     this->SetNumberPolarizations(auxUnsInt);
+    std::cout << "Insert the guard band size (slots): ";
+    std::cin >> auxUnsInt;
+    this->SetGuardBand(auxUnsInt);
     
     this->SetLoadPointUniform();
     
@@ -133,6 +138,8 @@ void Parameters::LoadFile() {
     this->SetMaxSectionLegnth(auxDouble);
     auxIfstream >> auxInt;
     this->SetNumberPolarizations(auxInt);
+    auxIfstream >> auxInt;
+    this->SetGuardBand(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -289,4 +296,13 @@ unsigned int Parameters::GetNumberPolarizations() const {
 void Parameters::SetNumberPolarizations(unsigned int numberPolarizations) {
     assert(numberPolarizations > 0);
     this->numberPolarizations = numberPolarizations;
+}
+
+unsigned int Parameters::GetGuardBand() const {
+    return guardBand;
+}
+
+void Parameters::SetGuardBand(unsigned int guardBand) {
+    assert(guardBand < numberSlots);
+    this->guardBand = guardBand;
 }

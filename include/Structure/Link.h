@@ -18,9 +18,11 @@
 #include <vector>
 #include <limits>
 #include <iostream>
+#include <memory>
 
 class Topology;
 class Signal;
+class Core;
 
 #include "../GeneralClasses/Def.h"
 
@@ -34,16 +36,17 @@ class Link {
 public:
     /**
      * @brief Standard constructor for a Link object.
-     * @param topPointer pointer to a Topology object that
-     * owns this link.
-     * @param origimNode origin node of the link.
-     * @param destinationNode destination node of the link.
-     * @param length length of the link (meters).
-     * @param numberSections total number of sections 
-     * of the link.
+     * @param topPointer Pointer to a Topology object that owns this link.
+     * @param origimNode Source node of the link.
+     * @param destinationNode Destination node of the link.
+     * @param length Length of the link (meters).
+     * @param numberSections Total number of sections of the link.
+     * @param numberCores Total number of cores in the link.
+     * @param numberSlots Total number of slots of each core in the link.
      */
     Link(Topology* topPointer, NodeIndex origimNode, NodeIndex destinationNode, 
-    double length, unsigned int numberSections, unsigned int numberSlots);
+    double length, unsigned int numberSections, unsigned int numberCores,
+    unsigned int numberSlots);
     /**
      * @brief Virtual destructor of a Link object.
      */
@@ -105,6 +108,8 @@ public:
 
     void SetUtilization(unsigned int utilization);
     
+    unsigned int GetNumberCores() const;
+    
     /**
      * @brief Update the signal power, ASE power and
      * nonlinear power crossing this link.
@@ -116,11 +121,15 @@ public:
      * @param index Slot index.
      */
     void OccupySlot(const SlotIndex index);
+    
+    void OccupySlot(const CoreIndex coreId, const SlotIndex slotId);
     /**
      * @brief Release an specified slot in this link.
      * @param index Slot index.
      */
     void ReleaseSlot(const SlotIndex index);
+    
+    void ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId);
     /**
      * @brief Check if an specified slot is occupied in
      * the link.
@@ -128,6 +137,8 @@ public:
      * @return True if the slot is occupied.
      */
     bool IsSlotOccupied(const SlotIndex index) const;
+    
+    bool IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId);
     /**
      * @brief Check if an specified slot is free in
      * the link.
@@ -136,17 +147,25 @@ public:
      */
     bool IsSlotFree(const SlotIndex index) const;
     
+    bool IsSlotFree(const CoreIndex coreId, const SlotIndex slotId);
+    
     unsigned int GetNumSlots() const;
+    
+    unsigned int GetNumSlots(const CoreIndex coreId) const;
     /**
      * @brief Return the number of free slots in the link.
      * @return Number of free slots.
      */
     unsigned int GetNumberFreeSlots() const;
+    
+    unsigned int GetNumberFreeSlots(const CoreIndex coreId) const;
     /**
      * @brief Return the number of occupied slots in the link.
      * @return Number of occupied slots.
      */
     unsigned int GetNumberOccupiedSlots() const;
+    
+    unsigned int GetNumberOccupiedSlots(const CoreIndex coreId) const;
     /**
      * @brief Function to return pointer of the topology
      * @return Pointer to topology
@@ -179,11 +198,8 @@ private:
      * selected metric
      */
     double cost;
-    /**
-     * @brief Vector with slots status, free or occupied,
-     * in this link
-     */
-    std::vector<SlotState> slotsStatus;
+    
+    std::vector<std::shared_ptr<Core>> cores;
     /**
      * @brief Boolean variable to indicate the  link state.
      */

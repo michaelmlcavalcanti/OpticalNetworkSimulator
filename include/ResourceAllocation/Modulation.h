@@ -48,7 +48,7 @@ public:
      * @param slotBand Slot bandwidth size, used to calculate the parameters.
      */
     Modulation(ResourceAlloc* resourAlloc, double slotBand, 
-               unsigned int numPolarization);
+    unsigned int numPolarization, unsigned int guardBand);
     /**
      * @brief Default destructor of a modulation object.
      */
@@ -67,13 +67,24 @@ public:
      */
     void SetModulationParam(CallDevices* call);
     /**
-     * @brief Function to calculate the spectral bandwidth of a optical signal, 
-     * based on the modulation format and the bit rate.
-     * @param M Number of bits used to compose the modulation variations.
-     * @param Rbps Bit rate to transmit.
-     * @return Spectral bandwidth needed to transmit.
+     * @brief Gets the possible slots set that the call requests can use.
+     * @param traffic Container with all possible traffics.
+     * @return Container of possible slots.
      */
-    double BandwidthQAM(TypeModulation M, double Rbps);
+    std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
+    /**
+     * @brief Function to get the slot bandwidth used as reference.
+     * @return Slot bandwidth.
+     */
+    double GetSlotBandwidth() const;
+    
+    unsigned int GetNumberSlots(const TypeModulation modulation, 
+    const double bitRate);
+    
+    unsigned int GetNumberSlots(const TypeModulation modulation, 
+    const double bitRate, double &bandwidth);
+    
+    static std::vector<TypeModulation> GetModulationFormats();
     /**
      * @brief Function to get the Optical Signal-Noise Ratio (OSNR) threshold 
      * for a specified modulation format and bit rate.
@@ -82,6 +93,15 @@ public:
      * @return OSNR threshold.
      */
     double GetOSNRQAM(TypeModulation M, double Rbps);
+private:
+    /**
+     * @brief Function to calculate the spectral bandwidth of a optical signal, 
+     * based on the modulation format and the bit rate.
+     * @param M Number of bits used to compose the modulation variations.
+     * @param Rbps Bit rate to transmit.
+     * @return Spectral bandwidth needed to transmit.
+     */
+    double BandwidthQAM(TypeModulation M, double Rbps);
     /**
      * @brief Function to get the SNRb value, in dB, depending on the modulation 
      * value and the BER used as reference.
@@ -95,28 +115,13 @@ public:
      * @return SNRb value.
      */
     double GetsnrbQAM(unsigned int M);
-    
-    unsigned int GetNumSlots(double bitRate, TypeModulation modulation);
     /**
      * @brief Check if the simulation is EON, based on the slot bandwidth.
      * @return True if it is an EON simulation.
      */
     bool isEON() const;
-    /**
-     * @brief Gets the possible slots set that the call requests can use.
-     * @param traffic Container with all possible traffics.
-     * @return Container of possible slots.
-     */
-    std::vector<unsigned int> GetPossibleSlots(std::vector<double> traffic);
-    /**
-     * @brief Function to get the slot bandwidth used as reference.
-     * @return Slot bandwidth.
-     */
-    double GetSlotBandwidth() const;
     
     static unsigned int GetNumBits(TypeModulation modulation);
-    
-    static std::vector<TypeModulation> GetModulationFormats();
 private:
     /**
      * @brief Gets the possible slots set that the call requests can use with
@@ -153,6 +158,8 @@ private:
     const unsigned int polarization;
     
     const double rollOff;
+    
+    const unsigned int guardBand;
     /**
      * @brief Map composed by the modulation format options and its respective
      * amount of bits to represent the signal.
