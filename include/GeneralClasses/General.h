@@ -36,44 +36,6 @@ public:
      * @return Linear value.
      */
     static double dBToLinear(const double dBValue);
-    /**
-     * @brief Template that return the absolute value.
-     * @param x Input value.
-     * @return Absolute value.
-     */
-    template <class T>
-    static const T& ABS(const T& x);
-    /**
-     * @brief Template that return the maximum value of two input values.
-     * @param a First input value.
-     * @param b Second input vale.
-     * @return Maximum value.
-     */
-    template <class T>
-    static const T& MAX (const T& a, const T& b);
-    /**
-     * @brief Template that return the minimum value of two input values.
-     * @param a First input value.
-     * @param b Second input vale.
-     * @return Minimum value.
-     */
-    template <class T>
-    static const T& MIN (const T& a, const T& b);
 };
-
-template <class T>
-const T& General::ABS(const T& x){
-	return (x>0)?x:-x;
-}
-
-template <class T>
-const T& General::MAX (const T& a, const T& b){
-	return (a>b)?a:b;
-}
-
-template <class T>
-const T& General::MIN (const T& a, const T& b){
-	return (a<b)?a:b;
-}
 
 #endif /* GENERAL_H */

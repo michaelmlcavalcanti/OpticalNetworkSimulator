@@ -43,13 +43,6 @@ genes(orig->genes) {
     
 }
 
-IndividualNumRoutesMSCL::IndividualNumRoutesMSCL(const std::shared_ptr<const 
-IndividualNumRoutesMSCL>& orig, double value):Individual(orig, value), 
-ga(orig->ga), blockProb(value), simulTime(value), 
-totalNumInterRoutes((unsigned) value), genes(orig->genes){
-
-}
-
 IndividualNumRoutesMSCL::~IndividualNumRoutesMSCL() {
     
 }
@@ -87,9 +80,8 @@ unsigned int IndividualNumRoutesMSCL::GetTotalNumInterRoutes() const {
 void IndividualNumRoutesMSCL::SetTotalNumInterRoutes() {
     unsigned int total = 0;
     
-    for(auto it1: genes)
-        for(auto it2: it1)
-            total += it2;
+    for(auto it: genes)
+        total = std::accumulate(it.begin(), it.end(), total);
     
     totalNumInterRoutes = total;
 }

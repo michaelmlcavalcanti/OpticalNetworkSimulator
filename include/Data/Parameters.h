@@ -206,6 +206,11 @@ public:
      * @param numberPolarizations Number of polarizations.
      */
     void SetNumberPolarizations(unsigned int numberPolarizations);
+    
+    unsigned int GetGuardBand() const;
+
+    void SetGuardBand(unsigned int guardBand);
+
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -270,6 +275,8 @@ private:
      * @brief Number of polarizations used in the simulation.
      */
     unsigned int numberPolarizations;
+    
+    unsigned int guardBand;
     
     /**
      * @brief Calculate the load step.

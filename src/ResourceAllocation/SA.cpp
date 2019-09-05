@@ -31,6 +31,7 @@ SA::~SA() {
 }
 
 void SA::SpecAllocation(Call* call) {
+    call->SetCore(0);
     
     switch(this->specAllOption){
         case SpecAllRandom:

@@ -3,10 +3,13 @@
 2
 1
 1
-1
-0
+2
 2
 1
+2
+1
+0
+0
 0
 0
 0
@@ -52,6 +55,7 @@
     4 - 40-100-200
     5 - 100-200
     6 - 200
+    7 - 100-200-300-400-500
 6-Resource Allocation Option
     0 - Invalid
     1 - RSA
@@ -98,3 +102,7 @@
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests
+17-Random Generation
+    0 - Same request for all points
+    1 - Pseudo random generation
+    2 - Random generation

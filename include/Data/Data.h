@@ -70,7 +70,10 @@ public:
      * @brief Saves the data values in the Log.txt file.
      */
     void SaveMultiloadLog();
-    
+    /**
+     * @brief Function to save the simulation log for a set of devices.
+     * @param vecParam Container of devices.
+     */
     void SaveLog(std::vector<unsigned> vecParam);
     /**
      * @brief Saves the data values in the PBvLoad.txt file.
@@ -190,7 +193,11 @@ private:
      * @param ostream Stream that contain the PBvLoad file.
      */
     void SaveCallReqBP(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the bandwidth blocking probability into a output
+     * stream.
+     * @param ostream Output stream.
+     */
     void SaveBandwidthBP(std::ostream& ostream);
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
@@ -199,7 +206,12 @@ private:
      * @param vec Container of parameters.
      */
     void SaveCallReqBP(std::ostream& ostream, std::vector<unsigned> vec);
-    
+    /**
+     * @brief Function to save the bandwidth blocking probability with a set
+     * of devices into a output stream.
+     * @param ostream Output stream.
+     * @param vec Container of devices.
+     */
     void SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec);
     /**
      * @brief Function to save all GA single objective data in the output files.

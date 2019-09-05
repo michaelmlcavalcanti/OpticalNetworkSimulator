@@ -90,8 +90,9 @@ enum TrafficOption {
     Traffic_40_100_200,
     Traffic_100_200,
     Traffic_200,
+    Traffic_100_200_300_400_500,
     FirstTrafficOption = Traffic_100_200_400,
-    LastTrafficOption = Traffic_200
+    LastTrafficOption = Traffic_100_200_300_400_500
 };
 
 /**
@@ -202,6 +203,10 @@ enum RegAssignmentOption {
     LastRegAss = RegAssOpaque
 };
 
+/**
+ * @brief Enumerate the possible stop criteria for the simulations.
+ * Total number of call requests or number of blocked call requests. 
+ */
 enum StopCriteria {
     NumCallRequestsMaximum,
     NumCallRequestsBlocked,
@@ -209,6 +214,14 @@ enum StopCriteria {
     LastStopCriteria = NumCallRequestsBlocked
 };
 
+enum RandomGenerationOption {
+    GenerationSame,
+    GenerationPseudoRandom,
+    GenerationRandom,
+    FirstGeneration = GenerationSame,
+    LastGeneration = GenerationRandom
+};
+        
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -447,6 +460,12 @@ public:
     std::string GetStopCriteriaName() const;
     
     void SetStopCriteria(StopCriteria stopCriteria);
+    
+    RandomGenerationOption GetGenerationOption() const;
+    
+    std::string GetGenerationOptionName() const;
+
+    void SetGenerationOption(RandomGenerationOption generationOption);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -516,6 +535,8 @@ private:
      * @brief Option to determine the simulation stop criteria. 
      */
     StopCriteria stopCriteria;
+    
+    RandomGenerationOption generationOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -610,6 +631,9 @@ private:
      */
     static const boost::unordered_map<StopCriteria,
     std::string> mapStopCriteria;
+    
+    static const boost::unordered_map<RandomGenerationOption,
+    std::string> mapRandomGeneration;
 };
 
 #endif /* OPTIONS_H */

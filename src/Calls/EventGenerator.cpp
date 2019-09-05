@@ -53,10 +53,12 @@ void EventGenerator::Load() {
     (0, this->traffic->GetVecTraffic().size() - 1);
     this->exponencialMuDistribution = std::exponential_distribution<TIME>
     (1.0L / this->simulType->GetParameters()->GetMu());
+    
+    this->LoadRandomGenerator();
 }
 
 void EventGenerator::Initialize() {
-    EventGenerator::random_generator = std::default_random_engine{0};
+    this->InitializeGenerator();
     this->simulationTime = 0.0;
     this->exponencialHDistribution = std::exponential_distribution<TIME>
     (this->networkLoad);
@@ -176,4 +178,27 @@ unsigned deNodeIndex, unsigned trafficIndex, TIME deactTime) {
     }
     
     return newCall;
+}
+
+void EventGenerator::LoadRandomGenerator() {
+    
+    switch(simulType->GetOptions()->GetGenerationOption()){
+        case GenerationSame:
+        case GenerationPseudoRandom:
+            EventGenerator::random_generator = std::default_random_engine{0};
+            break;
+        case GenerationRandom:
+            EventGenerator::random_generator = 
+            std::default_random_engine{Def::randomDevice()};
+            break;
+        default:
+            std::cerr << "Invalid random generation option" << std::endl;
+            std::abort();
+    }
+}
+
+void EventGenerator::InitializeGenerator() {
+    
+    if(simulType->GetOptions()->GetGenerationOption() == GenerationSame)
+        EventGenerator::random_generator = std::default_random_engine{0};
 }

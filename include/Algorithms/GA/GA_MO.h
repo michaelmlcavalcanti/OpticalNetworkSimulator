@@ -32,7 +32,10 @@ public:
      */
     virtual ~GA_MO();
     
-    
+    /**
+     * @brief Function to load the GA multi-objective parameters of an input
+     * file.
+     */
     void LoadFile() override;
 
     /**
@@ -63,7 +66,9 @@ public:
         bool operator()(const std::shared_ptr<Individual>& indA,
                         const std::shared_ptr<Individual>& indB) const;
     };
-    
+    /**
+     * @brief Function to initialize the GA multi-objective parameters.
+     */
     void Initialize() override;
     /**
      * @brief Initialize the population with random individuals, created only 
@@ -118,18 +123,39 @@ public:
      * @return 
      */
     unsigned int GetNumIndParetoFronts() const;
-    
+    /**
+     * @brief Function to get the Pareto front (Container of individuals) of the 
+     * actual generation.
+     * @return Container of individuals.
+     */
     std::vector<Individual*> GetParetoFront() const;
-    
+    /**
+     * @brief Function to get the GA multi-objective initial population.
+     * @return Container of individuals.
+     */
     std::vector<Individual*> GetIniPopulation() const;
+    /**
+     * @brief Function to set the save step of Pareto fronts.
+     * @param savePasso Save step.
+     */
+    void SetSaveStep(unsigned int saveStep);
+    /**
+     * @brief Function to get the save step of Pareto fronts.
+     * @return Save step.
+     */
+    unsigned int GetSaveStep() const;
     
-    void SetSavePasso(unsigned int savePasso);
-
-    unsigned int GetSavePasso() const;
-    
-    
+    /**
+     * @brief Function to print number of individuals in the Pareto front of the
+     * GA actual generation into an output stream.
+     * @param ostream Output stream.
+     */
     void print(std::ostream& ostream) const override;
-    
+    /**
+     * @brief Function to print the GA parameters into an output stream.
+     * @param ostream Output stream.
+     * @return Output stream.
+     */
     std::ostream& printParameters(std::ostream& ostream) const override;
 private:
     /**
@@ -140,8 +166,10 @@ private:
      * @brief Container to keep the first Pareto front of each generation.
      */
     std::vector<std::vector<std::shared_ptr<Individual>>> firstParetoFronts;
-    
-    unsigned int savePasso;
+    /**
+     * @brief GA save step.
+     */
+    unsigned int saveStep;
 public:
     /**
      * @brief Container of the Pareto fronts of the GA.

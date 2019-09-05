@@ -37,6 +37,8 @@ public:
      * in a core.
      */
     Core(CoreIndex cId, unsigned int nSlots);
+    
+    Core(Link* link, CoreIndex coreId, unsigned int numSlots);
     /**
      * @brief Default destructor of Core object.
      */
@@ -75,7 +77,15 @@ public:
      * in the core. 
      */
     void ReleaseSlot(SlotIndex sPosition);
+    
+    bool IsCoreWorking();
+    
+    void SetCoreState(bool state);
+    
+    unsigned int GetNumSlots();
 private:
+    
+    Link* link;
     /**
      * @brief Index of the core.
      */
@@ -84,6 +94,8 @@ private:
      * @brief Vector of slots of this core.
      */
     std::vector<SlotState> slotsStatus;
+    
+    bool coreWorking;
 };
 
 #endif /* CORE_H */

@@ -13,6 +13,7 @@
 
 #ifndef CSA_H
 #define CSA_H
+
 #include "SA.h"
 
 class CSA: public SA {
@@ -26,6 +27,9 @@ public:
      */    
     virtual ~CSA();
     
+    
+    void SpecAllocation(Call* call) override;
+
     void FirstFit(Call* call);        
     /**
      * @brief Return strong call class pointer to cast

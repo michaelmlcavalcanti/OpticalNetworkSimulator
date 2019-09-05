@@ -44,9 +44,6 @@ public:
      * @param orig Original individual to be copied.
      */
     IndividualBool(const std::shared_ptr<const IndividualBool>& orig);
-    
-    IndividualBool(const std::shared_ptr<const IndividualBool>& orig, 
-                   double value);
     /**
      * @brief Default destructor of this individual.
      */

@@ -39,12 +39,6 @@ blockProb(orig->blockProb) {
     
 }
 
-IndividualBool::IndividualBool(const std::shared_ptr<const IndividualBool>& 
-orig, double value):Individual(orig, value), ga(orig->ga), genes(orig->genes), 
-blockProb(value)  {
-    
-}
-
 IndividualBool::~IndividualBool() {
     
 }

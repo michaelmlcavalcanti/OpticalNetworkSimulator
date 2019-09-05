@@ -39,9 +39,6 @@ public:
      */
     IndividualNumRoutesMSCL(const std::shared_ptr
                             <const IndividualNumRoutesMSCL>& orig);
-    
-    IndividualNumRoutesMSCL(const std::shared_ptr<const 
-                            IndividualNumRoutesMSCL>& orig, double value);
     /**
      * @brief Default destructor of this individual.
      */
@@ -67,9 +64,15 @@ public:
      * @param simulTime Simulation time.
      */
     void SetSimulTime(TIME simulTime);
-    
+    /**
+     * @brief Function to get the total number of interfering routes to check.
+     * @return Total number of interfering routes.
+     */
     unsigned int GetTotalNumInterRoutes() const;
-    
+    /**
+     * @brief Function to set the total number of interfering routes to check.
+     * The sum for each route of each node pair.
+     */
     void SetTotalNumInterRoutes();
     
     /**
@@ -100,7 +103,6 @@ public:
      */
     void SetGene(unsigned int orN, unsigned int deN, unsigned int pos, 
                  unsigned int gene);
-    
     
     /**
      * @brief Gets the first parameter(blocking probability) of this 

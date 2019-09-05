@@ -21,7 +21,7 @@ const boost::unordered_map<TypeSimulation, std::string>
 Kernel::mapSimulationType = boost::assign::map_list_of
     (InvalidSimulation, "Invalid")
     (MultiLoadSimulationType, "Multiple Load Simulation")
-    (IncNumRegType, "Increase Number of Regenerators")
+    (IncNumDevType, "Increase Number of Devices")
     (GaSimulationType, "GA Simulation");
 
 Kernel::Kernel()
@@ -31,25 +31,24 @@ Kernel::Kernel()
 
 Kernel::~Kernel() {
     
-    for(auto it : simulations)
-        it.reset();
+    simulations.clear();
 }
 
 void Kernel::Run() {
     
     this->CreateSimulations();
     
-    for(auto it: this->simulations){
-        this->Pre_Simulation(it.get());
-        this->Simulation(it.get());
-        this->Pos_Simulation(it.get());
+    for(unsigned int a = 0; a < simulations.size(); a++){
+        this->Pre_Simulation(simulations.at(a).get());
+        this->Simulation(simulations.at(a).get());
+        this->Pos_Simulation(simulations.at(a).get());
+        simulations.at(a).reset();
     }
 }
 
 void Kernel::CreateSimulations() {
     unsigned int auxIndex;
     TypeSimulation typeSimul;
-    std::shared_ptr<SimulationType> auxSimulation;
     
     std::cout << "Type the number of simulations to perform: ";
     std::cin >> this->numberSimulations;
@@ -66,24 +65,7 @@ void Kernel::CreateSimulations() {
         std::cin >> auxIndex;
         typeSimul = (TypeSimulation) auxIndex;
         
-        switch(typeSimul){
-            case MultiLoadSimulationType:
-                auxSimulation = std::make_shared<SimulationMultiLoad>(a, 
-                                      typeSimul);
-                break;
-            case IncNumRegType:
-                auxSimulation = std::make_shared<SimulationMultiNumDevices>(a, 
-                                      typeSimul);
-                break;
-            case GaSimulationType:
-                auxSimulation = std::make_shared<SimulationGA>(a, 
-                                      typeSimul);
-                break;
-            default:
-                std::cerr << "Invalid simulation type" << std::endl;
-                std::abort();
-        }
-        simulations.push_back(auxSimulation);
+        this->CreateSimulation(a, typeSimul);
     }
     std::cout << std::endl;
 }
@@ -103,4 +85,24 @@ void Kernel::Simulation(SimulationType* simul) {
 void Kernel::Pos_Simulation(SimulationType* simul) {
     
     simul->Save();
+}
+
+void Kernel::CreateSimulation(SimulIndex index, TypeSimulation type) {
+    
+    switch(type){
+        case MultiLoadSimulationType:
+            simulations.push_back(std::make_shared<SimulationMultiLoad>(
+            index, type));
+            break;
+        case IncNumDevType:
+            simulations.push_back(std::make_shared<SimulationMultiNumDevices>(
+            index, type));
+            break;
+        case GaSimulationType:
+            simulations.push_back(std::make_shared<SimulationGA>(index, type));
+            break;
+        default:
+            std::cerr << "Invalid simulation type" << std::endl;
+            std::abort();
+    }
 }
