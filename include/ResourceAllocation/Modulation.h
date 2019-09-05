@@ -86,6 +86,14 @@ public:
     
     static std::vector<TypeModulation> GetModulationFormats();
     /**
+     * @brief Function to calculate the spectral bandwidth of a optical signal, 
+     * based on the modulation format and the bit rate.
+     * @param M Number of bits used to compose the modulation variations.
+     * @param Rbps Bit rate to transmit.
+     * @return Spectral bandwidth needed to transmit.
+     */
+    double BandwidthQAM(TypeModulation M, double Rbps);
+    /**
      * @brief Function to get the Optical Signal-Noise Ratio (OSNR) threshold 
      * for a specified modulation format and bit rate.
      * @param M Modulation format.
@@ -95,13 +103,11 @@ public:
     double GetOSNRQAM(TypeModulation M, double Rbps);
 private:
     /**
-     * @brief Function to calculate the spectral bandwidth of a optical signal, 
-     * based on the modulation format and the bit rate.
-     * @param M Number of bits used to compose the modulation variations.
-     * @param Rbps Bit rate to transmit.
-     * @return Spectral bandwidth needed to transmit.
+     * @brief Function to get the SNRb linear value.
+     * @param M Modulation value.
+     * @return SNRb value.
      */
-    double BandwidthQAM(TypeModulation M, double Rbps);
+    double GetsnrbQAM(unsigned int M);
     /**
      * @brief Function to get the SNRb value, in dB, depending on the modulation 
      * value and the BER used as reference.
@@ -110,19 +116,10 @@ private:
      */
     double GetSNRbQAM(unsigned int M);
     /**
-     * @brief Function to get the SNRb linear value.
-     * @param M Modulation value.
-     * @return SNRb value.
-     */
-    double GetsnrbQAM(unsigned int M);
-    /**
      * @brief Check if the simulation is EON, based on the slot bandwidth.
      * @return True if it is an EON simulation.
      */
     bool isEON() const;
-    
-    static unsigned int GetNumBits(TypeModulation modulation);
-private:
     /**
      * @brief Gets the possible slots set that the call requests can use with
      * a fixed modulation format allowed.
@@ -139,6 +136,7 @@ private:
      */
     std::vector<unsigned int> GetPossibleSlotsVariableMod(std::vector<double>&
                                                           traffic);
+    static unsigned int GetNumBits(TypeModulation modulation);
 private:
     /**
      * @brief ResouseAlloc object that owns the modulation object.

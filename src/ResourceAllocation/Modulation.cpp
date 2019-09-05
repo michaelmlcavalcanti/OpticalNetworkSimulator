@@ -126,6 +126,20 @@ const double bitRate, double& bandwidth) {
     return numSlots;
 }
 
+std::vector<TypeModulation> Modulation::GetModulationFormats() {
+    std::vector<TypeModulation> vecModulations(0);
+    TypeModulation mod = LastModulation;
+    
+    while(mod != InvalidModulation){
+        vecModulations.push_back(mod);
+        mod = TypeModulation(mod - 1);
+    }
+    
+    vecModulations.push_back(InvalidModulation);
+    
+    return vecModulations;
+}
+
 double Modulation::BandwidthQAM(TypeModulation M, double Rbps) {
     assert(M >= FirstModulation && M <= LastModulation);
     unsigned int value = mapNumBitsModulation.at(M);
@@ -206,24 +220,6 @@ bool Modulation::isEON() const {
     return false;
 }
 
-unsigned int Modulation::GetNumBits(TypeModulation modulation) {
-    return mapNumBitsModulation.at(modulation);
-}
-
-std::vector<TypeModulation> Modulation::GetModulationFormats() {
-    std::vector<TypeModulation> vecModulations(0);
-    TypeModulation mod = LastModulation;
-    
-    while(mod != InvalidModulation){
-        vecModulations.push_back(mod);
-        mod = TypeModulation(mod - 1);
-    }
-    
-    vecModulations.push_back(InvalidModulation);
-    
-    return vecModulations;
-}
-
 std::vector<unsigned int> Modulation::GetPossibleSlotsFixedMod(
 std::vector<double>& traffic) {
     std::vector<unsigned int> posSlots(0);
@@ -293,4 +289,8 @@ std::vector<double>& traffic) {
     std::sort(posSlots.begin(), posSlots.end());
     
     return posSlots;
+}
+
+unsigned int Modulation::GetNumBits(TypeModulation modulation) {
+    return mapNumBitsModulation.at(modulation);
 }
