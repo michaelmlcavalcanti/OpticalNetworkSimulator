@@ -83,7 +83,8 @@ public:
     
     unsigned int GetNumberSlots(const TypeModulation modulation, 
     const double bitRate, double &bandwidth);
-private:
+    
+    static std::vector<TypeModulation> GetModulationFormats();
     /**
      * @brief Function to calculate the spectral bandwidth of a optical signal, 
      * based on the modulation format and the bit rate.
@@ -100,6 +101,13 @@ private:
      * @return OSNR threshold.
      */
     double GetOSNRQAM(TypeModulation M, double Rbps);
+private:
+    /**
+     * @brief Function to get the SNRb linear value.
+     * @param M Modulation value.
+     * @return SNRb value.
+     */
+    double GetsnrbQAM(unsigned int M);
     /**
      * @brief Function to get the SNRb value, in dB, depending on the modulation 
      * value and the BER used as reference.
@@ -107,12 +115,6 @@ private:
      * @return SNRb value.
      */
     double GetSNRbQAM(unsigned int M);
-    /**
-     * @brief Function to get the SNRb linear value.
-     * @param M Modulation value.
-     * @return SNRb value.
-     */
-    double GetsnrbQAM(unsigned int M);
     /**
      * @brief Check if the simulation is EON, based on the slot bandwidth.
      * @return True if it is an EON simulation.
@@ -134,6 +136,7 @@ private:
      */
     std::vector<unsigned int> GetPossibleSlotsVariableMod(std::vector<double>&
                                                           traffic);
+    static unsigned int GetNumBits(TypeModulation modulation);
 private:
     /**
      * @brief ResouseAlloc object that owns the modulation object.
