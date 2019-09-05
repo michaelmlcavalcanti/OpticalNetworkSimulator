@@ -299,7 +299,7 @@ protected:
      * owns this RSA.
      */
     SimulationType* simulType;
-       /**
+    /**
      * @breif Pointer to the Parameters object of this simulation.
      */
     Parameters* parameters;

@@ -30,7 +30,7 @@
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
-routing(nullptr), specAlloc(nullptr), parameters(nullptr) {
+parameters(nullptr), routing(nullptr), specAlloc(nullptr) {
     
 }
 
@@ -157,6 +157,7 @@ void ResourceAlloc::RoutingSpec(Call* call) {
 void ResourceAlloc::SpecRouting(Call* call) {
     this->routing->RoutingCall(call);
     call->RepeatModulation();
+    call->SetCore(0);
     
     bool allocFound = false;
     unsigned int numRoutes = call->GetNumRoutes();
