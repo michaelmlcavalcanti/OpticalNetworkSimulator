@@ -26,6 +26,7 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/GeneralClasses/Def.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
@@ -51,13 +52,14 @@ void ResourceAlloc::Load() {
     topology = simulType->GetTopology();
     traffic = simulType->GetTraffic();
     options = simulType->GetOptions();
-    Parameters* par = simulType->GetParameters();
-    
+    parameters = simulType->GetParameters();
+        
     this->CreateRouting();
     this->CreateSpecAllocation();
     
-    modulation = std::make_shared<Modulation>(this, par->GetSlotBandwidth(), 
-    par->GetNumberPolarizations(), par->GetGuardBand());
+    modulation = std::make_shared<Modulation>(this, 
+    parameters->GetSlotBandwidth(), parameters->GetNumberPolarizations(), 
+    parameters->GetGuardBand());
     
     resources = std::make_shared<Resources>(this, modulation.get());
     
@@ -338,17 +340,19 @@ bool ResourceAlloc::RsaOrderTopology() {
 
 void ResourceAlloc::SetResourceAllocOrderHE() {
     unsigned int numNodes = topology->GetNumNodes();
+    Data* data = simulType->GetData();
     bool foundBetterOption = true;
     double currentBP;
     unsigned int bestIndex1 = Def::Max_UnInt;
     unsigned int bestIndex2 = Def::Max_UnInt;
     unsigned int auxIndex1, auxIndex2;
     ResAllocOrder rsaOrder =  this->RsaOrderTopology();
-    this->GetSimulType()->GetCallGenerator()->SetNetworkLoad(parameters->GetMidLoadPoint());
+    double load = parameters->GetMidLoadPoint();
+    simulType->GetCallGenerator()->SetNetworkLoad(load);
     double numMaxReq = parameters->GetNumberReqMax();
     parameters->SetNumberReqMax(1E5);
     simulType->RunBase();
-    double bestBP = simulType->GetData()->GetPbReq();
+    double bestBP = data->GetPbReq();
     while (foundBetterOption){
         foundBetterOption = false;
         
@@ -364,11 +368,12 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
                     continue;
                 resources->resourceAllocOrder.at(auxIndex1) = !rsaOrder;
                 resources->resourceAllocOrder.at(auxIndex2) = !rsaOrder;
+                data->Initialize();
                 simulType->RunBase();
-                currentBP = simulType->GetData()->GetPbReq();
+                currentBP = data->GetPbReq();
 
                 if(currentBP < bestBP){
-                    bestBP = simulType->GetData()->GetPbReq();
+                    bestBP = currentBP;
                     bestIndex1 = auxIndex1;
                     bestIndex2 = auxIndex2;
                     foundBetterOption = true;
