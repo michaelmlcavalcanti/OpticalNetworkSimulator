@@ -150,6 +150,7 @@ void ResourceAlloc::RoutingSpec(Call* call) {
 void ResourceAlloc::SpecRouting(Call* call) {
     this->routing->RoutingCall(call);
     call->RepeatModulation();
+    call->SetCore(0);
     
     bool allocFound = false;
     unsigned int numRoutes = call->GetNumRoutes();
