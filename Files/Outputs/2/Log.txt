@@ -1,0 +1,57 @@
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: SA-Routing
+GA: GA Disabled
+Devices: Disabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Different pseudo-random generation
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 240
+Maximum load point(erlang): 300
+Number of points: 6
+Total number of requisitions: 1e+06
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+K: 3
+Maximum section length (km): 70
+Number of polarizations: 2
+Guard band size (slots): 0
+
+DATA
+Simulation time:4169.14  Real simul time: 38.1746  Number of requests:1e+06
+Load point:240  PbReq:9.8e-05  PbSlots:0.000165406  HopsMed:2.45259  NetOcc:9.0193e+06
+
+
+Simulation time:3966.97  Real simul time: 39.1636  Number of requests:1e+06
+Load point:252  PbReq:0.000365  PbSlots:0.000621923  HopsMed:2.45089  NetOcc:8.9968e+06
+
+
+Simulation time:3781.29  Real simul time: 41.5594  Number of requests:1e+06
+Load point:264  PbReq:0.001207  PbSlots:0.00205659  HopsMed:2.44847  NetOcc:8.98832e+06
+
+
+Simulation time:3629.34  Real simul time: 42.4633  Number of requests:1e+06
+Load point:276  PbReq:0.003018  PbSlots:0.00513362  HopsMed:2.44501  NetOcc:8.94103e+06
+
+
+Simulation time:3473.55  Real simul time: 43.2972  Number of requests:1e+06
+Load point:288  PbReq:0.006349  PbSlots:0.0107902  HopsMed:2.437  NetOcc:8.85779e+06
+
+
+Simulation time:3328.04  Real simul time: 44.5693  Number of requests:1e+06
+Load point:300  PbReq:0.01094  PbSlots:0.0186092  HopsMed:2.43235  NetOcc:8.76646e+06
+
+

@@ -347,10 +347,10 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
     unsigned int bestIndex2 = Def::Max_UnInt;
     unsigned int auxIndex1, auxIndex2;
     ResAllocOrder rsaOrder =  this->RsaOrderTopology();
-    double load = parameters->GetMidLoadPoint();
+    double load = parameters->GetMinLoadPoint();
     simulType->GetCallGenerator()->SetNetworkLoad(load);
     double numMaxReq = parameters->GetNumberReqMax();
-    parameters->SetNumberReqMax(1E5);
+    parameters->SetNumberReqMax(1E6);
     simulType->RunBase();
     double bestBP = data->GetPbReq();
     while (foundBetterOption){
