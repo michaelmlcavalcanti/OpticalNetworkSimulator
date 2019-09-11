@@ -46,6 +46,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/GA/Individual.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualBool.o \
 	${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o \
+	${OBJECTDIR}/src/Algorithms/PSO/PSO.o \
+	${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO.o \
+	${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallDevices.o \
 	${OBJECTDIR}/src/Calls/Event.o \
@@ -79,6 +82,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/SimulationType/SimulationGA.o \
 	${OBJECTDIR}/src/SimulationType/SimulationMultiLoad.o \
 	${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o \
+	${OBJECTDIR}/src/SimulationType/SimulationPSO.o \
 	${OBJECTDIR}/src/SimulationType/SimulationType.o \
 	${OBJECTDIR}/src/Structure/Core.o \
 	${OBJECTDIR}/src/Structure/Devices/BVT.o \
@@ -169,6 +173,21 @@ ${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o: src/Algorithms/GA/Indi
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/GA
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/GA/IndividualNumRoutesMSCL.o src/Algorithms/GA/IndividualNumRoutesMSCL.cpp
+
+${OBJECTDIR}/src/Algorithms/PSO/PSO.o: src/Algorithms/PSO/PSO.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/PSO
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/PSO/PSO.o src/Algorithms/PSO/PSO.cpp
+
+${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO.o: src/Algorithms/PSO/ParticlePSO.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/PSO
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO.o src/Algorithms/PSO/ParticlePSO.cpp
+
+${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o: src/Algorithms/PSO/ParticlePSO_SCRA.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/PSO
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o src/Algorithms/PSO/ParticlePSO_SCRA.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls
@@ -334,6 +353,11 @@ ${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o: src/SimulationType/
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationMultiNumDevices.o src/SimulationType/SimulationMultiNumDevices.cpp
+
+${OBJECTDIR}/src/SimulationType/SimulationPSO.o: src/SimulationType/SimulationPSO.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/SimulationType
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SimulationType/SimulationPSO.o src/SimulationType/SimulationPSO.cpp
 
 ${OBJECTDIR}/src/SimulationType/SimulationType.o: src/SimulationType/SimulationType.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/SimulationType

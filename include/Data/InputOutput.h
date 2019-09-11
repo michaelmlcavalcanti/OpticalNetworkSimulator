@@ -86,6 +86,8 @@ public:
      */
     void LoadDevicesFile(std::ifstream& devicesFile);
     
+    void LoadPSO(std::ifstream& psoFile);
+    
     /**
      * @brief Get the Log.txt ofstream.
      * @return ofstream containing the log file.

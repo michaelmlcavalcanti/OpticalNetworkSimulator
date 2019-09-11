@@ -210,6 +210,23 @@ void InputOutput::LoadDevicesFile(std::ifstream& devicesFile) {
     }while(!devicesFile.is_open());
 }
 
+void InputOutput::LoadPSO(std::ifstream& psoFile) {
+    unsigned int auxInt = simulType->GetSimulationIndex();
+    std::string auxString = std::to_string(auxInt);
+    
+    do{
+        psoFile.open("Files/Inputs/PSO/PSO_" + auxString + ".txt");
+        
+        if(!psoFile.is_open()){
+            std::cerr << "Wrong PSO file." << std::endl;
+            std::cerr << "The file required is: PSO_" + auxString + ".txt";
+            std::cerr << "Add/Fix the file then press 'Enter'" << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!psoFile.is_open());
+}
+
 void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     

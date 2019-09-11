@@ -186,8 +186,7 @@ void ResourceDeviceAlloc::CreateRegeneratorAssignment() {
             regAssAlgorithm = std::make_shared<FirstLongestReach>(this);
             break;
         case RegAssFNS:
-            regAssAlgorithm = std::make_shared<FirstNarrowestSpectrum>
-            (this);
+            regAssAlgorithm = std::make_shared<FirstNarrowestSpectrum>(this);
             break;
         case RegAssDRE2BR:
             regAssAlgorithm = std::make_shared<DRE2BR>(this);

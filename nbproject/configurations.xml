@@ -79,6 +79,11 @@
           <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualNumRoutesMSCL.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="f2" displayName="PSO" projectFiles="true">
+          <itemPath>include/Algorithms/PSO/PSO.h</itemPath>
+          <itemPath>include/Algorithms/PSO/ParticlePSO.h</itemPath>
+          <itemPath>include/Algorithms/PSO/ParticlePSO_SCRA.h</itemPath>
+        </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>include/Calls/Call.h</itemPath>
@@ -126,6 +131,7 @@
         <itemPath>include/SimulationType/SimulationGA.h</itemPath>
         <itemPath>include/SimulationType/SimulationMultiLoad.h</itemPath>
         <itemPath>include/SimulationType/SimulationMultiNumDevices.h</itemPath>
+        <itemPath>include/SimulationType/SimulationPSO.h</itemPath>
         <itemPath>include/SimulationType/SimulationType.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
@@ -162,6 +168,11 @@
           <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualNumRoutesMSCL.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="PSO" projectFiles="true">
+          <itemPath>src/Algorithms/PSO/PSO.cpp</itemPath>
+          <itemPath>src/Algorithms/PSO/ParticlePSO.cpp</itemPath>
+          <itemPath>src/Algorithms/PSO/ParticlePSO_SCRA.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
@@ -209,6 +220,7 @@
         <itemPath>src/SimulationType/SimulationGA.cpp</itemPath>
         <itemPath>src/SimulationType/SimulationMultiLoad.cpp</itemPath>
         <itemPath>src/SimulationType/SimulationMultiNumDevices.cpp</itemPath>
+        <itemPath>src/SimulationType/SimulationPSO.cpp</itemPath>
         <itemPath>src/SimulationType/SimulationType.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Structure" projectFiles="true">
@@ -470,6 +482,18 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/PSO/PSO.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/PSO/ParticlePSO.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/PSO/ParticlePSO_SCRA.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
@@ -595,6 +619,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/SimulationPSO.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/SimulationType/SimulationType.h"
             ex="false"
             tool="3"
@@ -654,6 +683,15 @@
             flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualNumRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/PSO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO_SCRA.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -768,6 +806,11 @@
             flavor2="0">
       </item>
       <item path="src/SimulationType/SimulationMultiNumDevices.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SimulationType/SimulationPSO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1009,6 +1052,18 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/PSO/PSO.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/PSO/ParticlePSO.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/PSO/ParticlePSO_SCRA.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
@@ -1134,6 +1189,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/SimulationType/SimulationPSO.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/SimulationType/SimulationType.h"
             ex="false"
             tool="3"
@@ -1193,6 +1253,15 @@
             flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualNumRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/PSO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO_SCRA.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1307,6 +1376,11 @@
             flavor2="0">
       </item>
       <item path="src/SimulationType/SimulationMultiNumDevices.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/SimulationType/SimulationPSO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
