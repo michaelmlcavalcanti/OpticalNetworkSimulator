@@ -388,7 +388,8 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
             resources->resourceAllocOrder.at(bestIndex2) = !rsaOrder;
         }
     }
-parameters->SetNumberReqMax(numMaxReq);
+    data->Initialize();
+    parameters->SetNumberReqMax(numMaxReq);
 }
 
 void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
