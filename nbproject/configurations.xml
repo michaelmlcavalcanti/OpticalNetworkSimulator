@@ -57,6 +57,8 @@
             <itemPath>Files/Outputs/1/GA/InitialPopulation.txt</itemPath>
             <itemPath>Files/Outputs/1/GA/WorstIndividuals.txt</itemPath>
           </logicalFolder>
+          <logicalFolder name="f2" displayName="PSO" projectFiles="true">
+          </logicalFolder>
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
           <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
           <itemPath>Files/Outputs/1/bandBP.txt</itemPath>

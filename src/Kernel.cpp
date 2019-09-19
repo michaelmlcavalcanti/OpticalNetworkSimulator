@@ -16,13 +16,15 @@
 #include "../include/SimulationType/SimulationMultiLoad.h"
 #include "../include/SimulationType/SimulationGA.h"
 #include "../include/SimulationType/SimulationMultiNumDevices.h"
+#include "../include/SimulationType/SimulationPSO.h"
 
 const boost::unordered_map<TypeSimulation, std::string> 
 Kernel::mapSimulationType = boost::assign::map_list_of
     (InvalidSimulation, "Invalid")
     (MultiLoadSimulationType, "Multiple Load Simulation")
     (IncNumDevType, "Increase Number of Devices")
-    (GaSimulationType, "GA Simulation");
+    (GaSimulationType, "GA Simulation")
+    (PsoSimulationType, "PSO Simulation");
 
 Kernel::Kernel()
 :numberSimulations(0), simulations(0) {
@@ -100,6 +102,9 @@ void Kernel::CreateSimulation(SimulIndex index, TypeSimulation type) {
             break;
         case GaSimulationType:
             simulations.push_back(std::make_shared<SimulationGA>(index, type));
+            break;
+        case PsoSimulationType:
+            simulations.push_back(std::make_shared<SimulationPSO>(index, type));
             break;
         default:
             std::cerr << "Invalid simulation type" << std::endl;

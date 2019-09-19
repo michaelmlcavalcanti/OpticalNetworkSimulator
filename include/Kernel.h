@@ -32,8 +32,9 @@ enum TypeSimulation{
     MultiLoadSimulationType,
     IncNumDevType,
     GaSimulationType,
+    PsoSimulationType,
     FirstSimulation = MultiLoadSimulationType,
-    LastSimulation = GaSimulationType
+    LastSimulation = PsoSimulationType
 };
 
 /**
