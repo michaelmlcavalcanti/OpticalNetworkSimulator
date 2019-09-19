@@ -11,10 +11,7 @@
  * Created on August 8, 2018, 8:14 PM
  */
 
-#include <iostream>
-
 #include "../../include/Data/InputOutput.h"
-
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Options.h"
 
@@ -22,11 +19,12 @@ const int InputOutput::barWidth = 30;
 
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
-    this->LoadLog(this->logFile);
-    this->LoadResults(this->resultFile);
-    this->LoadBandBP(this->bandBpFile);
-    this->LoadGaFiles(this->bestIndividuals, this->bestIndividual, 
-                      this->worstIndividuals, this->initialPopulation);
+    this->LoadLog(logFile);
+    this->LoadResults(resultFile);
+    this->LoadBandBP(bandBpFile);
+    this->LoadGaFiles(bestIndividuals, bestIndividual, 
+                      worstIndividuals, initialPopulation);
+    this->LoadPsoFiles(bestParticle, bestParticles);
 }
 
 InputOutput::~InputOutput() {
@@ -349,6 +347,37 @@ std::ofstream& worst, std::ofstream& iniPop) {
     }while(!iniPop.is_open());
 }
 
+void InputOutput::LoadPsoFiles(std::ofstream& best, std::ofstream& bests) {
+    unsigned int index = simulType->GetSimulationIndex();
+    std::string string = std::to_string(index);
+    
+    do{
+        best.open("Files/Outputs/" + string + "/PSO/BestParticle.txt");
+        
+        if(!best.is_open()){
+            std::cerr << "Wrong best particle file." << std::endl;
+            std::cerr << "The folder required is: " << string << "/PSO/" 
+                      << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'" << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!best.is_open());
+    
+    do{
+        bests.open("Files/Outputs/" + string + "/PSO/BestParticles.txt");
+        
+        if(!bests.is_open()){
+            std::cerr << "Wrong best particles file." << std::endl;
+            std::cerr << "The folder required is: " << string << "/PSO/" 
+                      << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'" << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!bests.is_open());
+}
+
 std::ofstream& InputOutput::GetLogFile() {
     return this->logFile;
 }
@@ -375,6 +404,14 @@ std::ofstream& InputOutput::GetWorstIndividualsFile() {
 
 std::ofstream& InputOutput::GetIniPopulationFile() {
     return this->initialPopulation;
+}
+
+std::ofstream& InputOutput::GetBestParticle() {
+    return bestParticle;
+}
+
+std::ofstream& InputOutput::GetBestParticles() {
+    return bestParticles;
 }
 
 std::ofstream& InputOutput::LoadTable() {

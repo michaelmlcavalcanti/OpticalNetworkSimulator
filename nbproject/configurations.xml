@@ -14,6 +14,9 @@
           <itemPath>Files/Inputs/GA/GA_MO_1.txt</itemPath>
           <itemPath>Files/Inputs/GA/GA_SO_1.txt</itemPath>
         </logicalFolder>
+        <logicalFolder name="f5" displayName="PSO" projectFiles="true">
+          <itemPath>Files/Inputs/PSO/PSO_1.txt</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="Topologies" projectFiles="true">
           <itemPath>Files/Inputs/Topologies/3_Nodes.txt</itemPath>
           <itemPath>Files/Inputs/Topologies/CoreNet.txt</itemPath>
@@ -323,6 +326,8 @@
       <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/PSO/PSO_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -893,6 +898,8 @@
       <item path="Files/Inputs/Options_3.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/PSO/PSO_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
       </item>

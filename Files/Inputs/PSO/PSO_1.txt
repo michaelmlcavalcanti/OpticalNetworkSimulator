@@ -1,0 +1,18 @@
+1000
+300
+50
+3
+-1
+1
+-1
+1
+
+
+1-Load point
+2-Number of iterations
+3-Number of particles
+4-Number of dimensions
+5-Minimum position
+6-Maximum position
+7-Minimum velocity
+8-Maximum velocity

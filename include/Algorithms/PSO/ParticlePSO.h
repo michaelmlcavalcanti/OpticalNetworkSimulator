@@ -17,12 +17,16 @@
 #include <vector>
 #include <memory>
 #include <cassert>
+#include <ostream>
 
 class PSO;
 class Data;
 class ResourceAlloc;
 
 class ParticlePSO {
+    
+    friend std::ostream& operator<<(std::ostream& ostream, 
+                                    const ParticlePSO* particle);
 public:
     
     ParticlePSO(PSO* pso, Data* data, ResourceAlloc* resAlloc);

@@ -129,6 +129,11 @@ public:
      */
     std::ofstream& GetIniPopulationFile();
     
+    std::ofstream& GetBestParticle();
+
+    std::ofstream& GetBestParticles();
+
+    
     std::ofstream& LoadTable();
     
     /**
@@ -172,6 +177,8 @@ private:
      */
     void LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
                      std::ofstream& worst, std::ofstream& iniPop);
+    
+    void LoadPsoFiles(std::ofstream& best, std::ofstream& bests);
 private:
     /**
      * @brief Pointer to a SimulationType object that owns this object
@@ -208,6 +215,10 @@ private:
      * @brief Output file to save the initial population of a GA.
      */
     std::ofstream initialPopulation;
+    
+    std::ofstream bestParticle;
+    
+    std::ofstream bestParticles;
     
     std::ofstream table;
     /**

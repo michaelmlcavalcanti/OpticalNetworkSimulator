@@ -21,8 +21,7 @@ std::default_random_engine PSO::random_engine(Def::randomDevice());
 
 std::ostream& operator<<(std::ostream& ostream, const PSO* pso) {
     ostream << "Iteration: " << pso->actualIteration << std::endl;
-    ostream << "Best particle: " 
-            << pso->bestParticles.at(pso->actualIteration-1) << std::endl;
+    ostream << "Best particle: " << pso->GetBestParticle() << std::endl;
     
     return ostream;
 }
@@ -107,7 +106,7 @@ void PSO::InitializePopulation() {
         it->UpdateNeighborBestPosition();
 }
 
-void PSO::SaveBestIndividual() {
+void PSO::SaveBestParticle() {
     bestParticles.push_back( std::make_shared<ParticlePSO_SCRA>(
     std::dynamic_pointer_cast<ParticlePSO_SCRA>(particles.back())) );
 }
@@ -177,7 +176,11 @@ SimulationType* PSO::GetSimul() const {
     return simul;
 }
 
-std::ostream& PSO::printParameters(std::ostream& ostream) const {
+ParticlePSO* PSO::GetBestParticle() const {
+    return bestParticles.at(actualIteration-1).get();
+}
+
+std::ostream& PSO::PrintParameters(std::ostream& ostream) const {
     ostream << "PSO PARAMETERS" << std::endl;
     ostream << "Network load(erlang): " << this->GetLoadPoint() << std::endl;
     ostream << "Number of iterations: " << this->GetNumberIterations() 

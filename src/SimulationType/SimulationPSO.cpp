@@ -16,6 +16,7 @@
 #include "../../include/Algorithms/PSO/PSO.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Calls/EventGenerator.h"
+#include "../../include/Data/Data.h"
 
 SimulationPSO::SimulationPSO(unsigned int simulIndex, 
 TypeSimulation typeSimulation) 
@@ -37,14 +38,14 @@ void SimulationPSO::Run() {
     for(unsigned int a = 1; a <= numIterations; a++){
         psoAlgorithm->SetActualIteration(a);
         psoAlgorithm->RunIteration();
-        psoAlgorithm->SaveBestIndividual();
+        psoAlgorithm->SaveBestParticle();
         std::cout << psoAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numIterations);
     }
 }
 
 void SimulationPSO::RunBase() {
-    SimulationType::Run();   
+    SimulationType::Run();
 }
 
 void SimulationPSO::Load() {
@@ -67,12 +68,12 @@ void SimulationPSO::AdditionalSettings() {
 void SimulationPSO::Print() {
     this->Help(std::cout);
     SimulationType::Print();
-    psoAlgorithm->printParameters(std::cout);
+    psoAlgorithm->PrintParameters(std::cout);
 }
 
 void SimulationPSO::Save() {
     SimulationType::Save();
-    //Save PSO Files
+    this->GetData()->SaveFilesPSO();
 }
 
 std::ostream& SimulationPSO::Help(std::ostream& ostream) {

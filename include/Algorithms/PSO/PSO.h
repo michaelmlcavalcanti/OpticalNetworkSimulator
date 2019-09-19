@@ -17,8 +17,6 @@
 #include <random>
 #include <memory>
 
-#include "ParticlePSO.h"
-
 class SimulationType;
 class ParticlePSO;
 
@@ -45,7 +43,7 @@ public:
     
     virtual void InitializePopulation();
     
-    void SaveBestIndividual();
+    void SaveBestParticle();
     
     
     const double GetC1() const;
@@ -82,8 +80,9 @@ public:
     
     SimulationType* GetSimul() const;
 
+    ParticlePSO* GetBestParticle() const;
     
-    std::ostream& printParameters(std::ostream& ostream) const;
+    std::ostream& PrintParameters(std::ostream& ostream) const;
 private:
     
     void SetLoadPoint(double loadPoint);

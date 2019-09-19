@@ -92,6 +92,8 @@ public:
      */
     void SaveGaFiles();
     
+    void SaveFilesPSO();
+    
     /**
      * @brief Set the number of request of the actual load point.
      * @param numReq Number of requests.

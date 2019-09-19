@@ -17,6 +17,7 @@
 #include "../../include/Data/Options.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/SimulationType/SimulationGA.h"
+#include "../../include/SimulationType/SimulationPSO.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Algorithms/GA/GA.h"
@@ -24,6 +25,8 @@
 #include "../../include/Algorithms/GA/GA_MO.h"
 #include "../../include/Algorithms/GA/IndividualBool.h"
 #include "../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
+#include "../../include/Algorithms/PSO/PSO.h"
+#include "../../include/Algorithms/PSO/ParticlePSO.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {
@@ -183,6 +186,33 @@ void Data::SaveGaFiles() {
         this->SaveGaSoFiles(logOfstream, initPop, bestInds, worstInds, bestInd);
     else if(this->simulType->GetOptions()->IsGA_MO())
         this->SaveGaMoFiles(logOfstream, bestInds, bestInd);
+}
+
+void Data::SaveFilesPSO() {
+    std::ofstream& logOfstream = simulType->GetInputOutput()->GetLogFile();
+    std::ofstream& bestParticle = simulType->GetInputOutput()
+                                           ->GetBestParticle();
+    std::ofstream& bestParticles = simulType->GetInputOutput()
+                                            ->GetBestParticles();
+    PSO* pso = dynamic_cast<SimulationPSO*>(simulType)->GetPSO();
+    unsigned int numIterations = pso->GetNumberIterations();
+    
+    pso->PrintParameters(logOfstream);
+    
+    //Save the Log.txt and the best particle of each iteration.
+    for(unsigned int a = 1; a <= numIterations; a++){
+        pso->SetActualIteration(a);
+        logOfstream << pso << std::endl;
+        bestParticles << a << "\t" << pso->GetBestParticle()->GetBestFitness()
+                      << std::endl;
+    }
+    
+    //Save the best particle coefficients.
+    std::vector<double> coefficients = pso->GetBestParticle()
+                                          ->GetBestPosition();
+    
+    for(unsigned int a = 0; a < coefficients.size(); a++)
+        bestParticle << coefficients.at(a) << std::endl;
 }
 
 void Data::SetNumberReq(double numReq) {

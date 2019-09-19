@@ -14,6 +14,12 @@
 #include "../../../include/Algorithms/PSO/ParticlePSO.h"
 #include "../../../include/Algorithms/PSO/PSO.h"
 
+std::ostream& operator<<(std::ostream& ostream, const ParticlePSO* particle) {
+    ostream << particle->GetBestFitness();
+    
+    return ostream;
+}
+
 ParticlePSO::ParticlePSO(PSO* pso, Data* data, ResourceAlloc* resAlloc)
 :pso(pso), data(data), resAlloc(resAlloc), fitness(0.0), position(0), 
 velocity(0), bestFitness(0.0), bestPosition(0), bestNeighborFitness(0.0), 
