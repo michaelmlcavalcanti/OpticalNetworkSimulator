@@ -14,10 +14,10 @@
 #include "../../../include/Algorithms/PSO/ParticlePSO.h"
 #include "../../../include/Algorithms/PSO/PSO.h"
 
-ParticlePSO::ParticlePSO(PSO* pso)
-:pso(pso), fitness(0.0), position(0), velocity(0), bestFitness(0.0), 
-bestPosition(0), bestNeighborFitness(0.0), bestNeighborPosition(0), 
-neighborParticles(0) {
+ParticlePSO::ParticlePSO(PSO* pso, Data* data, ResourceAlloc* resAlloc)
+:pso(pso), data(data), resAlloc(resAlloc), fitness(0.0), position(0), 
+velocity(0), bestFitness(0.0), bestPosition(0), bestNeighborFitness(0.0), 
+bestNeighborPosition(0), neighborParticles(0) {
     unsigned int numDimensions = pso->GetNumberDimensions();
     
     while(position.size() < numDimensions){
@@ -30,10 +30,10 @@ neighborParticles(0) {
 }
 
 ParticlePSO::ParticlePSO(const std::shared_ptr<const ParticlePSO>& orig)
-:pso(orig->pso), fitness(orig->fitness), position(orig->position), 
-velocity(orig->velocity), bestFitness(orig->bestFitness), 
-bestPosition(orig->bestPosition), bestNeighborFitness(0.0), 
-bestNeighborPosition(0), neighborParticles(0) {
+:pso(orig->pso), data(orig->data), resAlloc(orig->resAlloc), 
+fitness(orig->fitness), position(orig->position), velocity(orig->velocity), 
+bestFitness(orig->bestFitness), bestPosition(orig->bestPosition), 
+bestNeighborFitness(0.0), bestNeighborPosition(0), neighborParticles(0) {
     
 }
 
@@ -68,11 +68,13 @@ void ParticlePSO::CalcNewPosition() {
         
         if(position.at(ind) < pso->GetMinPosition()){
             position.at(ind) = pso->GetMinPosition();
-            velocity.at(ind) = 0.0;
+            velocity.at(ind) = (pso->GetMaxVelocity() + pso->GetMinVelocity())
+                               / 2;
         }
         else if(position.at(ind) > pso->GetMaxPosition()){
             position.at(ind) = pso->GetMaxPosition();
-            velocity.at(ind) = 0.0;
+            velocity.at(ind) = (pso->GetMaxVelocity() + pso->GetMinVelocity())
+                               / 2;
         }
     }
 }

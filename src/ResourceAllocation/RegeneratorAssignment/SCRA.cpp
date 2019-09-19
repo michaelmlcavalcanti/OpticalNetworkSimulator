@@ -109,3 +109,15 @@ unsigned subRouteIndex) {
     
     return totalCost;
 }
+
+void SCRA::SetAlpha(double alpha) {
+    this->alpha = alpha;
+}
+
+void SCRA::SetConstSlot(double constSlot) {
+    this->constSlot = constSlot;
+}
+
+void SCRA::SetConstReg(double constReg) {
+    this->constReg = constReg;
+}

@@ -15,14 +15,19 @@
 #include "../../../include/Algorithms/PSO/PSO.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Data/Data.h"
+#include "../../../include/ResourceAllocation/ResourceDeviceAlloc.h"
+#include "../../../include/ResourceAllocation/RegeneratorAssignment/SCRA.h"
 
-ParticlePSO_SCRA::ParticlePSO_SCRA(PSO* pso)
-:ParticlePSO(pso) {
-
+ParticlePSO_SCRA::ParticlePSO_SCRA(PSO* pso, Data* data, 
+ResourceAlloc* resAlloc): ParticlePSO(pso, data, resAlloc),
+resDevAlloc(dynamic_cast<ResourceDeviceAlloc*>(this->resAlloc)),
+scra(dynamic_cast<SCRA*>(resDevAlloc->GetRegeneratorAssignment())) {
+    assert(pso->GetNumberDimensions() == 3);
 }
 
 ParticlePSO_SCRA::ParticlePSO_SCRA(const std::shared_ptr<const 
-ParticlePSO_SCRA>& orig): ParticlePSO(orig) {
+ParticlePSO_SCRA>& orig): ParticlePSO(orig), resDevAlloc(orig->resDevAlloc),
+scra(orig->scra) {
 
 }
 
@@ -31,11 +36,14 @@ ParticlePSO_SCRA::~ParticlePSO_SCRA() {
 }
 
 void ParticlePSO_SCRA::CalculateFitness() {
-    SimulationType* simul = pso->GetSimul();
-    Data* data = simul->GetData();
-    
-    //Function to apply the positions in the SCRA.
-    simul->RunBase();
+    this->ApplyCoefficients();
+    pso->GetSimul()->RunBase();
     this->SetFitness(1 / data->GetPbReq());
     data->Initialize();
+}
+
+void ParticlePSO_SCRA::ApplyCoefficients() {
+    scra->SetAlpha(position.at(0));
+    scra->SetConstSlot(position.at(1));
+    scra->SetConstSlot(position.at(2));
 }

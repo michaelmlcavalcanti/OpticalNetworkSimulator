@@ -146,6 +146,10 @@ void ResourceDeviceAlloc::RoutingTransponderSpecAlloc(CallDevices* call) {
     call->ClearTrialRoutes();
 }
 
+RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {
+    return regAssAlgorithm.get();
+}
+
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     

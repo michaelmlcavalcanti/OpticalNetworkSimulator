@@ -60,6 +60,8 @@ public:
     void RoutingOnVirtRegSpecAlloc(CallDevices* call);
     
     void RoutingTransponderSpecAlloc(CallDevices* call);
+    
+    RegeneratorAssignment* GetRegeneratorAssignment() const;
 private:
     /**
      * @brief Function to check the OSNR for a call request with devices.

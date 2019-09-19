@@ -38,6 +38,7 @@ void SimulationPSO::Run() {
         psoAlgorithm->SetActualIteration(a);
         psoAlgorithm->RunIteration();
         psoAlgorithm->SaveBestIndividual();
+        std::cout << psoAlgorithm << std::endl;
         this->GetInputOutput()->PrintProgressBar(a, numIterations);
     }
 }

@@ -94,15 +94,17 @@ void PSO::Initialize() {
 void PSO::InitializePopulation() {
     
     while(particles.size() < numberParticles)
-        particles.push_back(std::make_shared<ParticlePSO_SCRA>(this));
+        particles.push_back(std::make_shared<ParticlePSO_SCRA>(this, 
+        simul->GetData(), simul->GetResourceAlloc()));
     
     for(auto it: particles)
         it->CalculateFitness();
     
-    for(auto it: particles){
+    for(auto it: particles)
         it->UpdateBestPosition();
+    
+    for(auto it: particles)
         it->UpdateNeighborBestPosition();
-    }
 }
 
 void PSO::SaveBestIndividual() {

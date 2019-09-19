@@ -16,11 +16,13 @@
 
 #include "ParticlePSO.h"
 
+class ResourceDeviceAlloc;
+class SCRA;
 
 class ParticlePSO_SCRA : public ParticlePSO {
 public:
     
-    ParticlePSO_SCRA(PSO* pso);
+    ParticlePSO_SCRA(PSO* pso, Data* data, ResourceAlloc* resAlloc);
     
     ParticlePSO_SCRA(const std::shared_ptr<const ParticlePSO_SCRA>& orig);
 
@@ -28,7 +30,13 @@ public:
     
     void CalculateFitness() override;
 private:
-
+    
+    void ApplyCoefficients();
+private:
+    
+    ResourceDeviceAlloc* resDevAlloc;
+    
+    SCRA* scra;
 };
 
 #endif /* PARTICLEPSO_SCRA_H */

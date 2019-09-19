@@ -27,6 +27,12 @@ public:
     
     double CalcTupleCost(CallDevices* call, unsigned routeIndex, 
     unsigned subRouteIndex) override;
+    
+    void SetAlpha(double alpha);
+    
+    void SetConstSlot(double constSlot);
+
+    void SetConstReg(double constReg);
 private:
     
     double alpha;

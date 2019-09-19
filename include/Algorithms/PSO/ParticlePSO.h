@@ -19,11 +19,13 @@
 #include <cassert>
 
 class PSO;
+class Data;
+class ResourceAlloc;
 
 class ParticlePSO {
 public:
     
-    ParticlePSO(PSO* pso);
+    ParticlePSO(PSO* pso, Data* data, ResourceAlloc* resAlloc);
     
     ParticlePSO(const std::shared_ptr<const ParticlePSO>& orig);
 
@@ -51,6 +53,10 @@ public:
 protected:
     
     PSO* pso;
+    
+    Data* data;
+    
+    ResourceAlloc* resAlloc;
     
     double fitness;
     
