@@ -196,11 +196,19 @@ void ResourceDeviceAlloc::CreateRegeneratorAssignment() {
             regAssAlgorithm = std::make_shared<DRE2BR>(this);
             break;
         case RegAssSCRA1:
+            regAssAlgorithm = std::make_shared<SCRA>(this, -0.05, 1.0, 1.0);
+            break;
         case RegAssSCRA2:
+            regAssAlgorithm = std::make_shared<SCRA>(this, 0.0, 1.0, 1.0);
+            break;
         case RegAssSCRA3:
+            regAssAlgorithm = std::make_shared<SCRA>(this, -1.0, 1E-5, 0.0);
+            break;
         case RegAssSCRA4:
+            regAssAlgorithm = std::make_shared<SCRA>(this, 0.0, 1.0, -1E-5);
+            break;
         case RegAssSCRA5:
-            regAssAlgorithm = std::make_shared<SCRA>(this);
+            regAssAlgorithm = std::make_shared<SCRA>(this, 0.0, 1.0, 1E-5);
             break;
         default:
             std::cerr << "Invalid regenerator assignment" << std::endl;

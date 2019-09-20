@@ -13,39 +13,10 @@
 
 #include "../../../include/ResourceAllocation/RegeneratorAssignment/SCRA.h"
 
-SCRA::SCRA(ResourceDeviceAlloc* resDevAlloc)
-:RegeneratorAssignment(resDevAlloc) {
+SCRA::SCRA(ResourceDeviceAlloc* resDevAlloc, double alpha, double constSlot, 
+double constReg):RegeneratorAssignment(resDevAlloc), alpha(alpha), 
+constSlot(constSlot), constReg(constReg) {
     
-    switch(resDevAlloc->options->GetRegAssOption()){
-        case RegAssSCRA1:
-            alpha = -0.05;
-            constSlot = 1.0;
-            constReg = 1.0;
-            break;
-        case RegAssSCRA2:
-            alpha = 0.0;
-            constSlot = 1.0;
-            constReg = 1.0;
-            break;
-        case RegAssSCRA3:
-            alpha = -1.0;
-            constSlot = 1E-5;
-            constReg = 0.0;
-            break;
-        case RegAssSCRA4:
-            alpha = 0.0;
-            constSlot = 1.0;
-            constReg = -1E-5;
-            break;
-        case RegAssSCRA5:
-            alpha = 0.0;
-            constSlot = 1.0;
-            constReg = 1E-5;
-            break;
-        default:
-            std::cerr << "Invalid SCRA type" << std::endl;
-            std::abort();
-    }
 }
 
 SCRA::~SCRA() {

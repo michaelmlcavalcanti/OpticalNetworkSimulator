@@ -15,6 +15,7 @@
 #include "../../../include/Algorithms/PSO/ParticlePSO_SCRA.h"
 #include "../../../include/GeneralClasses/Def.h"
 #include "../../../include/Data/InputOutput.h"
+#include "../../../include/Data/Options.h"
 #include "../../../include/SimulationType/SimulationType.h"
 
 std::default_random_engine PSO::random_engine(Def::randomDevice());
@@ -32,7 +33,6 @@ numberParticles(0), numberDimensions(0), minPosition(0.0), maxPosition(0.0),
 minVelocity(0.0), maxVelocity(0.0), particles(0), bestParticles(0) {
     
 }
-
 
 PSO::~PSO() {
 
@@ -92,9 +92,8 @@ void PSO::Initialize() {
 
 void PSO::InitializePopulation() {
     
-    while(particles.size() < numberParticles)
-        particles.push_back(std::make_shared<ParticlePSO_SCRA>(this, 
-        simul->GetData(), simul->GetResourceAlloc()));
+    this->CreateParticles();
+    this->SetParticlesNeighbors();
     
     for(auto it: particles)
         it->CalculateFitness();
@@ -236,6 +235,24 @@ void PSO::SetMinVelocity(double minVelocity) {
 
 void PSO::SetMaxVelocity(double maxVelocity) {
     this->maxVelocity = maxVelocity;
+}
+
+void PSO::CreateParticles() {
+    Options* options = simul->GetOptions();
+    assert(options->GetDevicesOption() == DevicesEnabled);
+    assert(options->GetRegenerationOption() != RegenerationDisabled);
+    assert(options->GetRegAssOption() == RegAssSCRA1 || 
+           options->GetRegAssOption() == RegAssSCRA2 ||
+           options->GetRegAssOption() == RegAssSCRA3 ||
+           options->GetRegAssOption() == RegAssSCRA4 ||
+           options->GetRegAssOption() == RegAssSCRA5);
+    Data* data = simul->GetData();
+    ResourceAlloc* resAlloc = simul->GetResourceAlloc();
+    
+    while(particles.size() < numberParticles){
+        particles.push_back(std::make_shared<ParticlePSO_SCRA>(this, data, 
+                                                               resAlloc));
+    }
 }
 
 void PSO::SetParticlesNeighbors() {

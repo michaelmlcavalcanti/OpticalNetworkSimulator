@@ -203,7 +203,7 @@ void Data::SaveFilesPSO() {
     for(unsigned int a = 1; a <= numIterations; a++){
         pso->SetActualIteration(a);
         logOfstream << pso << std::endl;
-        bestParticles << a << "\t" << pso->GetBestParticle()->GetBestFitness()
+        bestParticles << a << "\t" << pso->GetBestParticle()->GetMainParameter()
                       << std::endl;
     }
     

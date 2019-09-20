@@ -19,7 +19,8 @@
 class SCRA : public RegeneratorAssignment {
 public:
     
-    SCRA(ResourceDeviceAlloc* resDevAlloc);
+    SCRA(ResourceDeviceAlloc* resDevAlloc, double alpha, double constSlot,
+         double constReg);
     
     virtual ~SCRA();
     

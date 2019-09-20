@@ -29,14 +29,30 @@ public:
     virtual ~ParticlePSO_SCRA();
     
     void CalculateFitness() override;
+    
+    double GetMainParameter() const override;
+    
+    void UpdateMainParameter() override;
 private:
     
     void ApplyCoefficients();
+    
+    double GetBlockProb() const;
+
+    void SetBlockProb(double blockProb);
+    
+    double GetBestBlockProb() const;
+
+    void SetBestBlockProb(double bestBlockProb);
 private:
     
     ResourceDeviceAlloc* resDevAlloc;
     
     SCRA* scra;
+    
+    double blockProb;
+    
+    double bestBlockProb;
 };
 
 #endif /* PARTICLEPSO_SCRA_H */

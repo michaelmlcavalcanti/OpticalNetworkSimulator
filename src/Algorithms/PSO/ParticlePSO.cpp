@@ -15,7 +15,7 @@
 #include "../../../include/Algorithms/PSO/PSO.h"
 
 std::ostream& operator<<(std::ostream& ostream, const ParticlePSO* particle) {
-    ostream << particle->GetBestFitness();
+    ostream << particle->GetMainParameter();
     
     return ostream;
 }
@@ -90,6 +90,7 @@ void ParticlePSO::UpdateBestPosition() {
     if(fitness > bestFitness){
         bestFitness = fitness;
         bestPosition = position;
+        this->UpdateMainParameter();
     }
 }
 

@@ -50,6 +50,10 @@ public:
     
     
     double GetBestFitness() const;
+    
+    virtual double GetMainParameter() const = 0;
+    
+    virtual void UpdateMainParameter() = 0;
 
     void SetFitness(double fitness);
 

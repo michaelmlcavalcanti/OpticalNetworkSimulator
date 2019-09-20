@@ -101,6 +101,9 @@ private:
     
     void SetMaxVelocity(double maxVelocity);
     
+    
+    void CreateParticles();
+    
     void SetParticlesNeighbors();
 private:
     
