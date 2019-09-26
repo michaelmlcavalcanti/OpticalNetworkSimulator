@@ -22,6 +22,8 @@ public:
     SCRA(ResourceDeviceAlloc* resDevAlloc, double alpha, double constSlot,
          double constReg);
     
+    SCRA(ResourceDeviceAlloc* resDevAlloc, std::ifstream& file);
+
     virtual ~SCRA();
     
     void ResourceAlloc(CallDevices* call) override;
@@ -32,7 +34,7 @@ public:
     void SetAlpha(double alpha);
     
     void SetConstSlot(double constSlot);
-
+    
     void SetConstReg(double constReg);
 private:
     

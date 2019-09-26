@@ -21,6 +21,8 @@
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/NodeDevices.h"
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/Data/InputOutput.h"
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType), regAssAlgorithm(nullptr) {
@@ -210,8 +212,14 @@ void ResourceDeviceAlloc::CreateRegeneratorAssignment() {
         case RegAssSCRA5:
             regAssAlgorithm = std::make_shared<SCRA>(this, 0.0, 1.0, 1E-5);
             break;
+        case RegAssSCRA_PSO:{
+            std::ifstream auxIfstream;
+            simulType->GetInputOutput()->LoadCoefficientsSCRA(auxIfstream);
+            regAssAlgorithm = std::make_shared<SCRA>(this, auxIfstream);
+            break;
+        }
         default:
             std::cerr << "Invalid regenerator assignment" << std::endl;
             std::abort();
-        }
+    }
 }

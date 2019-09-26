@@ -225,6 +225,23 @@ void InputOutput::LoadPSO(std::ifstream& psoFile) {
     }while(!psoFile.is_open());
 }
 
+void InputOutput::LoadCoefficientsSCRA(std::ifstream& coeSCRA) {
+    
+    do{
+        coeSCRA.open("Files/Outputs/1/PSO/BestParticle.txt");
+        
+        if(!coeSCRA.is_open()) {
+            std::cerr << "Wrong PSO coefficients file." << std::endl;
+            std::cerr << "The file required is: Files/Outputs/"
+            "1/PSO/BestParticle.txt" << std::endl;
+            std::cerr << "Add/Fix the file then press 'Enter'" 
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!coeSCRA.is_open());
+}
+
 void InputOutput::LoadResults(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     

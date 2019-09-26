@@ -88,6 +88,8 @@ public:
     
     void LoadPSO(std::ifstream& psoFile);
     
+    void LoadCoefficientsSCRA(std::ifstream& coeSCRA);
+    
     /**
      * @brief Get the Log.txt ofstream.
      * @return ofstream containing the log file.

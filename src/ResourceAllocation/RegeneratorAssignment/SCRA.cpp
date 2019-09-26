@@ -19,6 +19,18 @@ constSlot(constSlot), constReg(constReg) {
     
 }
 
+SCRA::SCRA(ResourceDeviceAlloc* resDevAlloc, std::ifstream& file)
+:RegeneratorAssignment(resDevAlloc), alpha(0.0), constSlot(0.0), constReg(0.0) {
+    double auxDouble;
+    
+    file >> auxDouble;
+    this->SetAlpha(auxDouble);
+    file >> auxDouble;
+    this->SetConstSlot(auxDouble);
+    file >> auxDouble;
+    this->SetConstReg(auxDouble);
+}
+
 SCRA::~SCRA() {
     
 }

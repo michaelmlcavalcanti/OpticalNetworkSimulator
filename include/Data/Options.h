@@ -204,8 +204,9 @@ enum RegAssignmentOption {
     RegAssSCRA3,
     RegAssSCRA4,
     RegAssSCRA5,
+    RegAssSCRA_PSO,
     FirstRegAss = RegAssInvalid,
-    LastRegAss = RegAssSCRA5
+    LastRegAss = RegAssSCRA_PSO
 };
 
 /**
