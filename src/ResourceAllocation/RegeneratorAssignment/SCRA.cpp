@@ -84,6 +84,11 @@ unsigned subRouteIndex) {
             numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
                                                                  GetBitRate());
             totalFreeReg = (double) auxNode->GetNumFreeRegenerators();
+            
+            if(numUsedReg > totalFreeReg){
+                totalCost = Def::Max_Double;
+                break;
+            }
             cost += constReg*(numUsedReg/totalFreeReg);
         }
         
