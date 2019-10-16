@@ -28,6 +28,7 @@ extern "C" {
 #include "FirstNarrowestSpectrum.h"
 #include "DRE2BR.h"
 #include "SCRA.h"
+#include "SCRA2.h"
 
 #ifdef __cplusplus
 }

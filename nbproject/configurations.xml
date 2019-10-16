@@ -123,6 +123,7 @@
           <itemPath>include/ResourceAllocation/RegeneratorAssignment/RegAssAlgorithms.h</itemPath>
           <itemPath>include/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.h</itemPath>
           <itemPath>include/ResourceAllocation/RegeneratorAssignment/SCRA.h</itemPath>
+          <itemPath>include/ResourceAllocation/RegeneratorAssignment/SCRA2.h</itemPath>
         </logicalFolder>
         <itemPath>include/ResourceAllocation/CSA.h</itemPath>
         <itemPath>include/ResourceAllocation/Modulation.h</itemPath>
@@ -212,6 +213,7 @@
           <itemPath>src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.cpp</itemPath>
           <itemPath>src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.cpp</itemPath>
           <itemPath>src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp</itemPath>
         </logicalFolder>
         <itemPath>src/ResourceAllocation/CSA.cpp</itemPath>
         <itemPath>src/ResourceAllocation/Modulation.cpp</itemPath>
@@ -597,6 +599,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA2.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -790,6 +797,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1179,6 +1191,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA2.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -1372,6 +1389,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp"
             ex="false"
             tool="1"
             flavor2="0">

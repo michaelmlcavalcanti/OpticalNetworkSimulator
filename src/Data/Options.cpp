@@ -134,7 +134,9 @@ Options::mapRegAssOption = boost::assign::map_list_of
     (RegAssSCRA3, "SCRA: -1.00 + e*(nl/NL)")
     (RegAssSCRA4, "SCRA:  0.00 + nl/NL - e*(r/R)")
     (RegAssSCRA5, "SCRA:  0.00 + nl/NL + e*(r/R)")
-    (RegAssSCRA_PSO, "SCRA PSO");
+    (RegAssSCRA_PSO, "SCRA PSO")
+    (RegAssSCRA_Mod, "SCRA Modified: -0.05 + nl/NL + r/R + f/F")
+    (RegAssSCRA_ModPSO, "SCRA Modified PSO");
 
 const boost::unordered_map<StopCriteria, std::string>
 Options::mapStopCriteria = boost::assign::map_list_of

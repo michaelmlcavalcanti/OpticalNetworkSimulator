@@ -72,6 +72,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/MinimumSlotsMinReg.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o \
+	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
@@ -303,6 +304,11 @@ ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o: src/ResourceAl
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o src/ResourceAllocation/RegeneratorAssignment/SCRA.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o: src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/ResourceAlloc.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

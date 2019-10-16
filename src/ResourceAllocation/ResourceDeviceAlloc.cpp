@@ -105,7 +105,6 @@ void ResourceDeviceAlloc::RoutingOnVirtRegSpecAlloc(CallDevices* call) {
             call->SetTranspSegModulation(vecModulation);
             this->modulation->SetModulationParam(call);
             
-            //Retirar???
             if(!this->CheckOSNR(call))
                 continue;
             
@@ -216,6 +215,16 @@ void ResourceDeviceAlloc::CreateRegeneratorAssignment() {
             std::ifstream auxIfstream;
             simulType->GetInputOutput()->LoadCoefficientsSCRA(auxIfstream);
             regAssAlgorithm = std::make_shared<SCRA>(this, auxIfstream);
+            break;
+        }
+        case RegAssSCRA_Mod:
+            regAssAlgorithm = std::make_shared<SCRA2>(this, -0.05, 1.0, 1.0, 
+                                                      1.0);
+            break;
+        case RegAssSCRA_ModPSO:{
+            std::ifstream auxIfstream;
+            simulType->GetInputOutput()->LoadCoefficientsSCRA(auxIfstream);
+            regAssAlgorithm = std::make_shared<SCRA2>(this, auxIfstream);
             break;
         }
         default:
