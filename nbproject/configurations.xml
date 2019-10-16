@@ -153,6 +153,7 @@
         <itemPath>include/Structure/Link.h</itemPath>
         <itemPath>include/Structure/Node.h</itemPath>
         <itemPath>include/Structure/NodeDevices.h</itemPath>
+        <itemPath>include/Structure/Structures.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
@@ -679,6 +680,8 @@
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/NodeDevices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/Structures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1271,6 +1274,8 @@
       <item path="include/Structure/Node.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/NodeDevices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Structure/Structures.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Structure/Topology.h" ex="false" tool="3" flavor2="0">
       </item>

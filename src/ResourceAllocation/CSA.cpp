@@ -53,7 +53,7 @@ void CSA::FirstFit(Call* call){
     for(unsigned int core = 0; core < this->GetTopology()->GetNumCores(); 
     core++){
         for(int s = 0; s < slot_range; s++){
-            if(this->GetTopology()->CheckSlotsDispCore(route, s, s + 
+            if(resourceAlloc->CheckSlotsDispCore(route, s, s + 
             call->GetNumberSlots() - 1, core)){
                 call->SetFirstSlot(s);
                 call->SetLastSlot(s + call->GetNumberSlots() - 1);
@@ -98,7 +98,7 @@ void CSA::MSCL(Call* call){
             //Verifica quais conjuntos de slots podem ser alocados
             for(s = 0; s < slot_range; s++){
                 perda = 0.0;
-                DispFitSi = topology->CheckSlotsDispCore(route, s,
+                DispFitSi = resourceAlloc->CheckSlotsDispCore(route, s,
                 s + NslotsReq - 1,e);
                 if(DispFitSi == true){
                     //Percorre rotas interferentes
@@ -108,7 +108,7 @@ void CSA::MSCL(Call* call){
                         else
                             route_aux = RouteInt.at(0).get();
                         for(int se = 0;se < totalSlots;se++){
-				if(!(topology->CheckSlotsDispCore(route_aux,
+				if(!(resourceAlloc->CheckSlotsDispCore(route_aux,
                                 se,se,e))){
 					vetDispInt[se] = false;
 					vetDispFin[se] = false;

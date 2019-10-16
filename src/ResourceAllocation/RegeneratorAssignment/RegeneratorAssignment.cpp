@@ -96,10 +96,10 @@ Route* route, TypeModulation modulation) {
     unsigned numSlots = resDevAlloc->modulation->GetNumberSlots(modulation,
                                                                 bitRate);
     
-    if(!resDevAlloc->topology->CheckOSNR(route, osnrThreshold))
+    if(!resDevAlloc->ResourceAlloc::CheckOSNR(route, osnrThreshold))
         return false;
     
-    if(!resDevAlloc->topology->CheckBlockSlotsDisp(route, numSlots))
+    if(!resDevAlloc->ResourceAlloc::CheckBlockSlotsDisp(route, numSlots))
         return false;
     
     return true;
@@ -139,9 +139,10 @@ Route* route) {
                                                                 bitRate);
             numSlots = resDevAlloc->modulation->GetNumberSlots(auxMod, bitRate);
 
-            if(resDevAlloc->topology->CheckOSNR(route, osnrThreshold) && 
-            resDevAlloc->topology->CheckBlockSlotsDisp(route, numSlots))
+            if(resDevAlloc->ResourceAlloc::CheckOSNR(route, osnrThreshold) && 
+            resDevAlloc->CheckBlockSlotsDisp(route, numSlots)){
                 return auxMod;
+            }
         }
     }
     

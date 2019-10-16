@@ -17,12 +17,7 @@
 #include "../../include/Data/Options.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
-#include "../../include/Structure/Node.h"
-#include "../../include/Structure/NodeDevices.h"
-#include "../../include/Structure/Link.h"
-#include "../../include/Structure/Core.h"
-#include "../../include/Structure/Devices/Regenerator.h"
-#include "../../include/Structure/Devices/BVT.h"
+#include "../../include/Structure/Structures.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
@@ -296,13 +291,12 @@ void Topology::SetNodesNeighbors() {
     }
 }
 
-Node* Topology::GetNode(unsigned int index) const {
+Node* Topology::GetNode(NodeIndex index) const {
     assert(index < this->GetNumNodes());
     return this->vecNodes.at(index).get();
 }
 
-Link* Topology::GetLink(unsigned int indexOrNode, 
-unsigned int indexDeNode) const {
+Link* Topology::GetLink(NodeIndex indexOrNode, NodeIndex indexDeNode) const {
     assert(indexOrNode < this->GetNumNodes());
     assert(indexDeNode < this->GetNumNodes());
     
@@ -310,98 +304,12 @@ unsigned int indexDeNode) const {
     indexDeNode).get();
 }
 
-std::shared_ptr<Link> Topology::GetLinkPointer(unsigned int indexOrNode, 
-                                               unsigned int indexDeNode) const {
+std::shared_ptr<Link> Topology::GetLinkPointer(NodeIndex indexOrNode, 
+                                               NodeIndex indexDeNode) const {
     assert(indexOrNode < this->GetNumNodes());
     assert(indexDeNode < this->GetNumNodes());
     
     return this->vecLinks.at(indexOrNode * this->numNodes + indexDeNode);
-}
-
-bool Topology::CheckSlotDisp(Route* route, unsigned int slot) 
-const {
-    Link* link;
-    unsigned int numHops = route->GetNumHops();
-    
-    for(unsigned int a = 0; a < numHops; a++){
-        link = route->GetLink(a);
-        
-        if(link->IsSlotOccupied(slot))
-            return false;
-    }
-    return true;
-}
-
-bool Topology::CheckSlotsDisp(Route* route,unsigned int iniSlot, 
-unsigned int finSlot) const {
-    
-    for(unsigned int a = iniSlot; a <= finSlot; a++){
-        if(!this->CheckSlotDisp(route, a))
-            return false;
-    }
-    
-    return true;
-}
-
-bool Topology::CheckSlotsDispCore(Route* route, unsigned int iniSlot,
-unsigned int finSlot, unsigned int core) const {
-    bool flag = false;
-    Link* link = route->GetLink(0);
-    
-    //Check the availability of the set of slots in the core on the first hop
-    for(unsigned int s = iniSlot; s <= finSlot; s++){
-        // is link c->c+1 busy in slot s?
-        if(link->IsSlotOccupied(core, s)){
-            flag = true;
-            break;
-        }
-        // found the core in the first link
-        if(s == finSlot)
-            break;
-    }
-    if(flag)
-        return false;
-    
-    //Check the availability of the set of slots in the core on the rest of the 
-    //route
-    for(unsigned int c = 1; c < route->GetNumHops(); c++){
-        link = route->GetLink(c);
-        
-        for(unsigned int s = iniSlot; s <= finSlot; s++){
-            if(link->IsSlotOccupied(core, s))
-                return false;
-        }
-    }
-    return true;
-}
-
-bool Topology::CheckBlockSlotsDisp(Route* route, unsigned int numSlots) const {
-    unsigned int numContiguousSlots = 0;
-
-    for(unsigned int s = 0; s < this->numSlots; s++){
-        if(this->CheckSlotDisp(route, s))
-            numContiguousSlots++;
-        else
-            numContiguousSlots = 0;
-        if(numContiguousSlots == numSlots)
-            return true;
-    }
-    return false;
-}
-
-bool Topology::CheckOSNR(const Route* route, double OSNRth) {
-    Link* link;
-    unsigned int numHops = route->GetNumHops();
-    std::shared_ptr<Signal> signal = std::make_shared<Signal>();
-    
-    for(unsigned int a = 0; a < numHops; a++){
-        link = route->GetLink(a);
-        link->CalcSignal(signal.get());
-    }
-    
-    if(signal->GetOSNR() > OSNRth)
-        return true;
-    return false;
 }
 
 bool Topology::IsValidLink(const Link* link) {

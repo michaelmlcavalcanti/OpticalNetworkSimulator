@@ -158,7 +158,7 @@ bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
         if(!calls.empty()){
             for(auto it: calls){
                 
-                if(!topology->CheckOSNR(it->GetRoute(), it->GetOsnrTh()))
+                if(!ResourceAlloc::CheckOSNR(it->GetRoute(), it->GetOsnrTh()))
                     return false;
             }
         }

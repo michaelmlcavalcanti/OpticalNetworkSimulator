@@ -148,66 +148,23 @@ public:
      * @param index index of vector of nodes.
      * @return Pointer to a Node object.
      */
-    Node* GetNode(unsigned int index) const;
+    Node* GetNode(NodeIndex index) const;
     /**
      * @brief Get a specified link in the topology.
      * @param indexOrNode index of origin node.
      * @param indexDeNode index of destination node.
      * @return Pointer to a Link object.
      */
-    Link* GetLink(unsigned int indexOrNode, 
-    unsigned int indexDeNode) const;
+    Link* GetLink(NodeIndex indexOrNode, NodeIndex indexDeNode) const;
     /**
      * @brief Return strong pointer to cast
      * @param indexOrNode Origin Node
      * @param indexDeNode Destination Node
      * @return Link pointer
      */
-    std::shared_ptr<Link> GetLinkPointer(unsigned int indexOrNode, 
-    unsigned int indexDeNode) const;
-    /**
-     * @brief Checks if an specified slot is free in an specified route.
-     * @param route Route to be analyzed.
-     * @param slot Slot index.
-     * @return True if the slot is available.
-     */
-    bool CheckSlotDisp(Route* route, unsigned int slot) const;
-    /**
-     * @brief Checks if a block of slots is free in an specified route.
-     * @param route Route to be analyzed.
-     * @param iniSlot First slot index.
-     * @param finSlot Last slot index.
-     * @return True if the block of slots is available.
-     */
-    bool CheckSlotsDisp(Route* route, unsigned int iniSlot,
-                                            unsigned int finSlot) const;
-    /**
-     * @brief Checks if a block of slots is free in an specified core in a route.
-     * @param route Route to be analyzed.
-     * @param iniSlot First slot index.
-     * @param finSlot Last slot index.
-     * @param core Index of the core.
-     * @return True if the block of slots is available.
-     */
-    bool CheckSlotsDispCore(Route* route, unsigned int iniSlot,
-                         unsigned int finSlot, unsigned int core) const;
-    /**
-     * @brief Checks if there is a contiguous block of free slots in
-     * an specified route.
-     * @param route Route to be analyzed.
-     * @param numSlots Number of slots.
-     * @return True if there is a block of avaliable slots.
-     */
-    bool CheckBlockSlotsDisp(Route* route, 
-                         unsigned int numSlots) const;
-    /**
-     * @brief Check if the specified OSNR is larger than the signal OSNR for
-     * the specified route.
-     * @param route Route to be analyzed.
-     * @param OSNRth OSNR value for comparison.
-     * @return True if the OSNR is larger.
-     */
-    bool CheckOSNR(const Route* route, double OSNRth);
+    std::shared_ptr<Link> GetLinkPointer(NodeIndex indexOrNode, 
+    NodeIndex indexDeNode) const;
+    
     /**
      * @brief Checks if a specified link is valid.
      * @param link Link to evaluate.

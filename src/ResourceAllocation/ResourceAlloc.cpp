@@ -13,13 +13,14 @@
 
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/SimulationType/SimulationType.h"
-#include "../../include/Structure/Topology.h"
+#include "../../include/Structure/Structures.h"
 #include "../../include/ResourceAllocation/Routing.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/SA.h"
 #include "../../include/ResourceAllocation/CSA.h"
 #include "../../include/ResourceAllocation/Modulation.h"
 #include "../../include/ResourceAllocation/Resources.h"
+#include "../../include/ResourceAllocation/Signal.h"
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Options.h"
@@ -173,7 +174,7 @@ void ResourceAlloc::SpecRouting(Call* call) {
             if(!this->CheckOSNR(call))
                 continue;
             
-            if(this->topology->CheckSlotsDisp(call->GetRoute(), auxSlot, 
+            if(this->CheckSlotsDisp(call->GetRoute(), auxSlot, 
             auxSlot + call->GetNumberSlots() - 1)){
                 call->SetFirstSlot(auxSlot);
                 call->SetLastSlot(auxSlot + call->GetNumberSlots() - 1);
@@ -254,7 +255,7 @@ bool ResourceAlloc::CheckInterRouting() {
 bool ResourceAlloc::CheckOSNR(Call* call) {
     
     if(this->phyLayerOption == PhyLayerEnabled)
-        if(!this->topology->CheckOSNR(call->GetRoute(), call->GetOsnrTh()))
+        if(!this->CheckOSNR(call->GetRoute(), call->GetOsnrTh()))
             return false;
     
     return true;
@@ -263,6 +264,94 @@ bool ResourceAlloc::CheckOSNR(Call* call) {
 bool ResourceAlloc::CheckResourceAllocOrder(Call* call) {
     return this->resources->resourceAllocOrder.at( call->GetOrNode()->
     GetNodeId()*this->topology->GetNumNodes()+call->GetDeNode()->GetNodeId() );
+}
+
+bool ResourceAlloc::CheckSlotDisp(Route* route, SlotIndex slot) const {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        
+        if(link->IsSlotOccupied(slot))
+            return false;
+    }
+    return true;
+}
+
+bool ResourceAlloc::CheckSlotsDisp(Route* route, SlotIndex firstSlot, 
+SlotIndex lastSlot) const {
+    
+    for(unsigned int a = firstSlot; a <= lastSlot; a++){
+        if(!this->CheckSlotDisp(route, a))
+            return false;
+    }
+    
+    return true;
+}
+
+bool ResourceAlloc::CheckBlockSlotsDisp(Route* route, unsigned int numSlots) 
+const {
+    unsigned int numContiguousSlots = 0;
+    unsigned int totalNumSlots = topology->GetNumSlots();
+
+    for(unsigned int s = 0; s < totalNumSlots; s++){
+        
+        if(this->CheckSlotDisp(route, s))
+            numContiguousSlots++;
+        else
+            numContiguousSlots = 0;
+        if(numContiguousSlots == numSlots)
+            return true;
+    }
+    return false;
+}
+
+bool ResourceAlloc::CheckSlotsDispCore(Route* route, SlotIndex firstSlot, 
+SlotIndex lastSlot, CoreIndex core) const {
+    bool flag = false;
+    Link* link = route->GetLink(0);
+    
+    //Check the availability of the set of slots in the core on the first hop
+    for(unsigned int s = firstSlot; s <= lastSlot; s++){
+        // is link c->c+1 busy in slot s?
+        if(link->IsSlotOccupied(core, s)){
+            flag = true;
+            break;
+        }
+        // found the core in the first link
+        if(s == lastSlot)
+            break;
+    }
+    if(flag)
+        return false;
+    
+    //Check the availability of the set of slots in the core on the rest of the 
+    //route
+    for(unsigned int c = 1; c < route->GetNumHops(); c++){
+        link = route->GetLink(c);
+        
+        for(unsigned int s = firstSlot; s <= lastSlot; s++){
+            if(link->IsSlotOccupied(core, s))
+                return false;
+        }
+    }
+    return true;
+}
+
+bool ResourceAlloc::CheckOSNR(const Route* route, double OSNRth) {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+    std::shared_ptr<Signal> signal = std::make_shared<Signal>();
+    
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+        link->CalcSignal(signal.get());
+    }
+    
+    if(signal->GetOSNR() > OSNRth)
+        return true;
+    return false;
 }
 
 SimulationType* ResourceAlloc::GetSimulType() const {

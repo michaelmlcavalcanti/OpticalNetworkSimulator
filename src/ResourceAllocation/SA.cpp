@@ -93,7 +93,7 @@ void SA::FirstFit(Call* call) {
     
     for(unsigned int slot = 0; slot < topNumSlots; slot++){
         
-        if(this->topology->CheckSlotDisp(route, slot)){
+        if(resourceAlloc->CheckSlotDisp(route, slot)){
             numContigSlots++;
             
             if(numContigSlots == numSlotsReq){
@@ -140,7 +140,7 @@ void SA::MSCL(Call* call) {
         vecDisp.at(a).resize(numSlotsTop);
         
         for(unsigned int b = 0; b < numSlotsTop; b++){
-            if(!(this->topology->CheckSlotDisp(auxRoute, b)))
+            if(!(resourceAlloc->CheckSlotDisp(auxRoute, b)))
                 vecDisp.at(a).at(b) = false;
             else
                 vecDisp.at(a).at(b) = true;
@@ -148,7 +148,7 @@ void SA::MSCL(Call* call) {
     }
     
     for(unsigned int s = 0; s < (numSlotsTop - numSlotsReq + 1); s++){
-        DispFitSi = this->topology->CheckSlotsDisp(route, s, 
+        DispFitSi = resourceAlloc->CheckSlotsDisp(route, s, 
                                                    s + numSlotsReq - 1);
         
         if(DispFitSi){
@@ -265,7 +265,7 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     std::vector<unsigned int> slots(0);
     
     for(unsigned int a = 0; a <= maxSlotIndex; a++){
-        if(this->topology->CheckSlotsDisp(route, a, a + numSlotsReq - 1)){
+        if(resourceAlloc->CheckSlotsDisp(route, a, a + numSlotsReq - 1)){
             slots.push_back(a);
         }
     }

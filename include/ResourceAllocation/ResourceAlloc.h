@@ -103,6 +103,48 @@ public:
      * @return True if the simulation uses interfering routes.
      */
     bool CheckInterRouting();
+    /**
+     * @brief Checks if an specified slot is free in an specified route.
+     * @param route Route to be analyzed.
+     * @param slot Slot index.
+     * @return True if the slot is available.
+     */
+    bool CheckSlotDisp(Route* route, SlotIndex slot) const;
+    /**
+     * @brief Checks if a block of slots is free in an specified route.
+     * @param route Route to be analyzed.
+     * @param firstSlot First slot index.
+     * @param lastSlot Last slot index.
+     * @return True if the block of slots is available.
+     */
+    bool CheckSlotsDisp(Route* route, SlotIndex firstSlot, 
+                        SlotIndex lastSlot) const;
+    /**
+     * @brief Checks if there is a contiguous block of free slots in
+     * an specified route.
+     * @param route Route to be analyzed.
+     * @param numSlots Number of slots.
+     * @return True if there is a block of available slots.
+     */
+    bool CheckBlockSlotsDisp(Route* route, unsigned int numSlots) const;
+    /**
+     * @brief Checks if a block of slots is free in an specified core in a route.
+     * @param route Route to be analyzed.
+     * @param firstSlot First slot index.
+     * @param lastSlot Last slot index.
+     * @param core Index of the core.
+     * @return True if the block of slots is available.
+     */
+    bool CheckSlotsDispCore(Route* route, SlotIndex firstSlot,
+                            SlotIndex lastSlot, CoreIndex core) const;
+    /**
+     * @brief Check if the specified OSNR is larger than the signal OSNR for
+     * the specified route.
+     * @param route Route to be analyzed.
+     * @param OSNRth OSNR value for comparison.
+     * @return True if the OSNR is larger.
+     */
+    bool CheckOSNR(const Route* route, double OSNRth);
     
     /**
      * @brief Get the SimulationType object that owns this object.
