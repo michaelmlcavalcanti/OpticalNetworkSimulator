@@ -121,24 +121,6 @@ private:
      * @return Vector with all possible slots for allocation.
      */
     std::vector<unsigned int> FirstFitSlots(Call* call);
-    /**
-     * @brief Function to calculate the number of forms of a call request number
-     * of slots in a specified availability vector.
-     * @param reqSize Call request number of slots.
-     * @param dispVec Availability vector.
-     * @return Number of forms.
-     */
-    unsigned int CalcNumFormAloc(unsigned int reqSize, 
-                                 std::vector<bool>& dispVec);
-    /**
-     * @brief Function to get the blocks of free slots equal or larger then the 
-     * specified call request number of slots.
-     * @param reqSize Call request number of slots.
-     * @param dispVec Availability vector.
-     * @return Container with the size of free slots blocks.
-     */
-    std::vector<unsigned int> GetBlocksFreeSlots(unsigned int reqSize, 
-                                                 std::vector<bool>& dispVec);
 protected:
     /**
      * @brief RourceAlloc that own this object.

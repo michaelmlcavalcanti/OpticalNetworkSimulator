@@ -126,30 +126,23 @@ void SA::MSCL(Call* call) {
     unsigned int vetCapFin[numInterRoutesCheck+1];
     double perda, perdaMin = Def::Max_Double;
     unsigned int si = Def::Max_UnInt;
-    bool DispFitSi = false;
+    bool DispFitSi = false;    
     
-    
-    std::vector<bool> auxVecDisp;
-    std::vector<std::vector<bool>> vecDisp;
+    std::vector<SlotState> auxVecDisp;
+    std::vector<std::vector<SlotState>> vecDisp;
     vecDisp.resize(numInterRoutesCheck+1);
     for(unsigned int a = 0; a <= numInterRoutesCheck; a++){
         if(a != 0)
             auxRoute = intRoutes.at(a-1).get();
         else
             auxRoute = route;
-        vecDisp.at(a).resize(numSlotsTop);
         
-        for(unsigned int b = 0; b < numSlotsTop; b++){
-            if(!(resourceAlloc->CheckSlotDisp(auxRoute, b)))
-                vecDisp.at(a).at(b) = false;
-            else
-                vecDisp.at(a).at(b) = true;
-        }
+        vecDisp.at(a) = resourceAlloc->GetDispVector(auxRoute);
     }
     
     for(unsigned int s = 0; s < (numSlotsTop - numSlotsReq + 1); s++){
         DispFitSi = resourceAlloc->CheckSlotsDisp(route, s, 
-                                                   s + numSlotsReq - 1);
+                                                  s + numSlotsReq - 1);
         
         if(DispFitSi){
             perda = 0.0;
@@ -164,18 +157,18 @@ void SA::MSCL(Call* call) {
                 //Calculates the initial capacity based on the number of 
                 //allocation forms.
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
-                    vetCapInic[r] += this->
+                    vetCapInic[r] += resourceAlloc->
                     CalcNumFormAloc(vecTrafficSlots.at(i), auxVecDisp);
                 }
                 //Calculates the requisition allocation impact in the 
                 //interfering routes for each set of slots
                 for(unsigned int i = s; i < s + numSlotsReq; i++)
-                    auxVecDisp.at(i) = false;
+                    auxVecDisp.at(i) = occupied;
                 
                 //Calculates the final capacity based on the number of 
                 //allocation forms.
                 for(unsigned i = 0; i < vecTrafficSlots.size(); i++){
-                    vetCapFin[r] += this->
+                    vetCapFin[r] += resourceAlloc->
                     CalcNumFormAloc(vecTrafficSlots.at(i), auxVecDisp);
                 }
                 
@@ -207,19 +200,6 @@ ResourceAlloc* SA::GetResourceAlloc(){
 }
 
 int SA::CalcNumFormAloc(int L, bool* Disp,int tam) { 
-//L indica a largura da requisicao e Disp o vetor de disponibilidade
-/*
-	int sum = 0, si, se; //si eh o slot inicial da alocacao, que vai de 0 ate SE-L
-	for(si = 0; si <= tam-L; si++){
-		for(se = si; se < si+L; se++) //se checa se todos os slots de si ate si+L-1 estao disponiveis
-			if(Disp[se] == false)
-				break;
-		if(se == si+L) // Os slots si,si+1,...,si+Lf-1 estao disponiveis
-			sum++;
-	}
-	return sum;
-}
-*/
     int sum = 0, si;//si eh o slot inicial da alocacao, que vai de 0 ate SE-L
     int cont = 0;
     for(si = 0; si < tam; si++){
@@ -271,39 +251,4 @@ std::vector<unsigned int> SA::FirstFitSlots(Call* call) {
     }
     
     return slots;
-}
-
-unsigned int SA::CalcNumFormAloc(unsigned int reqSize, 
-                                 std::vector<bool>& dispVec) {
-    std::vector<unsigned int> freeSlotsBlocks = 
-    this->GetBlocksFreeSlots(reqSize, dispVec);
-    unsigned int sum = 0;
-    
-    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
-        sum += freeSlotsBlocks.at(a) - reqSize + 1;
-    
-    return sum;
-}
-
-std::vector<unsigned int> SA::GetBlocksFreeSlots(unsigned int reqSize, 
-                                             std::vector<bool>& dispVec) {
-    unsigned int topNumSlots = this->topology->GetNumSlots();
-    unsigned int sizeBlock = 0;
-    std::vector<unsigned int> freeSlotsBlocks(0);
-    
-    for(unsigned int a = 0; a < topNumSlots; a++){
-        
-        if(dispVec.at(a) == true)
-            sizeBlock++;
-        else{
-            if(sizeBlock >= reqSize)
-                freeSlotsBlocks.push_back(sizeBlock);
-            sizeBlock = 0;
-        }
-    }
-    
-    if(sizeBlock >= reqSize)
-        freeSlotsBlocks.push_back(sizeBlock);
-    
-    return freeSlotsBlocks;
 }
