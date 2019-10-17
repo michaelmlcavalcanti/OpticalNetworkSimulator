@@ -590,6 +590,53 @@ void ResourceAlloc::SetNumSlotsTraffic() {
     this->traffic->GetVecTraffic());
 }
 
+std::vector<SlotState> ResourceAlloc::GetDispVector(Route* route) {
+    unsigned int topNumSlots = topology->GetNumSlots();
+    std::vector<SlotState> vecDisp(topNumSlots, free);
+    
+    for(SlotIndex a = 0; a < topNumSlots; a++){
+        if(!this->CheckSlotDisp(route, a))
+            vecDisp.at(a) = occupied;
+    }
+    
+    return vecDisp;
+}
+
+unsigned int ResourceAlloc::CalcNumFormAloc(unsigned int callSize, 
+std::vector<SlotState>& dispVec) {
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(callSize, dispVec);
+    unsigned int sum = 0;
+    
+    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
+        sum += freeSlotsBlocks.at(a) - callSize + 1;
+    
+    return sum;
+}
+
+std::vector<unsigned int> ResourceAlloc::GetBlocksFreeSlots(
+unsigned int callSize, std::vector<SlotState>& dispVec) {
+    unsigned int topNumSlots = topology->GetNumSlots();
+    unsigned int sizeBlock = 0;
+    std::vector<unsigned int> freeSlotsBlocks(0);
+    
+    for(unsigned int a = 0; a < topNumSlots; a++){
+        
+        if(dispVec.at(a) == free)
+            sizeBlock++;
+        else{
+            if(sizeBlock >= callSize)
+                freeSlotsBlocks.push_back(sizeBlock);
+            sizeBlock = 0;
+        }
+    }
+    
+    if(sizeBlock >= callSize)
+        freeSlotsBlocks.push_back(sizeBlock);
+    
+    return freeSlotsBlocks;
+}
+
 void ResourceAlloc::CreateRouting() {
     RoutingOption option = simulType->GetOptions()->GetRoutingOption();
             

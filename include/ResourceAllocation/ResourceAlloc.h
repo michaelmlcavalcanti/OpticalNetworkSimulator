@@ -259,6 +259,14 @@ public:
      * a connection request could have.
      */
     void SetNumSlotsTraffic();
+    
+    std::vector<SlotState> GetDispVector(Route* route);
+    
+    unsigned int CalcNumFormAloc(unsigned int callSize, 
+    std::vector<SlotState>& dispVec);
+    
+    std::vector<unsigned int> GetBlocksFreeSlots(unsigned int callSize,
+    std::vector<SlotState>& dispVec);
 private:
     /**
      * @brief Function to apply resource allocation without modulation 

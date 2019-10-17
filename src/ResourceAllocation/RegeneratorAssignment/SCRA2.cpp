@@ -42,7 +42,7 @@ unsigned subRouteIndex) {
     double auxNumSlots;
     double totalFreeReg;
     double numUsedReg;
-    //double totalNumForms
+    double totalNumForms;
     std::vector<std::shared_ptr<Route>> vecSubRoutes = 
     resDevAlloc->resources->GetRoutesTranspSegments(call, routeIndex, 
                                                     subRouteIndex);
