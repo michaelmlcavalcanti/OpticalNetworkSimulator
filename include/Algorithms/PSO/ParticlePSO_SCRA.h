@@ -33,10 +33,10 @@ public:
     double GetMainParameter() const override;
     
     void UpdateMainParameter() override;
+protected:
+    
+    virtual void ApplyCoefficients();
 private:
-    
-    void ApplyCoefficients();
-    
     double GetBlockProb() const;
 
     void SetBlockProb(double blockProb);
@@ -44,12 +44,12 @@ private:
     double GetBestBlockProb() const;
 
     void SetBestBlockProb(double bestBlockProb);
-private:
+protected:
     
     ResourceDeviceAlloc* resDevAlloc;
     
     SCRA* scra;
-    
+private:
     double blockProb;
     
     double bestBlockProb;

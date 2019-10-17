@@ -90,6 +90,7 @@
           <itemPath>include/Algorithms/PSO/PSO.h</itemPath>
           <itemPath>include/Algorithms/PSO/ParticlePSO.h</itemPath>
           <itemPath>include/Algorithms/PSO/ParticlePSO_SCRA.h</itemPath>
+          <itemPath>include/Algorithms/PSO/ParticlePSO_SCRA2.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
@@ -182,6 +183,7 @@
           <itemPath>src/Algorithms/PSO/PSO.cpp</itemPath>
           <itemPath>src/Algorithms/PSO/ParticlePSO.cpp</itemPath>
           <itemPath>src/Algorithms/PSO/ParticlePSO_SCRA.cpp</itemPath>
+          <itemPath>src/Algorithms/PSO/ParticlePSO_SCRA2.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
@@ -519,6 +521,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/PSO/ParticlePSO_SCRA2.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
@@ -724,6 +731,11 @@
       <item path="src/Algorithms/PSO/ParticlePSO.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/PSO/ParticlePSO_SCRA.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO_SCRA2.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1113,6 +1125,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/PSO/ParticlePSO_SCRA2.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/Calls/Call.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Calls/CallDevices.h" ex="false" tool="3" flavor2="0">
@@ -1318,6 +1335,11 @@
       <item path="src/Algorithms/PSO/ParticlePSO.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/PSO/ParticlePSO_SCRA.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/PSO/ParticlePSO_SCRA2.cpp"
             ex="false"
             tool="1"
             flavor2="0">

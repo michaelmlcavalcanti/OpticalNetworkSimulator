@@ -43,6 +43,7 @@ unsigned subRouteIndex) {
     double totalFreeReg;
     double numUsedReg;
     double totalNumForms;
+    double numForms;
     std::vector<std::shared_ptr<Route>> vecSubRoutes = 
     resDevAlloc->resources->GetRoutesTranspSegments(call, routeIndex, 
                                                     subRouteIndex);
@@ -61,6 +62,7 @@ unsigned subRouteIndex) {
         auxRoute = vecSubRoutes.at(ind);
         auxNode = dynamic_cast<NodeDevices*>(auxRoute->GetDeNode());
         
+        //Number of slots/links portion
         if(auxNode->isThereFreeRegenerators(call->GetBitRate()) ||
            ind == vecSubRoutes.size() - 1){
             auxNumLinks = (double) auxRoute->GetNumHops();
@@ -73,6 +75,19 @@ unsigned subRouteIndex) {
             break;
         }
         
+        //Number of forms portion
+        double numSlots = (double) vecNumSlots.at(ind) / auxNumLinks;
+        totalNumForms =  (double) resDevAlloc->topology->GetNumSlots() - 
+                         numSlots + 1;
+        numForms = (double) resDevAlloc->CalcNumForms(auxRoute.get(), numSlots);
+        
+        if(numForms == 0.0){
+            totalCost = Def::Max_Double;
+            break;
+        }
+        cost += constNumForms*(numForms/totalNumForms);
+        
+        //Regenerator portion
         if(ind != vecSubRoutes.size() - 1){
             numUsedReg = (double) NodeDevices::GetNumRegRequired(call->
                                                                  GetBitRate());

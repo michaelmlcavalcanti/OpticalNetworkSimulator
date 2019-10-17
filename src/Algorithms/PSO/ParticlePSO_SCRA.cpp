@@ -23,7 +23,7 @@ ResourceAlloc* resAlloc): ParticlePSO(pso, data, resAlloc),
 resDevAlloc(dynamic_cast<ResourceDeviceAlloc*>(this->resAlloc)),
 scra(dynamic_cast<SCRA*>(resDevAlloc->GetRegeneratorAssignment())),
 blockProb(0.0), bestBlockProb(0.0) {
-    assert(pso->GetNumberDimensions() == 3);
+    assert(pso->GetNumberDimensions() == 3 || pso->GetNumberDimensions() == 4);
 }
 
 ParticlePSO_SCRA::ParticlePSO_SCRA(const std::shared_ptr<const 

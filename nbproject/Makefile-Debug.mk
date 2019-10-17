@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Algorithms/PSO/PSO.o \
 	${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO.o \
 	${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o \
+	${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA2.o \
 	${OBJECTDIR}/src/Calls/Call.o \
 	${OBJECTDIR}/src/Calls/CallDevices.o \
 	${OBJECTDIR}/src/Calls/Event.o \
@@ -189,6 +190,11 @@ ${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o: src/Algorithms/PSO/ParticleP
 	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/PSO
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA.o src/Algorithms/PSO/ParticlePSO_SCRA.cpp
+
+${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA2.o: src/Algorithms/PSO/ParticlePSO_SCRA2.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/Algorithms/PSO
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Algorithms/PSO/ParticlePSO_SCRA2.o src/Algorithms/PSO/ParticlePSO_SCRA2.cpp
 
 ${OBJECTDIR}/src/Calls/Call.o: src/Calls/Call.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/Calls

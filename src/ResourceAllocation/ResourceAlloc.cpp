@@ -614,6 +614,12 @@ std::vector<SlotState>& dispVec) {
     return sum;
 }
 
+unsigned int ResourceAlloc::CalcNumForms(Route* route, unsigned int callSize) {
+    std::vector<SlotState> vecDisp = this->GetDispVector(route);
+    
+    return this->CalcNumFormAloc(callSize, vecDisp);
+}
+
 std::vector<unsigned int> ResourceAlloc::GetBlocksFreeSlots(
 unsigned int callSize, std::vector<SlotState>& dispVec) {
     unsigned int topNumSlots = topology->GetNumSlots();

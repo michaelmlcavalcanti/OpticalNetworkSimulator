@@ -259,7 +259,11 @@ public:
      * a connection request could have.
      */
     void SetNumSlotsTraffic();
-    
+    /**
+     * @brief Function to get the availability vector for a specified route.
+     * @param route Specified route.
+     * @return Container of slots state.
+     */
     std::vector<SlotState> GetDispVector(Route* route);
     /**
      * @brief Function to calculate the number of forms of a call request number
@@ -270,6 +274,14 @@ public:
      */
     unsigned int CalcNumFormAloc(unsigned int callSize, 
     std::vector<SlotState>& dispVec);
+    /**
+     * @brief Function to calculate the number of forms of a call request number
+     * of slots in a specified route.
+     * @param route Specified route.
+     * @param callSize Call request number of slots.
+     * @return Number of forms.
+     */
+    unsigned int CalcNumForms(Route* route, unsigned int callSize);
     /**
      * @brief Function to get the blocks of free slots equal or larger then the 
      * specified call request number of slots.
