@@ -330,6 +330,9 @@ public:
      * have. It is used in MSCL SA for find the capacity loss.
      */
     std::vector<unsigned int> numSlotsTraffic;
+    
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
+    protectionRoutes;
 private:
     /**
      * @brief ResourceAlloc object that owns these resources.
