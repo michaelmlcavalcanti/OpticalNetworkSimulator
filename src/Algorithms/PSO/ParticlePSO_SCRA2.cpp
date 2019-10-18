@@ -22,8 +22,8 @@ scra2(dynamic_cast<SCRA2*>(scra)) {
     assert(pso->GetNumberDimensions() == 4);
 }
 
-ParticlePSO_SCRA2::ParticlePSO_SCRA2(const std::shared_ptr<const 
-ParticlePSO_SCRA>& orig):ParticlePSO_SCRA(orig) {
+ParticlePSO_SCRA2::ParticlePSO_SCRA2(const std::shared_ptr<const
+ParticlePSO_SCRA2>& orig):ParticlePSO_SCRA(orig), scra2(orig->scra2) {
     
 }
 

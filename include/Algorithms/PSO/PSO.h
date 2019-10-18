@@ -19,6 +19,7 @@
 
 class SimulationType;
 class ParticlePSO;
+class Options;
 
 class PSO {
     
@@ -108,6 +109,8 @@ private:
 private:
     
     SimulationType* simul;
+    
+    Options* options;
     
     double loadPoint;
     

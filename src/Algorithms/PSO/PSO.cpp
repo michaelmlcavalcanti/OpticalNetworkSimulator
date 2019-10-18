@@ -13,6 +13,7 @@
 
 #include "../../../include/Algorithms/PSO/PSO.h"
 #include "../../../include/Algorithms/PSO/ParticlePSO_SCRA.h"
+#include "../../../include/Algorithms/PSO/ParticlePSO_SCRA2.h"
 #include "../../../include/GeneralClasses/Def.h"
 #include "../../../include/Data/InputOutput.h"
 #include "../../../include/Data/Options.h"
@@ -28,9 +29,10 @@ std::ostream& operator<<(std::ostream& ostream, const PSO* pso) {
 }
 
 PSO::PSO(SimulationType* simul) 
-:simul(simul), loadPoint(0.0), actualIteration(0), numberIterations(0), 
-numberParticles(0), numberDimensions(0), minPosition(0.0), maxPosition(0.0), 
-minVelocity(0.0), maxVelocity(0.0), particles(0), bestParticles(0) {
+:simul(simul), options(nullptr), loadPoint(0.0), actualIteration(0), 
+numberIterations(0), numberParticles(0), numberDimensions(0), minPosition(0.0), 
+maxPosition(0.0), minVelocity(0.0), maxVelocity(0.0), particles(0), 
+bestParticles(0) {
     
 }
 
@@ -67,6 +69,8 @@ void PSO::LoadFile() {
     this->SetMinVelocity(auxDouble);
     auxIfstream >> auxDouble;
     this->SetMaxVelocity(auxDouble);
+    
+    options = simul->GetOptions();
 }
 
 void PSO::RunIteration() {
@@ -106,8 +110,27 @@ void PSO::InitializePopulation() {
 }
 
 void PSO::SaveBestParticle() {
-    bestParticles.push_back( std::make_shared<ParticlePSO_SCRA>(
-    std::dynamic_pointer_cast<ParticlePSO_SCRA>(particles.back())) );
+    std::shared_ptr<ParticlePSO> auxParticle;
+    
+    switch(options->GetRegAssOption()){
+        case RegAssSCRA1:
+        case RegAssSCRA2:
+        case RegAssSCRA3:
+        case RegAssSCRA4:
+        case RegAssSCRA5:
+            auxParticle = std::make_shared<ParticlePSO_SCRA>(
+            std::dynamic_pointer_cast<ParticlePSO_SCRA>(particles.back()));
+            break;
+        case RegAssSCRA_Mod:
+            auxParticle = std::make_shared<ParticlePSO_SCRA2>(
+            std::dynamic_pointer_cast<ParticlePSO_SCRA2>(particles.back()));
+            break;
+        default:
+            std::cerr << "Invalid SCRA option" << std::endl;
+            std::abort();
+    }
+    bestParticles.push_back(auxParticle);
+    auxParticle.reset();
 }
 
 const double PSO::GetC1() const {
@@ -238,20 +261,34 @@ void PSO::SetMaxVelocity(double maxVelocity) {
 }
 
 void PSO::CreateParticles() {
-    Options* options = simul->GetOptions();
     assert(options->GetDevicesOption() == DevicesEnabled);
     assert(options->GetRegenerationOption() != RegenerationDisabled);
-    assert(options->GetRegAssOption() == RegAssSCRA1 || 
-           options->GetRegAssOption() == RegAssSCRA2 ||
-           options->GetRegAssOption() == RegAssSCRA3 ||
-           options->GetRegAssOption() == RegAssSCRA4 ||
-           options->GetRegAssOption() == RegAssSCRA5);
+    RegAssignmentOption regAssOpt = options->GetRegAssOption();
+    assert(regAssOpt == RegAssSCRA1 || regAssOpt == RegAssSCRA2 ||
+           regAssOpt == RegAssSCRA3 || regAssOpt == RegAssSCRA4 ||
+           regAssOpt == RegAssSCRA5 || regAssOpt == RegAssSCRA_Mod);
     Data* data = simul->GetData();
     ResourceAlloc* resAlloc = simul->GetResourceAlloc();
     
     while(particles.size() < numberParticles){
-        particles.push_back(std::make_shared<ParticlePSO_SCRA>(this, data, 
-                                                               resAlloc));
+        
+        switch(regAssOpt){
+            case RegAssSCRA1:
+            case RegAssSCRA2:
+            case RegAssSCRA3:
+            case RegAssSCRA4:
+            case RegAssSCRA5:
+                particles.push_back(std::make_shared<ParticlePSO_SCRA>(this, 
+                data, resAlloc));
+                break;
+            case RegAssSCRA_Mod:
+                particles.push_back(std::make_shared<ParticlePSO_SCRA2>(this, 
+                data, resAlloc));
+                break;
+            default:
+                std::cerr << "Invalid SCRA option" << std::endl;
+                std::abort();
+        }
     }
 }
 

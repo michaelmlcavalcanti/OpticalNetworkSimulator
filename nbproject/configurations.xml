@@ -58,8 +58,6 @@
             <itemPath>Files/Outputs/1/GA/WorstIndividuals.txt</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="PSO" projectFiles="true">
-            <itemPath>Files/Outputs/1/PSO/BestParticle.txt</itemPath>
-            <itemPath>Files/Outputs/1/PSO/BestParticles.txt</itemPath>
           </logicalFolder>
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
           <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
@@ -452,16 +450,6 @@
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Files/Outputs/1/PSO/BestParticle.txt"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="Files/Outputs/1/PSO/BestParticles.txt"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="Files/Outputs/1/bandBP.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -1056,16 +1044,6 @@
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Files/Outputs/1/PSO/BestParticle.txt"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="Files/Outputs/1/PSO/BestParticles.txt"
-            ex="false"
-            tool="3"
-            flavor2="0">
       </item>
       <item path="Files/Outputs/1/bandBP.txt" ex="false" tool="3" flavor2="0">
       </item>

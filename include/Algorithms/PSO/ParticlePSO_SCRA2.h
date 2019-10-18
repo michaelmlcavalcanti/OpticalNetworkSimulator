@@ -18,12 +18,12 @@ class SCRA2;
 
 #include "ParticlePSO_SCRA.h"
 
-class ParticlePSO_SCRA2 : ParticlePSO_SCRA {
+class ParticlePSO_SCRA2 : public ParticlePSO_SCRA {
 public:
     
     ParticlePSO_SCRA2(PSO* pso, Data* data, ResourceAlloc* resAlloc);
     
-    ParticlePSO_SCRA2(const std::shared_ptr<const ParticlePSO_SCRA>& orig);
+    ParticlePSO_SCRA2(const std::shared_ptr<const ParticlePSO_SCRA2>& orig);
     
     virtual ~ParticlePSO_SCRA2();
 protected:
