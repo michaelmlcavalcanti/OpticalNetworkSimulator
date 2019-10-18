@@ -176,12 +176,12 @@ void InputOutput::LoadGA_MO(std::ifstream& gaMoParam) {
 void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     
     do{
-        orderRsa.open("Files/Inputs/GA/BestIndividual.txt");
+        orderRsa.open("Files/Outputs/1/GA/BestIndividual.txt");
         
         if(!orderRsa.is_open()) {
             std::cerr << "Wrong RSA order file." << std::endl;
-            std::cerr << "The file required is: Files/Inputs/"
-            "GA/BestIndividual.txt" << std::endl;
+            std::cerr << "The file required is: Files/Outputs/"
+            "1/GA/BestIndividual.txt" << std::endl;
             std::cerr << "Add/Fix the file then press 'Enter'" 
                       << std::endl;
             

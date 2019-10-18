@@ -366,8 +366,10 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
                 
                 if(resources->resourceAllocOrder.at(auxIndex1) != rsaOrder)
                     continue;
-                resources->resourceAllocOrder.at(auxIndex1) = !rsaOrder;
-                resources->resourceAllocOrder.at(auxIndex2) = !rsaOrder;
+                resources->resourceAllocOrder.at(auxIndex1) = !resources->
+                                            resourceAllocOrder.at(auxIndex1);
+                resources->resourceAllocOrder.at(auxIndex2) = !resources->
+                                            resourceAllocOrder.at(auxIndex2);
                 data->Initialize();
                 simulType->RunBase();
                 currentBP = data->GetPbReq();
