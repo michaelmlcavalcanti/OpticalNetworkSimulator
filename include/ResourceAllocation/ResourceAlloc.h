@@ -154,9 +154,10 @@ public:
      * each node pair in the network of the output of the first simulation.
      */
     void SetResourceAllocOrderGA();
+    
     bool RsaOrderTopology();
+    
     void SetResourceAllocOrderHE();
-    void Fucntion();
     
     void SetResAllocOrderHeuristicsRing();
     
