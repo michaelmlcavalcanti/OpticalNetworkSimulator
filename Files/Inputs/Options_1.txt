@@ -105,3 +105,6 @@
     0 - Same request for all points
     1 - Pseudo random generation
     2 - Random generation
+18-Protection Option
+    0 - Protection Disable
+    1 - 
