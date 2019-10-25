@@ -421,6 +421,13 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
     this->SetResourceAllocOrder(vecBool);
 }
 
+void ResourceAlloc::DisableRouteLinks(Route* route){
+    
+    for (unsigned int a = 0; a < route->GetNumHops(); a++){
+        route->GetLink(a)->SetLinkState(false);
+    }
+}
+
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
 int des, int pos) {
     return this->resources->interRoutes.at(ori*(this->topology->GetNumNodes()) 
