@@ -20,13 +20,7 @@
 #include "../../include/SimulationType/SimulationPSO.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
-#include "../../include/Algorithms/GA/GA.h"
-#include "../../include/Algorithms/GA/GA_SO.h"
-#include "../../include/Algorithms/GA/GA_MO.h"
-#include "../../include/Algorithms/GA/IndividualBool.h"
-#include "../../include/Algorithms/GA/IndividualNumRoutesMSCL.h"
-#include "../../include/Algorithms/PSO/PSO.h"
-#include "../../include/Algorithms/PSO/ParticlePSO.h"
+#include "../../include/Algorithms/Algorithms.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {

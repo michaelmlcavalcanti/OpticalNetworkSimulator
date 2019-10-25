@@ -90,6 +90,7 @@
           <itemPath>include/Algorithms/PSO/ParticlePSO_SCRA.h</itemPath>
           <itemPath>include/Algorithms/PSO/ParticlePSO_SCRA2.h</itemPath>
         </logicalFolder>
+        <itemPath>include/Algorithms/Algorithms.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Calls" projectFiles="true">
         <itemPath>include/Calls/Call.h</itemPath>
@@ -458,6 +459,8 @@
       <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/Algorithms.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/CoreOrderIndividual.h"
             ex="false"
@@ -1052,6 +1055,8 @@
       <item path="Files/Outputs/3" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/4" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Algorithms/Algorithms.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Algorithms/GA/CoreOrderIndividual.h"
             ex="false"

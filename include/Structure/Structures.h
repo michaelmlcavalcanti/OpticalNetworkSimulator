@@ -14,11 +14,14 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
+//Basic structures
 #include "Topology.h"
 #include "Node.h"
 #include "NodeDevices.h"
 #include "Link.h"
 #include "Core.h"
+
+//Devices structures
 #include "Devices/Device.h"
 #include "Devices/Regenerator.h"
 #include "Devices/BVT.h"
