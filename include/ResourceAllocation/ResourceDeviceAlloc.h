@@ -19,6 +19,7 @@
 
 class Call;
 class CallDevices;
+class ProtectionScheme;
 
 /**
  * @brief Class responsible to apply the resource allocation with devices.
@@ -56,6 +57,8 @@ private:
     void RoutingVirtRegSpecAlloc(CallDevices* call);
     
     void RoutingTranspSpecAlloc(CallDevices* call);
+    
+    void CreateProtectionScheme();
     
     /**
      * @brief Function to order the tuples of route and regeneration combination
@@ -150,6 +153,9 @@ private:
      * @return True if the OSNR is acceptable.
      */
     bool CheckOSNR(CallDevices* call);
+private:
+    
+    std::shared_ptr<ProtectionScheme> protScheme;
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

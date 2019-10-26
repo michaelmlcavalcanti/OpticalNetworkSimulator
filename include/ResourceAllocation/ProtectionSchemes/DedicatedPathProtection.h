@@ -19,9 +19,11 @@
 class DedicatedPathProtection : public ProtectionScheme {
 public:
     
-    DedicatedPathProtection(ResourceAlloc* rsa);
+    DedicatedPathProtection(ResourceDeviceAlloc* rsa);
 
     virtual ~DedicatedPathProtection();
+    
+    void ResourceAlloc(CallDevices* call) override;
 private:
 
 };

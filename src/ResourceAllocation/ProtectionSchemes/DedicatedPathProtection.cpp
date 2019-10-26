@@ -13,7 +13,7 @@
 
 #include "../../../include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
 
-DedicatedPathProtection::DedicatedPathProtection(ResourceAlloc* rsa) :
+DedicatedPathProtection::DedicatedPathProtection(ResourceDeviceAlloc* rsa) :
 ProtectionScheme(rsa) {
     
 }
@@ -21,3 +21,8 @@ ProtectionScheme(rsa) {
 DedicatedPathProtection::~DedicatedPathProtection() {
     
 }
+
+void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
+
+}
+

@@ -13,8 +13,8 @@
 
 #include "../../../include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
 
-ProtectionScheme::ProtectionScheme(ResourceAlloc* rsa)
-:rsa(rsa) {
+ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
+:resDevAlloc(rsa) {
     
 }
 

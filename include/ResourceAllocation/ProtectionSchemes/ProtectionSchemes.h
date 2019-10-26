@@ -8,22 +8,14 @@
  * File:   ProtectionSchemes.h
  * Author: henrique
  *
- * Created on October 25, 2019, 6:12 PM
+ * Created on October 26, 2019, 11:27 AM
  */
 
 #ifndef PROTECTIONSCHEMES_H
 #define PROTECTIONSCHEMES_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef __cplusplus
-}
-#endif
+#include "ProtectionScheme.h"
+#include "DedicatedPathProtection.h"
 
 #endif /* PROTECTIONSCHEMES_H */
 

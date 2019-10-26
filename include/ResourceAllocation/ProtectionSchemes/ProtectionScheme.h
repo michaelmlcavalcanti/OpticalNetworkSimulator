@@ -14,17 +14,20 @@
 #ifndef PROTECTIONSCHEME_H
 #define PROTECTIONSCHEME_H
 
-class ResourceAlloc;
+class ResourceDeviceAlloc;
+class CallDevices;
 
 class ProtectionScheme {
 public:
     
-    ProtectionScheme(ResourceAlloc* rsa);
+    ProtectionScheme(ResourceDeviceAlloc* rsa);
     
     virtual ~ProtectionScheme();
+    
+    virtual void ResourceAlloc(CallDevices* call) = 0;   
 protected:
     
-    ResourceAlloc* rsa;
+    ResourceDeviceAlloc* resDevAlloc;
 };
 
 #endif /* PROTECTIONSCHEME_H */

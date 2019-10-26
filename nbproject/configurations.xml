@@ -130,6 +130,7 @@
       <itemPath>include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
       <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</itemPath>
+      <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -484,6 +485,11 @@
             flavor2="0">
       </item>
       <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -948,6 +954,11 @@
             flavor2="0">
       </item>
       <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
             ex="false"
             tool="3"
             flavor2="0">
