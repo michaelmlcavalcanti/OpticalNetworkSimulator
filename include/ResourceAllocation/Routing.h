@@ -107,6 +107,11 @@ public:
     
     void UpdateLinksUtiCosts(const double alpha);
     
+    void ProtectionDisjointYEN();
+    
+    std::vector<std::shared_ptr<Route>> ProtectionDisjointYEN(NodeIndex orNode, 
+    NodeIndex deNode, RouteIndex routeIndex);
+    
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.
@@ -171,6 +176,7 @@ private:
      * @brief Number of routes for the k-shortest path algorithms.
      */
     unsigned int K;
+    unsigned int Kd;
 };
 
 #endif /* ROUTING_H */

@@ -347,10 +347,10 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
     unsigned int bestIndex2 = Def::Max_UnInt;
     unsigned int auxIndex1, auxIndex2;
     ResAllocOrder rsaOrder =  this->RsaOrderTopology();
-    double load = parameters->GetMidLoadPoint();
+    double load = parameters->GetMinLoadPoint();
     simulType->GetCallGenerator()->SetNetworkLoad(load);
     double numMaxReq = parameters->GetNumberReqMax();
-    parameters->SetNumberReqMax(1E5);
+    parameters->SetNumberReqMax(1E6);
     simulType->RunBase();
     double bestBP = data->GetPbReq();
     while (foundBetterOption){
@@ -366,8 +366,10 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
                 
                 if(resources->resourceAllocOrder.at(auxIndex1) != rsaOrder)
                     continue;
-                resources->resourceAllocOrder.at(auxIndex1) = !rsaOrder;
-                resources->resourceAllocOrder.at(auxIndex2) = !rsaOrder;
+                resources->resourceAllocOrder.at(auxIndex1) = !resources->
+                                            resourceAllocOrder.at(auxIndex1);
+                resources->resourceAllocOrder.at(auxIndex2) = !resources->
+                                            resourceAllocOrder.at(auxIndex2);
                 data->Initialize();
                 simulType->RunBase();
                 currentBP = data->GetPbReq();
@@ -388,7 +390,8 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
             resources->resourceAllocOrder.at(bestIndex2) = !rsaOrder;
         }
     }
-parameters->SetNumberReqMax(numMaxReq);
+    data->Initialize();
+    parameters->SetNumberReqMax(numMaxReq);
 }
 
 void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
@@ -416,6 +419,13 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
     
     assert(vecBool.size() == numNodes*numNodes);
     this->SetResourceAllocOrder(vecBool);
+}
+
+void ResourceAlloc::DisableRouteLinks(Route* route){
+    
+    for (unsigned int a = 0; a < route->GetNumHops(); a++){
+        route->GetLink(a)->SetLinkState(false);
+    }
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 

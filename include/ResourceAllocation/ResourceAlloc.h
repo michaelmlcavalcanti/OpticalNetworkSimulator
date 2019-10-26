@@ -32,6 +32,7 @@ class Options;
 #include "../Data/Options.h"
 #include "../GeneralClasses/Def.h"
 #include "../Data/Parameters.h"
+#include "Route.h"
 
 
 /**
@@ -160,6 +161,12 @@ public:
     void SetResourceAllocOrderHE();
     
     void SetResAllocOrderHeuristicsRing();
+    
+    /**
+     * @brief 
+     * @param route 
+     */
+    void DisableRouteLinks(Route* route);
     
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
