@@ -160,7 +160,7 @@ public:
      */
     double GetNetOccupancy() const;
     
-    double GetNetUtilization() const;
+    double GetMeamNetUtilization() const;
     /**
      * @brief Function to get the simulation time for the actual simulation.
      * @return Simulation time.

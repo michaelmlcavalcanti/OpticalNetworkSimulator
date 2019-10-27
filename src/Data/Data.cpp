@@ -47,8 +47,8 @@ const Data* data) {
     ostream << "  ReqBP:" << data->GetReqBP() 
             << "  SlotsBP:" << data->GetSlotsBP() 
             << "  HopsMed:" << data->GetMeanNumHops() << std::endl;
-    ostream << "  NetOcc:" << data->GetNetOccupancy() 
-            << "  NetUti:" << data->GetNetUtilization() << std::endl;
+    ostream << "NetOcc:" << data->GetNetOccupancy() 
+            << "  NetUti:" << data->GetMeamNetUtilization() << std::endl;
     
     ostream << std::endl;
     
@@ -263,7 +263,7 @@ double Data::GetNetOccupancy() const {
     return this->netOccupancy.at(this->actualIndex);
 }
 
-double Data::GetNetUtilization() const {
+double Data::GetMeamNetUtilization() const {
     double total = (double) simulType->GetTopology()->GetNumLinks() * 
     (double) simulType->GetTopology()->GetNumSlots() * simulTime.at(actualIndex);
     

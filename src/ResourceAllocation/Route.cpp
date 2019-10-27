@@ -140,7 +140,7 @@ void Route::SetAllNodesWorking() {
 
 std::shared_ptr<Route> Route::CreatePartialRoute(unsigned int ind1, 
 unsigned int ind2) {
-    assert(ind2 > ind1 && ind1 < path.size() && ind2 < path.size());
+    assert(ind2 >= ind1 && ind1 < path.size() && ind2 < path.size());
     std::vector<int> newPath(0);
     
     for(unsigned int a = ind1; a <= ind2; a++){
