@@ -21,6 +21,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Algorithms/Algorithms.h"
+#include "../../include/Structure/Topology.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {
@@ -43,11 +44,11 @@ const Data* data) {
             std::abort();
     }
     
-    ostream << "  PbReq:" << data->GetNumberBlocReq()/data->GetNumberReq() 
-            << "  PbSlots:" << data->GetNumberBlocSlots()/
-            data->GetNumberSlotsReq() << "  HopsMed:" 
-            << data->GetNumHopsPerRoute()/data->GetNumberAccReq() 
-            << "  NetOcc:" << data->GetNetOccupancy() << std::endl;
+    ostream << "  ReqBP:" << data->GetReqBP() 
+            << "  SlotsBP:" << data->GetSlotsBP() 
+            << "  HopsMed:" << data->GetMeanNumHops() << std::endl;
+    ostream << "  NetOcc:" << data->GetNetOccupancy() 
+            << "  NetUti:" << data->GetNetUtilization() << std::endl;
     
     ostream << std::endl;
     
@@ -76,6 +77,7 @@ void Data::Initialize() {
     this->numberAccSlots.assign(size, 0.0);
     this->numHopsPerRoute.assign(size, 0.0);
     this->netOccupancy.assign(size, 0.0);
+    this->netUtilization.assign(size, 0.0);
     this->simulTime.assign(size, 0.0);
     this->realSimulTime.assign(size, 0.0);
 }
@@ -90,6 +92,7 @@ void Data::Initialize(unsigned int numPos) {
     this->numberAccSlots.assign(numPos, 0.0);
     this->numHopsPerRoute.assign(numPos, 0.0);
     this->netOccupancy.assign(numPos, 0.0);
+    this->netUtilization.assign(numPos, 0.0);
     this->simulTime.assign(numPos, 0.0);
     this->realSimulTime.assign(numPos, 0.0);
 }
@@ -99,22 +102,24 @@ void Data::StorageCall(Call* call) {
     
     switch(call->GetStatus()){
         case Accepted:
-            this->numberAccReq.at(this->actualIndex)++;
-            this->numHopsPerRoute.at(this->actualIndex) += (double) 
+            numberAccReq.at(actualIndex)++;
+            numberAccSlots.at(actualIndex) += bitRate;
+            numHopsPerRoute.at(actualIndex) += (double) 
             call->GetRoute()->GetNumHops();
-            this->netOccupancy.at(this->actualIndex) += 
+            netOccupancy.at(actualIndex) += 
             (double) call->GetTotalNumSlots();
-            this->numberAccSlots.at(this->actualIndex) += bitRate;
+            netUtilization.at(actualIndex) += ((double) call->GetTotalNumSlots())
+            * call->GetDeactivationTime();
             break;
         case Blocked:
-            this->numberBlocReq.at(this->actualIndex)++;
-            this->numberBlocSlots.at(this->actualIndex) += bitRate;
+            numberBlocReq.at(actualIndex)++;
+            numberBlocSlots.at(actualIndex) += bitRate;
             break;
         case NotEvaluated:
             std::cerr << "Not evaluated call" <<  std::endl;
             std::abort();
     }
-    this->numberSlotsReq.at(this->actualIndex) += bitRate;
+    numberSlotsReq.at(actualIndex) += bitRate;
 }
 
 void Data::SaveMultiloadLog() {
@@ -226,7 +231,7 @@ double Data::GetNumberAccReq() const {
     return this->numberAccReq.at(this->actualIndex);
 }
 
-double Data::GetPbReq() const {
+double Data::GetReqBP() const {
     return this->GetNumberBlocReq()/this->GetNumberReq();
 }
 
@@ -242,7 +247,7 @@ double Data::GetNumberAccSlots() const {
     return this->numberAccSlots.at(this->actualIndex);
 }
 
-double Data::GetPbSlots() const {
+double Data::GetSlotsBP() const {
     return this->GetNumberBlocSlots()/this->GetNumberSlotsReq();
 }
 
@@ -250,8 +255,19 @@ double Data::GetNumHopsPerRoute() const {
     return this->numHopsPerRoute.at(this->actualIndex);
 }
 
+double Data::GetMeanNumHops() const {
+    return (this->GetNumHopsPerRoute() / this->GetNumberAccReq());
+}
+
 double Data::GetNetOccupancy() const {
     return this->netOccupancy.at(this->actualIndex);
+}
+
+double Data::GetNetUtilization() const {
+    double total = (double) simulType->GetTopology()->GetNumLinks() * 
+    (double) simulType->GetTopology()->GetNumSlots() * simulTime.at(actualIndex);
+    
+    return netUtilization.at(actualIndex) / total;
 }
 
 TIME Data::GetSimulTime() const {
@@ -286,7 +302,7 @@ void Data::SaveCallReqBP(std::ostream& ostream) {
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetPbReq() 
+                   this->GetActualIndex()) << "\t" << this->GetReqBP() 
                 << std::endl;
     }
 }
@@ -298,7 +314,7 @@ void Data::SaveBandwidthBP(std::ostream& ostream) {
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetPbSlots() 
+                   this->GetActualIndex()) << "\t" << this->GetSlotsBP() 
                 << std::endl;
     }
 }
@@ -308,7 +324,7 @@ void Data::SaveCallReqBP(std::ostream& ostream, std::vector<unsigned> vec) {
     
     for(unsigned int a = 0; a < vec.size(); a++){
         this->SetActualIndex(a);
-        ostream << vec.at(a) << "\t" << this->GetPbReq() << std::endl;
+        ostream << vec.at(a) << "\t" << this->GetReqBP() << std::endl;
     }
 }
 
@@ -317,7 +333,7 @@ void Data::SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec) {
     
     for(unsigned int a = 0; a < vec.size(); a++){
         this->SetActualIndex(a);
-        ostream << vec.at(a) << "\t" << this->GetPbSlots() << std::endl;
+        ostream << vec.at(a) << "\t" << this->GetSlotsBP() << std::endl;
     }
 }
 

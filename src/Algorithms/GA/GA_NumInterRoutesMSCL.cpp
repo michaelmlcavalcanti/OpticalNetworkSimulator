@@ -62,7 +62,7 @@ void GA_NumInterRoutesMSCL::ApplyIndividual(Individual* ind) {
 }
 
 void GA_NumInterRoutesMSCL::SetIndParameters(Individual* ind) {
-    double blockProb = this->GetSimul()->GetData()->GetPbReq();
+    double blockProb = this->GetSimul()->GetData()->GetReqBP();
     TIME simulTime = this->GetSimul()->GetData()->GetRealSimulTime();
     
     IndividualNumRoutesMSCL* auxInd = dynamic_cast<IndividualNumRoutesMSCL*>

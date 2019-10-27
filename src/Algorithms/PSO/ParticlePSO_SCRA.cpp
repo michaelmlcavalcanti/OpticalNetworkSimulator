@@ -40,8 +40,8 @@ ParticlePSO_SCRA::~ParticlePSO_SCRA() {
 void ParticlePSO_SCRA::CalculateFitness() {
     this->ApplyCoefficients();
     pso->GetSimul()->RunBase();
-    this->SetBlockProb(data->GetPbReq());
-    this->SetFitness(1 / data->GetPbReq());
+    this->SetBlockProb(data->GetReqBP());
+    this->SetFitness(1 / data->GetReqBP());
     data->Initialize();
 }
 

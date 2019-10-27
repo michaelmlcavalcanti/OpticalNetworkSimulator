@@ -121,7 +121,7 @@ public:
      * the actual point.
      * @return Call request blocking probability.
      */
-    double GetPbReq() const;
+    double GetReqBP() const;
     /**
      * @brief Function to get the total bandwidth used by the call requests in
      * the actual simulation.
@@ -145,18 +145,22 @@ public:
      * the actual simulation.
      * @return Bandwidth blocking probability.
      */
-    double GetPbSlots() const;
+    double GetSlotsBP() const;
     /**
      * @brief Function to get the mean of hops per route for the actual 
      * simulation.
      * @return Mean of hops per route.
      */
     double GetNumHopsPerRoute() const;
+    
+    double GetMeanNumHops() const;
     /**
      * @brief Function to get the network occupancy for the actual simulation.
      * @return Network occupancy.
      */
     double GetNetOccupancy() const;
+    
+    double GetNetUtilization() const;
     /**
      * @brief Function to get the simulation time for the actual simulation.
      * @return Simulation time.
@@ -312,6 +316,8 @@ private:
      * occupied by the number of route hops.
      */
     std::vector<double> netOccupancy;
+    
+    std::vector<double> netUtilization;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

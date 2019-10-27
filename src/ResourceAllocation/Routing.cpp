@@ -303,8 +303,8 @@ void Routing::BSR() {
         
         //Calc the BP and keep the routes if it is better then the 
         //previous best BP.
-        if(data->GetPbReq() < bestBP){
-            bestBP = data->GetPbReq();
+        if(data->GetReqBP() < bestBP){
+            bestBP = data->GetReqBP();
             bestRoutes = resources->GetRoutes();
         }
         data->Initialize();

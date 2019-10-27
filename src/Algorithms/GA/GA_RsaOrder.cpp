@@ -107,7 +107,7 @@ void GA_RsaOrder::ApplyIndividual(Individual* ind) {
 }
 
 void GA_RsaOrder::SetIndParameters(Individual* ind) {
-    double blockProb = this->GetSimul()->GetData()->GetPbReq();
+    double blockProb = this->GetSimul()->GetData()->GetReqBP();
     IndividualBool* indBool = dynamic_cast<IndividualBool*>(ind);
     
     indBool->SetBlockProb(blockProb);

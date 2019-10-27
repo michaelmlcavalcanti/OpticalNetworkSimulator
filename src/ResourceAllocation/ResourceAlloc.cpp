@@ -435,7 +435,7 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
     double numMaxReq = parameters->GetNumberReqMax();
     parameters->SetNumberReqMax(1E6);
     simulType->RunBase();
-    double bestBP = data->GetPbReq();
+    double bestBP = data->GetReqBP();
     while (foundBetterOption){
         foundBetterOption = false;
         
@@ -455,7 +455,7 @@ void ResourceAlloc::SetResourceAllocOrderHE() {
                                             resourceAllocOrder.at(auxIndex2);
                 data->Initialize();
                 simulType->RunBase();
-                currentBP = data->GetPbReq();
+                currentBP = data->GetReqBP();
 
                 if(currentBP < bestBP){
                     bestBP = currentBP;
