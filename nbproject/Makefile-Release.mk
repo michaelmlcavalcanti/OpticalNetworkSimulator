@@ -74,6 +74,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o \
+	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o \
+	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
@@ -115,11 +117,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/simulatoropticalnetwork ${OBJECTFILES} ${LDLIBSOPTIONS} -static -static-libstdc++ -static-libgcc
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/opticalnetworksimulator ${OBJECTFILES} ${LDLIBSOPTIONS} -static -static-libstdc++ -static-libgcc
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -315,6 +317,16 @@ ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o: src/ResourceA
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/SCRA2.o src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o: src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o: src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -Wall -s -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/ResourceAlloc.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

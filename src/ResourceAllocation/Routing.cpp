@@ -32,7 +32,7 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
 Parameters* parameters)
 :resourceAlloc(rsa), routingOption(option), topology(nullptr), 
-data(data), parameters(parameters), resources(nullptr), K(0) {
+data(data), parameters(parameters), resources(nullptr), K(0), Kd(1) {
     
 }
 
@@ -365,6 +365,60 @@ void Routing::UpdateLinksUtiCosts(const double alpha) {
         }
     }
 }
+
+void Routing::ProtectionDisjointYEN() {
+std::vector<std::shared_ptr<Route>> routes;
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int numRoutes;
+    unsigned int nodePairIndex;
+    resources->protectionRoutes.resize(resources->allRoutes.size());
+    
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            nodePairIndex = orN * numNodes + deN;
+            numRoutes = resources->allRoutes.at(nodePairIndex).size();
+            resources->protectionRoutes.at(nodePairIndex).resize(numRoutes);
+            
+            for (unsigned int routeIndex = 0;  routeIndex < numRoutes; 
+            routeIndex++){
+                if(orN != deN){
+                    routes = this->ProtectionDisjointYEN(orN, deN, routeIndex);                
+                }
+                else {
+                    routes.assign(Kd, nullptr);
+                }
+                resources->protectionRoutes.at(nodePairIndex).at(routeIndex) = 
+                routes;
+                routes.clear();
+            }                        
+        }
+    }
+}
+
+std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex orNode, 
+NodeIndex deNode, RouteIndex routeIndex) {
+    unsigned int numNodes = topology->GetNumNodes();
+    unsigned int nodePairIndex = orNode * numNodes + deNode;
+    std::shared_ptr<Route> orRoute = resources->allRoutes.at(nodePairIndex)
+    .at(routeIndex);
+    std::shared_ptr<Route> auxRoute;
+    std::vector<std::shared_ptr<Route> > routes(0);
+    resourceAlloc->DisableRouteLinks(orRoute.get());
+    routes.push_back(orRoute);   
+    
+    for (unsigned int a = 0; a < Kd; a++){
+        auxRoute = this->Dijkstra(orNode, deNode);
+        routes.push_back(auxRoute);
+        
+        if(auxRoute != nullptr){   
+            resourceAlloc->DisableRouteLinks(auxRoute.get());
+        }            
+    }
+    topology->SetAllLinksWorking();
+    
+    return routes;
+}
+
 
 ResourceAlloc* Routing::GetResourceAlloc() const {
     return resourceAlloc;

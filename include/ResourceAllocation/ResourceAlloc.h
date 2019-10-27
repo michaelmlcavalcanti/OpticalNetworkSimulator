@@ -31,6 +31,9 @@ class Options;
 
 #include "../Data/Options.h"
 #include "../GeneralClasses/Def.h"
+#include "../Data/Parameters.h"
+#include "Route.h"
+
 
 /**
  * @brief Class responsible for resource allocation, at least routing and 
@@ -193,9 +196,19 @@ public:
      * @brief Set the container that indicate the RSA order (R-SA or SA-R) for
      * each node pair in the network of the output of the first simulation.
      */
-    void SetResourceAllocOrder();
+    void SetResourceAllocOrderGA();
+    
+    bool RsaOrderTopology();
+    
+    void SetResourceAllocOrderHE();
     
     void SetResAllocOrderHeuristicsRing();
+    
+    /**
+     * @brief 
+     * @param route 
+     */
+    void DisableRouteLinks(Route* route);
     
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
@@ -368,6 +381,11 @@ public:
      * owns this RSA.
      */
     SimulationType* simulType;
+    /**
+     * @breif Pointer to the Parameters object of this simulation.
+     */
+    Parameters* parameters;
+    
     /**
      * @brief Resource allocation option chosen.
      */

@@ -34,6 +34,7 @@ typedef unsigned int SimulIndex;
 typedef unsigned int NodeIndex;
 typedef unsigned int CoreIndex;
 typedef unsigned int SlotIndex;
+typedef unsigned int RouteIndex;
 
 /**
  * @brief Class responsible to define constants, random engines and other

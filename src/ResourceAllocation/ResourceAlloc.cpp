@@ -24,13 +24,16 @@
 #include "../../include/Data/Parameters.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Data/Options.h"
+#include "../../include/Data/Data.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
+#include "../../include/Calls/EventGenerator.h"
 #include "../../include/GeneralClasses/Def.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
 routing(nullptr), specAlloc(nullptr), modulation(nullptr), resources(nullptr) {
+parameters(nullptr), routing(nullptr), specAlloc(nullptr) {
     
 }
 
@@ -45,13 +48,14 @@ void ResourceAlloc::Load() {
     topology = simulType->GetTopology();
     traffic = simulType->GetTraffic();
     options = simulType->GetOptions();
-    Parameters* par = simulType->GetParameters();
-    
+    parameters = simulType->GetParameters();
+        
     this->CreateRouting();
     this->CreateSpecAllocation();
     
-    modulation = std::make_shared<Modulation>(this, par->GetSlotBandwidth(), 
-    par->GetNumberPolarizations(), par->GetGuardBand());
+    modulation = std::make_shared<Modulation>(this, 
+    parameters->GetSlotBandwidth(), parameters->GetNumberPolarizations(), 
+    parameters->GetGuardBand());
     
     resources = std::make_shared<Resources>(this, modulation.get());
     
@@ -390,7 +394,7 @@ resourceAllocOrder) {
     this->resources->resourceAllocOrder = resourceAllocOrder;
 }
 
-void ResourceAlloc::SetResourceAllocOrder() {
+void ResourceAlloc::SetResourceAllocOrderGA() {
     std::ifstream auxIfstream;
     std::vector<bool> vecBool;
     bool auxBool;
@@ -402,6 +406,76 @@ void ResourceAlloc::SetResourceAllocOrder() {
         vecBool.push_back(auxBool);
     }
     this->SetResourceAllocOrder(vecBool);
+}
+
+bool ResourceAlloc::RsaOrderTopology() {
+    unsigned int numNodes = topology->GetNumNodes();
+    TopologyOption RsaTopology = options->GetTopologyOption();
+    
+    if(RsaTopology != TopologyRing){
+        resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
+        return sa_r;
+    }
+    else{
+        resources->resourceAllocOrder.assign(numNodes*numNodes, r_sa);
+        return r_sa;
+    }
+}
+
+void ResourceAlloc::SetResourceAllocOrderHE() {
+    unsigned int numNodes = topology->GetNumNodes();
+    Data* data = simulType->GetData();
+    bool foundBetterOption = true;
+    double currentBP;
+    unsigned int bestIndex1 = Def::Max_UnInt;
+    unsigned int bestIndex2 = Def::Max_UnInt;
+    unsigned int auxIndex1, auxIndex2;
+    ResAllocOrder rsaOrder =  this->RsaOrderTopology();
+    double load = parameters->GetMinLoadPoint();
+    simulType->GetCallGenerator()->SetNetworkLoad(load);
+    double numMaxReq = parameters->GetNumberReqMax();
+    parameters->SetNumberReqMax(1E6);
+    simulType->RunBase();
+    double bestBP = data->GetPbReq();
+    while (foundBetterOption){
+        foundBetterOption = false;
+        
+        for(unsigned int sourNode = 0; sourNode < numNodes; sourNode++){
+            for(unsigned desNode = 0; desNode < numNodes; desNode++){
+                
+                if(sourNode == desNode)
+                    continue;
+                auxIndex1 = sourNode*numNodes + desNode;
+                auxIndex2 = desNode*numNodes + sourNode;
+                
+                if(resources->resourceAllocOrder.at(auxIndex1) != rsaOrder)
+                    continue;
+                resources->resourceAllocOrder.at(auxIndex1) = !resources->
+                                            resourceAllocOrder.at(auxIndex1);
+                resources->resourceAllocOrder.at(auxIndex2) = !resources->
+                                            resourceAllocOrder.at(auxIndex2);
+                data->Initialize();
+                simulType->RunBase();
+                currentBP = data->GetPbReq();
+
+                if(currentBP < bestBP){
+                    bestBP = currentBP;
+                    bestIndex1 = auxIndex1;
+                    bestIndex2 = auxIndex2;
+                    foundBetterOption = true;
+                }
+                resources->resourceAllocOrder.at(auxIndex1) = rsaOrder;
+                resources->resourceAllocOrder.at(auxIndex2) = rsaOrder;
+            }
+        }
+        
+        if(foundBetterOption){
+            resources->resourceAllocOrder.at(bestIndex1) = !rsaOrder;
+            resources->resourceAllocOrder.at(bestIndex2) = !rsaOrder;
+        }
+    }
+    data->Initialize();
+    parameters->SetNumberReqMax(numMaxReq);
 }
 
 void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
@@ -429,6 +503,13 @@ void ResourceAlloc::SetResAllocOrderHeuristicsRing() {
     
     assert(vecBool.size() == numNodes*numNodes);
     this->SetResourceAllocOrder(vecBool);
+}
+
+void ResourceAlloc::DisableRouteLinks(Route* route){
+    
+    for (unsigned int a = 0; a < route->GetNumHops(); a++){
+        route->GetLink(a)->SetLinkState(false);
+    }
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
@@ -673,8 +754,11 @@ void ResourceAlloc::CreateRsaOrder() {
         case OrderSaRouting:
             resources->resourceAllocOrder.assign(numNodes*numNodes, sa_r);
             break;
-        case MixedOrder:
-            this->SetResourceAllocOrder();
+        case MixedOrderGA:
+            this->SetResourceAllocOrderGA();
+            break;
+        case MixedOrderHE:
+            this->SetResourceAllocOrderHE();
             break;
         case HeuristicsOrder:
             this->SetResAllocOrderHeuristicsRing();

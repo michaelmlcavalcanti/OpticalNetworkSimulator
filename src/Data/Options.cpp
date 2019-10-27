@@ -86,7 +86,8 @@ const boost::unordered_map<RsaOrder,  std::string>
 Options::mapOrderRSA = boost::assign::map_list_of
     (OrderRoutingSa, "Routing-SA")
     (OrderSaRouting, "SA-Routing")
-    (MixedOrder, "Mixed order")
+    (MixedOrderGA, "Mixed orderGA")
+    (MixedOrderHE, "Mixed orderHE")
     (HeuristicsOrder, "Heuristics Ring Order");
 
 const boost::unordered_map<GAOption, std::string>
@@ -149,6 +150,14 @@ Options::mapRandomGeneration = boost::assign::map_list_of
     (GenerationPseudoRandom, "Different pseudo-random generation")
     (GenerationRandom, "Random generation");
 
+const boost::unordered_map<ProtectionOption, std::string>
+Options::mapProtectionOption = boost::assign::map_list_of
+    (ProtectionDisable, "No Protection")
+    (ProtectionDPP, "Dedicated Path Protection")
+    (ProtectionDPPS, "Dedicated Path Protection with Squeezing")
+    (ProtectionPDPP, "Partitioning Dedicated Path Protection")
+    (ProtectionPDPPS, "Partitioning Dedicated Path Protection");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -188,6 +197,8 @@ const Options* options) {
     ostream << "Stop criteria: " << options->GetStopCriteriaName()
             << std::endl;
     ostream << "Random generation: " << options->GetGenerationOptionName()
+            << std::endl;
+    ostream << "Protection: " << options->GetProtectionOptionName()
             << std::endl;
     
     return ostream;
@@ -409,6 +420,8 @@ void Options::LoadFile() {
     this->SetStopCriteria((StopCriteria) auxInt);
     auxIfstream >> auxInt;
     this->SetGenerationOption((RandomGenerationOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetProtectionOption((ProtectionOption) auxInt);
 }
 
 void Options::Save() {
@@ -671,4 +684,19 @@ void Options::SetGenerationOption(RandomGenerationOption generationOption) {
     assert(generationOption >= FirstGeneration && 
     generationOption  <= LastGeneration);
     this->generationOption = generationOption;
+}
+
+ProtectionOption Options::GetProtectionOption() const {
+    return protectionOption;
+}
+
+std::string Options::GetProtectionOptionName() const {
+    return mapProtectionOption.at(protectionOption);
+}
+
+void Options::SetProtectionOption(ProtectionOption protectionOption) {
+    assert(protectionOption >= FirstProtectionOption && 
+           protectionOption <= LastProtectionOption);
+    
+    this->protectionOption = protectionOption;
 }

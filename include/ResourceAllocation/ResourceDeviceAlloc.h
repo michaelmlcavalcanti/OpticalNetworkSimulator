@@ -22,6 +22,7 @@
 class Call;
 class CallDevices;
 class RegeneratorAssignment;
+class ProtectionScheme;
 
 /**
  * @brief Class responsible to apply the resource allocation with devices.
@@ -59,6 +60,7 @@ public:
     
     void RoutingOnVirtRegSpecAlloc(CallDevices* call);
     
+    void CreateProtectionScheme();
     void RoutingTransponderSpecAlloc(CallDevices* call);
     
     RegeneratorAssignment* GetRegeneratorAssignment() const;
@@ -74,6 +76,7 @@ private:
 private:
     
     std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;
+    std::shared_ptr<ProtectionScheme> protScheme;
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

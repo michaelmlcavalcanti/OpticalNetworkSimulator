@@ -127,13 +127,14 @@ enum NetworkOption {
 };
 
 /**
- * @brief Numerate the resource allocation choice order, R-SA, SA-R or GA found 
+ * @brief Numerate the resource allocation choice order, R-SA, SA-R, HE or GA found 
  * order.
  */
 enum RsaOrder {
     OrderRoutingSa,
     OrderSaRouting,
-    MixedOrder,
+    MixedOrderGA,
+    MixedOrderHE,
     HeuristicsOrder,
     FirstOrderRSA = OrderRoutingSa,
     LastOrderRSA = HeuristicsOrder
@@ -229,7 +230,17 @@ enum RandomGenerationOption {
     FirstGeneration = GenerationSame,
     LastGeneration = GenerationRandom
 };
-        
+  
+enum ProtectionOption {
+    ProtectionDisable,
+    ProtectionDPP,
+    ProtectionDPPS,
+    ProtectionPDPP,
+    ProtectionPDPPS,
+    FirstProtectionOption = ProtectionDisable,
+    LastProtectionOption = ProtectionPDPPS
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -474,6 +485,12 @@ public:
     std::string GetGenerationOptionName() const;
 
     void SetGenerationOption(RandomGenerationOption generationOption);
+    
+    ProtectionOption GetProtectionOption() const;
+    
+    std::string GetProtectionOptionName() const;
+
+    void SetProtectionOption(ProtectionOption protectionOption);
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -545,6 +562,8 @@ private:
     StopCriteria stopCriteria;
     
     RandomGenerationOption generationOption;
+    
+    ProtectionOption protectionOption;
     
     /**
      * @brief Map that keeps the topology option 
@@ -642,6 +661,9 @@ private:
     
     static const boost::unordered_map<RandomGenerationOption,
     std::string> mapRandomGeneration;
+    
+    static const boost::unordered_map<ProtectionOption, 
+    std::string> mapProtectionOption;
 };
 
 #endif /* OPTIONS_H */

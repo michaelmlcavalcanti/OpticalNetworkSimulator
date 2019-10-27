@@ -1,10 +1,10 @@
 1
-1
 2
 2
 1
-2
 1
+1
+0
 2
 0
 0
@@ -15,6 +15,7 @@
 0
 0
 0
+
 
 1-Topology
     0 - Invalid
@@ -68,8 +69,9 @@
 9-RSA Order
     0 - Routing-SA
     1 - SA-Routing
-    2 - Mixed order
-    3 - Heuristics order
+    2 - Mixed order GA
+    3 - Mixed order HE
+    4 - Heuristics order
 10-GA Option
     0 - GA Disabled
     1 - GA RSA Order
@@ -111,3 +113,6 @@
     0 - Same request for all points
     1 - Pseudo random generation
     2 - Random generation
+18-Protection Option
+    0 - Protection Disable
+    1 - 

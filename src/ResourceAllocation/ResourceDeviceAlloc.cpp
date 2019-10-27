@@ -23,6 +23,7 @@
 #include "../../include/Structure/NodeDevices.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
+#include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"  
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType), regAssAlgorithm(nullptr) {
@@ -38,6 +39,9 @@ void ResourceDeviceAlloc::Load() {
     
     if(options->GetRegenerationOption() != RegenerationDisabled)
         this->CreateRegeneratorAssignment();
+    
+    if (options->GetProtectionOption() != ProtectionDisable)
+        this->CreateProtectionScheme();
 }
 
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
@@ -47,6 +51,9 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
         regAssAlgorithm->ResourceAlloc(callDev);
     else if(options->GetTransponderOption() == TransponderEnabled)
         this->RoutingTransponderSpecAlloc(callDev);
+        this->RoutingTranspSpecAlloc(callDev);
+    else if(options->GetProtectionOption() != ProtectionDisable)
+        protScheme->ResourceAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
@@ -147,6 +154,43 @@ void ResourceDeviceAlloc::RoutingTransponderSpecAlloc(CallDevices* call) {
     call->ClearTrialRoutes();
 }
 
+void ResourceDeviceAlloc::CreateProtectionScheme() {
+    
+    switch (options->GetProtectionOption()){
+        case ProtectionDPP:
+            protScheme = std::make_shared<DedicatedPathProtection>(this);
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
+    }
+}
+
+void ResourceDeviceAlloc::OrderRegenerationOptions(CallDevices* call, 
+std::vector<std::tuple<unsigned, unsigned> >& vec) {
+    vec.clear();
+    
+    switch(options->GetRegAssOption()){
+        case RegAssMinReg:
+            this->SetMinRegChoiceOrder(call, vec);
+            break;
+        case RegAssMinSlotsMinReg:
+            this->SetMinSlotsChoiceOrder(call, vec);
+            break;
+        case RegAssMinSlotsMaxReg:
+            this->SetMinSlotsMaxRegChoiceOrder(call, vec);
+            break;
+        case RegAssMaxReg:
+            this->SetMaxRegChoiceOrder(call, vec);
+            break;
+        case RegAssDRE2BR:
+        case RegAssSCRA:
+            this->SetCostMetric(call, vec);
+            break;
+        default:
+            std::cerr << "Invalid regenerator assignment option" << std::endl;
+            std::abort();
+    }
 RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {
     return regAssAlgorithm.get();
 }
