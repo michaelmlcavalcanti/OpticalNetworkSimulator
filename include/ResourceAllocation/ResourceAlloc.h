@@ -27,13 +27,10 @@ class Call;
 class Modulation;
 class Traffic;
 class Resources;
-class Options;
+class Parameters;
 
 #include "../Data/Options.h"
 #include "../GeneralClasses/Def.h"
-#include "../Data/Parameters.h"
-#include "Route.h"
-
 
 /**
  * @brief Class responsible for resource allocation, at least routing and 

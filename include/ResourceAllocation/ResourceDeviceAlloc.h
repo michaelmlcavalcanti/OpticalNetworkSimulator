@@ -17,7 +17,6 @@
 #include "ResourceAlloc.h"
 #include "../Data/Options.h"
 #include "Modulation.h"
-#include "RegeneratorAssignment/RegeneratorAssignment.h"
 
 class Call;
 class CallDevices;
@@ -60,8 +59,8 @@ public:
     
     void RoutingOnVirtRegSpecAlloc(CallDevices* call);
     
-    void CreateProtectionScheme();
     void RoutingTransponderSpecAlloc(CallDevices* call);
+    
     
     RegeneratorAssignment* GetRegeneratorAssignment() const;
 private:
@@ -73,9 +72,12 @@ private:
     bool CheckOSNR(CallDevices* call);
     
     void CreateRegeneratorAssignment();
+    
+    void CreateProtectionScheme();
 private:
     
     std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;
+    
     std::shared_ptr<ProtectionScheme> protScheme;
 };
 

@@ -110,6 +110,11 @@
         <itemPath>include/GeneralClasses/General.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <logicalFolder name="f2" displayName="ProtectionSchemes" projectFiles="true">
+          <itemPath>include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h</itemPath>
+          <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</itemPath>
+          <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1"
                        displayName="RegeneratorAssignment"
                        projectFiles="true">
@@ -156,10 +161,7 @@
         <itemPath>include/Structure/Structures.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
-      <itemPath>include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</itemPath>
-      <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -206,6 +208,10 @@
         <itemPath>src/GeneralClasses/General.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
+        <logicalFolder name="f2" displayName="ProtectionSchemes" projectFiles="true">
+          <itemPath>src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1"
                        displayName="RegeneratorAssignment"
                        projectFiles="true">
@@ -250,9 +256,7 @@
         <itemPath>src/Structure/NodeDevices.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
-      <itemPath>src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -553,6 +557,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/RegeneratorAssignment/DRE2BR.h"
             ex="false"
             tool="3"
@@ -604,21 +623,6 @@
             flavor2="0">
       </item>
       <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA2.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -782,6 +786,16 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp"
             ex="false"
             tool="1"
@@ -828,16 +842,6 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1174,6 +1178,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/RegeneratorAssignment/DRE2BR.h"
             ex="false"
             tool="3"
@@ -1225,21 +1244,6 @@
             flavor2="0">
       </item>
       <item path="include/ResourceAllocation/RegeneratorAssignment/SCRA2.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1403,6 +1407,16 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp"
             ex="false"
             tool="1"
@@ -1449,16 +1463,6 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/RegeneratorAssignment/SCRA2.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
             ex="false"
             tool="1"
             flavor2="0">

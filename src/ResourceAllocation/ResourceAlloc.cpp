@@ -28,12 +28,11 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/EventGenerator.h"
-#include "../../include/GeneralClasses/Def.h"
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
-routing(nullptr), specAlloc(nullptr), modulation(nullptr), resources(nullptr) {
-parameters(nullptr), routing(nullptr), specAlloc(nullptr) {
+parameters(nullptr), routing(nullptr), specAlloc(nullptr), modulation(nullptr),
+resources(nullptr) {
     
 }
 
