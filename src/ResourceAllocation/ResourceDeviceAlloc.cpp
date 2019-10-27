@@ -20,6 +20,7 @@
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/NodeDevices.h"
+#include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"  
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType) {
@@ -32,6 +33,9 @@ ResourceDeviceAlloc::~ResourceDeviceAlloc() {
 
 void ResourceDeviceAlloc::Load() {
     ResourceAlloc::Load();
+    
+    if (options->GetProtectionOption() != ProtectionDisable)
+        this->CreateProtectionScheme();
 }
 
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
@@ -41,6 +45,8 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
         this->RoutingVirtRegSpecAlloc(callDev);
     else if(options->GetTransponderOption() == TransponderEnabled)
         this->RoutingTranspSpecAlloc(callDev);
+    else if(options->GetProtectionOption() != ProtectionDisable)
+        protScheme->ResourceAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
         call->SetStatus(Blocked);
@@ -105,6 +111,18 @@ void ResourceDeviceAlloc::RoutingTranspSpecAlloc(CallDevices* call) {
         }
     }
     call->ClearTrialRoutes();
+}
+
+void ResourceDeviceAlloc::CreateProtectionScheme() {
+    
+    switch (options->GetProtectionOption()){
+        case ProtectionDPP:
+            protScheme = std::make_shared<DedicatedPathProtection>(this);
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
+    }
 }
 
 void ResourceDeviceAlloc::OrderRegenerationOptions(CallDevices* call, 

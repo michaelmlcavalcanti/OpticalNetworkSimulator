@@ -60,6 +60,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Kernel.o \
 	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
+	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o \
+	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/ResourceDeviceAlloc.o \
 	${OBJECTDIR}/src/ResourceAllocation/Resources.o \
@@ -230,6 +232,16 @@ ${OBJECTDIR}/src/ResourceAllocation/Modulation.o: src/ResourceAllocation/Modulat
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/Modulation.o src/ResourceAllocation/Modulation.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o: src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o: src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/ResourceAlloc.o: src/ResourceAllocation/ResourceAlloc.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation

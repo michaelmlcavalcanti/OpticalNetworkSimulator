@@ -127,7 +127,10 @@
         <itemPath>include/Structure/NodeDevices.h</itemPath>
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
+      <itemPath>include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h</itemPath>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</itemPath>
+      <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -197,7 +200,9 @@
         <itemPath>src/Structure/NodeDevices.cpp</itemPath>
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
+      <itemPath>src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp</itemPath>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -474,6 +479,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -608,6 +628,16 @@
       <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -918,6 +948,21 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ResourceAlloc.h"
             ex="false"
             tool="3"
@@ -1052,6 +1097,16 @@
       <item path="src/ResourceAllocation/CSA.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ResourceAllocation/Modulation.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp"
             ex="false"
             tool="1"
             flavor2="0">
