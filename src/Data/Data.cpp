@@ -48,7 +48,8 @@ const Data* data) {
             << "  SlotsBP:" << data->GetSlotsBP() 
             << "  HopsMed:" << data->GetMeanNumHops() << std::endl;
     ostream << "NetOcc:" << data->GetNetOccupancy() 
-            << "  NetUti:" << data->GetMeamNetUtilization() << std::endl;
+            << "  NetUti:" << data->GetMeamNetUtilization() 
+            << " NetFrag:" << data->GetNetworkFrafmentation() << std::endl;
     
     ostream << std::endl;
     
@@ -58,8 +59,8 @@ const Data* data) {
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
-numHopsPerRoute(0), netOccupancy(0), simulTime(0), realSimulTime(0), 
-actualIndex(0) {
+numHopsPerRoute(0), netOccupancy(0), netUtilization(0), fragmentationRatio(0), 
+simulTime(0), realSimulTime(0), actualIndex(0) {
     
 }
 
@@ -68,33 +69,36 @@ Data::~Data() {
 }
 
 void Data::Initialize() {
-    int size = this->simulType->GetParameters()->GetNumberLoadPoints();
-    this->numberReq.assign(size, 0.0);
-    this->numberBlocReq.assign(size, 0.0);
-    this->numberAccReq.assign(size, 0.0);
-    this->numberSlotsReq.assign(size, 0.0);
-    this->numberBlocSlots.assign(size, 0.0);
-    this->numberAccSlots.assign(size, 0.0);
-    this->numHopsPerRoute.assign(size, 0.0);
-    this->netOccupancy.assign(size, 0.0);
-    this->netUtilization.assign(size, 0.0);
-    this->simulTime.assign(size, 0.0);
-    this->realSimulTime.assign(size, 0.0);
+    int size = simulType->GetParameters()->GetNumberLoadPoints();
+    
+    numberReq.assign(size, 0.0);
+    numberBlocReq.assign(size, 0.0);
+    numberAccReq.assign(size, 0.0);
+    numberSlotsReq.assign(size, 0.0);
+    numberBlocSlots.assign(size, 0.0);
+    numberAccSlots.assign(size, 0.0);
+    numHopsPerRoute.assign(size, 0.0);
+    netOccupancy.assign(size, 0.0);
+    netUtilization.assign(size, 0.0);
+    fragmentationRatio.assign(size, 0.0);
+    simulTime.assign(size, 0.0);
+    realSimulTime.assign(size, 0.0);
 }
 
 void Data::Initialize(unsigned int numPos) {
     
-    this->numberReq.assign(numPos, 0.0);
-    this->numberBlocReq.assign(numPos, 0.0);
-    this->numberAccReq.assign(numPos, 0.0);
-    this->numberSlotsReq.assign(numPos, 0.0);
-    this->numberBlocSlots.assign(numPos, 0.0);
-    this->numberAccSlots.assign(numPos, 0.0);
-    this->numHopsPerRoute.assign(numPos, 0.0);
-    this->netOccupancy.assign(numPos, 0.0);
-    this->netUtilization.assign(numPos, 0.0);
-    this->simulTime.assign(numPos, 0.0);
-    this->realSimulTime.assign(numPos, 0.0);
+    numberReq.assign(numPos, 0.0);
+    numberBlocReq.assign(numPos, 0.0);
+    numberAccReq.assign(numPos, 0.0);
+    numberSlotsReq.assign(numPos, 0.0);
+    numberBlocSlots.assign(numPos, 0.0);
+    numberAccSlots.assign(numPos, 0.0);
+    numHopsPerRoute.assign(numPos, 0.0);
+    netOccupancy.assign(numPos, 0.0);
+    netUtilization.assign(numPos, 0.0);
+    fragmentationRatio.assign(numPos, 0.0);
+    simulTime.assign(numPos, 0.0);
+    realSimulTime.assign(numPos, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
@@ -268,6 +272,17 @@ double Data::GetMeamNetUtilization() const {
     (double) simulType->GetTopology()->GetNumSlots() * simulTime.at(actualIndex);
     
     return netUtilization.at(actualIndex) / total;
+}
+
+void Data::UpdateFragmentationRatio(double ratio) {
+    assert(ratio >= 0 && ratio <= 1.0);
+    
+    fragmentationRatio.at(actualIndex) += ratio;
+    fragmentationRatio.at(actualIndex) /= 2;
+}
+
+double Data::GetNetworkFrafmentation() const {
+    return fragmentationRatio.at(actualIndex);
 }
 
 TIME Data::GetSimulTime() const {

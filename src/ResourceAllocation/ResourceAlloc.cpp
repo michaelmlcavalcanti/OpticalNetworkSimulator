@@ -72,11 +72,11 @@ void ResourceAlloc::AdditionalSettings() {
     if(this->IsOfflineRouting()){
         this->RoutingOffline();
         this->UpdateRoutesCosts();
+        this->SetNumSlotsTraffic();
         
         if(this->CheckInterRouting()){
             this->SetInterferingRoutes();
             this->SetNumInterRoutesToCheck();
-            this->SetNumSlotsTraffic();
         }
         
         if(this->options->GetRegenerationOption() != RegenerationDisabled){
@@ -509,6 +509,32 @@ void ResourceAlloc::DisableRouteLinks(Route* route){
     for (unsigned int a = 0; a < route->GetNumHops(); a++){
         route->GetLink(a)->SetLinkState(false);
     }
+}
+
+double ResourceAlloc::CalcLinkFragmentation(Link* link) {
+    std::vector<SlotState> vecDisp = link->GetVecDisp();
+    unsigned int numFreeSlots = link->GetNumberFreeSlots();
+    double a = 0.0;
+    double b = 0.0;
+    
+    for(auto it: resources->numSlotsTraffic){
+        a += this->CalcNumFormAloc(it, vecDisp);
+    }
+    
+    vecDisp.assign(vecDisp.size(), occupied);
+    for(auto it: vecDisp){
+        it = free;
+        numFreeSlots--;
+        
+        if(numFreeSlots == 0)
+            break;
+    }
+    
+    for(auto it: resources->numSlotsTraffic){
+        b += this->CalcNumFormAloc(it, vecDisp);
+    }
+    
+    return (1 - (a/b));
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 

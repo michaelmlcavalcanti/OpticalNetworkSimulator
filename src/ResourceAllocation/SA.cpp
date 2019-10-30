@@ -79,10 +79,13 @@ void SA::Random(Call* call) {
     std::vector<unsigned int> vecSlots(0);
     
     vecSlots = this->FirstFitSlots(call);
-    std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
     
-    call->SetFirstSlot(vecSlots.back());
-    call->SetLastSlot(vecSlots.back() + call->GetNumberSlots() - 1);
+    if(!vecSlots.empty()){
+        std::shuffle(vecSlots.begin(), vecSlots.end(), Def::pseudoRandomEngine);
+    
+        call->SetFirstSlot(vecSlots.back());
+        call->SetLastSlot(vecSlots.back() + call->GetNumberSlots() - 1);
+    }
 }
 
 void SA::FirstFit(Call* call) {

@@ -161,6 +161,10 @@ public:
     double GetNetOccupancy() const;
     
     double GetMeamNetUtilization() const;
+    
+    void UpdateFragmentationRatio(double ratio);
+    
+    double GetNetworkFrafmentation() const;
     /**
      * @brief Function to get the simulation time for the actual simulation.
      * @return Simulation time.
@@ -318,6 +322,8 @@ private:
     std::vector<double> netOccupancy;
     
     std::vector<double> netUtilization;
+    
+    std::vector<double> fragmentationRatio;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

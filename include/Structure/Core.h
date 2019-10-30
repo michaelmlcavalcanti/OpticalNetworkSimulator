@@ -83,6 +83,8 @@ public:
     void SetCoreState(bool state);
     
     unsigned int GetNumSlots();
+    
+    std::vector<SlotState> GetSlotsStatus() const;
 private:
     
     Link* link;

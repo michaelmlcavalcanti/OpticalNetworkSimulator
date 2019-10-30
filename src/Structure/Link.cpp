@@ -236,6 +236,10 @@ unsigned int Link::GetNumberOccupiedSlots(const CoreIndex coreId) const {
     return numOccupiedSlots;
 }
 
+std::vector<SlotState> Link::GetVecDisp() const {
+    return cores.front()->GetSlotsStatus();
+}
+
 Topology* Link::GetTopology() const {
     return this->topPointer;
 }

@@ -166,6 +166,8 @@ public:
     unsigned int GetNumberOccupiedSlots() const;
     
     unsigned int GetNumberOccupiedSlots(const CoreIndex coreId) const;
+    
+    std::vector<SlotState> GetVecDisp() const;
     /**
      * @brief Function to return pointer of the topology
      * @return Pointer to topology

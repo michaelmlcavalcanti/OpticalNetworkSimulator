@@ -21,6 +21,7 @@
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/ResourceAllocation/Signal.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/CallDevices.h"
 
@@ -241,6 +242,19 @@ void Topology::SetAllLinksWorking() {
             it->SetLinkState(true);
         }
     }
+}
+
+double Topology::GetNetworkFragmentation() {
+    double totalFrag = 0.0;
+    ResourceAlloc* cp = simulType->GetResourceAlloc();
+    
+    for(auto it: vecLinks){
+        if(!it)
+            continue;
+        totalFrag += cp->CalcLinkFragmentation(it.get());
+    }
+    
+    return totalFrag / numLinks;
 }
 
 void Topology::SetLinksIniCost() {

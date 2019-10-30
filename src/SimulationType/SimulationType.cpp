@@ -174,21 +174,37 @@ void SimulationType::CreateLoadResourceAlloc() {
 void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
     std::shared_ptr<Event> evt;
+    unsigned int countEvent = 0;
     
     while(this->numberRequests < numReqMax){
         evt = this->callGenerator->GetNextEvent();
+        countEvent++;
         
         evt->ImplementEvent();
+        
+        if(countEvent == 1000){
+            this->GetData()->UpdateFragmentationRatio(
+            topology->GetNetworkFragmentation());
+            countEvent = 0;
+        }
     }
 }
 
 void SimulationType::SimulateNumBlocReq() {
     double numBlocReqMax = this->parameters->GetNumberBloqMax();
     std::shared_ptr<Event> evt;
+    unsigned int countEvent = 0;
     
     while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
         evt = this->callGenerator->GetNextEvent();
+        countEvent++;
         
         evt->ImplementEvent();
+        
+        if(countEvent == 1000){
+            this->GetData()->UpdateFragmentationRatio(
+            topology->GetNetworkFragmentation());
+            countEvent = 0;
+        }
     }
 }

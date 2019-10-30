@@ -21,6 +21,7 @@
 class SimulationType;
 class Topology;
 class Route;
+class Link;
 class Routing;
 class SA;
 class Call;
@@ -206,6 +207,8 @@ public:
      * @param route 
      */
     void DisableRouteLinks(Route* route);
+    
+    double CalcLinkFragmentation(Link* link);
     
     /**
      * @brief Gets the container of interfering routes of a specified node pair 

@@ -127,6 +127,7 @@ public:
      */
     double GetMaxLength() const;
     
+    
     /**
      * @brief Function to set the total number of a specified device type.
      * @param numDevices Total number of devices.
@@ -142,6 +143,8 @@ public:
      * @brief Function to set as valid all links in the network.
      */
     void SetAllLinksWorking();
+    
+    double GetNetworkFragmentation();
     
     /**
      * @brief Get a specified node in the topology.

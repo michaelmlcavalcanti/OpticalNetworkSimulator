@@ -77,3 +77,7 @@ void Core::SetCoreState(bool state) {
 unsigned int Core::GetNumSlots() {
     return slotsStatus.size();
 }
+
+std::vector<SlotState> Core::GetSlotsStatus() const {
+    return slotsStatus;
+}
