@@ -493,35 +493,30 @@ void Topology::ConnectWithoutDevices(Call* call) {
 
 void Topology::ConnectWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
-    RegenerationOption regOption = options->GetRegenerationOption();
-    TransponderOption transOption = options->GetTransponderOption();
     
-    if(regOption != RegenerationDisabled){
-        //Connect transparent segments
-        std::vector<Call*> transpSeg = callDev->GetTranspSegments();
-        for(auto it: transpSeg){
-            this->ConnectWithoutDevices(it);
-        }
-
-        if(regOption == RegenerationVirtualized){
-            std::vector<std::shared_ptr<Regenerator>> vecReg = 
-            callDev->GetRegenerators();
-            
-            for(auto it: vecReg){
-                it->SetRegeneratorOn();
-            }
-        }
-        //else{}
-        //Implement the option for back-to-back regeneration
+    //Check if the callDevices is valid
+    if(!callDev){
+        std::cerr << "Call devices transformation error" << std::endl;
+        std::abort();
     }
-    else if(transOption == TransponderEnabled){
-        this->ConnectWithoutDevices(call);
-        
-        std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
-        
-        for(auto it: bvts){
-            it->ConnectSubCarriers(callDev);
-        }
+    
+    //Connect the transparent segments
+    std::vector<Call*> transpSeg = callDev->GetTranspSegments();
+    for(auto it: transpSeg){
+        this->ConnectWithoutDevices(it);
+    }
+    
+    //Connect the regenerators
+    std::vector<std::shared_ptr<Regenerator>> vecReg = 
+    callDev->GetRegenerators();
+    for(auto it: vecReg){
+        it->SetRegeneratorOn();
+    }
+    
+    //Connect the transponders
+    std::vector<std::shared_ptr<BVT>> vecBVTs = callDev->GetTransponders();
+    for(auto it: vecBVTs){
+        it->ConnectSubCarriers(callDev);
     }
 }
 
@@ -561,36 +556,30 @@ void Topology::ReleaseWithoutDevices(Call* call) {
 
 void Topology::ReleaseWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
-    RegenerationOption regOption = options->GetRegenerationOption();
-    TransponderOption transOption = options->GetTransponderOption();
     
-    if(regOption != RegenerationDisabled){
-        //Release transparent segments
-        std::vector<Call*> transpSeg = callDev->GetTranspSegments();
-        for(auto it: transpSeg){
-            this->ReleaseWithoutDevices(it);
-        }
-
-        if(regOption == RegenerationVirtualized){
-            std::vector<std::shared_ptr<Regenerator>> vecReg = 
-            callDev->GetRegenerators();
-            
-            for(auto it: vecReg){
-                it->SetRegeneratorOff();
-            }
-        }
-        //else{}
-        //Implement the option for back-to-back regeneration
-        
+    //Check if the callDevices is valid
+    if(!callDev){
+        std::cerr << "Call devices transformation error" << std::endl;
+        std::abort();
     }
-    else if(transOption == TransponderEnabled){
-        this->ReleaseWithoutDevices(call);
-        
-        std::vector<std::shared_ptr<BVT>> bvts = callDev->GetTransponders();
-        
-        for(auto it: bvts){
-            it->ReleaseSubCarriers(callDev);
-        }
+    
+    //Release the transparent segments
+    std::vector<Call*> transpSeg = callDev->GetTranspSegments();
+    for(auto it: transpSeg){
+        this->ReleaseWithoutDevices(it);
+    }
+    
+    //Release the regenerators
+    std::vector<std::shared_ptr<Regenerator>> vecReg = 
+    callDev->GetRegenerators();
+    for(auto it: vecReg){
+        it->SetRegeneratorOff();
+    }
+    
+    //Release the transponders
+    std::vector<std::shared_ptr<BVT>> vecBVTs = callDev->GetTransponders();
+    for(auto it: vecBVTs){
+        it->ReleaseSubCarriers(callDev);
     }
 }
 

@@ -16,7 +16,7 @@
 
 CallDevices::CallDevices(Node* orNode, Node* deNode, double bitRate, 
 TIME deacTime):Call(orNode, deNode, bitRate, deacTime), transpSegments(0),
-regenerators(0), useRegeneration(false) {
+regenerators(0), useRegeneration(false), transponders(0) {
     
 }
 
