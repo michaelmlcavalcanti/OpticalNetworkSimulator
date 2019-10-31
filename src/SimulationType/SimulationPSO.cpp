@@ -19,7 +19,7 @@
 #include "../../include/Data/Data.h"
 
 SimulationPSO::SimulationPSO(unsigned int simulIndex, 
-TypeSimulation typeSimulation) 
+TypeSimulation typeSimulation)
 :SimulationType(simulIndex, typeSimulation) {
 
 }

@@ -81,7 +81,11 @@ private:
      * @param simul Simulation object.
      */
     void Pos_Simulation(SimulationType* simul);
-    
+    /**
+     * @brief Function to create a simulation based on the input option.
+     * @param index Simulation index.
+     * @param type Simulation type.
+     */
     void CreateSimulation(SimulIndex index, TypeSimulation type);
 private:
     /**

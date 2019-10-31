@@ -63,6 +63,9 @@ public:
      */
     virtual ~Routing();
     
+    /**
+     * Function to load several routing parameters.
+     */
     void Load();
     /**
      * @brief Apply the routing algorithm for a call. If it is a offline 
@@ -102,9 +105,16 @@ public:
      * @return Routes of this node pair.
      */
     std::vector<std::shared_ptr<Route>> YEN(NodeIndex orNode, NodeIndex deNode);
-    
+    /**
+     * @brief Function to apply the BSR routing algorithm for all node pairs
+     * ini the network.
+     */
     void BSR();
-    
+    /**
+     * @brief Function to update the links utilization for all links in the 
+     * network.
+     * @param alpha Constant close to 1.
+     */
     void UpdateLinksUtiCosts(const double alpha);
     
     void ProtectionDisjointYEN();
@@ -166,16 +176,23 @@ private:
      * @brief Topology used in this routing
      */
     Topology* topology;
-    
+    /**
+     * @brief Data pointer of the simulation.
+     */
     Data* data;
-    
+    /**
+     * @brief Parameter pointer of this simulation.
+     */
     Parameters* parameters;
-    
+    /**
+     * @brief Resources pointer of this simulation.
+     */
     Resources* resources;
     /**
      * @brief Number of routes for the k-shortest path algorithms.
      */
     unsigned int K;
+    
     unsigned int Kd;
 };
 

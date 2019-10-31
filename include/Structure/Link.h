@@ -183,17 +183,35 @@ public:
      * @return Number of free slots.
      */
     unsigned int GetNumberFreeSlots() const;
-    
+    /**
+     * @brief Function to get the number of free slots of a specified core.
+     * @param coreId Core index.
+     * @return Number of free slots.
+     */
     unsigned int GetNumberFreeSlots(const CoreIndex coreId) const;
     /**
      * @brief Return the number of occupied slots in the link.
      * @return Number of occupied slots.
      */
     unsigned int GetNumberOccupiedSlots() const;
-    
+    /**
+     * @brief Function to get the number of occupied slots for a specified core.
+     * @param coreId Core index.
+     * @return Number of occupied slots.
+     */
     unsigned int GetNumberOccupiedSlots(const CoreIndex coreId) const;
-    
+    /**
+     * @brief Function to get the availability vector of the link (single core).
+     * @return Availability vector.
+     */
     std::vector<SlotState> GetVecDisp() const;
+    /**
+     * @brief Function to get the availability vector of the link for a 
+     * specified core.
+     * @param coreId Core index.
+     * @return Availability vector.
+     */
+    std::vector<SlotState> GetVecDisp(const CoreIndex coreId) const;
     /**
      * @brief Function to return pointer of the topology
      * @return Pointer to topology
@@ -234,7 +252,10 @@ private:
      * @brief Boolean variable to indicate the  link state.
      */
     bool linkState;
-    
+    /**
+     * @brief Link utilization value. This parameter is determined by the number
+     * of times the link was used by all the routes for all node pairs.
+     */
     unsigned int utilization;
 };
 

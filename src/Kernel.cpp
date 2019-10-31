@@ -22,7 +22,7 @@ const boost::unordered_map<TypeSimulation, std::string>
 Kernel::mapSimulationType = boost::assign::map_list_of
     (InvalidSimulation, "Invalid")
     (MultiLoadSimulationType, "Multiple Load Simulation")
-    (IncNumDevType, "Increase Number of Devices")
+    (IncNumDevType, "Increase Number of Devices Simulation")
     (GaSimulationType, "GA Simulation")
     (PsoSimulationType, "PSO Simulation");
 

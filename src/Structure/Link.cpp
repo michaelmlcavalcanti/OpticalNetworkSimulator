@@ -228,6 +228,10 @@ std::vector<SlotState> Link::GetVecDisp() const {
     return cores.front()->GetSlotsStatus();
 }
 
+std::vector<SlotState> Link::GetVecDisp(const CoreIndex coreId) const {
+    return cores.at(coreId)->GetSlotsStatus();
+}
+
 Topology* Link::GetTopology() const {
     return this->topPointer;
 }
