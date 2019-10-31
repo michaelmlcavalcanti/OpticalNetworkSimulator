@@ -102,12 +102,21 @@ public:
      * @brief Set the link state (working or not).
      * @param NodeWorking Link state.
      */
-    void SetLinkState(bool linkWorking);
-    
+    void SetLinkState(State linkState);
+    /**
+     * @brief Function to get the link utilization, among all routes.
+     * @return Link utilization.
+     */
     unsigned int GetUtilization() const;
-
+    /**
+     * @brief Function to set the link utilization, among all routes.
+     * @param utilization Link utilization.
+     */
     void SetUtilization(unsigned int utilization);
-    
+    /**
+     * @brief Function to get the number of cores of the link.
+     * @return Number of cores.
+     */
     unsigned int GetNumberCores() const;
     
     /**
@@ -117,18 +126,16 @@ public:
      */
     void CalcSignal(Signal* signal) const;
     /**
-     * @brief Occupy an specified slot in this link.
-     * @param index Slot index.
+     * @brief Function to occupy a specified slot of a specified core.
+     * @param coreId Core index.
+     * @param slotId Slot index.
      */
-    void OccupySlot(const SlotIndex index);
-    
     void OccupySlot(const CoreIndex coreId, const SlotIndex slotId);
     /**
-     * @brief Release an specified slot in this link.
-     * @param index Slot index.
+     * @brief Function to release a specified slot of a specified core.
+     * @param coreId Core index.
+     * @param slotId Slot index.
      */
-    void ReleaseSlot(const SlotIndex index);
-    
     void ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId);
     /**
      * @brief Check if an specified slot is occupied in
@@ -137,7 +144,13 @@ public:
      * @return True if the slot is occupied.
      */
     bool IsSlotOccupied(const SlotIndex index) const;
-    
+    /**
+     * @brief Function to check if a specified slot of a specified core is 
+     * occupied.
+     * @param coreId Core index.
+     * @param slotId Slot index.
+     * @return True if the slot is occupied.
+     */
     bool IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId);
     /**
      * @brief Check if an specified slot is free in
@@ -146,11 +159,24 @@ public:
      * @return True if the slot is free.
      */
     bool IsSlotFree(const SlotIndex index) const;
-    
+    /**
+     * @brief Function to check if a specified slot of a specified core is 
+     * free.
+     * @param coreId Core index.
+     * @param slotId Slot index.
+     * @return rue if the slot is free.
+     */
     bool IsSlotFree(const CoreIndex coreId, const SlotIndex slotId);
-    
+    /**
+     * @brief Function to get the number of slots of this link.
+     * @return Number of slots.
+     */
     unsigned int GetNumSlots() const;
-    
+    /**
+     * @brief Function to get the number of slots of a specified core.
+     * @param coreId Core index.
+     * @return Number of slots.
+     */
     unsigned int GetNumSlots(const CoreIndex coreId) const;
     /**
      * @brief Return the number of free slots in the link.
@@ -200,12 +226,14 @@ private:
      * selected metric
      */
     double cost;
-    
+    /**
+     * @brief Container with the cores of the link.
+     */
     std::vector<std::shared_ptr<Core>> cores;
     /**
      * @brief Boolean variable to indicate the  link state.
      */
-    bool linkWorking;
+    bool linkState;
     
     unsigned int utilization;
 };

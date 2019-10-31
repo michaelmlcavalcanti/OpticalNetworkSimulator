@@ -22,6 +22,10 @@ typedef bool SlotState;
 #define free false
 #define occupied true
 
+typedef bool State;
+#define notWorking false
+#define working true
+
 typedef bool ResAllocOrder;
 #define r_sa false
 #define sa_r true

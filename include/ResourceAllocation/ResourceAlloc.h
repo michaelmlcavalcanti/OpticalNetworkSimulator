@@ -207,7 +207,10 @@ public:
      * @param route 
      */
     void DisableRouteLinks(Route* route);
-    
+    /**
+     * @brief Function to calculate the network fragmentation ratio.
+     * @return Network fragmentation ratio.
+     */
     double CalcNetworkFragmentation() const;
     
     /**
@@ -364,6 +367,11 @@ private:
      */
     void CreateRsaOrder();
     
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
     double CalcLinkFragmentation(Link* link) const;
 public:
     /**
