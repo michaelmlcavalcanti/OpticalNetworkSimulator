@@ -241,6 +241,11 @@ enum ProtectionOption {
     LastProtectionOption = ProtectionPDPPS
 };
 
+enum FragMeasureOption {
+    FragMeasureDisabled,
+    FragMeasureEnabled
+};
+
 /**
  * @brief The Options class is responsible for storage the simulation
  * options.
@@ -491,6 +496,13 @@ public:
     std::string GetProtectionOptionName() const;
 
     void SetProtectionOption(ProtectionOption protectionOption);
+    
+    FragMeasureOption GetFragMeasureOption() const;
+    
+    std::string GetFragMeasureOptionName() const;
+    
+    void SetFragMeasureOption(FragMeasureOption fragMeasureOption);
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong.
@@ -564,6 +576,8 @@ private:
     RandomGenerationOption generationOption;
     
     ProtectionOption protectionOption;
+    
+    FragMeasureOption fragMeasureOpion;
     
     /**
      * @brief Map that keeps the topology option 
@@ -664,6 +678,9 @@ private:
     
     static const boost::unordered_map<ProtectionOption, 
     std::string> mapProtectionOption;
+    
+    static const boost::unordered_map<FragMeasureOption, 
+    std::string> mapFragMeasureOption;
 };
 
 #endif /* OPTIONS_H */

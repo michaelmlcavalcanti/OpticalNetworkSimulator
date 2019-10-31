@@ -158,6 +158,11 @@ Options::mapProtectionOption = boost::assign::map_list_of
     (ProtectionPDPP, "Partitioning Dedicated Path Protection")
     (ProtectionPDPPS, "Partitioning Dedicated Path Protection");
 
+const boost::unordered_map<FragMeasureOption, std::string>
+Options::mapFragMeasureOption = boost::assign::map_list_of
+    (FragMeasureDisabled, "Disabled")
+    (FragMeasureEnabled, "Enabled");
+
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
     ostream << "OPTIONS" << std::endl;
@@ -200,7 +205,8 @@ const Options* options) {
             << std::endl;
     ostream << "Protection: " << options->GetProtectionOptionName()
             << std::endl;
-    
+    ostream << "Fragmentation Option: " << options->GetFragMeasureOptionName()
+            << std::endl;
     return ostream;
 }
 
@@ -422,6 +428,8 @@ void Options::LoadFile() {
     this->SetGenerationOption((RandomGenerationOption) auxInt);
     auxIfstream >> auxInt;
     this->SetProtectionOption((ProtectionOption) auxInt);
+    auxIfstream >> auxInt;
+    this->SetFragMeasureOption((FragMeasureOption) auxInt);   
 }
 
 void Options::Save() {
@@ -699,4 +707,16 @@ void Options::SetProtectionOption(ProtectionOption protectionOption) {
            protectionOption <= LastProtectionOption);
     
     this->protectionOption = protectionOption;
+}
+
+FragMeasureOption Options::GetFragMeasureOption() const {
+    return fragMeasureOpion;
+}
+
+std::string Options::GetFragMeasureOptionName() const {
+    return mapFragMeasureOption.at(fragMeasureOpion);
+}
+
+void Options::SetFragMeasureOption(FragMeasureOption fragMeasureOption) {
+    fragMeasureOpion = fragMeasureOption;
 }
