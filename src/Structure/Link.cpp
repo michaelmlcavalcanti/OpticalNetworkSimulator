@@ -40,7 +40,7 @@ NodeIndex destinationNode, double length, unsigned int numberSections,
 unsigned int numberCores, unsigned int numberSlots)
 :topPointer(topPointer), origimNode(origimNode), 
 destinationNode(destinationNode), length(length), 
-numberSections(numberSections), cost(0.0), cores(0), linkWorking(true), 
+numberSections(numberSections), cost(0.0), cores(0), linkState(working), 
 utilization(0) {
     
     for(unsigned int a = 0; a < numberCores; a++)
@@ -91,11 +91,11 @@ void Link::SetCost(double cost) {
 }
 
 bool Link::IsLinkWorking() const {
-    return this->linkWorking;
+    return this->linkState;
 }
 
-void Link::SetLinkState(bool linkWorking) {
-    this->linkWorking = linkWorking;
+void Link::SetLinkState(State linkState) {
+    this->linkState = linkState;
 }
 
 unsigned int Link::GetUtilization() const {
@@ -136,23 +136,11 @@ void Link::CalcSignal(Signal* signal) const {
     signal->SetNonLinearPower(nonLinearPower);
 }
 
-void Link::OccupySlot(const SlotIndex index) {
-    assert(cores.front()->IsSlotFree(index));
-    
-    cores.front()->OccupySlot(index);
-}
-
 void Link::OccupySlot(const CoreIndex coreId, const SlotIndex slotId) {
     assert(coreId < cores.size());
     assert(cores.at(coreId)->IsSlotFree(slotId));
     
     cores.at(coreId)->OccupySlot(slotId);
-}
-
-void Link::ReleaseSlot(const SlotIndex index) {
-    assert(cores.front()->IsSlotOccupied(index));
-    
-    cores.front()->ReleaseSlot(index);
 }
 
 void Link::ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId) {

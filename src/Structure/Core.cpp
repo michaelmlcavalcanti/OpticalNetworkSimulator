@@ -20,13 +20,8 @@ Core* core) {
     return ostream;
 }
 
-Core::Core(CoreIndex cId, unsigned int nSlots)
-:coreId(cId), slotsStatus(0) {
-    slotsStatus.assign(nSlots, free);
-}
-
 Core::Core(Link* link, CoreIndex coreId, unsigned int numSlots)
-:link(link), coreId(coreId), slotsStatus(0), coreWorking(true) {
+:link(link), coreId(coreId), slotsStatus(0), coreState(working) {
     slotsStatus.assign(numSlots, free);
 }
 
@@ -66,12 +61,12 @@ void Core::ReleaseSlot(SlotIndex sPosition){
     slotsStatus.at(sPosition) = free;
 }
 
-bool Core::IsCoreWorking() {
-    return coreWorking;
+State Core::IsCoreWorking() {
+    return coreState;
 }
 
-void Core::SetCoreState(bool state) {
-    coreWorking = state;
+void Core::SetCoreState(State state) {
+    coreState = state;
 }
 
 unsigned int Core::GetNumSlots() {

@@ -31,13 +31,10 @@ class Core {
 public:
     /**
      * @brief Standard constructor for a Core object.
-     * @param cId integer that represents the index of 
-     * the core.
-     * @param nSlots represents the total numbr of slots
-     * in a core.
+     * @param link Link in which this core is inserted.
+     * @param coreId Core index.
+     * @param numSlots Number of slots of the core.
      */
-    Core(CoreIndex cId, unsigned int nSlots);
-    
     Core(Link* link, CoreIndex coreId, unsigned int numSlots);
     /**
      * @brief Default destructor of Core object.
@@ -77,16 +74,30 @@ public:
      * in the core. 
      */
     void ReleaseSlot(SlotIndex sPosition);
-    
-    bool IsCoreWorking();
-    
-    void SetCoreState(bool state);
-    
+    /**
+     * @brief Function to check if the core is working.
+     * @return Core state.
+     */
+    State IsCoreWorking();
+    /**
+     * @brief Function to set the core state.
+     * @param state Core state.
+     */
+    void SetCoreState(State state);
+    /**
+     * @brief Function to get the core number of slots.
+     * @return number of slots.
+     */
     unsigned int GetNumSlots();
-    
+    /**
+     * @brief Function to get the container with the core slots state.
+     * @return Core slots state.
+     */
     std::vector<SlotState> GetSlotsStatus() const;
 private:
-    
+    /**
+     * @brief Link in which this core is inserted.
+     */
     Link* link;
     /**
      * @brief Index of the core.
@@ -96,8 +107,10 @@ private:
      * @brief Vector of slots of this core.
      */
     std::vector<SlotState> slotsStatus;
-    
-    bool coreWorking;
+    /**
+     * @brief Core state (working or notWorking).
+     */
+    State coreState;
 };
 
 #endif /* CORE_H */

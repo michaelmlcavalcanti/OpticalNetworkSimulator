@@ -207,8 +207,11 @@ public:
      * @param route 
      */
     void DisableRouteLinks(Route* route);
-    
-    double CalcLinkFragmentation(Link* link);
+    /**
+     * @brief Function to calculate the network fragmentation ratio.
+     * @return Network fragmentation ratio.
+     */
+    double CalcNetworkFragmentation() const;
     
     /**
      * @brief Gets the container of interfering routes of a specified node pair 
@@ -277,7 +280,7 @@ public:
      * @param route Specified route.
      * @return Container of slots state.
      */
-    std::vector<SlotState> GetDispVector(Route* route);
+    std::vector<SlotState> GetDispVector(Route* route) const;
     /**
      * @brief Function to calculate the number of forms of a call request number
      * of slots in a specified availability vector.
@@ -286,7 +289,7 @@ public:
      * @return Number of forms.
      */
     unsigned int CalcNumFormAloc(unsigned int callSize, 
-    std::vector<SlotState>& dispVec);
+    std::vector<SlotState>& dispVec) const;
     /**
      * @brief Function to calculate the number of forms of a call request number
      * of slots in a specified route.
@@ -303,7 +306,7 @@ public:
      * @return Container with the size of free slots blocks.
      */
     std::vector<unsigned int> GetBlocksFreeSlots(unsigned int callSize,
-    std::vector<SlotState>& dispVec);
+    std::vector<SlotState>& dispVec) const;
 private:
     /**
      * @brief Function to apply resource allocation without modulation 
@@ -363,6 +366,13 @@ private:
      * @brief Function to create the container of RSA order per node pair.
      */
     void CreateRsaOrder();
+    
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentation(Link* link) const;
 public:
     /**
      * @brief Pointer to the Topology object of this simulation.

@@ -511,7 +511,24 @@ void ResourceAlloc::DisableRouteLinks(Route* route){
     }
 }
 
-double ResourceAlloc::CalcLinkFragmentation(Link* link) {
+double ResourceAlloc::CalcNetworkFragmentation() const {
+    double totalFrag = 0.0;
+    unsigned int numNodes = topology->GetNumNodes();
+    Link* link;
+    
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            if(orN == deN)
+                continue;
+            link = topology->GetLink(orN, deN);
+            totalFrag += this->CalcLinkFragmentation(link);
+        }
+    }
+    
+    return totalFrag / topology->GetNumLinks();
+}
+
+double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
     std::vector<SlotState> vecDisp = link->GetVecDisp();
     unsigned int numFreeSlots = link->GetNumberFreeSlots();
     double a = 0.0;
@@ -696,7 +713,7 @@ void ResourceAlloc::SetNumSlotsTraffic() {
     this->traffic->GetVecTraffic());
 }
 
-std::vector<SlotState> ResourceAlloc::GetDispVector(Route* route) {
+std::vector<SlotState> ResourceAlloc::GetDispVector(Route* route) const {
     unsigned int topNumSlots = topology->GetNumSlots();
     std::vector<SlotState> vecDisp(topNumSlots, free);
     
@@ -709,7 +726,7 @@ std::vector<SlotState> ResourceAlloc::GetDispVector(Route* route) {
 }
 
 unsigned int ResourceAlloc::CalcNumFormAloc(unsigned int callSize, 
-std::vector<SlotState>& dispVec) {
+std::vector<SlotState>& dispVec) const {
     std::vector<unsigned int> freeSlotsBlocks = 
     this->GetBlocksFreeSlots(callSize, dispVec);
     unsigned int sum = 0;
@@ -727,7 +744,7 @@ unsigned int ResourceAlloc::CalcNumForms(Route* route, unsigned int callSize) {
 }
 
 std::vector<unsigned int> ResourceAlloc::GetBlocksFreeSlots(
-unsigned int callSize, std::vector<SlotState>& dispVec) {
+unsigned int callSize, std::vector<SlotState>& dispVec) const {
     unsigned int topNumSlots = topology->GetNumSlots();
     unsigned int sizeBlock = 0;
     std::vector<unsigned int> freeSlotsBlocks(0);

@@ -182,13 +182,10 @@ void SimulationType::SimulateNumTotalReq() {
         
         evt->ImplementEvent();
         
-        if(options->GetFragMeasureOption() == 1){            
-            
-            if(countEvent == 1000){
-                this->GetData()->UpdateFragmentationRatio(
-                topology->GetNetworkFragmentation());
-                countEvent = 0;
-            }
+        if(countEvent == 1000){
+            this->GetData()->UpdateFragmentationRatio(
+            resourceAlloc->CalcNetworkFragmentation());
+            countEvent = 0;
         }
     }
 }
@@ -204,13 +201,10 @@ void SimulationType::SimulateNumBlocReq() {
         
         evt->ImplementEvent();
         
-        if(options->GetFragMeasureOption() == 1){    
-            
-            if(countEvent == 1000){
-                this->GetData()->UpdateFragmentationRatio(
-                topology->GetNetworkFragmentation());
-                countEvent = 0;
-            }
+        if(countEvent == 1000){
+            this->GetData()->UpdateFragmentationRatio(
+            resourceAlloc->CalcNetworkFragmentation());
+            countEvent = 0;
         }
     }
 }
