@@ -46,10 +46,10 @@ const Data* data) {
     
     ostream << "  ReqBP:" << data->GetReqBP() 
             << "  SlotsBP:" << data->GetSlotsBP() 
-            << "  HopsMed:" << data->GetMeanNumHops() << std::endl;
+            << "  HopsMed:" << data->GetAverageNumHops() << std::endl;
     ostream << "NetOcc:" << data->GetNetOccupancy() 
-            << "  NetUti:" << data->GetMeamNetUtilization() 
-            << " NetFrag:" << data->GetNetworkFrafmentation() << std::endl;
+            << "  NetUti:" << data->GetAverageNetUtilization() 
+            << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
     
     ostream << std::endl;
     
@@ -59,7 +59,7 @@ const Data* data) {
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
-numHopsPerRoute(0), netOccupancy(0), netUtilization(0), fragmentationRatio(0), 
+numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), netFragmentationRatio(0), 
 simulTime(0), realSimulTime(0), actualIndex(0) {
     
 }
@@ -79,8 +79,8 @@ void Data::Initialize() {
     numberAccSlots.assign(size, 0.0);
     numHopsPerRoute.assign(size, 0.0);
     netOccupancy.assign(size, 0.0);
-    netUtilization.assign(size, 0.0);
-    fragmentationRatio.assign(size, 0.0);
+    accReqUtilization.assign(size, 0.0);
+    netFragmentationRatio.assign(size, 0.0);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
 }
@@ -95,8 +95,8 @@ void Data::Initialize(unsigned int numPos) {
     numberAccSlots.assign(numPos, 0.0);
     numHopsPerRoute.assign(numPos, 0.0);
     netOccupancy.assign(numPos, 0.0);
-    netUtilization.assign(numPos, 0.0);
-    fragmentationRatio.assign(numPos, 0.0);
+    accReqUtilization.assign(numPos, 0.0);
+    netFragmentationRatio.assign(numPos, 0.0);
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
 }
@@ -112,8 +112,8 @@ void Data::StorageCall(Call* call) {
             call->GetRoute()->GetNumHops();
             netOccupancy.at(actualIndex) += 
             (double) call->GetTotalNumSlots();
-            netUtilization.at(actualIndex) += ((double) call->GetTotalNumSlots())
-            * call->GetDeactivationTime();
+            accReqUtilization.at(actualIndex) += 
+            ((double) call->GetTotalNumSlots()) * call->GetDeactivationTime();
             break;
         case Blocked:
             numberBlocReq.at(actualIndex)++;
@@ -259,7 +259,7 @@ double Data::GetNumHopsPerRoute() const {
     return this->numHopsPerRoute.at(this->actualIndex);
 }
 
-double Data::GetMeanNumHops() const {
+double Data::GetAverageNumHops() const {
     return (this->GetNumHopsPerRoute() / this->GetNumberAccReq());
 }
 
@@ -267,22 +267,22 @@ double Data::GetNetOccupancy() const {
     return this->netOccupancy.at(this->actualIndex);
 }
 
-double Data::GetMeamNetUtilization() const {
+double Data::GetAverageNetUtilization() const {
     double total = (double) simulType->GetTopology()->GetNumLinks() * 
     (double) simulType->GetTopology()->GetNumSlots() * simulTime.at(actualIndex);
     
-    return netUtilization.at(actualIndex) / total;
+    return accReqUtilization.at(actualIndex) / total;
 }
 
 void Data::UpdateFragmentationRatio(double ratio) {
     assert(ratio >= 0 && ratio <= 1.0);
     
-    fragmentationRatio.at(actualIndex) += ratio;
-    fragmentationRatio.at(actualIndex) /= 2;
+    netFragmentationRatio.at(actualIndex) += ratio;
+    netFragmentationRatio.at(actualIndex) /= 2;
 }
 
-double Data::GetNetworkFrafmentation() const {
-    return fragmentationRatio.at(actualIndex);
+double Data::GetNetworkFragmentationRatio() const {
+    return netFragmentationRatio.at(actualIndex);
 }
 
 TIME Data::GetSimulTime() const {

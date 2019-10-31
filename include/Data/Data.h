@@ -152,19 +152,36 @@ public:
      * @return Mean of hops per route.
      */
     double GetNumHopsPerRoute() const;
-    
-    double GetMeanNumHops() const;
+    /**
+     * @brief Function to get the average number fo hops of all accepted call
+     * requests.
+     * @return Average number of hops.
+     */
+    double GetAverageNumHops() const;
     /**
      * @brief Function to get the network occupancy for the actual simulation.
      * @return Network occupancy.
      */
     double GetNetOccupancy() const;
-    
-    double GetMeamNetUtilization() const;
-    
+    /**
+     * @brief Function to get the average network utilization. This calculation
+     * is done dividing the accepted call requests utilization by the network
+     * total utilization. The later is calculated multiplying the total number
+     * of link, the number of slots per link and the total simulation time.
+     * @return Average network utilization.
+     */
+    double GetAverageNetUtilization() const;
+    /**
+     * @brief Function to update the network fragmentation ratio, calculating
+     * the average value between the old and the new ratio value.
+     * @param ratio New network fragmentation ratio value.
+     */
     void UpdateFragmentationRatio(double ratio);
-    
-    double GetNetworkFrafmentation() const;
+    /**
+     * @brief Function to get the network fragmentation ratio.
+     * @return Network fragmentation ratio.
+     */
+    double GetNetworkFragmentationRatio() const;
     /**
      * @brief Function to get the simulation time for the actual simulation.
      * @return Simulation time.
@@ -320,10 +337,16 @@ private:
      * occupied by the number of route hops.
      */
     std::vector<double> netOccupancy;
-    
-    std::vector<double> netUtilization;
-    
-    std::vector<double> fragmentationRatio;
+    /**
+     * @brief Accepted call requests utilization. The utilization is calculated
+     * multiplying the number of slots used, the number of route links and the 
+     * time the connection remain active.
+     */
+    std::vector<double> accReqUtilization;
+    /**
+     * @brief Network fragmentation ratio, the mean of all links fragmentation.
+     */
+    std::vector<double> netFragmentationRatio;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

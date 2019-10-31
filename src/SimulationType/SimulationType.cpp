@@ -184,7 +184,7 @@ void SimulationType::SimulateNumTotalReq() {
         
         if(countEvent == 1000){
             this->GetData()->UpdateFragmentationRatio(
-            topology->GetNetworkFragmentation());
+            resourceAlloc->CalcNetworkFragmentation());
             countEvent = 0;
         }
     }
@@ -203,7 +203,7 @@ void SimulationType::SimulateNumBlocReq() {
         
         if(countEvent == 1000){
             this->GetData()->UpdateFragmentationRatio(
-            topology->GetNetworkFragmentation());
+            resourceAlloc->CalcNetworkFragmentation());
             countEvent = 0;
         }
     }
