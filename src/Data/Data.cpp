@@ -155,7 +155,7 @@ void Data::SaveLog(std::vector<unsigned> vecParam) {
 
 void Data::SaveBP() {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
-                                        ->GetResultFile();
+                                        ->GetReqBpFile();
     std::ofstream &bandwidthBP = simulType->GetInputOutput()
                                           ->GetBandBpFile();
     
@@ -163,9 +163,23 @@ void Data::SaveBP() {
     this->SaveBandwidthBP(bandwidthBP);
 }
 
+void Data::SaveNetUtiliz() {
+    std::ofstream &netUtiliz = this->simulType->GetInputOutput()
+                                     ->GetNetUtilizFile();
+    
+    this->SaveNetUtiliz(netUtiliz);
+}
+
+void Data::SaveNetFrag() {
+    std::ofstream &netFrag = this->simulType->GetInputOutput()
+                                     ->GetNetFragFile();
+    
+    this->SaveNetFrag(netFrag);
+}
+
 void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
-                                        ->GetResultFile();
+                                        ->GetReqBpFile();
     std::ofstream &bandwidthBP = simulType->GetInputOutput()
                                           ->GetBandBpFile();
     
@@ -349,6 +363,30 @@ void Data::SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec) {
     for(unsigned int a = 0; a < vec.size(); a++){
         this->SetActualIndex(a);
         ostream << vec.at(a) << "\t" << this->GetSlotsBP() << std::endl;
+    }
+}
+
+void Data::SaveNetUtiliz(std::ostream& ostream) {
+unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetAverageNetUtilization() 
+                << std::endl;
+    }
+}
+
+void Data::SaveNetFrag(std::ostream& ostream) {
+unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetNetworkFragmentationRatio()
+                << std::endl;
     }
 }
 

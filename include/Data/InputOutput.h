@@ -99,13 +99,24 @@ public:
      * @brief Get the PBvLoad.txt ofstream.
      * @return ofstream containing the PBvLoad file.
      */
-    std::ofstream& GetResultFile();
+    std::ofstream& GetReqBpFile();
     /**
      * @brief Function to get the file that storage the bandwidth blocking
      * probabilities.
      * @return Bandwidth blocking probability file.
      */
     std::ofstream& GetBandBpFile();
+    /**
+     * @brief Function to get the file that storage the Network Utilization 
+     * File.
+     * @return Network Utilization file.
+     */
+    std::ofstream& GetNetUtilizFile();    
+    /**
+     * @brief Function to get the file that storage the Network Fragmentation.
+     * @return Network Fragmentation file.
+     */
+    std::ofstream& GetNetFragFile();    
     /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
@@ -159,12 +170,22 @@ private:
      * as function of the network load.
      * @param results ofstream to the PBvLoad.txt.
      */
-    void LoadResults(std::ofstream& pBvLoad);
+    void LoadReqBP(std::ofstream& pBvLoad);
     /**
      * @brief Function to load the bandwidth blocking probability file.
      * @param bandBP Bandwidth blocking probability file.
      */
     void LoadBandBP(std::ofstream& bandBP);
+    /**
+     * @brief Function to load the Network Utilization file.
+     * @param NetUtiliz Network Utilization
+     */
+    void LoadNetUtiliz(std::ofstream& NetUtiliz);
+   /**
+    * @brief Function to load the Network Fragmentation file.
+    * @param NetFrag
+    */
+    void LoadNetFrag(std::ofstream& NetFrag);
     /**
      * @brief Function to load the .txt file to output the simulation log.
      * @param results ofstream to the Log.txt.
@@ -191,13 +212,21 @@ private:
      */
     std::ofstream logFile;
     /**
-     * @brief Ofstream with the PBvLoad.txt file.
+     * @brief Request blocking probability outpput file.
      */
-    std::ofstream resultFile;
+    std::ofstream reqBpFile;
     /**
      * @brief Bandwidth blocking probability outpput file.
      */
     std::ofstream bandBpFile;
+     /**
+     * @brief Network Utilization outpput file.
+     */
+    std::ofstream netUtilizFile;
+     /**
+     * @brief Network Fragmentation outpput file.
+     */
+    std::ofstream netFragFile;    
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.

@@ -20,7 +20,7 @@ const int InputOutput::barWidth = 30;
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(logFile);
-    this->LoadResults(resultFile);
+    this->LoadReqBP(reqBpFile);
     this->LoadBandBP(bandBpFile);
     this->LoadGaFiles(bestIndividuals, bestIndividual, 
                       worstIndividuals, initialPopulation);
@@ -242,7 +242,7 @@ void InputOutput::LoadCoefficientsSCRA(std::ifstream& coeSCRA) {
     }while(!coeSCRA.is_open());
 }
 
-void InputOutput::LoadResults(std::ofstream& pBvLoad) {
+void InputOutput::LoadReqBP(std::ofstream& pBvLoad) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
     do{
@@ -279,6 +279,45 @@ void InputOutput::LoadBandBP(std::ofstream& bandBP) {
         }
     }while(!bandBP.is_open());
 }
+
+void InputOutput::LoadNetUtiliz(std::ofstream& netUtiliz) {
+unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        netUtiliz.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/NetUtiliz.txt");
+        
+        if(!netUtiliz.is_open()){
+            std::cerr << "Wrong result file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!netUtiliz.is_open());
+}
+
+void InputOutput::LoadNetFrag(std::ofstream& netFrag) {
+unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        netFrag.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/NetFrag.txt");
+        
+        if(!netFrag.is_open()){
+            std::cerr << "Wrong result file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!netFrag.is_open());
+}
+
 
 void InputOutput::LoadLog(std::ofstream& log) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
@@ -399,13 +438,22 @@ std::ofstream& InputOutput::GetLogFile() {
     return this->logFile;
 }
 
-std::ofstream& InputOutput::GetResultFile() {
-    return this->resultFile;
+std::ofstream& InputOutput::GetReqBpFile() {
+    return this->reqBpFile;
 }
 
 std::ofstream& InputOutput::GetBandBpFile() {
     return bandBpFile;
 }
+
+std::ofstream& InputOutput::GetNetUtilizFile() {
+    return netUtilizFile; 
+}
+
+std::ofstream& InputOutput::GetNetFragFile() {
+    return netFragFile;
+}
+
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
     return this->bestIndividuals;
