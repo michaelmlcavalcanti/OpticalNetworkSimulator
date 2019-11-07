@@ -69,7 +69,7 @@ public:
     /**
      * @brief Saves the data values in the Log.txt file.
      */
-    void SaveMultiloadLog();
+    void SaveLog();
     /**
      * @brief Function to save the simulation log for a set of devices.
      * @param vecParam Container of devices.
@@ -235,19 +235,18 @@ private:
      */
     void SaveBandwidthBP(std::ostream& ostream);
     
-        /**
+    /**
      * @brief Function to save the Average Network Utilization into a output
      * stream.
      * @param ostream Output stream.
      */
     void SaveNetUtiliz(std::ostream& ostream);
-        /**
+    /**
      * @brief Function to save the Network Fragmentation into a output
      * stream.
      * @param ostream Output stream.
      */
     void SaveNetFrag(std::ostream& ostream);
-    
     
     /**
      * @brief Function to save specified paramters with the main result(BP) to 

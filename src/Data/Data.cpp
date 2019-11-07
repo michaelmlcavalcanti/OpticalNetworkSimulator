@@ -126,7 +126,7 @@ void Data::StorageCall(Call* call) {
     numberSlotsReq.at(actualIndex) += bitRate;
 }
 
-void Data::SaveMultiloadLog() {
+void Data::SaveLog() {
     std::ofstream &logOfstream = this->simulType->GetInputOutput()
                                      ->GetLogFile();
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -367,26 +367,26 @@ void Data::SaveBandwidthBP(std::ostream& ostream, std::vector<unsigned> vec) {
 }
 
 void Data::SaveNetUtiliz(std::ostream& ostream) {
-unsigned int numLoadPoints = this->simulType->GetParameters()
+    unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
     
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetAverageNetUtilization() 
-                << std::endl;
+                   this->GetActualIndex()) << "\t" 
+                << this->GetAverageNetUtilization() << std::endl;
     }
 }
 
 void Data::SaveNetFrag(std::ostream& ostream) {
-unsigned int numLoadPoints = this->simulType->GetParameters()
+    unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
     
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetNetworkFragmentationRatio()
-                << std::endl;
+                   this->GetActualIndex()) << "\t" 
+                << this->GetNetworkFragmentationRatio() << std::endl;
     }
 }
 

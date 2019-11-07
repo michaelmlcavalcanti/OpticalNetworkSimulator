@@ -25,6 +25,8 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadGaFiles(bestIndividuals, bestIndividual, 
                       worstIndividuals, initialPopulation);
     this->LoadPsoFiles(bestParticle, bestParticles);
+    this->LoadNetUtiliz(netUtilizFile);
+    this->LoadNetFrag(netFragFile);
 }
 
 InputOutput::~InputOutput() {
@@ -318,7 +320,6 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
     }while(!netFrag.is_open());
 }
 
-
 void InputOutput::LoadLog(std::ofstream& log) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
@@ -453,7 +454,6 @@ std::ofstream& InputOutput::GetNetUtilizFile() {
 std::ofstream& InputOutput::GetNetFragFile() {
     return netFragFile;
 }
-
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
     return this->bestIndividuals;

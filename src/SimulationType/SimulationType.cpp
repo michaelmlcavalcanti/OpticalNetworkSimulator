@@ -181,6 +181,7 @@ void SimulationType::SimulateNumTotalReq() {
         countEvent++;
         
         evt->ImplementEvent();
+        
         if(options->GetFragMeasureOption() == FragMeasureEnabled){
             
             if(countEvent == 1000){

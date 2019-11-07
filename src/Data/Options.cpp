@@ -219,7 +219,8 @@ networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
 transponderOption(TransponderDisabled), regenerationOption(RegenerationDisabled), 
 regPlacOption(RegPlacInvalid), regAssOption(RegAssInvalid), 
-stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame) {
+stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame),
+protectionOption(ProtectionDisable), fragMeasureOpion(FragMeasureDisabled) {
     
 }
 
@@ -429,7 +430,7 @@ void Options::LoadFile() {
     auxIfstream >> auxInt;
     this->SetProtectionOption((ProtectionOption) auxInt);
     auxIfstream >> auxInt;
-    this->SetFragMeasureOption((FragMeasureOption) auxInt);   
+    this->SetFragMeasureOption((FragMeasureOption) auxInt);
 }
 
 void Options::Save() {

@@ -181,7 +181,7 @@ private:
      * @param NetUtiliz Network Utilization
      */
     void LoadNetUtiliz(std::ofstream& NetUtiliz);
-   /**
+    /**
     * @brief Function to load the Network Fragmentation file.
     * @param NetFrag
     */
@@ -219,11 +219,11 @@ private:
      * @brief Bandwidth blocking probability outpput file.
      */
     std::ofstream bandBpFile;
-     /**
+    /**
      * @brief Network Utilization outpput file.
      */
     std::ofstream netUtilizFile;
-     /**
+    /**
      * @brief Network Fragmentation outpput file.
      */
     std::ofstream netFragFile;    
