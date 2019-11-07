@@ -521,7 +521,9 @@ double ResourceAlloc::CalcNetworkFragmentation() const {
             if(orN == deN)
                 continue;
             link = topology->GetLink(orN, deN);
-            totalFrag += this->CalcLinkFragmentation(link);
+            
+            if(link)
+                totalFrag += this->CalcLinkFragmentation(link);
         }
     }
     
