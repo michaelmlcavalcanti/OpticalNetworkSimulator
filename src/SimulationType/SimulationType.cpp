@@ -175,20 +175,18 @@ void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
     std::shared_ptr<Event> evt;
     unsigned int countEvent = 0;
+    FragMeasureOption fragOption = options->GetFragMeasureOption();
     
     while(this->numberRequests < numReqMax){
         evt = this->callGenerator->GetNextEvent();
         countEvent++;
         
         evt->ImplementEvent();
-        
-        if(options->GetFragMeasureOption() == FragMeasureEnabled){
             
-            if(countEvent == 1000){
-                this->GetData()->UpdateFragmentationRatio(
-                resourceAlloc->CalcNetworkFragmentation());
-                countEvent = 0;
-            }
+        if(countEvent == 1000 && fragOption != FragMeasureDisabled){
+            this->GetData()->UpdateFragmentationRatio(
+            resourceAlloc->CalcNetworkFragmentation());
+            countEvent = 0;
         }
     }
 }
@@ -197,6 +195,7 @@ void SimulationType::SimulateNumBlocReq() {
     double numBlocReqMax = this->parameters->GetNumberBloqMax();
     std::shared_ptr<Event> evt;
     unsigned int countEvent = 0;
+    FragMeasureOption fragOption = options->GetFragMeasureOption();
     
     while(this->GetData()->GetNumberBlocReq() < numBlocReqMax){
         evt = this->callGenerator->GetNextEvent();
@@ -204,13 +203,10 @@ void SimulationType::SimulateNumBlocReq() {
         
         evt->ImplementEvent();
         
-        if(options->GetFragMeasureOption() == FragMeasureEnabled){
-        
-            if(countEvent == 1000){
-                this->GetData()->UpdateFragmentationRatio(
-                resourceAlloc->CalcNetworkFragmentation());
-                countEvent = 0;
-            }
+        if(countEvent == 1000 && fragOption != FragMeasureDisabled){
+            this->GetData()->UpdateFragmentationRatio(
+            resourceAlloc->CalcNetworkFragmentation());
+            countEvent = 0;
         }
     }
 }
