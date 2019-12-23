@@ -28,6 +28,7 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/EventGenerator.h"
+#include <math.h> 
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
@@ -537,7 +538,7 @@ double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
     double b = 0.0;
     
     for(auto it: resources->numSlotsTraffic){
-        a += this->CalcNumFormAloc(it, vecDisp);
+        a += this->CalcNumSimultAloc(it, vecDisp);
     }
     
     vecDisp.assign(vecDisp.size(), occupied);
@@ -550,7 +551,7 @@ double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
     }
     
     for(auto it: resources->numSlotsTraffic){
-        b += this->CalcNumFormAloc(it, vecDisp);
+        b += this->CalcNumSimultAloc(it, vecDisp);
     }
     
     return (1 - (a/b));
@@ -743,6 +744,18 @@ unsigned int ResourceAlloc::CalcNumForms(Route* route, unsigned int callSize) {
     std::vector<SlotState> vecDisp = this->GetDispVector(route);
     
     return this->CalcNumFormAloc(callSize, vecDisp);
+}
+
+unsigned int ResourceAlloc::CalcNumSimultAloc(unsigned int callSize, 
+std::vector<SlotState>& dispVec) const {
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(callSize, dispVec);
+    unsigned int sum = 0;
+    
+    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
+        sum += floor (freeSlotsBlocks.at(a) / callSize);
+    
+    return sum;
 }
 
 std::vector<unsigned int> ResourceAlloc::GetBlocksFreeSlots(

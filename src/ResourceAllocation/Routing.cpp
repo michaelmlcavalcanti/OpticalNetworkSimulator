@@ -419,7 +419,6 @@ NodeIndex deNode, RouteIndex routeIndex) {
     return routes;
 }
 
-
 ResourceAlloc* Routing::GetResourceAlloc() const {
     return resourceAlloc;
 }

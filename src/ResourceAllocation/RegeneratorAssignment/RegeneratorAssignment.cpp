@@ -13,9 +13,9 @@
 
 #include "../../../include/ResourceAllocation/RegeneratorAssignment/RegeneratorAssignment.h"
 
-RegeneratorAssignment::RegeneratorAssignment(ResourceDeviceAlloc* resDevAlloc)
-:resDevAlloc(resDevAlloc) {
-    
+RegeneratorAssignment::RegeneratorAssignment(ResourceDeviceAlloc* resDevAlloc) 
+: resDevAlloc (resDevAlloc){
+   
 }
 
 RegeneratorAssignment::~RegeneratorAssignment() {

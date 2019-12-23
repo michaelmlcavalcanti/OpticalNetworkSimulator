@@ -14,6 +14,8 @@
 0
 0
 0
+0
+0
 1
 
 1-Topology
@@ -112,3 +114,9 @@
     0 - Same request for all points
     1 - Pseudo random generation
     2 - Random generation
+18-Protection Option
+    0 - Protection Disable
+    1 - DDP
+19-Fragmentation Measure Option
+    0 - Disable
+    1 - Enable
