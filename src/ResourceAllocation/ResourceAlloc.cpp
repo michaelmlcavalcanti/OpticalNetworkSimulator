@@ -28,7 +28,6 @@
 #include "../../include/Calls/Call.h"
 #include "../../include/Calls/Traffic.h"
 #include "../../include/Calls/EventGenerator.h"
-#include <math.h> 
 
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
@@ -541,18 +540,23 @@ double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
         a += this->CalcNumSimultAloc(it, vecDisp);
     }
     
-    vecDisp.assign(vecDisp.size(), occupied);
-    for(auto it: vecDisp){
-        it = free;
-        numFreeSlots--;
-        
-        if(numFreeSlots == 0)
-            break;
+    if(numFreeSlots != 0){
+        vecDisp.assign(vecDisp.size(), occupied);
+        for(auto it: vecDisp){
+            it = free;
+            numFreeSlots--;
+
+            if(numFreeSlots == 0)
+                break;
+        }    
+    
+        for(auto it: resources->numSlotsTraffic){
+            b += this->CalcNumSimultAloc(it, vecDisp);
+        }
     }
     
-    for(auto it: resources->numSlotsTraffic){
-        b += this->CalcNumSimultAloc(it, vecDisp);
-    }
+    if(b == 0.0)
+        b = 1.0;
     
     return (1 - (a/b));
 }
@@ -753,7 +757,7 @@ std::vector<SlotState>& dispVec) const {
     unsigned int sum = 0;
     
     for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
-        sum += floor (freeSlotsBlocks.at(a) / callSize);
+        sum += std::floor(freeSlotsBlocks.at(a) / callSize);
     
     return sum;
 }
