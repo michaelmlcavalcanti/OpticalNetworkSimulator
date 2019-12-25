@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=simulatoropticalnetwork
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/simulatoropticalnetwork
+CND_ARTIFACT_NAME_Debug=opticalnetworksimulator
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/opticalnetworksimulator
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=simulatoropticalnetwork.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/simulatoropticalnetwork.tar
+CND_PACKAGE_NAME_Debug=opticalnetworksimulator.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/opticalnetworksimulator.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=simulatoropticalnetwork
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/simulatoropticalnetwork
+CND_ARTIFACT_NAME_Release=opticalnetworksimulator
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/opticalnetworksimulator
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=simulatoropticalnetwork.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/simulatoropticalnetwork.tar
+CND_PACKAGE_NAME_Release=opticalnetworksimulator.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/opticalnetworksimulator.tar
 #
 # include compiler specific variables
 #
