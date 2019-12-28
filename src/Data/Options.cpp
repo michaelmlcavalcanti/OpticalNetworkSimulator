@@ -160,8 +160,10 @@ Options::mapProtectionOption = boost::assign::map_list_of
 
 const boost::unordered_map<FragMeasureOption, std::string>
 Options::mapFragMeasureOption = boost::assign::map_list_of
-    (FragMeasureDisabled, "Disabled")
-    (FragMeasureEnabled, "Enabled");
+    (FragMetricDisabled, "Disabled")
+    (FragMetricSF, "Spectrum Fragmentation (SF)")
+    (FragMetricEF, "External Fragmentation (EF)")
+    (FragMetricABP, "Access Blocking Probability (ABP)");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -220,7 +222,7 @@ GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
 transponderOption(TransponderDisabled), regenerationOption(RegenerationDisabled), 
 regPlacOption(RegPlacInvalid), regAssOption(RegAssInvalid), 
 stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame),
-protectionOption(ProtectionDisable), fragMeasureOpion(FragMeasureDisabled) {
+protectionOption(ProtectionDisable), fragMeasureOpion(FragMetricDisabled) {
     
 }
 

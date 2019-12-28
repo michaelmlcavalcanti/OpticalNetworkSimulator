@@ -377,11 +377,32 @@ private:
     void CreateRsaOrder();
     
     /**
-     * @brief Function to calculate the fragmentation for a specified link.
+     * @brief unction to calculate the fragmentation for a specified link.
      * @param link Link to calculate.
      * @return Fragmentation value.
      */
     double CalcLinkFragmentation(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * Spectrum Fragmentation metric (Wang/Mukherjee)
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationSF(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * External Fragmentation metric.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationEF(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * Access Blocking Probability metric.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationABP(Link* link) const;
 public:
     /**
      * @brief Pointer to the Topology object of this simulation.
