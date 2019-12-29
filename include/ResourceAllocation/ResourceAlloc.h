@@ -388,7 +388,7 @@ private:
      * @param link Link to calculate.
      * @return Fragmentation value.
      */
-    double CalcLinkFragmentationSF(Link* link) const;
+    double CalcLinkFragmentationFR(Link* link) const;
     /**
      * @brief Function to calculate the fragmentation for a specified link.
      * External Fragmentation metric.

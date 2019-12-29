@@ -161,7 +161,7 @@ Options::mapProtectionOption = boost::assign::map_list_of
 const boost::unordered_map<FragMeasureOption, std::string>
 Options::mapFragMeasureOption = boost::assign::map_list_of
     (FragMetricDisabled, "Disabled")
-    (FragMetricSF, "Spectrum Fragmentation (SF)")
+    (FragMetricFR, "Fragmentation Ratio (FR)")
     (FragMetricEF, "External Fragmentation (EF)")
     (FragMetricABP, "Access Blocking Probability (ABP)");
 

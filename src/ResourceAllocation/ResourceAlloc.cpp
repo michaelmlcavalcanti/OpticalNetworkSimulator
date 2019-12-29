@@ -533,8 +533,8 @@ double ResourceAlloc::CalcNetworkFragmentation() const {
 double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
     
     switch(options->GetFragMeasureOption()){
-        case FragMetricSF:
-            return this->CalcLinkFragmentationSF(link);
+        case FragMetricFR:
+            return this->CalcLinkFragmentationFR(link);
         case FragMetricEF:
             return this->CalcLinkFragmentationEF(link);
         case FragMetricABP:
@@ -545,7 +545,7 @@ double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
     }
 }
 
-double ResourceAlloc::CalcLinkFragmentationSF(Link* link) const {
+double ResourceAlloc::CalcLinkFragmentationFR(Link* link) const {
     std::vector<SlotState> vecDisp = link->GetVecDisp();
     unsigned int numFreeSlots = link->GetNumberFreeSlots();
     double a = 0.0;

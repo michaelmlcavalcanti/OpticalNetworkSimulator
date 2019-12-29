@@ -243,7 +243,7 @@ enum ProtectionOption {
 
 enum FragMeasureOption {
     FragMetricDisabled,
-    FragMetricSF,
+    FragMetricFR,
     FragMetricEF,
     FragMetricABP
 };
