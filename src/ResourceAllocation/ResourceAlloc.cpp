@@ -521,7 +521,9 @@ double ResourceAlloc::CalcNetworkFragmentation() const {
             if(orN == deN)
                 continue;
             link = topology->GetLink(orN, deN);
-            totalFrag += this->CalcLinkFragmentation(link);
+            
+            if(link)
+                totalFrag += this->CalcLinkFragmentation(link);
         }
     }
     
@@ -529,29 +531,93 @@ double ResourceAlloc::CalcNetworkFragmentation() const {
 }
 
 double ResourceAlloc::CalcLinkFragmentation(Link* link) const {
+    
+    switch(options->GetFragMeasureOption()){
+        case FragMetricFR:
+            return this->CalcLinkFragmentationFR(link);
+        case FragMetricEF:
+            return this->CalcLinkFragmentationEF(link);
+        case FragMetricABP:
+            return this->CalcLinkFragmentationABP(link);
+        default:
+            std::cerr << "Invalid fragmentation option" << std::endl;
+            std::abort();
+    }
+}
+
+double ResourceAlloc::CalcLinkFragmentationFR(Link* link) const {
     std::vector<SlotState> vecDisp = link->GetVecDisp();
     unsigned int numFreeSlots = link->GetNumberFreeSlots();
     double a = 0.0;
     double b = 0.0;
     
     for(auto it: resources->numSlotsTraffic){
-        a += this->CalcNumFormAloc(it, vecDisp);
+        a += this->CalcNumSimultAloc(it, vecDisp);
     }
     
-    vecDisp.assign(vecDisp.size(), occupied);
-    for(auto it: vecDisp){
-        it = free;
-        numFreeSlots--;
-        
-        if(numFreeSlots == 0)
-            break;
+    if(numFreeSlots != 0){
+        vecDisp.assign(vecDisp.size(), occupied);
+        for(auto it: vecDisp){
+            it = free;
+            numFreeSlots--;
+
+            if(numFreeSlots == 0)
+                break;
+        }
+    
+        for(auto it: resources->numSlotsTraffic){
+            b += this->CalcNumSimultAloc(it, vecDisp);
+        }
     }
     
-    for(auto it: resources->numSlotsTraffic){
-        b += this->CalcNumFormAloc(it, vecDisp);
-    }
+    if(b == 0.0)
+        b = 1.0;
     
     return (1 - (a/b));
+}
+
+double ResourceAlloc::CalcLinkFragmentationEF(Link* link) const {
+    std::vector<SlotState> vecDisp = link->GetVecDisp();
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(1, vecDisp);
+    double a = 0.0;
+    double b = 1.0;
+    
+    if(!freeSlotsBlocks.empty()){
+        a = (double) *std::max_element(freeSlotsBlocks.begin(), 
+                                       freeSlotsBlocks.end());
+    }
+    
+    if(a != 0.0){
+        b = (double) std::accumulate(freeSlotsBlocks.begin(),
+                                     freeSlotsBlocks.end(), 0);
+    }
+    
+    return 1 - (a/b);
+}
+
+double ResourceAlloc::CalcLinkFragmentationABP(Link* link) const {
+    std::vector<SlotState> vecDisp = link->GetVecDisp();
+    unsigned int numFreeSlots = link->GetNumberFreeSlots();
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(1, vecDisp);
+    double a = 0.0;
+    double b = 0.0;
+    unsigned int aux = 0;
+    
+    for(auto block: freeSlotsBlocks){
+        for(auto traf: resources->numSlotsTraffic){
+            aux = block / traf;
+            a += (double) aux;
+        }
+    }
+    
+    for(auto traf: resources->numSlotsTraffic){
+        aux = numFreeSlots / traf;
+        b += (double) aux;
+    }
+    
+    return 1 - (a/b);
 }
 
 std::vector<std::shared_ptr<Route>> ResourceAlloc::GetInterRoutes(int ori, 
@@ -741,6 +807,18 @@ unsigned int ResourceAlloc::CalcNumForms(Route* route, unsigned int callSize) {
     std::vector<SlotState> vecDisp = this->GetDispVector(route);
     
     return this->CalcNumFormAloc(callSize, vecDisp);
+}
+
+unsigned int ResourceAlloc::CalcNumSimultAloc(unsigned int callSize, 
+std::vector<SlotState>& dispVec) const {
+    std::vector<unsigned int> freeSlotsBlocks = 
+    this->GetBlocksFreeSlots(callSize, dispVec);
+    unsigned int sum = 0;
+    
+    for(unsigned int a = 0; a < freeSlotsBlocks.size(); a++)
+        sum += std::floor(freeSlotsBlocks.at(a) / callSize);
+    
+    return sum;
 }
 
 std::vector<unsigned int> ResourceAlloc::GetBlocksFreeSlots(

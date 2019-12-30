@@ -160,8 +160,10 @@ Options::mapProtectionOption = boost::assign::map_list_of
 
 const boost::unordered_map<FragMeasureOption, std::string>
 Options::mapFragMeasureOption = boost::assign::map_list_of
-    (FragMeasureDisabled, "Disabled")
-    (FragMeasureEnabled, "Enabled");
+    (FragMetricDisabled, "Disabled")
+    (FragMetricFR, "Fragmentation Ratio (FR)")
+    (FragMetricEF, "External Fragmentation (EF)")
+    (FragMetricABP, "Access Blocking Probability (ABP)");
 
 std::ostream& operator<<(std::ostream& ostream,
 const Options* options) {
@@ -219,7 +221,8 @@ networkOption(NetworkInvalid), orderRSA(OrderRoutingSa),
 GaOption(GaOptionDisabled), devicesOption(DevicesDisabled),
 transponderOption(TransponderDisabled), regenerationOption(RegenerationDisabled), 
 regPlacOption(RegPlacInvalid), regAssOption(RegAssInvalid), 
-stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame) {
+stopCriteria(NumCallRequestsMaximum), generationOption(GenerationSame),
+protectionOption(ProtectionDisable), fragMeasureOpion(FragMetricDisabled) {
     
 }
 
@@ -429,7 +432,7 @@ void Options::LoadFile() {
     auxIfstream >> auxInt;
     this->SetProtectionOption((ProtectionOption) auxInt);
     auxIfstream >> auxInt;
-    this->SetFragMeasureOption((FragMeasureOption) auxInt);   
+    this->SetFragMeasureOption((FragMeasureOption) auxInt);
 }
 
 void Options::Save() {

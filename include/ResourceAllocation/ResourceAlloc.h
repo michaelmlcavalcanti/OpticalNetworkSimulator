@@ -299,6 +299,15 @@ public:
      */
     unsigned int CalcNumForms(Route* route, unsigned int callSize);
     /**
+     * @brief Function to calculate the number of simultaneous allocations of 
+     * a call request number of slots in a specified availability vector.
+     * @param callSize Call request number of slots.
+     * @param dispVec Availability vector.
+     * @return Number of forms.
+     */
+    unsigned int CalcNumSimultAloc(unsigned int callSize, 
+    std::vector<SlotState>& dispVec) const;
+    /**
      * @brief Function to get the blocks of free slots equal or larger then the 
      * specified call request number of slots.
      * @param callSize Call request number of slots.
@@ -368,11 +377,32 @@ private:
     void CreateRsaOrder();
     
     /**
-     * @brief Function to calculate the fragmentation for a specified link.
+     * @brief unction to calculate the fragmentation for a specified link.
      * @param link Link to calculate.
      * @return Fragmentation value.
      */
     double CalcLinkFragmentation(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * Spectrum Fragmentation metric (Wang/Mukherjee)
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationFR(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * External Fragmentation metric.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationEF(Link* link) const;
+    /**
+     * @brief Function to calculate the fragmentation for a specified link.
+     * Access Blocking Probability metric.
+     * @param link Link to calculate.
+     * @return Fragmentation value.
+     */
+    double CalcLinkFragmentationABP(Link* link) const;
 public:
     /**
      * @brief Pointer to the Topology object of this simulation.

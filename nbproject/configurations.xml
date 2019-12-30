@@ -62,6 +62,8 @@
             <itemPath>Files/Outputs/1/PSO/BestParticles.txt</itemPath>
           </logicalFolder>
           <itemPath>Files/Outputs/1/Log.txt</itemPath>
+          <itemPath>Files/Outputs/1/NetFrag.txt</itemPath>
+          <itemPath>Files/Outputs/1/NetUtiliz.txt</itemPath>
           <itemPath>Files/Outputs/1/PBvLoad.txt</itemPath>
           <itemPath>Files/Outputs/1/bandBP.txt</itemPath>
         </logicalFolder>
@@ -457,6 +459,10 @@
             flavor2="0">
       </item>
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/NetFrag.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/NetUtiliz.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -1088,6 +1094,10 @@
             flavor2="0">
       </item>
       <item path="Files/Outputs/1/Log.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/NetFrag.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Outputs/1/NetUtiliz.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Outputs/1/PBvLoad.txt" ex="false" tool="3" flavor2="0">
       </item>

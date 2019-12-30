@@ -66,8 +66,10 @@ void SimulationMultiLoad::Print() {
 
 void SimulationMultiLoad::Save() {
     SimulationType::Save();
-    this->GetData()->SaveMultiloadLog();
+    this->GetData()->SaveLog();
     this->GetData()->SaveBP();
+    this->GetData()->SaveNetUtiliz();
+    this->GetData()->SaveNetFrag();
 }
 
 std::ostream& SimulationMultiLoad::Help(std::ostream& ostream) {
