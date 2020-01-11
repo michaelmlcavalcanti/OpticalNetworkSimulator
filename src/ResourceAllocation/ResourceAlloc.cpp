@@ -549,14 +549,16 @@ double ResourceAlloc::CalcLinkFragmentationFR(Link* link) const {
     std::vector<SlotState> vecDisp = link->GetVecDisp();
     unsigned int numFreeSlots = link->GetNumberFreeSlots();
     double a = 0.0;
-    double b = 0.0;
+    double b = 1.0;
     
     for(auto it: resources->numSlotsTraffic){
         a += this->CalcNumSimultAloc(it, vecDisp);
     }
     
-    if(numFreeSlots != 0){
+    if(numFreeSlots != 0 && a != 0.0){
+        b = 0.0;
         vecDisp.assign(vecDisp.size(), occupied);
+        
         for(auto it: vecDisp){
             it = free;
             numFreeSlots--;
@@ -569,9 +571,6 @@ double ResourceAlloc::CalcLinkFragmentationFR(Link* link) const {
             b += this->CalcNumSimultAloc(it, vecDisp);
         }
     }
-    
-    if(b == 0.0)
-        b = 1.0;
     
     return (1 - (a/b));
 }
@@ -602,7 +601,7 @@ double ResourceAlloc::CalcLinkFragmentationABP(Link* link) const {
     std::vector<unsigned int> freeSlotsBlocks = 
     this->GetBlocksFreeSlots(1, vecDisp);
     double a = 0.0;
-    double b = 0.0;
+    double b = 1.0;
     unsigned int aux = 0;
     
     for(auto block: freeSlotsBlocks){
@@ -612,9 +611,13 @@ double ResourceAlloc::CalcLinkFragmentationABP(Link* link) const {
         }
     }
     
-    for(auto traf: resources->numSlotsTraffic){
-        aux = numFreeSlots / traf;
-        b += (double) aux;
+    if(a != 0.0){
+        b = 0.0;
+        
+        for(auto traf: resources->numSlotsTraffic){
+            aux = numFreeSlots / traf;
+            b += (double) aux;
+        }
     }
     
     return 1 - (a/b);
