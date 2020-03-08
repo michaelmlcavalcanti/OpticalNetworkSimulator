@@ -41,7 +41,7 @@ unsigned int numberCores, unsigned int numberSlots)
 :topPointer(topPointer), origimNode(origimNode), 
 destinationNode(destinationNode), length(length), 
 numberSections(numberSections), cost(0.0), cores(0), linkState(working), 
-utilization(0) {
+utilization(0), use(0) {
     
     for(unsigned int a = 0; a < numberCores; a++)
         cores.push_back(std::make_shared<Core>(this, a, numberSlots));
@@ -64,6 +64,7 @@ void Link::Initialize() {
     for(auto it: cores){
         it->Initialize();
     }
+    use = 0;
 }
 
 NodeIndex Link::GetOrigimNode() const {
@@ -108,6 +109,14 @@ void Link::SetUtilization(unsigned int utilization) {
 
 unsigned int Link::GetNumberCores() const {
     return cores.size();
+}
+
+unsigned int Link::GetUse() const {
+    return use;
+}
+
+void Link::IncrementUse() {
+    use += 1;
 }
 
 void Link::CalcSignal(Signal* signal) const {

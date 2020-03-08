@@ -156,6 +156,7 @@ void SimulationType::Simulate() {
     
     this->GetData()->SetNumberReq(this->numberRequests);
     this->GetData()->SetSimulTime(this->callGenerator->GetSimulationTime());
+    this->GetData()->SetLinksUse(this->GetTopology());
 }
 
 void SimulationType::FinalizeAll() {

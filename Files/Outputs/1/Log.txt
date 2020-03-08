@@ -18,7 +18,7 @@ Regeneration: Disabled
 Stop criteria: Number of call requests
 Random generation: Same pseudo-random generation
 Protection: No Protection
-Fragmentation Option: Enabled
+Fragmentation Option: Fragmentation Ratio (FR)
 
 PARAMETERS
 Number of slots per fiber: 128
@@ -36,32 +36,32 @@ Number of polarizations: 2
 Guard band size (slots): 0
 
 DATA
-Simulation time:4169.14  Real simul time: 5.01429  Number of requests:1e+06
+Simulation time:4169.14  Real simul time: 2.55145  Number of requests:1e+06
 Load point:240  ReqBP:0.000748  SlotsBP:0.00127525  HopsMed:2.1493
 NetOcc:7.89099e+06  NetUti:0.351962 NetFrag:0.109231
 
 
-Simulation time:3970.61  Real simul time: 4.93471  Number of requests:1e+06
+Simulation time:3970.61  Real simul time: 2.24906  Number of requests:1e+06
 Load point:252  ReqBP:0.001715  SlotsBP:0.00291945  HopsMed:2.15312
 NetOcc:7.90029e+06  NetUti:0.369974 NetFrag:0.11446
 
 
-Simulation time:3790.12  Real simul time: 5.05241  Number of requests:1e+06
+Simulation time:3790.12  Real simul time: 2.43661  Number of requests:1e+06
 Load point:264  ReqBP:0.003114  SlotsBP:0.00529813  HopsMed:2.15745
 NetOcc:7.90676e+06  NetUti:0.387954 NetFrag:0.110894
 
 
-Simulation time:3625.34  Real simul time: 5.17554  Number of requests:1e+06
+Simulation time:3625.34  Real simul time: 2.43383  Number of requests:1e+06
 Load point:276  ReqBP:0.005528  SlotsBP:0.0094067  HopsMed:2.16199
 NetOcc:7.90093e+06  NetUti:0.405348 NetFrag:0.125935
 
 
-Simulation time:3474.28  Real simul time: 5.25774  Number of requests:1e+06
+Simulation time:3474.28  Real simul time: 3.02922  Number of requests:1e+06
 Load point:288  ReqBP:0.009089  SlotsBP:0.0154389  HopsMed:2.16564
 NetOcc:7.87452e+06  NetUti:0.421392 NetFrag:0.124452
 
 
-Simulation time:3335.31  Real simul time: 5.45065  Number of requests:1e+06
+Simulation time:3335.31  Real simul time: 2.87604  Number of requests:1e+06
 Load point:300  ReqBP:0.013632  SlotsBP:0.0231572  HopsMed:2.16839
 NetOcc:7.82942e+06  NetUti:0.43663 NetFrag:0.149203
 

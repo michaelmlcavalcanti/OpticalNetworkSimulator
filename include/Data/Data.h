@@ -21,6 +21,10 @@ class GA_MO;
 
 #include <vector>
 #include <ostream>
+#include <unordered_set>
+#include <map>
+
+class Topology;
 
 #include "../Calls/EventGenerator.h"
 
@@ -93,6 +97,8 @@ public:
      * @brief Saves the data values in the NetFrag.txt file.
      */
     void SaveNetFrag();
+    
+    void SaveLinksUse();
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -212,6 +218,8 @@ public:
      * @param simulTime Computer simulation time.
      */
     void SetRealSimulTime(const TIME simulTime);
+    
+    void SetLinksUse(Topology* topology);
     /**
      * @brief Function to get the index of the actual simulation point.
      * @return Actual simulation point index.
@@ -248,6 +256,7 @@ private:
      */
     void SaveNetFrag(std::ostream& ostream);
     
+    void SaveLinksUse(std::ostream& ostream);
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.
@@ -369,6 +378,8 @@ private:
      * @brief Network fragmentation ratio, the mean of all links fragmentation.
      */
     std::vector<double> netFragmentationRatio;
+    
+    std::vector<std::map<std::pair<unsigned, unsigned>, unsigned>> linksUse;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

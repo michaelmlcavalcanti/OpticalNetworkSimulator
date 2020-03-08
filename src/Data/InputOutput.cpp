@@ -27,6 +27,7 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadPsoFiles(bestParticle, bestParticles);
     this->LoadNetUtiliz(netUtilizFile);
     this->LoadNetFrag(netFragFile);
+    this->LoadLinksUse(linksUse);
 }
 
 InputOutput::~InputOutput() {
@@ -339,6 +340,25 @@ void InputOutput::LoadLog(std::ofstream& log) {
     }while(!log.is_open());
 }
 
+void InputOutput::LoadLinksUse(std::ofstream& linksUse) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        linksUse.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/LinksUse.txt");
+        
+        if(!linksUse.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!linksUse.is_open());
+}
+
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
 std::ofstream& worst, std::ofstream& iniPop) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
@@ -453,6 +473,10 @@ std::ofstream& InputOutput::GetNetUtilizFile() {
 
 std::ofstream& InputOutput::GetNetFragFile() {
     return netFragFile;
+}
+
+std::ofstream& InputOutput::GetLinksUse() {
+    return linksUse;
 }
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {

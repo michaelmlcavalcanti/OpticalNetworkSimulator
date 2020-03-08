@@ -119,6 +119,10 @@ public:
      */
     unsigned int GetNumberCores() const;
     
+    unsigned int GetUse() const;
+    
+    void IncrementUse();
+    
     /**
      * @brief Update the signal power, ASE power and
      * nonlinear power crossing this link.
@@ -257,6 +261,11 @@ private:
      * of times the link was used by all the routes for all node pairs.
      */
     unsigned int utilization;
+    /**
+     * @brief Link use. This parameter is updated each time a connection uses
+     * the link in the allocation path.
+     */
+    unsigned int use;
 };
 
 #endif /* LINK_H */

@@ -59,8 +59,9 @@ const Data* data) {
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
-numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), netFragmentationRatio(0), 
-simulTime(0), realSimulTime(0), actualIndex(0) {
+numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
+netFragmentationRatio(0), linksUse(0), simulTime(0), realSimulTime(0), 
+actualIndex(0) {
     
 }
 
@@ -81,6 +82,7 @@ void Data::Initialize() {
     netOccupancy.assign(size, 0.0);
     accReqUtilization.assign(size, 0.0);
     netFragmentationRatio.assign(size, 0.0);
+    linksUse.resize(size);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
 }
@@ -97,6 +99,7 @@ void Data::Initialize(unsigned int numPos) {
     netOccupancy.assign(numPos, 0.0);
     accReqUtilization.assign(numPos, 0.0);
     netFragmentationRatio.assign(numPos, 0.0);
+    linksUse.resize(numPos);
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
 }
@@ -175,6 +178,12 @@ void Data::SaveNetFrag() {
                                      ->GetNetFragFile();
     
     this->SaveNetFrag(netFrag);
+}
+
+void Data::SaveLinksUse() {
+    std::ofstream &linksUse = this->simulType->GetInputOutput()->GetLinksUse();
+    
+    this->SaveLinksUse(linksUse);
 }
 
 void Data::SaveBP(std::vector<unsigned> vecParam) {
@@ -316,6 +325,25 @@ void Data::SetRealSimulTime(const TIME simulTime) {
     this->realSimulTime.at(this->actualIndex) = simulTime;
 }
 
+void Data::SetLinksUse(Topology* topology) {
+    unsigned int numNodes = topology->GetNumNodes();
+    Link* auxLink;
+    std::pair<unsigned, unsigned> nodePair;
+    std::pair<std::pair<unsigned, unsigned>, unsigned> use;
+    
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            auxLink = topology->GetLink(orN, deN);
+            
+            if(auxLink){
+                nodePair = std::make_pair(orN, deN);
+                use = std::make_pair(nodePair, auxLink->GetUse());
+                linksUse.at(actualIndex).insert(use);
+            }
+        }
+    }
+}
+
 unsigned int Data::GetActualIndex() const {
     return actualIndex;
 }
@@ -387,6 +415,27 @@ void Data::SaveNetFrag(std::ostream& ostream) {
         ostream << this->simulType->GetParameters()->GetLoadPoint(
                    this->GetActualIndex()) << "\t" 
                 << this->GetNetworkFragmentationRatio() << std::endl;
+    }
+}
+
+void Data::SaveLinksUse(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    std::map<std::pair<unsigned, unsigned>, unsigned> auxMap;
+    std::pair<unsigned, unsigned> nodePair;
+    unsigned int use;
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        auxMap = linksUse.at(actualIndex);
+        
+        for(auto const& pair: auxMap){
+            nodePair = pair.first;
+            use = pair.second;
+            ostream << nodePair.first << "->" << nodePair.second << "\t"
+                    << use << std::endl;
+        }
+        ostream << std::endl;
     }
 }
 

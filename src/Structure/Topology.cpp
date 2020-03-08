@@ -486,6 +486,7 @@ void Topology::ConnectWithoutDevices(Call* call) {
             for(unsigned int slot = call->GetFirstSlot(); 
             slot <= call->GetLastSlot(); slot++){
                 link->OccupySlot(core, slot);
+                link->IncrementUse();
             }
         }
     }

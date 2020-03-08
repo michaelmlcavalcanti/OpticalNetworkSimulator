@@ -111,12 +111,14 @@ public:
      * File.
      * @return Network Utilization file.
      */
-    std::ofstream& GetNetUtilizFile();    
+    std::ofstream& GetNetUtilizFile();
     /**
      * @brief Function to get the file that storage the Network Fragmentation.
      * @return Network Fragmentation file.
      */
-    std::ofstream& GetNetFragFile();    
+    std::ofstream& GetNetFragFile();
+    
+    std::ofstream& GetLinksUse();
     /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
@@ -191,6 +193,8 @@ private:
      * @param results ofstream to the Log.txt.
      */
     void LoadLog(std::ofstream& log);
+    
+    void LoadLinksUse(std::ofstream& linksUse);
     /**
      * @brief Function to load the GA algorithm files.
      * @param bests Best individuals file.
@@ -226,7 +230,9 @@ private:
     /**
      * @brief Network Fragmentation outpput file.
      */
-    std::ofstream netFragFile;    
+    std::ofstream netFragFile;
+    
+    std::ofstream linksUse;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.
