@@ -121,4 +121,6 @@
     1 - DDP
 19-Fragmentation Measure Option
     0 - Disable
-    1 - Enable
+    1 - Fragmentation Ratio (FR)
+    2 - External Fragmentation (EF)
+    3 - Access Blocking Probability (ABP)

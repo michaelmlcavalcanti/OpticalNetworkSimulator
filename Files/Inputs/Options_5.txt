@@ -6,7 +6,6 @@
 1
 0
 2
-1
 0
 0
 0
@@ -16,7 +15,8 @@
 0
 0
 0
-1
+0
+3
 
 1-Topology
     0 - Invalid
@@ -107,6 +107,8 @@
     12- SCRA 4
     13- SCRA 5
     14- SCRA PSO
+    15- Modified SCRA
+    16- Modified SCRA PSO
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests

@@ -1,20 +1,22 @@
 1
-1
 2
 2
 1
+1
+1
+0
 2
 1
+0
+0
+0
+0
+0
+0
+0
+0
+0
 2
-0
-0
-0
-0
-0
-0
-0
-0
-0
 
 1-Topology
     0 - Invalid
@@ -112,3 +114,11 @@
     0 - Same request for all points
     1 - Pseudo random generation
     2 - Random generation
+18-Protection Option
+    0 - Protection Disable
+    1 - DDP
+19-Fragmentation Measure Option
+    0 - Disable
+    1 - Fragmentation Ratio (FR)
+    2 - External Fragmentation (EF)
+    3 - Access Blocking Probability (ABP)

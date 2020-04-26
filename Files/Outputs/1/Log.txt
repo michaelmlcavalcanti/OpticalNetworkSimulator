@@ -27,7 +27,7 @@ Mu: 1
 Minimum load point(erlang): 240
 Maximum load point(erlang): 300
 Number of points: 6
-Total number of requisitions: 1e+06
+Total number of requisitions: 1e+07
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 K: 3
@@ -36,6 +36,7 @@ Number of polarizations: 2
 Guard band size (slots): 0
 
 DATA
+<<<<<<< Updated upstream
 Simulation time:4169.14  Real simul time: 2.55145  Number of requests:1e+06
 Load point:240  ReqBP:0.000748  SlotsBP:0.00127525  HopsMed:2.1493
 NetOcc:7.89099e+06  NetUti:0.351962 NetFrag:0.109231
@@ -64,5 +65,35 @@ NetOcc:7.87452e+06  NetUti:0.421392 NetFrag:0.124452
 Simulation time:3335.31  Real simul time: 2.87604  Number of requests:1e+06
 Load point:300  ReqBP:0.013632  SlotsBP:0.0231572  HopsMed:2.16839
 NetOcc:7.82942e+06  NetUti:0.43663 NetFrag:0.149203
+=======
+Simulation time:41666.1  Real simul time: 47.2456  Number of requests:1e+07
+Load point:240  ReqBP:0.0007717  SlotsBP:0.00131152  HopsMed:2.15091
+NetOcc:7.89284e+07  NetUti:0.35245 NetFrag:0.0814199
+
+
+Simulation time:39682  Real simul time: 48.2892  Number of requests:1e+07
+Load point:252  ReqBP:0.0016271  SlotsBP:0.00276856  HopsMed:2.15473
+NetOcc:7.90373e+07  NetUti:0.370584 NetFrag:0.091242
+
+
+Simulation time:37878.3  Real simul time: 49.3993  Number of requests:1e+07
+Load point:264  ReqBP:0.0031626  SlotsBP:0.00538111  HopsMed:2.15909
+NetOcc:7.90862e+07  NetUti:0.38851 NetFrag:0.0932262
+
+
+Simulation time:36231.4  Real simul time: 51.2989  Number of requests:1e+07
+Load point:276  ReqBP:0.0056014  SlotsBP:0.00953059  HopsMed:2.16347
+NetOcc:7.90138e+07  NetUti:0.405703 NetFrag:0.113044
+
+
+Simulation time:34721.7  Real simul time: 52.0263  Number of requests:1e+07
+Load point:288  ReqBP:0.0090627  SlotsBP:0.0154097  HopsMed:2.16745
+NetOcc:7.87809e+07  NetUti:0.422101 NetFrag:0.109367
+
+
+Simulation time:33332.9  Real simul time: 53.8051  Number of requests:1e+07
+Load point:300  ReqBP:0.013676  SlotsBP:0.0232397  HopsMed:2.17034
+NetOcc:7.83281e+07  NetUti:0.437173 NetFrag:0.119507
+>>>>>>> Stashed changes
 
 

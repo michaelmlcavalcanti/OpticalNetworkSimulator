@@ -44,10 +44,14 @@
         <itemPath>Files/Inputs/Options_2.txt</itemPath>
         <itemPath>Files/Inputs/Options_3.txt</itemPath>
         <itemPath>Files/Inputs/Options_4.txt</itemPath>
+        <itemPath>Files/Inputs/Options_5.txt</itemPath>
+        <itemPath>Files/Inputs/Options_6.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_1.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_2.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_3.txt</itemPath>
         <itemPath>Files/Inputs/Parameters_4.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_5.txt</itemPath>
+        <itemPath>Files/Inputs/Parameters_6.txt</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Outputs" projectFiles="true">
         <logicalFolder name="f1" displayName="1" projectFiles="true">
@@ -348,6 +352,10 @@
       </item>
       <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_6.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/PSO/PSO_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
@@ -357,6 +365,10 @@
       <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_6.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/3_Nodes.txt"
             ex="false"
@@ -983,6 +995,10 @@
       </item>
       <item path="Files/Inputs/Options_4.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Files/Inputs/Options_5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Options_6.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Files/Inputs/PSO/PSO_1.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_1.txt" ex="false" tool="3" flavor2="0">
@@ -992,6 +1008,10 @@
       <item path="Files/Inputs/Parameters_3.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Parameters_4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Files/Inputs/Parameters_6.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Files/Inputs/Topologies/3_Nodes.txt"
             ex="false"
