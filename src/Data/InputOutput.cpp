@@ -28,6 +28,7 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadNetUtiliz(netUtilizFile);
     this->LoadNetFrag(netFragFile);
     this->LoadLinksUse(linksUse);
+    this->LoadFragBand(fragBand);
 }
 
 InputOutput::~InputOutput() {
@@ -359,6 +360,25 @@ void InputOutput::LoadLinksUse(std::ofstream& linksUse) {
     }while(!linksUse.is_open());
 }
 
+void InputOutput::LoadFragBand(std::ofstream& fragBand) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        fragBand.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/FragBand.txt");
+        
+        if(!fragBand.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!fragBand.is_open());
+}
+
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
 std::ofstream& worst, std::ofstream& iniPop) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
@@ -473,6 +493,10 @@ std::ofstream& InputOutput::GetNetUtilizFile() {
 
 std::ofstream& InputOutput::GetNetFragFile() {
     return netFragFile;
+}
+
+std::ofstream& InputOutput::GetFragBandFile() {
+    return fragBand;
 }
 
 std::ofstream& InputOutput::GetLinksUse() {

@@ -60,8 +60,8 @@ Data::Data(SimulationType* simulType)
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
-netFragmentationRatio(0), linksUse(0), simulTime(0), realSimulTime(0), 
-actualIndex(0) {
+netFragmentationRatio(0), fragPerTraffic(0), linksUse(0), simulTime(0), 
+realSimulTime(0), actualIndex(0) {
     
 }
 
@@ -82,6 +82,7 @@ void Data::Initialize() {
     netOccupancy.assign(size, 0.0);
     accReqUtilization.assign(size, 0.0);
     netFragmentationRatio.assign(size, 0.0);
+    fragPerTraffic.resize(size);
     linksUse.resize(size);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
@@ -99,6 +100,7 @@ void Data::Initialize(unsigned int numPos) {
     netOccupancy.assign(numPos, 0.0);
     accReqUtilization.assign(numPos, 0.0);
     netFragmentationRatio.assign(numPos, 0.0);
+    fragPerTraffic.resize(numPos);
     linksUse.resize(numPos);
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
@@ -178,6 +180,12 @@ void Data::SaveNetFrag() {
                                      ->GetNetFragFile();
     
     this->SaveNetFrag(netFrag);
+}
+
+void Data::SaveFragTraffic() {
+    std::ofstream &netFrag = this->simulType->GetInputOutput()
+                                 ->GetFragBandFile();
+    this->SaveBandFrag(netFrag);
 }
 
 void Data::SaveLinksUse() {
@@ -344,6 +352,13 @@ void Data::SetLinksUse(Topology* topology) {
     }
 }
 
+void Data::SetBandFrag(const double band, const double netFrag) {
+    std::pair<double, double> frag;
+    frag = std::make_pair(band, netFrag);
+    fragPerTraffic.at(actualIndex).push_back(frag);
+}
+
+
 unsigned int Data::GetActualIndex() const {
     return actualIndex;
 }
@@ -415,6 +430,22 @@ void Data::SaveNetFrag(std::ostream& ostream) {
         ostream << this->simulType->GetParameters()->GetLoadPoint(
                    this->GetActualIndex()) << "\t" 
                 << this->GetNetworkFragmentationRatio() << std::endl;
+    }
+}
+
+void Data::SaveBandFrag(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    std::vector<std::pair<double, double>> bandFrag;
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        bandFrag = fragPerTraffic.at(actualIndex);
+        
+        for(auto const& pair: bandFrag){
+            ostream << pair.first << "\t" << pair.second << std::endl;
+        }
+        ostream << std::endl;
     }
 }
 
