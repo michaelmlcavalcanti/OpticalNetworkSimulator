@@ -99,6 +99,8 @@ public:
     void SaveNetFrag();
     
     void SaveLinksUse();
+    
+    void SaveFragTraffic();
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -220,6 +222,8 @@ public:
     void SetRealSimulTime(const TIME simulTime);
     
     void SetLinksUse(Topology* topology);
+    
+    void SetBandFrag(const double band, const double netFrag);
     /**
      * @brief Function to get the index of the actual simulation point.
      * @return Actual simulation point index.
@@ -255,6 +259,8 @@ private:
      * @param ostream Output stream.
      */
     void SaveNetFrag(std::ostream& ostream);
+    
+    void SaveBandFrag(std::ostream& ostream);
     
     void SaveLinksUse(std::ostream& ostream);
     /**
@@ -378,6 +384,8 @@ private:
      * @brief Network fragmentation ratio, the mean of all links fragmentation.
      */
     std::vector<double> netFragmentationRatio;
+    
+    std::vector<std::vector<std::pair<double, double>>> fragPerTraffic;
     
     std::vector<std::map<std::pair<unsigned, unsigned>, unsigned>> linksUse;
     /**

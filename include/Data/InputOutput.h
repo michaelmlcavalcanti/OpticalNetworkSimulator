@@ -118,6 +118,8 @@ public:
      */
     std::ofstream& GetNetFragFile();
     
+    std::ofstream& GetFragBandFile();
+    
     std::ofstream& GetLinksUse();
     /**
      * @brief Get the output file that will contain the best individuals, with
@@ -195,6 +197,8 @@ private:
     void LoadLog(std::ofstream& log);
     
     void LoadLinksUse(std::ofstream& linksUse);
+    
+    void LoadFragBand(std::ofstream& fragBand);
     /**
      * @brief Function to load the GA algorithm files.
      * @param bests Best individuals file.
@@ -231,6 +235,8 @@ private:
      * @brief Network Fragmentation outpput file.
      */
     std::ofstream netFragFile;
+    
+    std::ofstream fragBand;
     
     std::ofstream linksUse;
     /**

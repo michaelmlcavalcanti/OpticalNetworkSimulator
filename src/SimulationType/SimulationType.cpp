@@ -176,6 +176,7 @@ void SimulationType::SimulateNumTotalReq() {
     double numReqMax = this->parameters->GetNumberReqMax();
     std::shared_ptr<Event> evt;
     unsigned int countEvent = 0;
+    double countBand = 1E7;
     FragMeasureOption fragOption = options->GetFragMeasureOption();
     
     while(this->numberRequests < numReqMax){
@@ -188,6 +189,12 @@ void SimulationType::SimulateNumTotalReq() {
             this->GetData()->UpdateFragmentationRatio(
             resourceAlloc->CalcNetworkFragmentation());
             countEvent = 0;
+        }
+        
+        if((this->GetData()->GetNumberAccSlots() / 1E9) > countBand){
+            double netFrag = resourceAlloc->CalcNetworkFragmentation();
+            this->GetData()->SetBandFrag(countBand, netFrag);
+            countBand += 1E7;
         }
     }
 }
