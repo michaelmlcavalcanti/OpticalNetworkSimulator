@@ -58,10 +58,10 @@ const Data* data) {
 
 Data::Data(SimulationType* simulType) 
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
-numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0),
+numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
-netFragmentationRatio(0), fragPerTraffic(0), linksUse(0), simulTime(0), 
-realSimulTime(0), actualIndex(0) {
+netFragmentationRatio(0), fragPerTraffic(0), linksUse(0), slotsRelativeUse(0), 
+countSlotsRelativeUse(0), simulTime(0), realSimulTime(0), actualIndex(0) {
     
 }
 
@@ -71,6 +71,7 @@ Data::~Data() {
 
 void Data::Initialize() {
     int size = simulType->GetParameters()->GetNumberLoadPoints();
+    int numberSlots = simulType->GetParameters()->GetNumberSlots();
     
     numberReq.assign(size, 0.0);
     numberBlocReq.assign(size, 0.0);
@@ -78,12 +79,15 @@ void Data::Initialize() {
     numberSlotsReq.assign(size, 0.0);
     numberBlocSlots.assign(size, 0.0);
     numberAccSlots.assign(size, 0.0);
+    numberAccSlotsInt.assign(size, 0.0);
     numHopsPerRoute.assign(size, 0.0);
     netOccupancy.assign(size, 0.0);
     accReqUtilization.assign(size, 0.0);
     netFragmentationRatio.assign(size, 0.0);
     fragPerTraffic.resize(size);
     linksUse.resize(size);
+    slotsRelativeUse.resize(size);
+    countSlotsRelativeUse.resize(numberSlots, 0.0);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
 }
@@ -102,17 +106,20 @@ void Data::Initialize(unsigned int numPos) {
     netFragmentationRatio.assign(numPos, 0.0);
     fragPerTraffic.resize(numPos);
     linksUse.resize(numPos);
+    slotsRelativeUse.resize(numPos);
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
 }
 
 void Data::StorageCall(Call* call) {
     double bitRate = call->GetBitRate();
+    unsigned int numSlot = call->GetNumberSlots();
     
     switch(call->GetStatus()){
         case Accepted:
             numberAccReq.at(actualIndex)++;
             numberAccSlots.at(actualIndex) += bitRate;
+            numberAccSlotsInt.at(actualIndex) += numSlot;
             numHopsPerRoute.at(actualIndex) += (double) 
             call->GetRoute()->GetNumHops();
             netOccupancy.at(actualIndex) += 
@@ -120,6 +127,8 @@ void Data::StorageCall(Call* call) {
             accReqUtilization.at(actualIndex) += 
             ((double) call->GetTotalNumSlots()) * call->GetDeactivationTime();
             break;
+            this->SetCountSlotsRelativeUse(call);
+            this->SetSlotsRelativeUse();
         case Blocked:
             numberBlocReq.at(actualIndex)++;
             numberBlocSlots.at(actualIndex) += bitRate;
@@ -350,6 +359,23 @@ void Data::SetLinksUse(Topology* topology) {
             }
         }
     }
+}
+
+void Data::SetCountSlotsRelativeUse(Call* call) {
+    unsigned int callFirstSlot = call->GetFirstSlot();
+    unsigned int callLastSlot = call->GetLastSlot();
+        
+    for(unsigned int slot = callFirstSlot; slot <= callLastSlot; slot++){
+        countSlotsRelativeUse.at(slot) = countSlotsRelativeUse.at(slot)++;
+    }
+    for(auto it : countSlotsRelativeUse){
+    countSlotsRelativeUse.at(it) = (countSlotsRelativeUse.at(it)) / 
+    (numberAccSlotsInt.at(actualIndex));
+    }
+}
+void Data::SetSlotsRelativeUse() {
+    //slotsRelativeUse.insert(actualIndex, const double& countSlotsRelativeUse);
+    slotsRelativeUse.at(actualIndex).insert(countSlotsRelativeUse); 
 }
 
 void Data::SetBandFrag(const double band, const double netFrag) {

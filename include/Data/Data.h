@@ -223,6 +223,10 @@ public:
     
     void SetLinksUse(Topology* topology);
     
+    void SetSlotsRelativeUse();
+    
+    void SetCountSlotsRelativeUse(Call* call);
+    
     void SetBandFrag(const double band, const double netFrag);
     /**
      * @brief Function to get the index of the actual simulation point.
@@ -364,6 +368,11 @@ private:
      * per load.
      */
     std::vector<double> numberAccSlots;
+       /**
+     * @brief Actual Integer number of accepted slots simulated,
+     * per load.
+     */
+    std::vector<unsigned int> numberAccSlotsInt;
     /**
      * @brief Mean of hops per route, per load.
      */
@@ -388,6 +397,14 @@ private:
     std::vector<std::vector<std::pair<double, double>>> fragPerTraffic;
     
     std::vector<std::map<std::pair<unsigned, unsigned>, unsigned>> linksUse;
+      /**
+     * @brief Vector that contain the slots relative uses for actual load point.
+     */
+    std::vector<double> countSlotsRelativeUse;
+     /**
+     * @brief Vector that contain the slots relative uses for each load point.
+     */
+    std::vector<std::vector<double>> slotsRelativeUse;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */
