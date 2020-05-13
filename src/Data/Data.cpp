@@ -86,10 +86,14 @@ void Data::Initialize() {
     netFragmentationRatio.assign(size, 0.0);
     fragPerTraffic.resize(size);
     linksUse.resize(size);
-    slotsRelativeUse.resize(size);
     countSlotsRelativeUse.resize(numberSlots, 0.0);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
+    slotsRelativeUse.resize(size);
+    for(unsigned int a = 0; a < slotsRelativeUse.size(); a++){
+        std::vector<double> vec(numberSlots, 0);
+        slotsRelativeUse.at(a) = vec;
+    }
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -106,9 +110,9 @@ void Data::Initialize(unsigned int numPos) {
     netFragmentationRatio.assign(numPos, 0.0);
     fragPerTraffic.resize(numPos);
     linksUse.resize(numPos);
-    slotsRelativeUse.resize(numPos);
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
+    slotsRelativeUse.resize(numPos);
 }
 
 void Data::StorageCall(Call* call) {
@@ -364,15 +368,20 @@ void Data::SetLinksUse(Topology* topology) {
 void Data::SetCountSlotsRelativeUse(Call* call) {
     unsigned int callFirstSlot = call->GetFirstSlot();
     unsigned int callLastSlot = call->GetLastSlot();
-        
+    
+    for (unsigned a = callFirstSlot; a <= callLastSlot; a++){
+        slotsRelativeUse.at(actualIndex).at(a)++;
+    }
+    
     for(unsigned int slot = callFirstSlot; slot <= callLastSlot; slot++){
         countSlotsRelativeUse.at(slot) = countSlotsRelativeUse.at(slot)++;
     }
     for(auto it : countSlotsRelativeUse){
-    countSlotsRelativeUse.at(it) = (countSlotsRelativeUse.at(it)) / 
-    (numberAccSlotsInt.at(actualIndex));
+        countSlotsRelativeUse.at(it) = (countSlotsRelativeUse.at(it)) / 
+        (numberAccSlotsInt.at(actualIndex));
     }
 }
+
 void Data::SetSlotsRelativeUse() {
     //slotsRelativeUse.insert(actualIndex, const double& countSlotsRelativeUse);
     slotsRelativeUse.at(actualIndex).insert(countSlotsRelativeUse); 
