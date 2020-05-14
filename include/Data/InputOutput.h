@@ -122,6 +122,12 @@ public:
     
     std::ofstream& GetLinksUse();
     /**
+     * @brief Get the output file that will contain the Slots Relative Usage 
+     * of the simulation.
+     * @return Slots Relative Slots output file.
+     */
+    std::ofstream& GetSlotsRelativeUse();
+    /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
      * @return Best individuals output file.
@@ -197,6 +203,11 @@ private:
     void LoadLog(std::ofstream& log);
     
     void LoadLinksUse(std::ofstream& linksUse);
+    /**
+    * @brief Function to load the Slots Relative Usage file.
+    * @param slotsRelativeUse 
+    */
+    void LoadSlotsRelativeUse(std::ofstream& slotsRelativeUse);
     
     void LoadFragBand(std::ofstream& fragBand);
     /**
@@ -239,6 +250,10 @@ private:
     std::ofstream fragBand;
     
     std::ofstream linksUse;
+    /**
+     * @brief Slots Relative Usage outpput file.
+     */
+    std::ofstream slotsRelativeUse;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.

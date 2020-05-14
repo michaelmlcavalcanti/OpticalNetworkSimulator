@@ -28,6 +28,7 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadNetUtiliz(netUtilizFile);
     this->LoadNetFrag(netFragFile);
     this->LoadLinksUse(linksUse);
+    this->LoadSlotsRelativeUse(slotsRelativeUse);
     this->LoadFragBand(fragBand);
 }
 
@@ -360,6 +361,27 @@ void InputOutput::LoadLinksUse(std::ofstream& linksUse) {
     }while(!linksUse.is_open());
 }
 
+void InputOutput::LoadSlotsRelativeUse(std::ofstream& slotsRelativeUse) {
+unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        slotsRelativeUse.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/SlotsRelativeUse.txt");
+        
+        if(!slotsRelativeUse.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!slotsRelativeUse.is_open());
+}
+
+
+
 void InputOutput::LoadFragBand(std::ofstream& fragBand) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
@@ -501,6 +523,10 @@ std::ofstream& InputOutput::GetFragBandFile() {
 
 std::ofstream& InputOutput::GetLinksUse() {
     return linksUse;
+}
+
+std::ofstream& InputOutput::GetSlotsRelativeUse() {
+    return slotsRelativeUse;
 }
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {

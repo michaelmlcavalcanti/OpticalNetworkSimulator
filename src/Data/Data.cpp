@@ -61,7 +61,7 @@ Data::Data(SimulationType* simulType)
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
 netFragmentationRatio(0), fragPerTraffic(0), linksUse(0), slotsRelativeUse(0), 
-countSlotsRelativeUse(0), simulTime(0), realSimulTime(0), actualIndex(0) {
+simulTime(0), realSimulTime(0), actualIndex(0) {
     
 }
 
@@ -86,7 +86,6 @@ void Data::Initialize() {
     netFragmentationRatio.assign(size, 0.0);
     fragPerTraffic.resize(size);
     linksUse.resize(size);
-    countSlotsRelativeUse.resize(numberSlots, 0.0);
     simulTime.assign(size, 0.0);
     realSimulTime.assign(size, 0.0);
     slotsRelativeUse.resize(size);
@@ -131,8 +130,7 @@ void Data::StorageCall(Call* call) {
             accReqUtilization.at(actualIndex) += 
             ((double) call->GetTotalNumSlots()) * call->GetDeactivationTime();
             break;
-            this->SetCountSlotsRelativeUse(call);
-            this->SetSlotsRelativeUse();
+            SetSlotsRelativeUse(call);
         case Blocked:
             numberBlocReq.at(actualIndex)++;
             numberBlocSlots.at(actualIndex) += bitRate;
@@ -206,6 +204,14 @@ void Data::SaveLinksUse() {
     
     this->SaveLinksUse(linksUse);
 }
+
+void Data::SaveSlotsRelativeUse() {
+    std::ofstream &slotsRelativeUse = this->simulType->GetInputOutput()->
+            GetSlotsRelativeUse();
+    
+    this->SaveSlotsRelativeUse(slotsRelativeUse);
+}
+
 
 void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
@@ -365,26 +371,13 @@ void Data::SetLinksUse(Topology* topology) {
     }
 }
 
-void Data::SetCountSlotsRelativeUse(Call* call) {
+void Data::SetSlotsRelativeUse(Call* call) {
     unsigned int callFirstSlot = call->GetFirstSlot();
     unsigned int callLastSlot = call->GetLastSlot();
     
     for (unsigned a = callFirstSlot; a <= callLastSlot; a++){
         slotsRelativeUse.at(actualIndex).at(a)++;
-    }
-    
-    for(unsigned int slot = callFirstSlot; slot <= callLastSlot; slot++){
-        countSlotsRelativeUse.at(slot) = countSlotsRelativeUse.at(slot)++;
-    }
-    for(auto it : countSlotsRelativeUse){
-        countSlotsRelativeUse.at(it) = (countSlotsRelativeUse.at(it)) / 
-        (numberAccSlotsInt.at(actualIndex));
-    }
-}
-
-void Data::SetSlotsRelativeUse() {
-    //slotsRelativeUse.insert(actualIndex, const double& countSlotsRelativeUse);
-    slotsRelativeUse.at(actualIndex).insert(countSlotsRelativeUse); 
+    } 
 }
 
 void Data::SetBandFrag(const double band, const double netFrag) {
@@ -503,6 +496,24 @@ void Data::SaveLinksUse(std::ostream& ostream) {
         }
         ostream << std::endl;
     }
+}
+
+void Data::SaveSlotsRelativeUse(std::ostream& ostream) {
+ unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    double numSlots = simulType->GetParameters()->GetNumberSlots();
+        
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+            
+        for(unsigned int b = 0; b < numSlots; b++){
+            slotsRelativeUse.at(actualIndex).at(b) = 
+            slotsRelativeUse.at(actualIndex).at(b) / numberAccReq.at(actualIndex);
+            ostream << b << "\t" << slotsRelativeUse.at(actualIndex).at(b) 
+            << std::endl;
+        }  
+        ostream << std::endl;    
+    }        
 }
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 

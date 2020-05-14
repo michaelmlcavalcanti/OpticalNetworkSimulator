@@ -100,6 +100,8 @@ public:
     
     void SaveLinksUse();
     
+    void SaveSlotsRelativeUse();
+    
     void SaveFragTraffic();
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
@@ -223,10 +225,8 @@ public:
     
     void SetLinksUse(Topology* topology);
     
-    void SetSlotsRelativeUse();
-    
-    void SetCountSlotsRelativeUse(Call* call);
-    
+    void SetSlotsRelativeUse(Call* call);
+     
     void SetBandFrag(const double band, const double netFrag);
     /**
      * @brief Function to get the index of the actual simulation point.
@@ -267,6 +267,8 @@ private:
     void SaveBandFrag(std::ostream& ostream);
     
     void SaveLinksUse(std::ostream& ostream);
+    
+    void SaveSlotsRelativeUse(std::ostream& ostream);
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.
@@ -397,10 +399,6 @@ private:
     std::vector<std::vector<std::pair<double, double>>> fragPerTraffic;
     
     std::vector<std::map<std::pair<unsigned, unsigned>, unsigned>> linksUse;
-      /**
-     * @brief Vector that contain the slots relative uses for actual load point.
-     */
-    std::vector<double> countSlotsRelativeUse;
      /**
      * @brief Vector that contain the slots relative uses for each load point.
      */
