@@ -129,8 +129,8 @@ void Data::StorageCall(Call* call) {
             (double) call->GetTotalNumSlots();
             accReqUtilization.at(actualIndex) += 
             ((double) call->GetTotalNumSlots()) * call->GetDeactivationTime();
+            this->SetSlotsRelativeUse(call);
             break;
-            SetSlotsRelativeUse(call);
         case Blocked:
             numberBlocReq.at(actualIndex)++;
             numberBlocSlots.at(actualIndex) += bitRate;

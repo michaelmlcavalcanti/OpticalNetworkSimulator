@@ -72,6 +72,7 @@ void SimulationMultiLoad::Save() {
     this->GetData()->SaveNetFrag();
     this->GetData()->SaveLinksUse();
     this->GetData()->SaveFragTraffic();
+    this->GetData()->SaveSlotsRelativeUse();
 }
 
 std::ostream& SimulationMultiLoad::Help(std::ostream& ostream) {
