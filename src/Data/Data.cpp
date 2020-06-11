@@ -508,7 +508,7 @@ void Data::SaveSlotsRelativeUse(std::ostream& ostream) {
             
         for(unsigned int b = 0; b < numSlots; b++){
             slotsRelativeUse.at(actualIndex).at(b) = 
-            slotsRelativeUse.at(actualIndex).at(b) / numberAccReq.at(actualIndex);
+            slotsRelativeUse.at(actualIndex).at(b) / numberAccSlotsInt.at(actualIndex);
             ostream << b << "\t" << slotsRelativeUse.at(actualIndex).at(b) 
             << std::endl;
         }  
