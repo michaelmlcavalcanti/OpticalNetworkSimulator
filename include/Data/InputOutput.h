@@ -118,6 +118,13 @@ public:
      */
     std::ofstream& GetNetFragFile();
     
+      /**
+     * @brief Function to get the file that storage the Accumulated Network 
+     * Fragmentation.
+     * @return Accumulated Network Fragmentation file.
+     */
+    std::ofstream& GetAccumNetFragFile();
+    
     std::ofstream& GetFragBandFile();
     
     std::ofstream& GetLinksUse();
@@ -196,6 +203,13 @@ private:
     * @param NetFrag
     */
     void LoadNetFrag(std::ofstream& NetFrag);
+    
+     /**
+    * @brief Function to load the Accumulated Network Fragmentation file.
+    * @param AccumNetFrag
+    */
+    void LoadAccumNetFrag(std::ofstream& AccumNetFrag);
+    
     /**
      * @brief Function to load the .txt file to output the simulation log.
      * @param results ofstream to the Log.txt.
@@ -246,6 +260,11 @@ private:
      * @brief Network Fragmentation outpput file.
      */
     std::ofstream netFragFile;
+    
+    /**
+     * @brief Accumulated Network Fragmentation outpput file.
+     */
+    std::ofstream accumNetFragFile;
     
     std::ofstream fragBand;
     

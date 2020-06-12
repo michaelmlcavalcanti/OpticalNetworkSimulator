@@ -60,8 +60,9 @@ Data::Data(SimulationType* simulType)
 :simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
 numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
-netFragmentationRatio(0), fragPerTraffic(0), linksUse(0), slotsRelativeUse(0), 
-simulTime(0), realSimulTime(0), actualIndex(0) {
+netFragmentationRatio(0), accumNetFragmentationRatio(0) ,fragPerTraffic(0), 
+linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
+actualIndex(0) {
     
 }
 
@@ -84,6 +85,7 @@ void Data::Initialize() {
     netOccupancy.assign(size, 0.0);
     accReqUtilization.assign(size, 0.0);
     netFragmentationRatio.assign(size, 0.0);
+    accumNetFragmentationRatio.resize(size);
     fragPerTraffic.resize(size);
     linksUse.resize(size);
     simulTime.assign(size, 0.0);
@@ -107,6 +109,7 @@ void Data::Initialize(unsigned int numPos) {
     netOccupancy.assign(numPos, 0.0);
     accReqUtilization.assign(numPos, 0.0);
     netFragmentationRatio.assign(numPos, 0.0);
+    accumNetFragmentationRatio.resize(numPos);
     fragPerTraffic.resize(numPos);
     linksUse.resize(numPos);
     simulTime.assign(numPos, 0.0);
@@ -192,6 +195,14 @@ void Data::SaveNetFrag() {
     
     this->SaveNetFrag(netFrag);
 }
+
+void Data::SaveAccumNetFrag() {
+   std::ofstream &accumNetFrag = this->simulType->GetInputOutput()
+                                     ->GetAccumNetFragFile();
+    
+    this->SaveAccumNetFrag(accumNetFrag);
+}
+
 
 void Data::SaveFragTraffic() {
     std::ofstream &netFrag = this->simulType->GetInputOutput()
@@ -329,6 +340,8 @@ void Data::UpdateFragmentationRatio(double ratio) {
     
     netFragmentationRatio.at(actualIndex) += ratio;
     netFragmentationRatio.at(actualIndex) /= 2;
+    accumNetFragmentationRatio.at(actualIndex).push_back(
+    netFragmentationRatio.at(actualIndex));
 }
 
 double Data::GetNetworkFragmentationRatio() const {
@@ -460,6 +473,23 @@ void Data::SaveNetFrag(std::ostream& ostream) {
                 << this->GetNetworkFragmentationRatio() << std::endl;
     }
 }
+
+void Data::SaveAccumNetFrag(std::ostream& ostream) {
+unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+        
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        
+        for(unsigned int b = 0; b < accumNetFragmentationRatio.at(actualIndex).
+        size(); b++){
+            ostream << b << "\t" << accumNetFragmentationRatio.at(actualIndex).at(b) 
+            << std::endl;
+        }  
+        ostream << std::endl;    
+    }        
+}
+
 
 void Data::SaveBandFrag(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()

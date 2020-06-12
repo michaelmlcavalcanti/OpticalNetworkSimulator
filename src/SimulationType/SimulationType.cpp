@@ -185,7 +185,7 @@ void SimulationType::SimulateNumTotalReq() {
         
         evt->ImplementEvent();
             
-        if(countEvent == 1000 && fragOption != FragMetricDisabled){
+        if(countEvent == 100 && fragOption != FragMetricDisabled){
             this->GetData()->UpdateFragmentationRatio(
             resourceAlloc->CalcNetworkFragmentation());
             countEvent = 0;

@@ -70,8 +70,9 @@ void SimulationMultiLoad::Save() {
     this->GetData()->SaveBP();
     this->GetData()->SaveNetUtiliz();
     this->GetData()->SaveNetFrag();
-    this->GetData()->SaveLinksUse();
+    this->GetData()->SaveAccumNetFrag();
     this->GetData()->SaveFragTraffic();
+    this->GetData()->SaveLinksUse();
     this->GetData()->SaveSlotsRelativeUse();
 }
 

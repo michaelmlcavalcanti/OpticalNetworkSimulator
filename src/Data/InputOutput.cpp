@@ -27,9 +27,11 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadPsoFiles(bestParticle, bestParticles);
     this->LoadNetUtiliz(netUtilizFile);
     this->LoadNetFrag(netFragFile);
+    this->LoadAccumNetFrag(accumNetFragFile);
+    this->LoadFragBand(fragBand);
     this->LoadLinksUse(linksUse);
     this->LoadSlotsRelativeUse(slotsRelativeUse);
-    this->LoadFragBand(fragBand);
+    
 }
 
 InputOutput::~InputOutput() {
@@ -179,7 +181,7 @@ void InputOutput::LoadGA_MO(std::ifstream& gaMoParam) {
 void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     
     do{
-        orderRsa.open("Files/Outputs/1/GA/BestIndividual.txt");
+        orderRsa.open("Files/Inputs/GA/BestIndividual.txt");
         
         if(!orderRsa.is_open()) {
             std::cerr << "Wrong RSA order file." << std::endl;
@@ -323,6 +325,44 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
     }while(!netFrag.is_open());
 }
 
+void InputOutput::LoadAccumNetFrag(std::ofstream& accumNetFrag) {
+unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        accumNetFrag.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/AccumNetFrag.txt");
+        
+        if(!accumNetFrag.is_open()){
+            std::cerr << "Wrong result file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!accumNetFrag.is_open());
+}
+
+void InputOutput::LoadFragBand(std::ofstream& fragBand) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        fragBand.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/FragBand.txt");
+        
+        if(!fragBand.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!fragBand.is_open());
+}
+
 void InputOutput::LoadLog(std::ofstream& log) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
@@ -378,27 +418,6 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
             std::cin.get();
         }
     }while(!slotsRelativeUse.is_open());
-}
-
-
-
-void InputOutput::LoadFragBand(std::ofstream& fragBand) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
-    
-    do{
-        fragBand.open("Files/Outputs/" + std::to_string(auxInt) 
-                     + "/FragBand.txt");
-        
-        if(!fragBand.is_open()){
-            std::cerr << "Wrong log file." << std::endl;
-            std::cerr << "The folder required is: " << auxInt 
-                      << "/" << std::endl;
-            std::cerr << "Add/Fix the folder, then press 'Enter'"
-                      << std::endl;
-            
-            std::cin.get();
-        }
-    }while(!fragBand.is_open());
 }
 
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
@@ -516,6 +535,11 @@ std::ofstream& InputOutput::GetNetUtilizFile() {
 std::ofstream& InputOutput::GetNetFragFile() {
     return netFragFile;
 }
+
+std::ofstream& InputOutput::GetAccumNetFragFile() {
+    return accumNetFragFile;
+}
+
 
 std::ofstream& InputOutput::GetFragBandFile() {
     return fragBand;

@@ -98,11 +98,15 @@ public:
      */
     void SaveNetFrag();
     
+    void SaveAccumNetFrag();
+    
+    void SaveFragTraffic();
+        
     void SaveLinksUse();
     
     void SaveSlotsRelativeUse();
     
-    void SaveFragTraffic();
+
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -264,6 +268,8 @@ private:
      */
     void SaveNetFrag(std::ostream& ostream);
     
+    void SaveAccumNetFrag(std::ostream& ostream);
+    
     void SaveBandFrag(std::ostream& ostream);
     
     void SaveLinksUse(std::ostream& ostream);
@@ -395,6 +401,12 @@ private:
      * @brief Network fragmentation ratio, the mean of all links fragmentation.
      */
     std::vector<double> netFragmentationRatio;
+
+    /**
+     * @brief Vector which accumulates all the Network fragmentation ratio
+     * measured between the event interval, the mean of all links fragmentation.
+     */
+    std::vector<std::vector<double>> accumNetFragmentationRatio;    
     
     std::vector<std::vector<std::pair<double, double>>> fragPerTraffic;
     
