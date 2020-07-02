@@ -55,6 +55,9 @@ void Routing::RoutingCall(Call* call) {
         case RoutingBSR:
             this->SetOfflineRouting(call);
             break;
+        case RoutingBSR_YEN:
+            this->SetOfflineRouting(call);
+            break;
         default:
             std::cerr << "Invalid routing option" << std::endl;
             std::abort();
@@ -365,6 +368,98 @@ void Routing::UpdateLinksUtiCosts(const double alpha) {
         }
     }
 }
+
+void Routing::BSR_YEN() {
+unsigned int numIt = 10;
+    const double alpha = 0.9999;
+    double bestBP = Def::Max_Double;
+    Resources* resources = this->resourceAlloc->GetResources();
+    std::vector<std::vector<std::shared_ptr<Route>>> bestRoutes(0);
+    data->SetActualIndex(0);
+    resourceAlloc->GetSimulType()->GetCallGenerator()->SetNetworkLoad(
+    parameters->GetMaxLoadPoint());
+    double numMaxReq = parameters->GetNumberReqMax();
+    parameters->SetNumberReqMax(1E5);
+    
+    for(unsigned int it = 1; it <= numIt; it++){
+        
+        //Update the links utilization and costs
+        if(it != 1)
+            this->UpdateLinksUtiCostsBSR_YEN(alpha);
+        
+        this->YEN();
+        resources->CreateOfflineModulation();
+        
+        //Run a simulation with the routes of this iteration
+        resourceAlloc->GetSimulType()->RunBase();
+        
+        //Calc the BP and keep the routes if it is better then the 
+        //previous best BP.
+        if(data->GetReqBP() < bestBP){
+            bestBP = data->GetReqBP();
+            bestRoutes = resources->GetRoutes();
+        }
+        data->Initialize();
+    }
+    
+    //Set the best set of routes
+    resources->SetRoutes(bestRoutes);
+    parameters->SetNumberReqMax(numMaxReq);
+}
+
+void Routing::UpdateLinksUtiCostsBSR_YEN(const double alpha) {
+unsigned int numNodes = topology->GetNumNodes();
+    std::vector<std::shared_ptr<Route>> auxRoute;
+    Link* auxLink;
+    double auxCost;
+    
+    //Clear all links utilization
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxLink = topology->GetLink(orN, deN);
+            
+            if(auxLink != nullptr)
+                auxLink->SetUtilization(0);
+        }
+    }
+    
+    //Update links utilization
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxRoute = resources->GetRoutes(orN, deN);
+            
+            for(unsigned int k = 0; k < auxRoute.size(); k++) {
+                for(unsigned int a = 0; a < auxRoute.at(k)->GetNumHops(); a++){
+                    auxLink = auxRoute.at(k)->GetLink(a);
+                    auxLink->SetUtilization(auxLink->GetUtilization() + 1);
+                }
+            }        
+        }
+    }
+    
+    //Update links costs
+    for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            
+            if(orN == deN)
+                continue;
+            auxLink = topology->GetLink(orN, deN);
+            
+            if(auxLink != nullptr){
+                auxCost = (alpha * (auxLink->GetCost())) +
+                          ((1-alpha) * ((double) auxLink->GetUtilization()));
+                auxLink->SetCost(auxCost);
+            }
+        }
+    }
+}
+
 
 void Routing::ProtectionDisjointYEN() {
 std::vector<std::shared_ptr<Route>> routes;

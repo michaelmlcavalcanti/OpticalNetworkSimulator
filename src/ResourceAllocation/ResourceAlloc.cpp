@@ -221,6 +221,8 @@ bool ResourceAlloc::IsOfflineRouting() {
         case RoutingYEN:
         case RoutingBSR:
             return true;
+        case RoutingBSR_YEN:
+            return true;
         default:
             return false;
     }
@@ -238,6 +240,10 @@ void ResourceAlloc::RoutingOffline() {
         case RoutingBSR:
             this->CreateRsaOrder();
             this->routing->BSR();
+            break;
+        case RoutingBSR_YEN:
+            this->CreateRsaOrder();
+            this->routing->BSR_YEN();
             break;
         default:
             std::cerr << "Invalid offline routing option" << std::endl;

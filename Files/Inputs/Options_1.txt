@@ -1,5 +1,5 @@
 1
-2
+4
 2
 1
 1
@@ -37,6 +37,7 @@
     1 - DJK
     2 - YEN
     3 - BSR
+    4 - BSR-YEN
 3-Spectral allocation algorithm
     0 - Invalid
     1 - Random

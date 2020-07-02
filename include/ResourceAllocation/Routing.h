@@ -107,7 +107,7 @@ public:
     std::vector<std::shared_ptr<Route>> YEN(NodeIndex orNode, NodeIndex deNode);
     /**
      * @brief Function to apply the BSR routing algorithm for all node pairs
-     * ini the network.
+     * in the network.
      */
     void BSR();
     /**
@@ -116,7 +116,21 @@ public:
      * @param alpha Constant close to 1.
      */
     void UpdateLinksUtiCosts(const double alpha);
-    
+    /**
+     * @brief Function to apply the BSR-YEN routing algorithm for all node pairs
+     * in the network.
+     */
+    void BSR_YEN();
+    /**
+     * @brief Function to update the links utilization for k shortest path  
+     * links in the network.
+     * @param alpha Constant close to 1.
+     */
+    void UpdateLinksUtiCostsBSR_YEN(const double alpha);
+    /**
+     * @brief YEN Disjoint (k-shortest path disjoint) routing algorithm for all
+     * source/destination node pairs in the topology used.
+     */
     void ProtectionDisjointYEN();
     
     std::vector<std::shared_ptr<Route>> ProtectionDisjointYEN(NodeIndex orNode, 
