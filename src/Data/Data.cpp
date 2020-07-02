@@ -338,10 +338,11 @@ double Data::GetAverageNetUtilization() const {
 void Data::UpdateFragmentationRatio(double ratio) {
     assert(ratio >= 0.0 && ratio <= 1.0);
     
+    accumNetFragmentationRatio.at(actualIndex).push_back(ratio);
     netFragmentationRatio.at(actualIndex) += ratio;
     netFragmentationRatio.at(actualIndex) /= 2;
-    accumNetFragmentationRatio.at(actualIndex).push_back(
-    netFragmentationRatio.at(actualIndex));
+ /* accumNetFragmentationRatio.at(actualIndex).push_back(
+    netFragmentationRatio.at(actualIndex)); */
 }
 
 double Data::GetNetworkFragmentationRatio() const {
