@@ -45,6 +45,8 @@ void Routing::Load() {
     
     if(routingOption == RoutingYEN)
         this->SetK(parameters->GetNumberRoutes());
+    else if (routingOption == RoutingBSR_YEN)
+        this->SetK(parameters->GetNumberRoutes());
 }
 
 void Routing::RoutingCall(Call* call) {
@@ -459,7 +461,6 @@ unsigned int numNodes = topology->GetNumNodes();
         }
     }
 }
-
 
 void Routing::ProtectionDisjointYEN() {
 std::vector<std::shared_ptr<Route>> routes;

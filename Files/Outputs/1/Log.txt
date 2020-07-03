@@ -35,33 +35,33 @@ Number of polarizations: 2
 Guard band size (slots): 0
 
 DATA
-Simulation time:4169.14  Real simul time: 9.39126  Number of requests:1e+06
-Load point:240  ReqBP:0.00509  SlotsBP:0.00846783  HopsMed:2.13867
-NetOcc:7.77538e+06  NetUti:0.346808 NetFrag:0.0892475
+Simulation time:4169.14  Real simul time: 9.57832  Number of requests:1e+06
+Load point:240  ReqBP:0.000439  SlotsBP:0.000745183  HopsMed:2.14729
+NetOcc:7.88325e+06  NetUti:0.351597 NetFrag:0.0966994
 
 
-Simulation time:3970.61  Real simul time: 9.59036  Number of requests:1e+06
-Load point:252  ReqBP:0.008017  SlotsBP:0.013316  HopsMed:2.13702
-NetOcc:7.72964e+06  NetUti:0.36198 NetFrag:0.103061
+Simulation time:3970.61  Real simul time: 9.67305  Number of requests:1e+06
+Load point:252  ReqBP:0.001085  SlotsBP:0.00184946  HopsMed:2.1503
+NetOcc:7.89225e+06  NetUti:0.369571 NetFrag:0.0971561
 
 
-Simulation time:3790.12  Real simul time: 9.75861  Number of requests:1e+06
-Load point:264  ReqBP:0.011817  SlotsBP:0.0195162  HopsMed:2.13474
-NetOcc:7.67044e+06  NetUti:0.376295 NetFrag:0.110774
+Simulation time:3790.12  Real simul time: 9.88074  Number of requests:1e+06
+Load point:264  ReqBP:0.002101  SlotsBP:0.00357508  HopsMed:2.15426
+NetOcc:7.90161e+06  NetUti:0.387675 NetFrag:0.110573
 
 
-Simulation time:3625.34  Real simul time: 9.79601  Number of requests:1e+06
-Load point:276  ReqBP:0.016613  SlotsBP:0.0273447  HopsMed:2.13191
-NetOcc:7.59613e+06  NetUti:0.389615 NetFrag:0.114223
+Simulation time:3625.34  Real simul time: 10.2889  Number of requests:1e+06
+Load point:276  ReqBP:0.003907  SlotsBP:0.00665008  HopsMed:2.15857
+NetOcc:7.90263e+06  NetUti:0.405258 NetFrag:0.117653
 
 
-Simulation time:3474.28  Real simul time: 9.79548  Number of requests:1e+06
-Load point:288  ReqBP:0.021775  SlotsBP:0.0358502  HopsMed:2.12879
-NetOcc:7.51515e+06  NetUti:0.40206 NetFrag:0.11418
+Simulation time:3474.28  Real simul time: 10.5529  Number of requests:1e+06
+Load point:288  ReqBP:0.006751  SlotsBP:0.0114858  HopsMed:2.1626
+NetOcc:7.8884e+06  NetUti:0.422216 NetFrag:0.123879
 
 
-Simulation time:3335.31  Real simul time: 9.79681  Number of requests:1e+06
-Load point:300  ReqBP:0.027832  SlotsBP:0.0456726  HopsMed:2.12546
-NetOcc:7.42382e+06  NetUti:0.413754 NetFrag:0.117451
+Simulation time:3335.31  Real simul time: 12.6244  Number of requests:1e+06
+Load point:300  ReqBP:0.010421  SlotsBP:0.017755  HopsMed:2.1664
+NetOcc:7.86118e+06  NetUti:0.438245 NetFrag:0.117966
 
 
