@@ -372,7 +372,7 @@ void Routing::UpdateLinksUtiCosts(const double alpha) {
 }
 
 void Routing::BSR_YEN() {
-unsigned int numIt = 10;
+unsigned int numIt = 100;
     const double alpha = 0.9999;
     double bestBP = Def::Max_Double;
     Resources* resources = this->resourceAlloc->GetResources();
