@@ -41,6 +41,8 @@ public:
      * @brief Load the ResourceAlloc.
      */
     void Load() override;
+    
+    void AdditionalSettings() override;
 
     /**
      * @brief Choose the type of resource allocation for a call, based on the 

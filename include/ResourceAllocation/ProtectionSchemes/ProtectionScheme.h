@@ -24,7 +24,9 @@ public:
     
     virtual ~ProtectionScheme();
     
-    virtual void ResourceAlloc(CallDevices* call) = 0;   
+    virtual void ResourceAlloc(CallDevices* call) = 0;
+    
+    virtual void CreateProtectionRoutes();
 protected:
     
     ResourceDeviceAlloc* resDevAlloc;

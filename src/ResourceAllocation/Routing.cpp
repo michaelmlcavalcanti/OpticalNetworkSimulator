@@ -43,9 +43,7 @@ void Routing::Load() {
     topology = resourceAlloc->GetTopology();
     resources = resourceAlloc->GetResources();
     
-    if(routingOption == RoutingYEN)
-        this->SetK(parameters->GetNumberRoutes());
-    else if (routingOption == RoutingBSR_YEN)
+    if(routingOption == RoutingYEN || routingOption == RoutingBSR_YEN)
         this->SetK(parameters->GetNumberRoutes());
 }
 
@@ -55,8 +53,6 @@ void Routing::RoutingCall(Call* call) {
         case RoutingDJK:
         case RoutingYEN:
         case RoutingBSR:
-            this->SetOfflineRouting(call);
-            break;
         case RoutingBSR_YEN:
             this->SetOfflineRouting(call);
             break;
@@ -441,7 +437,7 @@ unsigned int numNodes = topology->GetNumNodes();
                     auxLink = auxRoute.at(k)->GetLink(a);
                     auxLink->SetUtilization(auxLink->GetUtilization() + 1);
                 }
-            }        
+            }
         }
     }
     

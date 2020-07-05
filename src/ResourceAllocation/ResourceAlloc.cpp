@@ -79,12 +79,7 @@ void ResourceAlloc::AdditionalSettings() {
             this->SetNumInterRoutesToCheck();
         }
         
-        if(this->options->GetRegenerationOption() != RegenerationDisabled){
-            assert(options->GetPhyLayerOption() == PhyLayerEnabled);
-            assert(options->GetResourAllocOption() == ResourAllocRMSA);
-            this->resources->CreateRegenerationResources();
-        }
-        else if(options->GetResourAllocOption() == ResourAllocRMSA){
+        if(options->GetResourAllocOption() == ResourAllocRMSA){
             this->resources->CreateOfflineModulation();
             this->resources->Save(); //Retirar depois (Markov)
         }

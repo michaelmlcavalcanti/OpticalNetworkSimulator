@@ -40,9 +40,27 @@ void ResourceDeviceAlloc::Load() {
     if(options->GetRegenerationOption() != RegenerationDisabled)
         this->CreateRegeneratorAssignment();
     //Put a else? How proceed when the two options are enabled?
-    if (options->GetProtectionOption() != ProtectionDisable)
+    if(options->GetProtectionOption() != ProtectionDisable)
         this->CreateProtectionScheme();
 }
+
+void ResourceDeviceAlloc::AdditionalSettings() {
+    ResourceAlloc::AdditionalSettings();
+    
+    if(this->IsOfflineRouting()){
+        if(this->options->GetRegenerationOption() != RegenerationDisabled){
+            assert(options->GetPhyLayerOption() == PhyLayerEnabled);
+            assert(options->GetResourAllocOption() == ResourAllocRMSA);
+            this->resources->CreateRegenerationResources();
+        }
+    
+        // Put functions to create the offline
+        if(options->GetProtectionOption() != ProtectionDisable){
+            protScheme->CreateProtectionRoutes();
+        }
+    }
+}
+
 
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);

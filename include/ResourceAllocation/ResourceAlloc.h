@@ -62,7 +62,7 @@ public:
      * route container, creation of regenerator resources, creation of offline
      * modulations and the RSA order.
      */
-    void AdditionalSettings();
+    virtual void AdditionalSettings();
     
     /**
      * @brief Choose the type of resource allocation for a call, based on the 

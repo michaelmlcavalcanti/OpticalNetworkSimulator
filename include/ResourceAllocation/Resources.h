@@ -334,6 +334,7 @@ public:
      */
     std::vector<unsigned int> numSlotsTraffic;
     
+    
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
     protectionRoutes;
 private:
