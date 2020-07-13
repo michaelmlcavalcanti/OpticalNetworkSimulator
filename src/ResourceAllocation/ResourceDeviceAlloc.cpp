@@ -56,7 +56,7 @@ void ResourceDeviceAlloc::AdditionalSettings() {
     
         // Put functions to create the offline
         if(options->GetProtectionOption() != ProtectionDisable){
-            protScheme->CreateProtectionRoutes();
+           // protScheme->CreateProtectionRoutes();
         }
     }
 }

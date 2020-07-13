@@ -185,13 +185,14 @@ void SimulationType::SimulateNumTotalReq() {
         
         evt->ImplementEvent();
             
-        if(countEvent == 100 && fragOption != FragMetricDisabled){
+        if(fragOption != FragMetricDisabled && countEvent == 100){
             this->GetData()->UpdateFragmentationRatio(
             resourceAlloc->CalcNetworkFragmentation());
             countEvent = 0;
         }
         
-        if((this->GetData()->GetNumberAccSlots() / 1E9) > countBand){
+        if(fragOption != FragMetricDisabled && ((this->GetData()->
+            GetNumberAccSlots() / 1E9) > countBand)){
             double netFrag = resourceAlloc->CalcNetworkFragmentation();
             this->GetData()->SetBandFrag(countBand, netFrag);
             countBand += 1E8;
