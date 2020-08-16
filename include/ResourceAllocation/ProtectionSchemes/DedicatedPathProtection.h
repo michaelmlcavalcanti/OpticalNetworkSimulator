@@ -23,9 +23,21 @@ public:
 
     virtual ~DedicatedPathProtection();
     
+    
+       /**
+     * @brief Function which perform RSA for Working and protection paths 
+     * according with DDP scheme.
+     * @param Call vector which contain working and protection paths.
+     */
     void ResourceAlloc(CallDevices* call) override;
+    /**
+     * @brief Function which creates a protection route, using DPP, for each 
+     * working route defined by routing algorithm and stored in allRoutes vector.
+     */
+    virtual void CreateProtectionRoutes() override;
 private:
 
+   
 };
 
 #endif /* DEDICATEDPATHPROTECTION_H */

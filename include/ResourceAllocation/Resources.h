@@ -337,6 +337,14 @@ public:
     
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
     protectionRoutes;
+    
+    /**
+     * @brief Vector that contain the protection routes for each route of 
+     * vector allRoutes (working routes). This vector is made according of
+     * protected scheme choice.
+     */
+    std::vector<std::vector<std::shared_ptr<Route>>> protectionAllRoutes;
+    
 private:
     /**
      * @brief ResourceAlloc object that owns these resources.

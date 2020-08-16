@@ -21,3 +21,6 @@ ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
 ProtectionScheme::~ProtectionScheme() {
 }
 
+void ProtectionScheme::CheckProtectionAllocDisp() {
+
+}
