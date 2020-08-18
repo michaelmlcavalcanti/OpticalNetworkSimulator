@@ -210,7 +210,21 @@ public:
     unsigned int GetGuardBand() const;
 
     void SetGuardBand(unsigned int guardBand);
+  /**
+     * @brief Function to get Squeezing index (beta) used in the simulation with Protection 
+     * option enabled.
+     */
+    unsigned int GetBeta() const;
+  /**
+     * @brief Function to set Squeezing index (beta) used in the simulation with Protection 
+     * option enabled.
+     */
+    void SetBeta(unsigned int beta);
+  
 
+
+    
+    
 private:
     /**
      * @brief A pointer to the simulation this object belongs.
@@ -277,7 +291,11 @@ private:
     unsigned int numberPolarizations;
     
     unsigned int guardBand;
-    
+     /**
+     * @brief Squeezing index (beta) used in the simulation with Protection 
+     * option enabled.
+     */
+    unsigned int beta;
     /**
      * @brief Calculate the load step.
      */

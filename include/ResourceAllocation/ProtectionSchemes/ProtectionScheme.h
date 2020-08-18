@@ -17,12 +17,14 @@
 class CallDevices;
 class ResourceDeviceAlloc;
 
-
 #include "../Resources.h"
 #include "../Routing.h"
 #include "../Route.h"
 #include "../../Structure/Topology.h"
 #include "../ResourceDeviceAlloc.h"
+#include "../../Calls/Call.h"
+#include "../../Data/Parameters.h"
+#include "../Modulation.h"
 
 class ProtectionScheme {
 public:
@@ -41,17 +43,26 @@ public:
      */
     virtual void CreateProtectionRoutes() = 0;
     /**
-     * @brief Function which checks if the set of slots used to working and 
-     * Protection paths are coherent in terms of continuity and contiguity.
+     * @brief Function which create a container of calls for working and backup
+     * lightpaths.
      * 
      */
-    void CheckProtectionAllocDisp();
+    void CreateProtectionCalls(Call* call);
     
 protected:
     Resources* resources;
     ResourceDeviceAlloc* resDevAlloc;
     Routing* routing;
     Topology* topology;
+    Parameters* parameters;
+    Call* call;
+    Modulation* modulation;
+    unsigned int numProtRoutes;
+    /**
+     * @brief Container of call requests for working and backup lightpaths. 
+     * Used if the simulation make use of protection. 
+     */
+    std::vector<std::shared_ptr<Call>> protectionCalls;
 };
 
 #endif /* PROTECTIONSCHEME_H */

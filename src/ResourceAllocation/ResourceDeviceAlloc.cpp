@@ -70,6 +70,7 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     else if(options->GetTransponderOption() == TransponderEnabled)
         this->RoutingTransponderSpecAlloc(callDev);
     else if(options->GetProtectionOption() != ProtectionDisable)
+        protScheme->CreateProtectionCalls(call);
         protScheme->ResourceAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)

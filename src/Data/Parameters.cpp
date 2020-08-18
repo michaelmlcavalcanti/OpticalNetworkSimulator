@@ -306,3 +306,12 @@ void Parameters::SetGuardBand(unsigned int guardBand) {
     assert(guardBand < numberSlots);
     this->guardBand = guardBand;
 }
+
+unsigned int Parameters::GetBeta() const {
+    return beta;
+}
+
+void Parameters::SetBeta(unsigned int beta) {
+    this->beta = beta;
+}
+
