@@ -15,14 +15,15 @@
 #define PROTECTIONSCHEME_H
 
 class CallDevices;
+class Call;
 class ResourceDeviceAlloc;
 
+#include "../../Calls/Call.h"
 #include "../Resources.h"
 #include "../Routing.h"
 #include "../Route.h"
 #include "../../Structure/Topology.h"
 #include "../ResourceDeviceAlloc.h"
-#include "../../Calls/Call.h"
 #include "../../Data/Parameters.h"
 #include "../Modulation.h"
 
@@ -59,7 +60,8 @@ protected:
     Modulation* modulation;
     unsigned int numProtRoutes;
     /**
-     * @brief Container of call requests for working and backup lightpaths. 
+     * @brief Container of call requests for working (first position) and 
+     * backup lightpaths (another positions). 
      * Used if the simulation make use of protection. 
      */
     std::vector<std::shared_ptr<Call>> protectionCalls;

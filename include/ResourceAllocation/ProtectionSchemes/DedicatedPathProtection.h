@@ -14,7 +14,12 @@
 #ifndef DEDICATEDPATHPROTECTION_H
 #define DEDICATEDPATHPROTECTION_H
 
+class Call;
+
+
 #include "ProtectionScheme.h"
+
+
 
 class DedicatedPathProtection : public ProtectionScheme {
 public:
