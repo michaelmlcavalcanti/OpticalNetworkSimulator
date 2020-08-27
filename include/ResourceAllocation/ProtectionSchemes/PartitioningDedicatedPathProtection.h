@@ -5,29 +5,22 @@
  */
 
 /* 
- * File:   DedicatedPathProtection.h
+ * File:   PartitioningDedicatedPathProtection.h
  * Author: henrique
  *
- * Created on October 26, 2019, 9:36 AM
+ * Created on August 26, 2020, 4:44 PM
  */
 
-#ifndef DEDICATEDPATHPROTECTION_H
-#define DEDICATEDPATHPROTECTION_H
-
-class Call;
-
+#ifndef PARTITIONINGDEDICATEDPATHPROTECTION_H
+#define PARTITIONINGDEDICATEDPATHPROTECTION_H
 
 #include "ProtectionScheme.h"
 
-
-
-class DedicatedPathProtection : public ProtectionScheme {
+class PartitioningDedicatedPathProtection : public ProtectionScheme {
 public:
-    
-    DedicatedPathProtection(ResourceDeviceAlloc* rsa);
-
-    virtual ~DedicatedPathProtection();
-    
+        
+    PartitioningDedicatedPathProtection(ResourceDeviceAlloc* rsa);
+    virtual ~PartitioningDedicatedPathProtection();
     
       /**
      * @brief Function which creates protection disjoint routes for each 
@@ -42,17 +35,15 @@ public:
     void CreateProtectionCalls(Call* call) override;
        /**
      * @brief Function which perform RSA for Working and protection paths 
-     * according with DPP scheme.
+     * according with PDPP scheme.
      * @param Call vector which contain working and protection paths.
      */
     void ResourceAlloc(CallDevices* call) override;
-      
-   
-private:
-
-   
+        
+    private:
+        
+        
 };
 
-#endif /* DEDICATEDPATHPROTECTION_H */
+#endif /* PARTITIONINGDEDICATEDPATHPROTECTION_H */
 
-    

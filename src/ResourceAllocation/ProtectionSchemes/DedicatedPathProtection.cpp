@@ -19,6 +19,9 @@
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/ResourceAllocation/Routing.h"
 #include "../../../include/ResourceAllocation/Modulation.h"
+#include "../../../include/Calls/Call.h"
+#include "../../../include/Data/Parameters.h"
+#include "math.h" 
 
 
 DedicatedPathProtection::DedicatedPathProtection(ResourceDeviceAlloc* rsa) :
@@ -29,6 +32,7 @@ ProtectionScheme(rsa) {
 DedicatedPathProtection::~DedicatedPathProtection() {
     
 }
+
 
 void DedicatedPathProtection::CreateProtectionRoutes() {
     routing->ProtectionDisjointYEN();
@@ -54,30 +58,48 @@ void DedicatedPathProtection::CreateProtectionRoutes() {
     }*/
 }
 
+void DedicatedPathProtection::CreateProtectionCalls(Call* call) {
+    std::shared_ptr<Call> auxCall;
+    numProtRoutes = 2;
+    
+    for(unsigned a = 1; numProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(), 
+        call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
+        protectionCalls.push_back(auxCall); 
+        
+            if(parameters->GetBeta() != 0){
+                double protBitRate = ceil ((1 - parameters->GetBeta()) * 
+                auxCall->GetBitRate());
+                auxCall->SetBitRate(protBitRate);
+                protectionCalls.push_back(auxCall); 
+                break;
+            }     
+    }
+}
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
-    unsigned int numRoutes = this->call->GetNumRoutes();
     std::shared_ptr<Call> callWork = protectionCalls.front();
-    std::shared_ptr<Call> callBackup = protectionCalls.back();
+    std::shared_ptr<Call> callBackup = protectionCalls.back();    
+    unsigned int numRoutes = this->call->GetNumRoutes();
     unsigned int orN = this->call->GetOrNode()->GetNodeId();
     unsigned int deN = this->call->GetDeNode()->GetNodeId();
     unsigned int numNodes = this->topology->GetNumNodes();
     unsigned int nodePairIndex = orN * numNodes + deN;
-    //std::deque<std::shared_ptr<Route>> trialProtRoutes;
-    //std::vector<std::shared_ptr<Route>> trialProtRoutes = resources->protectionRoutes.at(nodePairIndex).at(numRoutes);
     bool allocFound = false;
     const unsigned int topNumSlots = topology->GetNumSlots();
     std::vector<unsigned int> possibleSlots(0);
     possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
     unsigned int auxSlot;
     
-    for(unsigned int a = 0; a < numRoutes; a++){
+    for(unsigned int a = 0; a < numRoutes; a++){        
         callWork->SetRoute(this->call->GetRoute(a));
         callWork->SetModulation(this->call->GetModulation(a));
         //this->modulation->SetModulationParam(callWork);        
         
-        for(unsigned int b = 0; b < numProtRoutes; b++) {
-            callBackup->SetRoute(resources->protectionRoutes.at(nodePairIndex).at(a).at(b));
+        for(unsigned int b = 0; b < resources->protectionRoutes.at
+            (nodePairIndex).at(a).size(); b++) {            
+            callBackup->SetRoute(resources->protectionRoutes.at
+            (nodePairIndex).at(a).at(b));
             callBackup->SetModulation(this->call->GetModulation(b));
            // this->modulation->SetModulationParam(callBackup);
             

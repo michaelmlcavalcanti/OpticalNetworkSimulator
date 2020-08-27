@@ -170,6 +170,7 @@
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
+      <itemPath>include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -265,6 +266,7 @@
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
+      <itemPath>src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -589,6 +591,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
             ex="false"
             tool="3"
@@ -814,6 +821,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1232,6 +1244,11 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
             ex="false"
             tool="3"
@@ -1457,6 +1474,11 @@
             flavor2="0">
       </item>
       <item path="src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp"
             ex="false"
             tool="1"
             flavor2="0">

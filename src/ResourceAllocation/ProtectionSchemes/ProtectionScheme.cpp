@@ -23,21 +23,3 @@ ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
 
 ProtectionScheme::~ProtectionScheme() {
 }
-
-void ProtectionScheme::CreateProtectionCalls(Call* call) {
-    std::shared_ptr<Call> auxCall;
-    
-    for(unsigned a = 0; numProtRoutes+1; a++){
-        auxCall = std::make_shared<Call>(call->GetOrNode(), 
-        call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-        auxCall->SetRoute(a);
-        protectionCalls.push_back(auxCall); 
-        
-            if(parameters->GetBeta() != 0){
-                double protBitRate = ceil (parameters->GetBeta() * call->GetBitRate());
-                call->SetBitRate(protBitRate);
-            }                     
-    }
-    double workBitRate = protectionCalls.front()->GetBitRate();
-    call->SetBitRate(workBitRate);
-}

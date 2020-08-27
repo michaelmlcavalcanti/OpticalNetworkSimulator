@@ -65,6 +65,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ResourceAllocation/CSA.o \
 	${OBJECTDIR}/src/ResourceAllocation/Modulation.o \
 	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o \
+	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.o \
 	${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/DRE2BR.o \
 	${OBJECTDIR}/src/ResourceAllocation/RegeneratorAssignment/FirstLongestReach.o \
@@ -272,6 +273,11 @@ ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o:
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.o src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+
+${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.o: src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Wall -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.o src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp
 
 ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.o: src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ResourceAllocation/ProtectionSchemes

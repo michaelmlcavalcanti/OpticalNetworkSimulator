@@ -55,7 +55,7 @@ Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0), maxLoadPoint(0.0), 
 loadPasso(0.0), numberLoadPoints(0), numberReqMax(0.0), mu(0.0), 
 numberBloqMax(0), slotBandwidth(0.0), numberSlots(0), numberCores(0), 
-maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0) {
+maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0), beta(0) {
     
 }
 

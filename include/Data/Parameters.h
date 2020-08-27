@@ -295,7 +295,7 @@ private:
      * @brief Squeezing index (beta) used in the simulation with Protection 
      * option enabled.
      */
-    unsigned int beta;
+    double beta;
     /**
      * @brief Calculate the load step.
      */

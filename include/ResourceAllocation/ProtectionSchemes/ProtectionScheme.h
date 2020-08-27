@@ -48,7 +48,7 @@ public:
      * lightpaths.
      * 
      */
-    void CreateProtectionCalls(Call* call);
+    virtual void CreateProtectionCalls(Call* call) = 0;
     
 protected:
     Resources* resources;
@@ -58,6 +58,9 @@ protected:
     Parameters* parameters;
     Call* call;
     Modulation* modulation;
+       /**
+     * @brief Total number of routes (W + B) in the protection scheme. 
+     */
     unsigned int numProtRoutes;
     /**
      * @brief Container of call requests for working (first position) and 
