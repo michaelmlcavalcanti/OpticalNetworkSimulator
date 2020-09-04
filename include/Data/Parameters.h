@@ -211,17 +211,27 @@ public:
 
     void SetGuardBand(unsigned int guardBand);
   /**
-     * @brief Function to get Squeezing index (beta) used in the simulation with Protection 
-     * option enabled.
+     * @brief Function to get Squeezing index (beta) used in the simulation 
+     * with Protection option enabled.
      */
     unsigned int GetBeta() const;
   /**
-     * @brief Function to set Squeezing index (beta) used in the simulation with Protection 
-     * option enabled.
+     * @brief Function to set Squeezing index (beta) used in the simulation
+     * with Protection option enabled.
      */
-    void SetBeta(unsigned int beta);
-  
-
+    void SetBeta(double beta);
+   /**
+     * @brief Function to get the number of protection routes for each one 
+     * k-working routes.
+     * @return Number of protection routes.
+     */
+    unsigned int GetNumberProtectionRoutes() const;
+    /**
+     * @brief Function to set the number of of protection routes for each one 
+     * k-working routes.
+     * @param numberProtectionRoutes Number of protection routes.
+     */
+    void SetNumberProtectionRoutes(unsigned int numberProtectionRoutes);
 
     
     
@@ -296,6 +306,12 @@ private:
      * option enabled.
      */
     double beta;
+    /**
+     * @brief Number of protection routes for each one k-working routes. 
+     * This parameter is used for more than one protection route available 
+     * per network node pair.
+     */
+    unsigned int numberProtectionRoutes;
     /**
      * @brief Calculate the load step.
      */

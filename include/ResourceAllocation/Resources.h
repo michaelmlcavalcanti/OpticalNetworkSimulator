@@ -334,16 +334,14 @@ public:
      */
     std::vector<unsigned int> numSlotsTraffic;
     
-    
-    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
-    protectionRoutes;
-    
-    /**
-     * @brief Vector that contain the protection routes for each route of 
+        /**
+     * @brief Vector that contain Kd protection routes for each one k route of 
      * vector allRoutes (working routes). This vector is made according of
      * protected scheme choice.
      */
-    std::vector<std::vector<std::shared_ptr<Route>>> protectionAllRoutes;
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
+    protectionRoutes;
+    
     
 private:
     /**

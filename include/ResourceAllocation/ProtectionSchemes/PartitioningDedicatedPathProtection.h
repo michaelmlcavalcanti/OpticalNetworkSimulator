@@ -32,7 +32,7 @@ public:
      * lightpaths.
      * 
      */
-    void CreateProtectionCalls(Call* call) override;
+    void CreateProtectionCalls(CallDevices* call) override;
        /**
      * @brief Function which perform RSA for Working and protection paths 
      * according with PDPP scheme.

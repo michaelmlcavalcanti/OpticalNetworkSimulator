@@ -104,6 +104,12 @@ void Parameters::Load() {
     std::cout << "Insert the guard band size (slots): ";
     std::cin >> auxUnsInt;
     this->SetGuardBand(auxUnsInt);
+    std::cout << "Insert the Protection Squeezing Beta: ";
+    std::cin >> auxUnsInt;
+    this->SetBeta(auxUnsInt);
+    std::cout << "Insert the value for K Protection Routes: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberProtectionRoutes(auxUnsInt);
     
     this->SetLoadPointUniform();
     
@@ -140,6 +146,10 @@ void Parameters::LoadFile() {
     this->SetNumberPolarizations(auxInt);
     auxIfstream >> auxInt;
     this->SetGuardBand(auxInt);
+    auxIfstream >> auxDouble;
+    this->SetBeta(auxDouble);
+    auxIfstream >> auxInt;
+    this->SetNumberProtectionRoutes(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -311,7 +321,19 @@ unsigned int Parameters::GetBeta() const {
     return beta;
 }
 
-void Parameters::SetBeta(unsigned int beta) {
+void Parameters::SetBeta(double beta) {
+    assert(beta >= 0 && beta <=1);
+    
     this->beta = beta;
+}
+
+unsigned int Parameters::GetNumberProtectionRoutes() const {
+    return numberProtectionRoutes;
+}
+
+void Parameters::SetNumberProtectionRoutes(unsigned int numberProtectionRoutes) {
+    assert(numberProtectionRoutes > 0);
+    
+    this->numberProtectionRoutes = numberProtectionRoutes;
 }
 

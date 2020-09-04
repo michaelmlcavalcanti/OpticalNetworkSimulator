@@ -19,7 +19,7 @@
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/ResourceAllocation/Routing.h"
 #include "../../../include/ResourceAllocation/Modulation.h"
-#include "../../../include/Calls/Call.h"
+#include "../../../include/Calls/CallDevices.h"
 #include "../../../include/Data/Parameters.h"
 #include "math.h" 
 
@@ -35,54 +35,34 @@ DedicatedPathProtection::~DedicatedPathProtection() {
 
 
 void DedicatedPathProtection::CreateProtectionRoutes() {
-    routing->ProtectionDisjointYEN();
-    /*std::shared_ptr<Route> auxRoute;
-    unsigned int orN, deN; 
-    resources->protectionAllRoutes.resize(resources->allRoutes.size());
-    
-    //creating protectionAllroutes vector (prot.) from allRoutes vector (work)
-    for (int it = 0; it < resources->allRoutes.size(); it++){        
-        
-       for (int k = 0 ; this->resources->allRoutes.at(it).size(); k++){
-            auxRoute = resources->allRoutes.at(it).at(k);
-            orN = resources->allRoutes.at(it).at(k).get()->GetPath().front();
-            deN = resources->allRoutes.at(it).at(k).get()->GetPath().back();
-            
-            if(auxRoute != nullptr){   
-                resDevAlloc->DisableRouteLinks(auxRoute.get());
-                resources->protectionAllRoutes.at(it).at(k) = 
-                routing->Dijkstra(orN , deN);
-                topology->SetAllLinksWorking();   
-            } 
-        } 
-    }*/
+    routing->ProtectionDisjointYEN(); 
 }
 
-void DedicatedPathProtection::CreateProtectionCalls(Call* call) {
+void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     std::shared_ptr<Call> auxCall;
     numProtRoutes = 2;
     
     for(unsigned a = 1; numProtRoutes; a++){
         auxCall = std::make_shared<Call>(call->GetOrNode(), 
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-        protectionCalls.push_back(auxCall); 
-        
+        calldevices->GetTranspSegmentsVec().push_back(auxCall);
             if(parameters->GetBeta() != 0){
                 double protBitRate = ceil ((1 - parameters->GetBeta()) * 
-                auxCall->GetBitRate());
-                auxCall->SetBitRate(protBitRate);
-                protectionCalls.push_back(auxCall); 
-                break;
-            }     
+                call->GetBitRate());
+                call->SetBitRate(protBitRate);
+            }  
     }
+    double workBitRate = protectionCalls.front()->GetBitRate();
+    call->SetBitRate(workBitRate);    
 }
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
-    std::shared_ptr<Call> callWork = protectionCalls.front();
+    resDevAlloc->RoutingContProtectionSpecAlloc(call);
+ /*   std::shared_ptr<Call> callWork = protectionCalls.front();
     std::shared_ptr<Call> callBackup = protectionCalls.back();    
-    unsigned int numRoutes = this->call->GetNumRoutes();
-    unsigned int orN = this->call->GetOrNode()->GetNodeId();
-    unsigned int deN = this->call->GetDeNode()->GetNodeId();
+    unsigned int numRoutes = call->GetNumRoutes();
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
     unsigned int numNodes = this->topology->GetNumNodes();
     unsigned int nodePairIndex = orN * numNodes + deN;
     bool allocFound = false;
@@ -124,9 +104,9 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
                     callWork->SetLastSlot(auxSlot + callWork->GetNumberSlots() - 1);
                     callBackup->SetFirstSlot(auxSlot);
                     callBackup->SetLastSlot(auxSlot + callBackup->GetNumberSlots() - 1);
-                    this->call->ClearTrialModulations();
-                    this->call->ClearTrialRoutes();
-                    this->call->SetStatus(Accepted);
+                    call->ClearTrialModulations();
+                    call->ClearTrialRoutes();
+                    call->SetStatus(Accepted);
                     allocFound = true;
                     break;
                 }
@@ -140,6 +120,6 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
         }
         if(allocFound)
             break;    
-    }
+    }*/
     
 }

@@ -36,7 +36,7 @@ void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
  routing->ProtectionDisjointYEN();
 }
 
-void PartitioningDedicatedPathProtection::CreateProtectionCalls(Call* call) {
+void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
  std::shared_ptr<Call> auxCall;
     numProtRoutes = 3;
     

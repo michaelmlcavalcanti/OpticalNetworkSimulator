@@ -15,10 +15,9 @@
 #define PROTECTIONSCHEME_H
 
 class CallDevices;
-class Call;
 class ResourceDeviceAlloc;
 
-#include "../../Calls/Call.h"
+#include "../../Calls/CallDevices.h"
 #include "../Resources.h"
 #include "../Routing.h"
 #include "../Route.h"
@@ -48,7 +47,7 @@ public:
      * lightpaths.
      * 
      */
-    virtual void CreateProtectionCalls(Call* call) = 0;
+    virtual void CreateProtectionCalls(CallDevices* call) = 0;
     
 protected:
     Resources* resources;
@@ -56,7 +55,9 @@ protected:
     Routing* routing;
     Topology* topology;
     Parameters* parameters;
+    CallDevices* calldevices;
     Call* call;
+    
     Modulation* modulation;
        /**
      * @brief Total number of routes (W + B) in the protection scheme. 

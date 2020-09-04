@@ -63,6 +63,9 @@ public:
     
     void RoutingTransponderSpecAlloc(CallDevices* call);
     
+    void RoutingContProtectionSpecAlloc(CallDevices* call);
+    
+    void RoutingNocontProtectionSpecAlloc(CallDevices* call);
     
     RegeneratorAssignment* GetRegeneratorAssignment() const;
 private:

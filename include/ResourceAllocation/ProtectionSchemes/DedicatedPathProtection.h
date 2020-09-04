@@ -14,7 +14,7 @@
 #ifndef DEDICATEDPATHPROTECTION_H
 #define DEDICATEDPATHPROTECTION_H
 
-class Call;
+class CallDevices;
 
 
 #include "ProtectionScheme.h"
@@ -39,7 +39,7 @@ public:
      * lightpaths.
      * 
      */
-    void CreateProtectionCalls(Call* call) override;
+    void CreateProtectionCalls(CallDevices* call) override;
        /**
      * @brief Function which perform RSA for Working and protection paths 
      * according with DPP scheme.

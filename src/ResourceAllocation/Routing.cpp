@@ -459,11 +459,13 @@ unsigned int numNodes = topology->GetNumNodes();
 }
 
 void Routing::ProtectionDisjointYEN() {
-std::vector<std::shared_ptr<Route>> routes;
+    
+    std::vector<std::shared_ptr<Route>> routes;
     unsigned int numNodes = this->topology->GetNumNodes();
     unsigned int numRoutes;
     unsigned int nodePairIndex;
     resources->protectionRoutes.resize(resources->allRoutes.size());
+    Kd = parameters->GetNumberProtectionRoutes();
     
     for(unsigned int orN = 0; orN < numNodes; orN++){
         for(unsigned int deN = 0; deN < numNodes; deN++){
@@ -491,6 +493,7 @@ std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex or
 NodeIndex deNode, RouteIndex routeIndex) {
     unsigned int numNodes = topology->GetNumNodes();
     unsigned int nodePairIndex = orNode * numNodes + deNode;
+    Kd = parameters->GetNumberProtectionRoutes();
     std::shared_ptr<Route> orRoute = resources->allRoutes.at(nodePairIndex)
     .at(routeIndex);
     std::shared_ptr<Route> auxRoute;

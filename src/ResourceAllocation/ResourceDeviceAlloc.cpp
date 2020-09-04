@@ -70,7 +70,6 @@ void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     else if(options->GetTransponderOption() == TransponderEnabled)
         this->RoutingTransponderSpecAlloc(callDev);
     else if(options->GetProtectionOption() != ProtectionDisable)
-        protScheme->CreateProtectionCalls(call);
         protScheme->ResourceAlloc(callDev);
     
     if(call->GetStatus() == NotEvaluated)
@@ -170,6 +169,14 @@ void ResourceDeviceAlloc::RoutingTransponderSpecAlloc(CallDevices* call) {
         }
     }
     call->ClearTrialRoutes();
+}
+
+void ResourceDeviceAlloc::RoutingContProtectionSpecAlloc(CallDevices* call) {
+
+}
+
+void ResourceDeviceAlloc::RoutingNocontProtectionSpecAlloc(CallDevices* call) {
+
 }
 
 RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {
