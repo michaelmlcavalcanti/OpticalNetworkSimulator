@@ -57,8 +57,9 @@ std::vector<Call*> CallDevices::GetTranspSegments() {
     return calls;
 }
 
-std::vector<std::shared_ptr<Call>> CallDevices::GetTranspSegmentsVec() {
-    return transpSegments;
+void CallDevices::SetTranspSegments(std::vector<std::shared_ptr<Call> > 
+transpSeg) {
+    transpSegments = transpSeg;
 }
 
 unsigned int CallDevices::GetTotalNumSlots() const {

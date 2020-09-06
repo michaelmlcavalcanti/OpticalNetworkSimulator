@@ -161,9 +161,9 @@ const {
 }
 
 std::vector<std::shared_ptr<Route> > Resources::GetProtRoutes(unsigned int orN, 
-    unsigned int deN, unsigned int route) {
+    unsigned int deN, unsigned int routeInd) {
     return protectionRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes()
-    + deN).at(route);
+    + deN).at(routeInd);
 }
 
 void Resources::SetRoutes(std::vector<std::vector<

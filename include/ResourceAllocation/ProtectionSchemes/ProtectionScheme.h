@@ -55,8 +55,6 @@ protected:
     Routing* routing;
     Topology* topology;
     Parameters* parameters;
-    CallDevices* calldevices;
-    Call* call;
     
     Modulation* modulation;
        /**

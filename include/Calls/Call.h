@@ -366,7 +366,7 @@ private:
      * @brief Container of possible routes to allocate the call request.
      */
     std::deque<std::shared_ptr<Route>> trialRoutes;
-        /**
+    /**
      * @brief Container of possible protection routes to each working route to  
      * allocate the call request.
      */

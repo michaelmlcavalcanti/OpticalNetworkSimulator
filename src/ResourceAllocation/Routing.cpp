@@ -69,7 +69,7 @@ void Routing::SetOfflineRouting(Call* call) {
     call->PushTrialRoutes(resources->GetRoutes(orNode, deNode));
     
     if(resourceAlloc->options->GetProtectionOption() != ProtectionDisable)
-        for(int route = 1; call->GetNumRoutes(); route++ ){
+        for(int route = 1; call->GetNumRoutes(); route++ ){            
             call->PushTrialProtRoutes(resources->GetProtRoutes(orNode, deNode, 
             route));
         }

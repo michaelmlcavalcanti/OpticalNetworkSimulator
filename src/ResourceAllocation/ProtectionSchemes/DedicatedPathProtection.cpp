@@ -33,33 +33,33 @@ DedicatedPathProtection::~DedicatedPathProtection() {
     
 }
 
-
 void DedicatedPathProtection::CreateProtectionRoutes() {
     routing->ProtectionDisjointYEN(); 
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
     numProtRoutes = 2;
     
     for(unsigned a = 1; numProtRoutes; a++){
         auxCall = std::make_shared<Call>(call->GetOrNode(), 
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-        calldevices->GetTranspSegmentsVec().push_back(auxCall);
-            if(parameters->GetBeta() != 0){
-                double protBitRate = ceil ((1 - parameters->GetBeta()) * 
-                call->GetBitRate());
-                call->SetBitRate(protBitRate);
-            }  
+        auxVec.push_back(auxCall);
+        
+        if(parameters->GetBeta() != 0 && auxVec.size() > 1){
+            double protBitRate = ceil ((1 - parameters->GetBeta()) * 
+            call->GetBitRate());
+            auxCall->SetBitRate(protBitRate);
+        }
     }
-    double workBitRate = calldevices->GetTranspSegmentsVec().front()->GetBitRate();
-    call->SetBitRate(workBitRate);    
+    call->SetTranspSegments(auxVec);
 }
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
     resDevAlloc->RoutingContProtectionSpecAlloc(call);
- /*   std::shared_ptr<Call> callWork = protectionCalls.front();
-    std::shared_ptr<Call> callBackup = protectionCalls.back();    
+    std::shared_ptr<Call> callWork = protectionCalls.front();
+    std::shared_ptr<Call> callBackup = protectionCalls.back();
     unsigned int numRoutes = call->GetNumRoutes();
     unsigned int orN = call->GetOrNode()->GetNodeId();
     unsigned int deN = call->GetDeNode()->GetNodeId();
@@ -71,17 +71,18 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
     possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
     unsigned int auxSlot;
     
-    for(unsigned int a = 0; a < numRoutes; a++){        
-        callWork->SetRoute(this->call->GetRoute(a));
-        callWork->SetModulation(this->call->GetModulation(a));
-        //this->modulation->SetModulationParam(callWork);        
+    for(unsigned int a = 0; a < numRoutes; a++){
+        callWork->SetRoute(call->GetRoute(a));
+        callWork->SetModulation(call->GetModulation(a));
         
         for(unsigned int b = 0; b < resources->protectionRoutes.at
-            (nodePairIndex).at(a).size(); b++) {            
+            (nodePairIndex).at(a).size(); b++) {
             callBackup->SetRoute(resources->protectionRoutes.at
             (nodePairIndex).at(a).at(b));
-            callBackup->SetModulation(this->call->GetModulation(b));
-           // this->modulation->SetModulationParam(callBackup);
+            callBackup->SetModulation(call->GetModulation(b));
+            
+            // Calculate the number of slots for the vector of calls
+            this->modulation->SetModulationParam(call);
             
             for(unsigned int c = 0; c < possibleSlots.size(); c++){
                 auxSlot = possibleSlots.at(c);
@@ -120,6 +121,6 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
         }
         if(allocFound)
             break;    
-    }*/
+    }
     
 }

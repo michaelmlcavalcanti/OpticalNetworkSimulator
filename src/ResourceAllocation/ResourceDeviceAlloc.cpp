@@ -61,7 +61,6 @@ void ResourceDeviceAlloc::AdditionalSettings() {
     }
 }
 
-
 void ResourceDeviceAlloc::ResourAlloc(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     

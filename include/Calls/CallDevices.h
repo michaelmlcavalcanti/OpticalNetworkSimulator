@@ -58,11 +58,8 @@ public:
      * @return 
      */
     std::vector<Call*> GetTranspSegments();
-    /**
-     * @brief Function to get the own container of the transparent segments
-     * @return 
-     */
-    std::vector<std::shared_ptr<Call>> GetTranspSegmentsVec();
+    
+    void SetTranspSegments(std::vector<std::shared_ptr<Call>> transpSeg);
     /**
      * @brief Function to get the total number of slots occupied by the 
      * lightpath.
