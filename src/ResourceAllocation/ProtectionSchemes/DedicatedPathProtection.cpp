@@ -52,7 +52,7 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
                 call->SetBitRate(protBitRate);
             }  
     }
-    double workBitRate = protectionCalls.front()->GetBitRate();
+    double workBitRate = calldevices->GetTranspSegmentsVec().front()->GetBitRate();
     call->SetBitRate(workBitRate);    
 }
 

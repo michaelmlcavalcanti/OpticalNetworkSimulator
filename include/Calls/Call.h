@@ -246,6 +246,12 @@ public:
      */
     void PushTrialRoutes(std::vector<std::shared_ptr<Route>> routes);
     /**
+     * @brief Function to set a container of possible protection routes for  
+     * each working route to allocate the call request.
+     * @param protection routes Call request possible routes.
+     */
+    void PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> protRoutes);  
+    /**
      * @brief Function to clear the container of possible routes to allocate
      * the call request.
      */
@@ -364,7 +370,7 @@ private:
      * @brief Container of possible protection routes to each working route to  
      * allocate the call request.
      */
-    std::deque<std::shared_ptr<Route>> ProtectiontrialRoutes;
+    std::deque<std::shared_ptr<Route>> trialProtRoutes;
     
     /**
      * @brief Map that keeps the Events options 

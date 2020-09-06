@@ -160,6 +160,12 @@ const {
     return allRoutes;
 }
 
+std::vector<std::shared_ptr<Route> > Resources::GetProtRoutes(unsigned int orN, 
+    unsigned int deN, unsigned int route) {
+    return protectionRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes()
+    + deN).at(route);
+}
+
 void Resources::SetRoutes(std::vector<std::vector<
 std::shared_ptr<Route> > > allRoutes) {
     this->allRoutes = allRoutes;

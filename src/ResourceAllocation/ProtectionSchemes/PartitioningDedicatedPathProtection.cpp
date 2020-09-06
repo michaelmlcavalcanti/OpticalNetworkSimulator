@@ -45,7 +45,7 @@ void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* cal
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
         double workBitRate = ceil (call->GetBitRate() / numProtRoutes);   
         auxCall->SetBitRate(workBitRate);
-        protectionCalls.push_back(auxCall); 
+        calldevices->GetTranspSegmentsVec().push_back(auxCall); 
         
             if(a = numProtRoutes && parameters->GetBeta() != 0){
                 double protBitRate = ceil ((1 - parameters->GetBeta()) * 

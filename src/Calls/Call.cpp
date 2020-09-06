@@ -206,6 +206,14 @@ void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
     routes.clear();
 }
 
+void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route> > protRoutes) {
+    for(auto it : protRoutes)
+        if(it != nullptr)
+            this->trialProtRoutes.push_back(it);
+    protRoutes.clear();
+}
+
+
 void Call::ClearTrialRoutes() {
     
     while(!this->trialRoutes.empty()){

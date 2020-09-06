@@ -104,6 +104,18 @@ public:
     std::vector<std::shared_ptr<Route>> GetRoutes(unsigned int orN,
                                                   unsigned int deN);
     /**
+     * @brief Function that returns a container of protection routes of a 
+     * specified working route of a node pair.
+     * @param orN Source node.
+     * @param deN Destination node.
+     * @param route
+     * @return Vector of routes.
+     */
+    std::vector<std::shared_ptr<Route>> GetProtRoutes(unsigned int orN,
+                                                  unsigned int deN,
+                                                  unsigned int route);
+    
+    /**
      * @brief Function to get the container of routes of all network node
      * pairs.
      * @return Container with all routes.
