@@ -27,7 +27,7 @@ Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
 :allRoutes(0), interRoutes(0), numInterRoutesToCheck(0), 
 subRoutes(0), numReg(0), numSlots(0), numSlotsPerSubRoute(0), 
 subRoutesModulation(0), resourceAllocOrder(0), numSlotsTraffic(0), 
-protectionRoutes(0), resourceAlloc(resourceAlloc), modulation(modulation) {
+protectionAllRoutes(0), resourceAlloc(resourceAlloc), modulation(modulation) {
     
 }
 
@@ -162,7 +162,7 @@ const {
 
 std::vector<std::shared_ptr<Route> > Resources::GetProtRoutes(unsigned int orN, 
     unsigned int deN, unsigned int routeInd) {
-    return protectionRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes()
+    return protectionAllRoutes.at(orN*resourceAlloc->GetTopology()->GetNumNodes()
     + deN).at(routeInd);
 }
 

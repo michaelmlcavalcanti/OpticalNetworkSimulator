@@ -22,6 +22,7 @@ class Node;
 class SimulationType;
 class Route;
 class Topology;
+class Resources;
 
 #include "../Structure/Link.h"
 #include "EventGenerator.h"
@@ -218,6 +219,16 @@ public:
      */
     std::shared_ptr<Route> GetRoute(unsigned int index) const;
     /**
+     * @brief Function to get a specified protection route of the possible 
+     * protection routes of a specified working route.
+     * @param routeIndex working route index, protRouteIndex protection route
+     * index.
+     * @return Call request possible route.
+     */
+    std::shared_ptr<Route> GetProtRoute(unsigned int routeIndex , 
+    unsigned int protRouteIndex) const;
+    
+    /**
      * @brief Function to get the number of routes the call can be allocated.
      * @return Number of routes.
      */
@@ -250,12 +261,17 @@ public:
      * each working route to allocate the call request.
      * @param protection routes Call request possible routes.
      */
-    void PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> protRoutes);  
+    void PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes);  
     /**
      * @brief Function to clear the container of possible routes to allocate
      * the call request.
      */
     void ClearTrialRoutes();
+    /**
+     * @brief Function to clear the container of possible protection routes 
+     * to allocate the call request.
+     */
+    void ClearTrialProtRoutes();
     /**
      * @brief Function to set the modulation format container of possible
      * modulation formats of the call request.
@@ -370,7 +386,8 @@ private:
      * @brief Container of possible protection routes to each working route to  
      * allocate the call request.
      */
-    std::deque<std::shared_ptr<Route>> trialProtRoutes;
+    std::deque<std::deque<std::shared_ptr<Route>>> trialProtRoutes;
+    Resources* resources;
     
     /**
      * @brief Map that keeps the Events options 
@@ -378,6 +395,7 @@ private:
      */
     static const boost::unordered_map<CallStatus,
     std::string> mapCallStatus;
+    
 };
 
 #endif /* CALL_H */

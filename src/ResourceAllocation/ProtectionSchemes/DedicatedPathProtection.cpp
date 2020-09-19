@@ -38,27 +38,30 @@ void DedicatedPathProtection::CreateProtectionRoutes() {
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
+    call->GetTranspSegments().clear();
     std::shared_ptr<Call> auxCall;
     std::vector<std::shared_ptr<Call>> auxVec(0);
-    numProtRoutes = 2;
+    numSchProtRoutes = 2;
     
-    for(unsigned a = 1; numProtRoutes; a++){
+    for(unsigned a = 1; numSchProtRoutes; a++){
         auxCall = std::make_shared<Call>(call->GetOrNode(), 
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-        auxVec.push_back(auxCall);
-        
+        //condition for squeezing 
         if(parameters->GetBeta() != 0 && auxVec.size() > 1){
             double protBitRate = ceil ((1 - parameters->GetBeta()) * 
             call->GetBitRate());
             auxCall->SetBitRate(protBitRate);
         }
+        auxVec.push_back(auxCall);
     }
-    call->SetTranspSegments(auxVec);
+    call->SetTranspSegments(auxVec); 
 }
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
-    resDevAlloc->RoutingContProtectionSpecAlloc(call);
-    std::shared_ptr<Call> callWork = protectionCalls.front();
+    this->CreateProtectionCalls(call);
+    resDevAlloc->RoutingOffNocontProtDPPSpecAlloc(call);
+    
+/*    std::shared_ptr<Call> callWork = protectionCalls.front();
     std::shared_ptr<Call> callBackup = protectionCalls.back();
     unsigned int numRoutes = call->GetNumRoutes();
     unsigned int orN = call->GetOrNode()->GetNodeId();
@@ -75,9 +78,9 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
         callWork->SetRoute(call->GetRoute(a));
         callWork->SetModulation(call->GetModulation(a));
         
-        for(unsigned int b = 0; b < resources->protectionRoutes.at
+        for(unsigned int b = 0; b < resources->protectionAllRoutes.at
             (nodePairIndex).at(a).size(); b++) {
-            callBackup->SetRoute(resources->protectionRoutes.at
+            callBackup->SetRoute(resources->protectionAllRoutes.at
             (nodePairIndex).at(a).at(b));
             callBackup->SetModulation(call->GetModulation(b));
             
@@ -122,5 +125,5 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
         if(allocFound)
             break;    
     }
-    
+    */
 }

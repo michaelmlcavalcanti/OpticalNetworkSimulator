@@ -38,7 +38,7 @@ void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
 
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
  std::shared_ptr<Call> auxCall;
-    numProtRoutes = 3;
+    numSchProtRoutes = 3;
     
 //    for(unsigned a = 1; numProtRoutes; a++){
 //        auxCall = std::make_shared<Call>(call->GetOrNode(), 

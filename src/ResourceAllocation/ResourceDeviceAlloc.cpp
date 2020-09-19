@@ -174,8 +174,46 @@ void ResourceDeviceAlloc::RoutingContProtectionSpecAlloc(CallDevices* call) {
 
 }
 
-void ResourceDeviceAlloc::RoutingNocontProtectionSpecAlloc(CallDevices* call) {
+void ResourceDeviceAlloc::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
+    this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+    
+    protScheme->CreateProtectionCalls(call); //loading transpsegments with calls
+    
+    std::shared_ptr<Call> callWork = call->GetTranspSegmentsVec().front();
+    std::shared_ptr<Call> callBackup = call->GetTranspSegmentsVec().back();
+    unsigned int numRoutes = call->GetNumRoutes();
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int nodePairIndex = orN * numNodes + deN;
+    bool allocFound = false;
 
+    for(unsigned int a = 0; a < numRoutes; a++){
+        callWork->SetRoute(call->GetRoute(a));
+        callWork->SetModulation(call->GetModulation(0));
+        
+        for(unsigned int b = 0; b < resources->protectionAllRoutes.at
+            (nodePairIndex).at(a).size(); b++) {
+            callBackup->SetRoute(call->GetProtRoute(a , b));
+            callBackup->SetModulation(call->GetModulation(0));
+        
+            //calculate number of slots for the vector of calls (transpsegments)
+            this->modulation->SetModulationParam(call);
+            
+            this->specAlloc->SpecAllocation(call);
+            
+            if(topology->IsValidLigthPath(call)){
+                call->ClearTrialRoutes();
+                call->ClearTrialProtRoutes();
+                call->SetStatus(Accepted);
+                allocFound = true;
+                break;
+            }    
+        }
+        
+        if(allocFound)
+            break; 
+    }
 }
 
 RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {

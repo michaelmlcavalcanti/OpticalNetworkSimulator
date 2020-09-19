@@ -292,6 +292,13 @@ public:
      */
     std::vector<std::vector<std::shared_ptr<Route>>> allRoutes;
     /**
+     * @brief Vector that contain Kd protection routes for each one k route of 
+     * vector allRoutes (working routes). This vector is made according of
+     * protected scheme choice.
+     */
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> 
+    protectionAllRoutes;
+    /**
      *@brief Vector of vector of vector of route pointers to store interfering 
      * routes of all routes in the network
      */
@@ -346,13 +353,7 @@ public:
      */
     std::vector<unsigned int> numSlotsTraffic;
     
-        /**
-     * @brief Vector that contain Kd protection routes for each one k route of 
-     * vector allRoutes (working routes). This vector is made according of
-     * protected scheme choice.
-     */
-    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
-    protectionRoutes;
+
     
     
 private:

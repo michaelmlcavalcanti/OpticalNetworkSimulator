@@ -15,6 +15,10 @@
 #include "../../include/Structure/Node.h"
 #include "../../include/GeneralClasses/Def.h"
 #include "../../include/ResourceAllocation/Route.h"
+#include "../../include/ResourceAllocation/Resources.h"
+#include "../../include/Structure/Topology.h"
+#include "../../include/SimulationType/SimulationType.h"
+#include "../../include/ResourceAllocation/ResourceAlloc.h"
 
 const boost::unordered_map<CallStatus, std::string> 
 Call::mapCallStatus = boost::assign::map_list_of
@@ -41,8 +45,9 @@ Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
 firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
 totalNumSlots(0), core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), 
 bitRate(bitRate), modulation(InvalidModulation), trialModulation(0), 
-deactivationTime(deacTime), route(nullptr), trialRoutes(0) {
-    
+deactivationTime(deacTime), route(nullptr), trialRoutes(0), trialProtRoutes(0) {
+    resources = orNode->GetTopology()->GetSimulType()->GetResourceAlloc()->
+    GetResources();
 }
 
 Call::~Call() {
@@ -52,6 +57,12 @@ Call::~Call() {
        it.reset(); 
     }
     this->trialRoutes.clear();
+    
+   // for(auto it : trialProtRoutes){
+   //    it.reset(); 
+   // }
+    this->trialProtRoutes.clear();
+    
 }
 
 CallStatus Call::GetStatus() const {
@@ -181,6 +192,14 @@ std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
     return this->trialRoutes.at(index);
 }
 
+std::shared_ptr<Route> Call::GetProtRoute(unsigned int routeIndex, 
+unsigned int protRouteIndex) const {
+    assert(routeIndex < this->trialRoutes.size());
+    assert(protRouteIndex < this->trialProtRoutes.size());
+    
+    return this->trialProtRoutes.at(routeIndex).at(protRouteIndex); 
+}
+
 unsigned int Call::GetNumRoutes() const {
     return this->trialRoutes.size();
 }
@@ -206,13 +225,21 @@ void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
     routes.clear();
 }
 
-void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route> > protRoutes) {
-    for(auto it : protRoutes)
-        if(it != nullptr)
-            this->trialProtRoutes.push_back(it);
-    protRoutes.clear();
+void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes) {
+    NodeIndex orNode = this->GetOrNode()->GetNodeId();
+    NodeIndex deNode = this->GetDeNode()->GetNodeId();
+    std::vector<std::shared_ptr<Route>> protRoutes;
+    
+    for(unsigned int a = 0; routes.size(); a++){
+        if(a != 0){
+            protRoutes = resources->GetProtRoutes(orNode, deNode, a);
+                for(auto it : protRoutes){
+                    this->trialProtRoutes.at(a).push_back(it);
+                }
+            routes.clear();
+        }    
+    }
 }
-
 
 void Call::ClearTrialRoutes() {
     
@@ -221,6 +248,17 @@ void Call::ClearTrialRoutes() {
         this->trialRoutes.pop_front();
     }
 }
+
+void Call::ClearTrialProtRoutes() {
+    for(unsigned int a; trialProtRoutes.size(); a++){
+        
+        while(!this->trialProtRoutes.at(a).empty()){
+            this->trialProtRoutes.at(a).front().reset();
+            this->trialProtRoutes.at(a).pop_front();
+        }
+    }
+}
+
 
 void Call::PushTrialModulations(std::vector<TypeModulation> modulations) {
     

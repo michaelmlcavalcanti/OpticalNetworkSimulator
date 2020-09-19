@@ -52,15 +52,15 @@ public:
 protected:
     Resources* resources;
     ResourceDeviceAlloc* resDevAlloc;
-    Routing* routing;
     Topology* topology;
     Parameters* parameters;
-    
     Modulation* modulation;
+    
+    std::shared_ptr<Routing> routing;
        /**
      * @brief Total number of routes (W + B) in the protection scheme. 
      */
-    unsigned int numProtRoutes;
+    unsigned int numSchProtRoutes;
     /**
      * @brief Container of call requests for working (first position) and 
      * backup lightpaths (another positions). 

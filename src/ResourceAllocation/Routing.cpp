@@ -69,10 +69,7 @@ void Routing::SetOfflineRouting(Call* call) {
     call->PushTrialRoutes(resources->GetRoutes(orNode, deNode));
     
     if(resourceAlloc->options->GetProtectionOption() != ProtectionDisable)
-        for(int route = 1; call->GetNumRoutes(); route++ ){            
-            call->PushTrialProtRoutes(resources->GetProtRoutes(orNode, deNode, 
-            route));
-        }
+        call->PushTrialProtRoutes(resources->GetRoutes(orNode, deNode));
 }
 
 void Routing::Dijkstra() {
@@ -470,14 +467,14 @@ void Routing::ProtectionDisjointYEN() {
     unsigned int numNodes = this->topology->GetNumNodes();
     unsigned int numRoutes;
     unsigned int nodePairIndex;
-    resources->protectionRoutes.resize(resources->allRoutes.size());
+    resources->protectionAllRoutes.resize(resources->allRoutes.size());
     Kd = parameters->GetNumberProtectionRoutes();
     
     for(unsigned int orN = 0; orN < numNodes; orN++){
         for(unsigned int deN = 0; deN < numNodes; deN++){
             nodePairIndex = orN * numNodes + deN;
             numRoutes = resources->allRoutes.at(nodePairIndex).size();
-            resources->protectionRoutes.at(nodePairIndex).resize(numRoutes);
+            resources->protectionAllRoutes.at(nodePairIndex).resize(numRoutes);
             
             for (unsigned int routeIndex = 0;  routeIndex < numRoutes; 
             routeIndex++){
@@ -487,7 +484,7 @@ void Routing::ProtectionDisjointYEN() {
                 else {
                     routes.assign(Kd, nullptr);
                 }
-                resources->protectionRoutes.at(nodePairIndex).at(routeIndex) = 
+                resources->protectionAllRoutes.at(nodePairIndex).at(routeIndex) = 
                 routes;
                 routes.clear();
             }                        

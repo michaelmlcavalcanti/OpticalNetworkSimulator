@@ -58,7 +58,17 @@ public:
      * @return 
      */
     std::vector<Call*> GetTranspSegments();
-    
+    /**
+     * @brief Function to get the container of calls pointers to transparent 
+     * segments wich represents a lightpath between regenerators.
+     * @return transpsegments
+     */
+     std::vector<std::shared_ptr<Call>> GetTranspSegmentsVec();
+    /**
+     * @brief Function to set the container of calls pointers to transparent 
+     * segments wich represents a lightpath between regenerators.
+     * @return transpsegments
+     */
     void SetTranspSegments(std::vector<std::shared_ptr<Call>> transpSeg);
     /**
      * @brief Function to get the total number of slots occupied by the 
