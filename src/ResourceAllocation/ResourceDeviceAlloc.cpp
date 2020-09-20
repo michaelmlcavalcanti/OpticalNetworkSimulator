@@ -179,8 +179,9 @@ void ResourceDeviceAlloc::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
     
     protScheme->CreateProtectionCalls(call); //loading transpsegments with calls
     
-    std::shared_ptr<Call> callWork = call->GetTranspSegmentsVec().front();
-    std::shared_ptr<Call> callBackup = call->GetTranspSegmentsVec().back();
+    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+    std::shared_ptr<Call> callWork = callsVec.front();
+    std::shared_ptr<Call> callBackup = callsVec.back();
     unsigned int numRoutes = call->GetNumRoutes();
     unsigned int orN = call->GetOrNode()->GetNodeId();
     unsigned int deN = call->GetDeNode()->GetNodeId();
@@ -197,6 +198,8 @@ void ResourceDeviceAlloc::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
             callBackup->SetRoute(call->GetProtRoute(a , b));
             callBackup->SetModulation(call->GetModulation(0));
         
+            call->SetTranspSegments(callsVec);
+            
             //calculate number of slots for the vector of calls (transpsegments)
             this->modulation->SetModulationParam(call);
             
