@@ -34,7 +34,7 @@ DedicatedPathProtection::~DedicatedPathProtection() {
 }
 
 void DedicatedPathProtection::CreateProtectionRoutes() {
-    routing->ProtectionDisjointYEN(); 
+    routing->ProtectionDisjointYEN();
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
@@ -43,7 +43,7 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     std::vector<std::shared_ptr<Call>> auxVec(0);
     numSchProtRoutes = 2;
     
-    for(unsigned a = 1; numSchProtRoutes; a++){
+    for(unsigned a = 1; a <= numSchProtRoutes; a++){
         auxCall = std::make_shared<Call>(call->GetOrNode(), 
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
         //condition for squeezing 
@@ -54,11 +54,11 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
         }
         auxVec.push_back(auxCall);
     }
-    call->SetTranspSegments(auxVec); 
+    call->SetTranspSegments(auxVec);
 }
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
-    this->CreateProtectionCalls(call);
+//    this->CreateProtectionCalls(call);
     resDevAlloc->RoutingOffNocontProtDPPSpecAlloc(call);
     
 /*    std::shared_ptr<Call> callWork = protectionCalls.front();

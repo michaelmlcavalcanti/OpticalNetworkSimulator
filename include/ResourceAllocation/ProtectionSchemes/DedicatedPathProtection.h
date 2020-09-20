@@ -46,8 +46,6 @@ public:
      * @param Call vector which contain working and protection paths.
      */
     void ResourceAlloc(CallDevices* call) override;
-      
-   
 private:
 
    

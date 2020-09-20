@@ -50,14 +50,14 @@ public:
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
     
 protected:
-    Resources* resources;
     ResourceDeviceAlloc* resDevAlloc;
+    Resources* resources;
     Topology* topology;
     Parameters* parameters;
     Modulation* modulation;
     
-    std::shared_ptr<Routing> routing;
-       /**
+    Routing* routing;
+    /**
      * @brief Total number of routes (W + B) in the protection scheme. 
      */
     unsigned int numSchProtRoutes;

@@ -391,7 +391,7 @@ void Data::SetSlotsRelativeUse(Call* call) {
     
     for (unsigned a = callFirstSlot; a <= callLastSlot; a++){
         slotsRelativeUse.at(actualIndex).at(a)++;
-    } 
+    }
 }
 
 void Data::SetBandFrag(const double band, const double netFrag) {

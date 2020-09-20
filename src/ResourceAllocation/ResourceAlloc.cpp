@@ -215,7 +215,6 @@ bool ResourceAlloc::IsOfflineRouting() {
         case RoutingDJK:
         case RoutingYEN:
         case RoutingBSR:
-            return true;
         case RoutingBSR_YEN:
             return true;
         default:

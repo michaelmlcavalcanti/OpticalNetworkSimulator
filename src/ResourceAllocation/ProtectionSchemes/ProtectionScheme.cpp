@@ -17,14 +17,12 @@
 #include "math.h" 
 
 ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
-:resDevAlloc(rsa), numSchProtRoutes(2) {  
-    resources = resDevAlloc->GetResources();
-    routing = resDevAlloc->routing;
-    parameters = resDevAlloc->parameters;
-    topology = resDevAlloc->GetTopology();
-    modulation = resDevAlloc->GetModulation();
+:resDevAlloc(rsa), resources(rsa->GetResources()), topology(rsa->GetTopology()),
+parameters(rsa->parameters), modulation(rsa->GetModulation()), 
+routing(rsa->routing.get()), numSchProtRoutes(2) {
     
 }
 
 ProtectionScheme::~ProtectionScheme() {
+    
 }

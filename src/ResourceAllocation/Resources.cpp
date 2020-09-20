@@ -24,10 +24,10 @@
 #include "../../include/Data/InputOutput.h"
 
 Resources::Resources(ResourceAlloc* resourceAlloc, Modulation* modulation)
-:allRoutes(0), interRoutes(0), numInterRoutesToCheck(0), 
+:allRoutes(0), protectionAllRoutes(0), interRoutes(0), numInterRoutesToCheck(0), 
 subRoutes(0), numReg(0), numSlots(0), numSlotsPerSubRoute(0), 
 subRoutesModulation(0), resourceAllocOrder(0), numSlotsTraffic(0), 
-protectionAllRoutes(0), resourceAlloc(resourceAlloc), modulation(modulation) {
+resourceAlloc(resourceAlloc), modulation(modulation) {
     
 }
 

@@ -487,7 +487,7 @@ void Routing::ProtectionDisjointYEN() {
                 resources->protectionAllRoutes.at(nodePairIndex).at(routeIndex) = 
                 routes;
                 routes.clear();
-            }                        
+            }
         }
     }
 }

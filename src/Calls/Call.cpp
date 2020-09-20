@@ -200,6 +200,13 @@ unsigned int protRouteIndex) const {
     return this->trialProtRoutes.at(routeIndex).at(protRouteIndex); 
 }
 
+std::deque<std::shared_ptr<Route> > Call::GetProtRoutes(unsigned int routeIndex) 
+const {
+    assert(routeIndex < this->trialRoutes.size());
+    
+    return this->trialProtRoutes.at(routeIndex);
+}
+
 unsigned int Call::GetNumRoutes() const {
     return this->trialRoutes.size();
 }
@@ -229,16 +236,25 @@ void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes) {
     NodeIndex orNode = this->GetOrNode()->GetNodeId();
     NodeIndex deNode = this->GetDeNode()->GetNodeId();
     std::vector<std::shared_ptr<Route>> protRoutes;
+    unsigned int numRoutes = routes.size();
+    this->trialProtRoutes.resize(numRoutes);
     
-    for(unsigned int a = 0; routes.size(); a++){
-        if(a != 0){
-            protRoutes = resources->GetProtRoutes(orNode, deNode, a);
-                for(auto it : protRoutes){
-                    this->trialProtRoutes.at(a).push_back(it);
-                }
-            routes.clear();
-        }    
+//    for(unsigned int a = 0; a < routes.size(); a++){
+//        if(a != 0){
+//            protRoutes = resources->GetProtRoutes(orNode, deNode, a);
+//                for(auto it : protRoutes){
+//                    this->trialProtRoutes.at(a).push_back(it);
+//                }
+//            routes.clear();
+//        }
+//    }
+    for(unsigned int a = 0; a < routes.size(); a++){
+        protRoutes = resources->GetProtRoutes(orNode, deNode, a);
+        
+        for(auto it : protRoutes)
+            this->trialProtRoutes.at(a).push_back(it);
     }
+    routes.clear();
 }
 
 void Call::ClearTrialRoutes() {
@@ -250,7 +266,7 @@ void Call::ClearTrialRoutes() {
 }
 
 void Call::ClearTrialProtRoutes() {
-    for(unsigned int a; trialProtRoutes.size(); a++){
+    for(unsigned int a = 0; a < trialProtRoutes.size(); a++){
         
         while(!this->trialProtRoutes.at(a).empty()){
             this->trialProtRoutes.at(a).front().reset();
