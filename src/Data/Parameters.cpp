@@ -322,7 +322,7 @@ unsigned int Parameters::GetBeta() const {
 }
 
 void Parameters::SetBeta(double beta) {
-    assert(beta >= 0 && beta <=1);
+    assert(beta >= 0 && beta <=100);
     
     this->beta = beta;
 }

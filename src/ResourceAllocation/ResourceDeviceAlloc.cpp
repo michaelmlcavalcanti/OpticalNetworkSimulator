@@ -170,56 +170,6 @@ void ResourceDeviceAlloc::RoutingTransponderSpecAlloc(CallDevices* call) {
     call->ClearTrialRoutes();
 }
 
-void ResourceDeviceAlloc::RoutingContProtectionSpecAlloc(CallDevices* call) {
-
-}
-
-void ResourceDeviceAlloc::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
-    //PASS THIS FUNCTION TO DEDICATED PROTECTION OF PROTECTION SCHEME
-    
-    this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
-    
-    protScheme->CreateProtectionCalls(call); //loading transpsegments with calls
-    
-    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
-    std::shared_ptr<Call> callWork = callsVec.front();
-    std::shared_ptr<Call> callBackup = callsVec.back();
-    unsigned int numRoutes = call->GetNumRoutes();
-//    unsigned int orN = call->GetOrNode()->GetNodeId();
-//    unsigned int deN = call->GetDeNode()->GetNodeId();
-//    unsigned int numNodes = this->topology->GetNumNodes();
-//    unsigned int nodePairIndex = orN * numNodes + deN;
-//    bool allocFound = false;
-
-    for(unsigned int a = 0; a < numRoutes; a++){
-        callWork->SetRoute(call->GetRoute(a));
-        callWork->SetModulation(FixedModulation);
-        
-        unsigned int sizeProtRoutes = call->GetProtRoutes(a).size();
-        for(unsigned int b = 0; b < sizeProtRoutes; b++) {
-            callBackup->SetRoute(call->GetProtRoute(a, b));
-            callBackup->SetModulation(FixedModulation);
-        
-//            call->SetTranspSegments(callsVec);
-            
-            //calculate number of slots for the vector of calls (transpsegments)
-            this->modulation->SetModulationParam(call);
-            
-            this->specAlloc->SpecAllocation(call);
-            
-            if(topology->IsValidLigthPath(call)){
-                call->SetRoute(a);
-                call->SetFirstSlot(callWork->GetFirstSlot());
-                call->SetLastSlot(callWork->GetLastSlot());
-                call->ClearTrialRoutes();
-                call->ClearTrialProtRoutes();
-                call->SetStatus(Accepted);
-                return;
-            }
-        }
-    }
-}
-
 RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {
     return regAssAlgorithm.get();
 }

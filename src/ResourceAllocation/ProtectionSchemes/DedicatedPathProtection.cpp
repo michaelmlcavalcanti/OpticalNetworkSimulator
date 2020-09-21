@@ -46,20 +46,24 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     for(unsigned a = 1; a <= numSchProtRoutes; a++){
         auxCall = std::make_shared<Call>(call->GetOrNode(), 
         call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
+        
         //condition for squeezing 
-        if(parameters->GetBeta() != 0 && auxVec.size() > 1){
-            double protBitRate = ceil ((1 - parameters->GetBeta()) * 
-            call->GetBitRate());
+        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
+            double percent = 100.0;
+            double squeezingInd = (1 - (parameters->GetBeta() / percent));
+            double bitrate = call->GetBitRate();
+            double protBitRate = ceil (squeezingInd * bitrate);
             auxCall->SetBitRate(protBitRate);
         }
+        
         auxVec.push_back(auxCall);
     }
     call->SetTranspSegments(auxVec);
 }
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
-//    this->CreateProtectionCalls(call);
-    resDevAlloc->RoutingOffNocontProtDPPSpecAlloc(call);
+
+    this->RoutingOffNocontProtDPPSpecAlloc(call);
     
 /*    std::shared_ptr<Call> callWork = protectionCalls.front();
     std::shared_ptr<Call> callBackup = protectionCalls.back();
@@ -126,4 +130,42 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
             break;    
     }
     */
+}
+
+void DedicatedPathProtection::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
+    
+    this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+    
+    this->CreateProtectionCalls(call); //loading transpsegments with calls
+    
+    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+    std::shared_ptr<Call> callWork = callsVec.front();
+    std::shared_ptr<Call> callBackup = callsVec.back();
+    unsigned int numRoutes = call->GetNumRoutes();
+
+    for(unsigned int a = 0; a < numRoutes; a++){
+        callWork->SetRoute(call->GetRoute(a));
+        callWork->SetModulation(FixedModulation);
+        
+        unsigned int sizeProtRoutes = call->GetProtRoutes(a).size();
+        for(unsigned int b = 0; b < sizeProtRoutes; b++) {
+            callBackup->SetRoute(call->GetProtRoute(a, b));
+            callBackup->SetModulation(FixedModulation);    
+            
+            //calculate number of slots for the vector of calls (transpsegments)
+            this->modulation->SetModulationParam(call);
+            
+            this->resDevAlloc->specAlloc->SpecAllocation(call);
+                        
+            if(topology->IsValidLigthPath(call)){
+                call->SetRoute(a);
+                call->SetFirstSlot(callWork->GetFirstSlot());
+                call->SetLastSlot(callWork->GetLastSlot());
+                call->ClearTrialRoutes();
+                call->ClearTrialProtRoutes();
+                call->SetStatus(Accepted);
+                return;
+            }
+        }
+    }
 }

@@ -29,23 +29,31 @@ public:
     virtual ~DedicatedPathProtection();
     
     
-      /**
+     /**
      * @brief Function which creates protection disjoint routes for each 
      * working route defined by routing algorithm and stored in allRoutes vector.
      */
     void CreateProtectionRoutes() override;
-      /**
+     /**
      * @brief Function which create a container of calls for working and backup
      * lightpaths.
      * 
      */
     void CreateProtectionCalls(CallDevices* call) override;
-       /**
+     /**
      * @brief Function which perform RSA for Working and protection paths 
      * according with DPP scheme.
-     * @param Call vector which contain working and protection paths.
+     * @param call Call request the function will try to allocate.
      */
     void ResourceAlloc(CallDevices* call) override;
+      /**
+     * @brief Function which perform RSA for Working and protection paths  
+     * according with DPP scheme for offline routing and no same slots 
+     * between work and Backup paths.
+     * @param call Call request the function will try to allocate.
+     */
+     void RoutingOffNocontProtDPPSpecAlloc(CallDevices* call);
+    
 private:
 
    

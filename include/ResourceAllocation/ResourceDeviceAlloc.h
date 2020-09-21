@@ -63,14 +63,6 @@ public:
     
     void RoutingTransponderSpecAlloc(CallDevices* call);
     
-    void RoutingContProtectionSpecAlloc(CallDevices* call);
-       /**
-     * @brief Function to apply the resource allocation with Dedicated Path 
-     * protection option, offline routing and no continuity/contiguity.
-     * @param call Call request the function will try to allocate.
-     */
-    void RoutingOffNocontProtDPPSpecAlloc(CallDevices* call);
-    
     RegeneratorAssignment* GetRegeneratorAssignment() const;
 private:
     /**

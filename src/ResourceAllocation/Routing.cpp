@@ -501,8 +501,7 @@ NodeIndex deNode, RouteIndex routeIndex) {
     .at(routeIndex);
     std::shared_ptr<Route> auxRoute;
     std::vector<std::shared_ptr<Route> > routes(0);
-    resourceAlloc->DisableRouteLinks(orRoute.get());
-    routes.push_back(orRoute);   
+    resourceAlloc->DisableRouteLinks(orRoute.get());    
     
     for (unsigned int a = 0; a < Kd; a++){
         auxRoute = this->Dijkstra(orNode, deNode);

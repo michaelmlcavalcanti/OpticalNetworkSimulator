@@ -1,8 +1,8 @@
 128
 1
 1
+100
 200
-300
 6
 1E5
 500
@@ -10,7 +10,7 @@
 80
 2
 0
-0
+20
 2
 
 1-Number of slots per fiber
@@ -25,5 +25,5 @@
 10-Maximum section length(km)
 11-Number of polarizations
 12-Guard band size(slots)
-13-Protection Squeezing Beta
+13-Protection Squeezing Beta (%)
 14-Value for k-shortest protection routes
