@@ -235,11 +235,9 @@ enum RandomGenerationOption {
 enum ProtectionOption {
     ProtectionDisable,
     ProtectionDPP,
-    ProtectionDPPS,
     ProtectionPDPP,
-    ProtectionPDPPS,
     FirstProtectionOption = ProtectionDisable,
-    LastProtectionOption = ProtectionPDPPS
+    LastProtectionOption = ProtectionPDPP
 };
 
 enum FragMeasureOption {

@@ -63,7 +63,7 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
 
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
-    this->RoutingOffNocontProtDPPSpecAlloc(call);
+    this->RoutingOffNoSameSlotProtDPPSpecAlloc(call);
     
 /*    std::shared_ptr<Call> callWork = protectionCalls.front();
     std::shared_ptr<Call> callBackup = protectionCalls.back();
@@ -132,7 +132,7 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
     */
 }
 
-void DedicatedPathProtection::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call) {
+void DedicatedPathProtection::RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* call) {
     
     this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
     

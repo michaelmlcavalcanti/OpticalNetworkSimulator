@@ -14,6 +14,8 @@
 #ifndef PARTITIONINGDEDICATEDPATHPROTECTION_H
 #define PARTITIONINGDEDICATEDPATHPROTECTION_H
 
+class CallDevices;
+
 #include "ProtectionScheme.h"
 
 class PartitioningDedicatedPathProtection : public ProtectionScheme {
@@ -39,7 +41,13 @@ public:
      * @param Call vector which contain working and protection paths.
      */
     void ResourceAlloc(CallDevices* call) override;
-        
+     /**
+     * @brief Function which perform RSA for Working and protection paths  
+     * according with PDPP scheme for offline routing and no same slots 
+     * between work and Backup paths.
+     * @param call Call request the function will try to allocate.
+     */
+     void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
     private:
         
         

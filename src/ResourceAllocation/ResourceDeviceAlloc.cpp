@@ -262,6 +262,10 @@ void ResourceDeviceAlloc::CreateProtectionScheme() {
         case ProtectionDPP:
             protScheme = std::make_shared<DedicatedPathProtection>(this);
             break;
+        case ProtectionPDPP:
+            protScheme = std::make_shared<PartitioningDedicatedPathProtection>
+            (this);
+            break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;
             std::abort();

@@ -574,3 +574,13 @@ unsigned int Routing::GetK() const {
 void Routing::SetK(unsigned int K) {
     this->K = K;
 }
+
+unsigned int Routing::GetKd() const {
+    return Kd;
+}
+
+void Routing::SetKd(unsigned int Kd) {
+    this->Kd = Kd;
+}
+
+

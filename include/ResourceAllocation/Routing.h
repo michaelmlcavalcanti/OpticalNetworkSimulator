@@ -174,6 +174,18 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
+    /**
+     * @brief Get the number k disjoint of shortest routes used in
+     * ProtectionDisjointYEN.
+     * @return Number of disjoint routes.
+     */
+    unsigned int GetKd() const;
+    /**
+     * @brief Set the number k disjoint of shortest routes used in
+     * ProtectionDisjointYEN.
+     * @return Number of disjoint routes.
+     */
+    void SetKd(unsigned int Kd);
 private:
     /**
      * @brief Get the number k of shortest routes used in YEN.
@@ -185,6 +197,8 @@ private:
      * @param K Number of routes.
      */
     void SetK(unsigned int K);
+
+
 private:
     /**
      * @brief ResourceAlloc object that owns this routing.
@@ -214,7 +228,9 @@ private:
      * @brief Number of routes for the k-shortest path algorithms.
      */
     unsigned int K;
-    
+     /**
+     * @brief Number of disjoint routes for the k-shortest path algorithms.
+     */
     unsigned int Kd;
 };
 

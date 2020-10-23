@@ -155,9 +155,7 @@ const boost::unordered_map<ProtectionOption, std::string>
 Options::mapProtectionOption = boost::assign::map_list_of
     (ProtectionDisable, "No Protection")
     (ProtectionDPP, "Dedicated Path Protection")
-    (ProtectionDPPS, "Dedicated Path Protection with Squeezing")
-    (ProtectionPDPP, "Partitioning Dedicated Path Protection")
-    (ProtectionPDPPS, "Partitioning Dedicated Path Protection");
+    (ProtectionPDPP, "Partitioning Dedicated Path Protection");
 
 const boost::unordered_map<FragMeasureOption, std::string>
 Options::mapFragMeasureOption = boost::assign::map_list_of

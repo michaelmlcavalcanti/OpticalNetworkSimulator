@@ -16,6 +16,7 @@
 
 #include "ProtectionScheme.h"
 #include "DedicatedPathProtection.h"
+#include "PartitioningDedicatedPathProtection.h"
 
 #endif /* PROTECTIONSCHEMES_H */
 

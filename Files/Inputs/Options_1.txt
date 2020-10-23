@@ -15,7 +15,7 @@
 0
 0
 0
-1
+2
 0
 
 1-Topology
@@ -119,7 +119,8 @@
     2 - Random generation
 18-Protection Option
     0 - Protection Disable
-    1 - DDP
+    1 - DPP
+    2 - PDPP
 19-Fragmentation Measure Option
     0 - Disable
     1 - Fragmentation Ratio (FR)

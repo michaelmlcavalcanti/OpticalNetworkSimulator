@@ -52,7 +52,7 @@ public:
      * between work and Backup paths.
      * @param call Call request the function will try to allocate.
      */
-     void RoutingOffNocontProtDPPSpecAlloc(CallDevices* call);
+     void RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* call);
     
 private:
 
