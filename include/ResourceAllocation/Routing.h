@@ -132,9 +132,17 @@ public:
      * source/destination node pairs in the topology used.
      */
     void ProtectionDisjointYEN();
-    
+    /**
+     * @brief YEN Disjoint (k-shortest path disjoint) routing algorithm for a
+     * specific source/destination node pair of the topology used.
+     */
     std::vector<std::shared_ptr<Route>> ProtectionDisjointYEN(NodeIndex orNode, 
     NodeIndex deNode, RouteIndex routeIndex);
+    /**
+     * @brief Function to check if the K-working routes are disjoint of their
+     * Kd-protection routes
+     */
+    std::vector<std::shared_ptr<Route>> CheckProtectionDisjointYEN();
     
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.

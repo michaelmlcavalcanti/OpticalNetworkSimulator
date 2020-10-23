@@ -54,7 +54,7 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
             double bitrate = call->GetBitRate();
             double protBitRate = ceil (squeezingInd * bitrate);
             auxCall->SetBitRate(protBitRate);
-        }
+        } 
         
         auxVec.push_back(auxCall);
     }
@@ -146,26 +146,29 @@ void DedicatedPathProtection::RoutingOffNocontProtDPPSpecAlloc(CallDevices* call
     for(unsigned int a = 0; a < numRoutes; a++){
         callWork->SetRoute(call->GetRoute(a));
         callWork->SetModulation(FixedModulation);
-        
         unsigned int sizeProtRoutes = call->GetProtRoutes(a).size();
+        
         for(unsigned int b = 0; b < sizeProtRoutes; b++) {
-            callBackup->SetRoute(call->GetProtRoute(a, b));
-            callBackup->SetModulation(FixedModulation);    
             
-            //calculate number of slots for the vector of calls (transpsegments)
-            this->modulation->SetModulationParam(call);
-            
-            this->resDevAlloc->specAlloc->SpecAllocation(call);
-                        
-            if(topology->IsValidLigthPath(call)){
-                call->SetRoute(a);
-                call->SetFirstSlot(callWork->GetFirstSlot());
-                call->SetLastSlot(callWork->GetLastSlot());
-                call->ClearTrialRoutes();
-                call->ClearTrialProtRoutes();
-                call->SetStatus(Accepted);
-                return;
-            }
+            if(call->GetProtRoute(a , b)){  //if to avoid null route pointer
+                callBackup->SetRoute(call->GetProtRoute(a, b));
+                callBackup->SetModulation(FixedModulation);    
+
+                //calculate number of slots for the vector of calls (transpsegments)
+                this->modulation->SetModulationParam(call);
+
+                this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+                if(topology->IsValidLigthPath(call)){
+                    call->SetRoute(a);
+                    call->SetFirstSlot(callWork->GetFirstSlot());
+                    call->SetLastSlot(callWork->GetLastSlot());
+                    call->ClearTrialRoutes();
+                    call->ClearTrialProtRoutes();
+                    call->SetStatus(Accepted);
+                    return;           
+                }
+            }    
         }
     }
 }

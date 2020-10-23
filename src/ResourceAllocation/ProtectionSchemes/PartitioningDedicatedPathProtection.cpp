@@ -37,23 +37,29 @@ void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
 }
 
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
- std::shared_ptr<Call> auxCall;
+    call->GetTranspSegments().clear();
+    std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
     numSchProtRoutes = 3;
+    int numWorkRoutes = numSchProtRoutes -1;
+    double partialBitRate = (call->GetBitRate()/numWorkRoutes);
     
-//    for(unsigned a = 1; numProtRoutes; a++){
-//        auxCall = std::make_shared<Call>(call->GetOrNode(), 
-//        call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-//        double workBitRate = ceil (call->GetBitRate() / numProtRoutes);   
-//        auxCall->SetBitRate(workBitRate);
-//        calldevices->GetTranspSegmentsVec().push_back(auxCall); 
-//        
-//            if(a = numProtRoutes && parameters->GetBeta() != 0){
-//                double protBitRate = ceil ((1 - parameters->GetBeta()) * 
-//                auxCall->GetBitRate());
-//                auxCall->SetBitRate(protBitRate);
-//                protectionCalls.push_back(auxCall); 
-//            }     
-//    }
+    for(unsigned a = 1; a <= numSchProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(), 
+        call->GetDeNode(), partialBitRate, call->GetDeactivationTime());
+        
+        //condition for squeezing 
+        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
+            double percent = 100.0;
+            double squeezingInd = (1 - (parameters->GetBeta() / percent));
+            double bitrate = call->GetBitRate();
+            double protBitRate = ceil (squeezingInd * bitrate);
+            auxCall->SetBitRate(protBitRate);
+        } 
+        
+        auxVec.push_back(auxCall);
+    }
+    call->SetTranspSegments(auxVec);
 }
 
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {

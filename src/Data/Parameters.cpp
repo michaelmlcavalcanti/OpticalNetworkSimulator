@@ -317,7 +317,7 @@ void Parameters::SetGuardBand(unsigned int guardBand) {
     this->guardBand = guardBand;
 }
 
-unsigned int Parameters::GetBeta() const {
+double Parameters::GetBeta() const {
     return beta;
 }
 

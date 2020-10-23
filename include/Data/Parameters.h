@@ -214,7 +214,7 @@ public:
      * @brief Function to get Squeezing index (beta) used in the simulation 
      * with Protection option enabled.
      */
-    unsigned int GetBeta() const;
+    double GetBeta() const;
   /**
      * @brief Function to set Squeezing index (beta) used in the simulation
      * with Protection option enabled.

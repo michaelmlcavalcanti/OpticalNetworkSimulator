@@ -195,7 +195,7 @@ std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
 std::shared_ptr<Route> Call::GetProtRoute(unsigned int routeIndex, 
 unsigned int protRouteIndex) const {
     assert(routeIndex < this->trialRoutes.size());
-    assert(protRouteIndex < this->trialProtRoutes.size());
+    assert(protRouteIndex < this->trialProtRoutes.at(routeIndex).size());
     
     return this->trialProtRoutes.at(routeIndex).at(protRouteIndex); 
 }
@@ -239,15 +239,6 @@ void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes) {
     unsigned int numRoutes = routes.size();
     this->trialProtRoutes.resize(numRoutes);
     
-//    for(unsigned int a = 0; a < routes.size(); a++){
-//        if(a != 0){
-//            protRoutes = resources->GetProtRoutes(orNode, deNode, a);
-//                for(auto it : protRoutes){
-//                    this->trialProtRoutes.at(a).push_back(it);
-//                }
-//            routes.clear();
-//        }
-//    }
     for(unsigned int a = 0; a < routes.size(); a++){
         protRoutes = resources->GetProtRoutes(orNode, deNode, a);
         

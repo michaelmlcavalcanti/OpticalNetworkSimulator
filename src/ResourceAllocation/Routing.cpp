@@ -486,14 +486,15 @@ void Routing::ProtectionDisjointYEN() {
                 }
                 resources->protectionAllRoutes.at(nodePairIndex).at(routeIndex) = 
                 routes;
-                routes.clear();
+                routes.clear();                
             }
         }
     }
+    this->CheckProtectionDisjointYEN();
 }
 
-std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex orNode, 
-NodeIndex deNode, RouteIndex routeIndex) {
+std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex 
+orNode, NodeIndex deNode, RouteIndex routeIndex) {
     unsigned int numNodes = topology->GetNumNodes();
     unsigned int nodePairIndex = orNode * numNodes + deNode;
     Kd = parameters->GetNumberProtectionRoutes();
@@ -515,6 +516,32 @@ NodeIndex deNode, RouteIndex routeIndex) {
     
     return routes;
 }
+
+std::vector<std::shared_ptr<Route> > Routing::CheckProtectionDisjointYEN() {
+    std::vector<std::shared_ptr<Route>> nonDisjoint;
+    
+    for(unsigned int NodeI = 0; NodeI < resources->protectionAllRoutes.
+    size(); NodeI++){
+        
+        for(unsigned int k = 0; k < resources->protectionAllRoutes.at(NodeI).
+        size(); k++){
+            
+            for(unsigned int kd = 0; kd < resources->protectionAllRoutes.
+            at(NodeI).at(k).size(); kd++){
+
+ //               if(resources->allRoutes.at(NodeI).at(k) && resources->
+ //               protectionAllRoutes.at(NodeI).at(k).at(kd))
+                
+                    if(resources->allRoutes.at(NodeI).at(k) == resources->
+                    protectionAllRoutes.at(NodeI).at(k).at(kd))
+                        nonDisjoint.push_back(resources->protectionAllRoutes.
+                        at(NodeI).at(k).at(kd));
+            }
+        }           
+    }
+    return nonDisjoint;
+}
+
 
 ResourceAlloc* Routing::GetResourceAlloc() const {
     return resourceAlloc;
