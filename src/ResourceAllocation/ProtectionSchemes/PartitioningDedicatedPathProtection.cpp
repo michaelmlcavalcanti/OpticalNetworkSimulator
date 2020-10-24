@@ -81,7 +81,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
     std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
     std::shared_ptr<Call> callWork0 = callsVec.at(0);
     std::shared_ptr<Call> callWork1 = callsVec.at(1);
-    std::shared_ptr<Call> callBackup = callsVec.at(3);
+    std::shared_ptr<Call> callBackup = callsVec.at(2);
     unsigned int numRoutes = call->GetNumRoutes();
 
     for(unsigned int k = 0; k < numRoutes; k++){
