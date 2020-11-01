@@ -53,6 +53,9 @@ public:
     bool operator<(const Route& right) const;
     
     bool operator>(const Route& right) const;
+    
+    bool checkShareLink(Route* route) const;
+
 
     /**
      * @brief Function that return the source node Id of this route.

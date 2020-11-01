@@ -40,6 +40,19 @@ bool Route::operator==(const Route& right) const {
     return false;
 }
 
+bool Route::checkShareLink(Route* route) const {
+    
+    for(unsigned int hop = 0; hop < this->GetNumHops(); hop++){
+        
+        for(unsigned int hop2 = 0; hop2 < route->GetNumHops(); hop2++){
+            
+            if(this->GetLink(hop) == route->GetLink(hop2))
+                return true;
+        }
+    }
+    return false;
+}
+
 bool Route::operator<(const Route& right) const {
     
     return right.GetCost() > this->GetCost();
@@ -125,7 +138,7 @@ void Route::SetCost() {
 }
 
 Link* Route::GetLink(unsigned int index) const {
-    assert(index < this->path.size());
+    assert(index < this->GetNumHops());
     
     return this->topology->GetLink(this->GetNodeId(index), 
                                    this->GetNodeId(index + 1));

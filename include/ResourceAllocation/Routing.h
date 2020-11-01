@@ -142,7 +142,7 @@ public:
      * @brief Function to check if the K-working routes are disjoint of their
      * Kd-protection routes
      */
-    std::vector<std::shared_ptr<Route>> CheckProtectionDisjointYEN();
+    void CheckProtectionDisjointYEN();
     
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.

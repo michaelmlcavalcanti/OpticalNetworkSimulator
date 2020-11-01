@@ -183,6 +183,9 @@ void SimulationType::SimulateNumTotalReq() {
         evt = this->callGenerator->GetNextEvent();
         countEvent++;
         
+        if(this->numberRequests == 491.0)
+            int x = 0;
+        
         evt->ImplementEvent();
             
         if(fragOption != FragMetricDisabled && countEvent == 100){

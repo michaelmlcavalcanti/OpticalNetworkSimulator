@@ -132,7 +132,8 @@ void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
     */
 }
 
-void DedicatedPathProtection::RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* call) {
+void DedicatedPathProtection::RoutingOffNoSameSlotProtDPPSpecAlloc(
+CallDevices* call) {
     
     this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
     
@@ -152,7 +153,7 @@ void DedicatedPathProtection::RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* 
             
             if(call->GetProtRoute(a , b)){  //if to avoid null route pointer
                 callBackup->SetRoute(call->GetProtRoute(a, b));
-                callBackup->SetModulation(FixedModulation);    
+                callBackup->SetModulation(FixedModulation);
 
                 //calculate number of slots for the vector of calls (transpsegments)
                 this->modulation->SetModulationParam(call);
@@ -166,9 +167,9 @@ void DedicatedPathProtection::RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* 
                     call->ClearTrialRoutes();
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
-                    return;           
+                    return;
                 }
-            }    
+            }
         }
     }
 }
