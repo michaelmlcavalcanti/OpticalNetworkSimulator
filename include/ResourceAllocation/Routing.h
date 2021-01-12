@@ -145,6 +145,18 @@ public:
     void CheckProtectionDisjointYEN();
     
     /**
+     * @brief YEN semi Disjoint (k-shortest path semi disjoint) routing algorithm 
+     * for all source/destination node pairs in the topology used.
+     */
+    void ProtectionYEN();
+    /**
+     * @brief YEN semi Disjoint (k-shortest path semi disjoint) routing algorithm 
+     * for a specific source/destination node pair of the topology used.
+     */
+    std::vector<std::shared_ptr<Route>> ProtectionYEN(NodeIndex orNode, 
+    NodeIndex deNode, RouteIndex routeIndex);
+    
+    /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.
      */

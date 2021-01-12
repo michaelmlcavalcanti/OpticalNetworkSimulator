@@ -207,6 +207,13 @@ public:
      * @param route 
      */
     void DisableRouteLinks(Route* route);
+    
+      /**
+     * @brief 
+     * @param route 
+     */
+    void EnableRouteLinks(Route* route);
+    
     /**
      * @brief Function to calculate the network fragmentation ratio.
      * @return Network fragmentation ratio.

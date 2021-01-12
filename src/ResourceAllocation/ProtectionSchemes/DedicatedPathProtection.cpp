@@ -37,30 +37,6 @@ void DedicatedPathProtection::CreateProtectionRoutes() {
     routing->ProtectionDisjointYEN();
 }
 
-void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
-    call->GetTranspSegments().clear();
-    std::shared_ptr<Call> auxCall;
-    std::vector<std::shared_ptr<Call>> auxVec(0);
-    numSchProtRoutes = 2;
-    
-    for(unsigned a = 1; a <= numSchProtRoutes; a++){
-        auxCall = std::make_shared<Call>(call->GetOrNode(), 
-        call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
-        
-        //condition for squeezing 
-        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
-            double percent = 100.0;
-            double squeezingInd = (1 - (parameters->GetBeta() / percent));
-            double bitrate = call->GetBitRate();
-            double protBitRate = ceil (squeezingInd * bitrate);
-            auxCall->SetBitRate(protBitRate);
-        } 
-        
-        auxVec.push_back(auxCall);
-    }
-    call->SetTranspSegments(auxVec);
-}
-
 void DedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
     this->RoutingOffNoSameSlotProtDPPSpecAlloc(call);
@@ -172,4 +148,28 @@ CallDevices* call) {
             }
         }
     }
+}
+
+void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
+    call->GetTranspSegments().clear();
+    std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
+    numSchProtRoutes = 2;
+    
+    for(unsigned a = 1; a <= numSchProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(), 
+        call->GetDeNode(), call->GetBitRate(), call->GetDeactivationTime());
+        
+        //condition for squeezing 
+        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
+            double percent = 100.0;
+            double squeezingInd = (1 - (parameters->GetBeta() / percent));
+            double bitrate = call->GetBitRate();
+            double protBitRate = ceil (squeezingInd * bitrate);
+            auxCall->SetBitRate(protBitRate);
+        } 
+        
+        auxVec.push_back(auxCall);
+    }
+    call->SetTranspSegments(auxVec);
 }

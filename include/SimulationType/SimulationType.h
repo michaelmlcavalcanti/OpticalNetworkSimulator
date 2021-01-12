@@ -179,7 +179,7 @@ public:
      * This variable is updated when a new call/event is create,
      * in function GenerateCall of CallGenerator class.
      */
-    double numberRequests;
+    unsigned long long int numberRequests;
 private:
     /**
      * @brief Define the type of simulation based on the option chosen.

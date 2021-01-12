@@ -511,6 +511,13 @@ void ResourceAlloc::DisableRouteLinks(Route* route){
     }
 }
 
+void ResourceAlloc::EnableRouteLinks(Route* route) {
+    for (unsigned int a = 0; a < route->GetNumHops(); a++){
+        route->GetLink(a)->SetLinkState(true);
+    }
+}
+
+
 double ResourceAlloc::CalcNetworkFragmentation() const {
     double totalFrag = 0.0;
     unsigned int numNodes = topology->GetNumNodes();
