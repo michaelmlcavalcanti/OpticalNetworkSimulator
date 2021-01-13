@@ -119,7 +119,8 @@ CallDevices* call) {
     std::shared_ptr<Call> callWork = callsVec.front();
     std::shared_ptr<Call> callBackup = callsVec.back();
     unsigned int numRoutes = call->GetNumRoutes();
-
+    
+    //Try work and protection together
     for(unsigned int a = 0; a < numRoutes; a++){
         callWork->SetRoute(call->GetRoute(a));
         callWork->SetModulation(FixedModulation);
@@ -136,38 +137,35 @@ CallDevices* call) {
 
                 this->resDevAlloc->specAlloc->SpecAllocation(call);
 
-                if(topology->IsValidLigthPath(call)){
-                    call->SetRoute(a);
-                    call->SetFirstSlot(callWork->GetFirstSlot());
-                    call->SetLastSlot(callWork->GetLastSlot());
+                if(topology->IsValidLigthPath(call)){                    
                     call->ClearTrialRoutes();
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
                     IncrementNumProtectedCalls();
-                    return;           
+                    return;
                 }
             }
         }
     }
-    Call* basecall = dynamic_cast<Call*>(call);
-        
+    
+    //Delete protection route
+    call->GetTranspSegmentsVec().pop_back();
+    
+    //Try only work connection
     for(unsigned int k = 0; k < numRoutes; k++){
-        basecall->SetRoute(call->GetRoute(k));
-        basecall->SetModulation(FixedModulation);
-        this->modulation->SetModulationParam(basecall);
-        this->resDevAlloc->specAlloc->SpecAllocation(basecall);
+        callWork->SetRoute(call->GetRoute(k));
+        callWork->SetModulation(FixedModulation);
+        this->modulation->SetModulationParam(call);
+        this->resDevAlloc->specAlloc->SpecAllocation(call);
         
-        if(topology->IsValidLigthPath(basecall)){
-            basecall->SetRoute(k);
-            basecall->SetFirstSlot(callWork->GetFirstSlot());
-            basecall->SetLastSlot(callWork->GetLastSlot());
-            basecall->ClearTrialRoutes();
-            basecall->ClearTrialProtRoutes();
-            basecall->SetStatus(Accepted);
+        if(topology->IsValidLigthPath(call)){
+            call->ClearTrialRoutes();
+            call->ClearTrialProtRoutes();
+            call->SetStatus(Accepted);
             IncrementNumNonProtectedCalls();
             return;
-        }    
-    }   
+        }
+    }
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {

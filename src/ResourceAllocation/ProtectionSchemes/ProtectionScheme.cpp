@@ -36,11 +36,11 @@ void ProtectionScheme::SetNumProtectedCalls(long long int numProtectedCalls) {
 }
 
 void ProtectionScheme::IncrementNumProtectedCalls() {
-    this->numProtectedCalls = numProtectedCalls++;
+    this->numProtectedCalls++;
 }
 
 void ProtectionScheme::IncrementNumNonProtectedCalls() {
-     this->numNonProtectedCalls = numNonProtectedCalls++;
+     this->numNonProtectedCalls++;
 }
 
 

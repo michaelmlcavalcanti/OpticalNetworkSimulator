@@ -59,45 +59,38 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
         callWork0->SetModulation(FixedModulation);
         unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
         
-        for(unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
+        if(sizeProtRoutes >= 2){
+            for(unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
             
-            if(call->GetProtRoute(k , kd0)){  //if to avoid null route pointer
-                callWork1->SetRoute(call->GetProtRoute(k, kd0));
-                callWork1->SetModulation(FixedModulation);    
+                if(call->GetProtRoute(k , kd0)){  //if to avoid null route pointer
+                    callWork1->SetRoute(call->GetProtRoute(k, kd0));
+                    callWork1->SetModulation(FixedModulation);    
 
-                for(unsigned int kd1 = 0; kd1 < sizeProtRoutes; kd1++) {
-            
-                    if(call->GetProtRoute(k , kd1)){  //if to avoid null route pointer
-                        if(kd1 == kd0){         
-                            kd1 = kd0 + 1;
-                            callWork2->SetRoute(call->GetProtRoute(k, kd1));
-                            callWork2->SetModulation(FixedModulation);
+                    for(unsigned int kd1 = 0; kd1 < sizeProtRoutes; kd1++) {
+                        
+                        if(kd0 == kd1)
+                            continue;
+                        callWork2->SetRoute(call->GetProtRoute(k, kd1));
+                        callWork2->SetModulation(FixedModulation);
+
+                        //calculate number of slots for the vector of calls (transpsegments)
+                        this->modulation->SetModulationParam(call);
+
+                        this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+                        if(topology->IsValidLigthPath(call)){
+                            call->ClearTrialRoutes();
+                            call->ClearTrialProtRoutes();
+                            call->SetStatus(Accepted);
+                            IncrementNumProtectedCalls();
+                            return;           
                         }
-                        else{
-                            callWork2->SetRoute(call->GetProtRoute(k, kd1));
-                            callWork2->SetModulation(FixedModulation);
-                        }           
-                    }
-                
-                    //calculate number of slots for the vector of calls (transpsegments)
-                    this->modulation->SetModulationParam(call);
-
-                    this->resDevAlloc->specAlloc->SpecAllocation(call);
-
-                    if(topology->IsValidLigthPath(call)){
-                        call->SetRoute(k);
-                        call->SetFirstSlot(callWork0->GetFirstSlot());
-                        call->SetLastSlot(callWork0->GetLastSlot());
-                        call->ClearTrialRoutes();
-                        call->ClearTrialProtRoutes();
-                        call->SetStatus(Accepted);
-                        IncrementNumProtectedCalls();
-                        return;           
                     }
                 }
             }
-        }    
+        }
     }
+    
     Call* basecall = dynamic_cast<Call*>(call);
         
     for(unsigned int k = 0; k < numRoutes; k++){
@@ -116,7 +109,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
             IncrementNumNonProtectedCalls();
             return;
         }    
-    }   
+    }
 }
 
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
