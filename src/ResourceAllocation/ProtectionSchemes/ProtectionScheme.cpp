@@ -26,3 +26,21 @@ routing(rsa->routing.get()), numSchProtRoutes(2) {
 ProtectionScheme::~ProtectionScheme() {
     
 }
+
+long long int ProtectionScheme::GetNumProtectedCalls() const {
+    return numProtectedCalls;
+}
+
+void ProtectionScheme::SetNumProtectedCalls(long long int numProtectedCalls) {
+     this->numProtectedCalls = numProtectedCalls;
+}
+
+void ProtectionScheme::IncrementNumProtectedCalls() {
+    this->numProtectedCalls = numProtectedCalls++;
+}
+
+void ProtectionScheme::IncrementNumNonProtectedCalls() {
+     this->numNonProtectedCalls = numNonProtectedCalls++;
+}
+
+

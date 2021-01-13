@@ -48,6 +48,15 @@ public:
      * 
      */
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
+
+    long long int GetNumProtectedCalls() const;
+
+    void SetNumProtectedCalls(long long int numProtectedCalls);
+    
+    void IncrementNumProtectedCalls();
+    
+    void IncrementNumNonProtectedCalls();
+
     
 protected:
     ResourceDeviceAlloc* resDevAlloc;
@@ -57,6 +66,7 @@ protected:
     Modulation* modulation;
     
     Routing* routing;
+    ProtectionScheme* protectionScheme;
     /**
      * @brief Total number of routes (W + B) in the protection scheme. 
      */
@@ -67,6 +77,12 @@ protected:
      * Used if the simulation make use of protection. 
      */
     std::vector<std::shared_ptr<Call>> protectionCalls;
+    /**
+     * @brief Total number of protected calls by the protection scheme. 
+     */
+    long long int numProtectedCalls;
+    
+    long int numNonProtectedCalls;
 };
 
 #endif /* PROTECTIONSCHEME_H */

@@ -15,6 +15,7 @@
 #include <memory>
 
 #include "../../../include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h"
+#include "../../../include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h"
 #include "../../../include/ResourceAllocation/SA.h"
 #include "../../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../../include/ResourceAllocation/Routing.h"
@@ -23,9 +24,8 @@
 #include "../../../include/Data/Parameters.h"
 #include "math.h" 
 
-
-DedicatedPathProtection::DedicatedPathProtection(ResourceDeviceAlloc* rsa) :
-ProtectionScheme(rsa) {
+DedicatedPathProtection::DedicatedPathProtection(ResourceDeviceAlloc* rsa) 
+: ProtectionScheme(rsa) {
     
 }
 
@@ -143,11 +143,31 @@ CallDevices* call) {
                     call->ClearTrialRoutes();
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
-                    return;
+                    IncrementNumProtectedCalls();
+                    return;           
                 }
             }
         }
     }
+    Call* basecall = dynamic_cast<Call*>(call);
+        
+    for(unsigned int k = 0; k < numRoutes; k++){
+        basecall->SetRoute(call->GetRoute(k));
+        basecall->SetModulation(FixedModulation);
+        this->modulation->SetModulationParam(basecall);
+        this->resDevAlloc->specAlloc->SpecAllocation(basecall);
+        
+        if(topology->IsValidLigthPath(basecall)){
+            basecall->SetRoute(k);
+            basecall->SetFirstSlot(callWork->GetFirstSlot());
+            basecall->SetLastSlot(callWork->GetLastSlot());
+            basecall->ClearTrialRoutes();
+            basecall->ClearTrialProtRoutes();
+            basecall->SetStatus(Accepted);
+            IncrementNumNonProtectedCalls();
+            return;
+        }    
+    }   
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {

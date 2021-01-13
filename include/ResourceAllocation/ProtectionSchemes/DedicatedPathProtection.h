@@ -55,8 +55,8 @@ public:
      void RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* call);
     
 private:
-
-   
+    ProtectionScheme* protectionScheme;
+       
 };
 
 #endif /* DEDICATEDPATHPROTECTION_H */

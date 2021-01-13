@@ -33,39 +33,9 @@ PartitioningDedicatedPathProtection::~PartitioningDedicatedPathProtection() {
 }
 
 void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
-    // assert(routing->GetKd() >= 2);
-    if(routing->GetKd() < 2){
-        routing->SetKd(2);
-    }
+    
     routing->ProtectionDisjointYEN();
 }
-
-void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
-    call->GetTranspSegments().clear();
-    std::shared_ptr<Call> auxCall;
-    std::vector<std::shared_ptr<Call>> auxVec(0);
-    numSchProtRoutes = 3;
-    int numWorkRoutes = numSchProtRoutes -1;
-    double partialBitRate = (call->GetBitRate()/numWorkRoutes);
-    
-    for(unsigned a = 1; a <= numSchProtRoutes; a++){
-        auxCall = std::make_shared<Call>(call->GetOrNode(), 
-        call->GetDeNode(), partialBitRate, call->GetDeactivationTime());
-        
-        //condition for squeezing 
-        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
-            double percent = 100.0;
-            double squeezingInd = (1 - (parameters->GetBeta() / percent));
-            double bitrate = partialBitRate;
-            double protBitRate = ceil (squeezingInd * bitrate);
-            auxCall->SetBitRate(protBitRate);
-        } 
-        
-        auxVec.push_back(auxCall);
-    }
-    call->SetTranspSegments(auxVec);
-}
-
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
     this->RoutingOffNoSameSlotProtPDPPSpecAlloc(call);
@@ -81,7 +51,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
     std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
     std::shared_ptr<Call> callWork0 = callsVec.at(0);
     std::shared_ptr<Call> callWork1 = callsVec.at(1);
-    std::shared_ptr<Call> callBackup = callsVec.at(2);
+    std::shared_ptr<Call> callWork2 = callsVec.at(2);
     unsigned int numRoutes = call->GetNumRoutes();
 
     for(unsigned int k = 0; k < numRoutes; k++){
@@ -100,12 +70,12 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                     if(call->GetProtRoute(k , kd1)){  //if to avoid null route pointer
                         if(kd1 == kd0){         
                             kd1 = kd0 + 1;
-                            callBackup->SetRoute(call->GetProtRoute(k, kd1));
-                            callBackup->SetModulation(FixedModulation);
+                            callWork2->SetRoute(call->GetProtRoute(k, kd1));
+                            callWork2->SetModulation(FixedModulation);
                         }
                         else{
-                            callBackup->SetRoute(call->GetProtRoute(k, kd1));
-                            callBackup->SetModulation(FixedModulation);
+                            callWork2->SetRoute(call->GetProtRoute(k, kd1));
+                            callWork2->SetModulation(FixedModulation);
                         }           
                     }
                 
@@ -121,13 +91,59 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->ClearTrialRoutes();
                         call->ClearTrialProtRoutes();
                         call->SetStatus(Accepted);
+                        IncrementNumProtectedCalls();
                         return;           
                     }
                 }
             }
         }    
     }
+    Call* basecall = dynamic_cast<Call*>(call);
+        
+    for(unsigned int k = 0; k < numRoutes; k++){
+        basecall->SetRoute(call->GetRoute(k));
+        basecall->SetModulation(FixedModulation);
+        this->modulation->SetModulationParam(basecall);
+        this->resDevAlloc->specAlloc->SpecAllocation(basecall);
+        
+        if(topology->IsValidLigthPath(basecall)){
+            basecall->SetRoute(k);
+            basecall->SetFirstSlot(callWork0->GetFirstSlot());
+            basecall->SetLastSlot(callWork0->GetLastSlot());
+            basecall->ClearTrialRoutes();
+            basecall->ClearTrialProtRoutes();
+            basecall->SetStatus(Accepted);
+            IncrementNumNonProtectedCalls();
+            return;
+        }    
+    }   
 }
 
+void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
+    call->GetTranspSegments().clear();
+    std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
+    numSchProtRoutes = 3;
+    //int numWorkRoutes = numSchProtRoutes -1;
+    double partialBitRate = ceil (((call->GetBitRate())/(numSchProtRoutes-1)) - 
+    (((parameters->GetBeta()) * (call->GetBitRate())) / (numSchProtRoutes-1)));
+    
+    for(unsigned a = 1; a <= numSchProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(), 
+        call->GetDeNode(), partialBitRate, call->GetDeactivationTime());
+        
+        /*condition for squeezing 
+        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
+            double percent = 100.0;
+            double squeezingInd = (1 - (parameters->GetBeta() / percent));
+            double bitrate = partialBitRate;
+            double protBitRate = ceil (squeezingInd * bitrate);
+            auxCall->SetBitRate(protBitRate);
+        } */
+        
+        auxVec.push_back(auxCall);
+    }
+    call->SetTranspSegments(auxVec);
+}
 
 

@@ -640,8 +640,7 @@ NodeIndex deNode, RouteIndex routeIndex) {
             auxRoute = (this->YEN(orNode, deNode)).back();
             routes.push_back(auxRoute);
         }
-    }
-    
+    }    
     
     topology->SetAllLinksWorking();
     
