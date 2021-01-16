@@ -244,6 +244,7 @@ void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes) {
         
         for(auto it : protRoutes)
             this->trialProtRoutes.at(a).push_back(it);
+                     
     }
     routes.clear();
 }

@@ -117,7 +117,7 @@ CallDevices* call) {
     
     std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
     std::shared_ptr<Call> callWork = callsVec.front();
-    std::shared_ptr<Call> callBackup = callsVec.back();
+    std::shared_ptr<Call> callBackup = callsVec.back(); 
     unsigned int numRoutes = call->GetNumRoutes();
     
     //Try work and protection together
@@ -137,11 +137,16 @@ CallDevices* call) {
 
                 this->resDevAlloc->specAlloc->SpecAllocation(call);
 
-                if(topology->IsValidLigthPath(call)){                    
+                if(topology->IsValidLigthPath(call)){
+                    call->SetRoute(call->GetRoute(a));
+                    call->SetFirstSlot(callWork->GetFirstSlot());
+                    call->SetLastSlot(callWork->GetLastSlot());
                     call->ClearTrialRoutes();
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
-                    IncrementNumProtectedCalls();
+                    //callWork->SetStatus(Accepted);
+                    //callBackup->SetStatus(Accepted);
+                    IncrementNumProtectedCalls();                    
                     return;
                 }
             }
@@ -165,7 +170,7 @@ CallDevices* call) {
             IncrementNumNonProtectedCalls();
             return;
         }
-    }
+    } 
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
