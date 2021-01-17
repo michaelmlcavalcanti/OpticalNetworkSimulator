@@ -164,6 +164,9 @@ CallDevices* call) {
         this->resDevAlloc->specAlloc->SpecAllocation(call);
         
         if(topology->IsValidLigthPath(call)){
+            call->SetRoute(call->GetRoute(k));
+            call->SetFirstSlot(callWork->GetFirstSlot());
+            call->SetLastSlot(callWork->GetLastSlot());
             call->ClearTrialRoutes();
             call->ClearTrialProtRoutes();
             call->SetStatus(Accepted);
@@ -185,8 +188,7 @@ void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
         
         //condition for squeezing 
         if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
-            double percent = 100.0;
-            double squeezingInd = (1 - (parameters->GetBeta() / percent));
+            double squeezingInd = (1 - (parameters->GetBeta()));
             double bitrate = call->GetBitRate();
             double protBitRate = ceil (squeezingInd * bitrate);
             auxCall->SetBitRate(protBitRate);
