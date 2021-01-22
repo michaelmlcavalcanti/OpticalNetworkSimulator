@@ -48,8 +48,13 @@ public:
      * @param call Call request the function will try to allocate.
      */
      void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
+     
+     void CalcPDPPBitRatePoss(CallDevices* call);
+     
     private:
         
+        
+        std::vector<double> NodePairPDPPBitRateDist;
         
 };
 

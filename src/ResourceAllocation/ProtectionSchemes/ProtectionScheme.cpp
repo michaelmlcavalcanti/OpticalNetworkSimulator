@@ -31,10 +31,6 @@ long long int ProtectionScheme::GetNumProtectedCalls() const {
     return numProtectedCalls;
 }
 
-void ProtectionScheme::SetNumProtectedCalls(long long int numProtectedCalls) {
-     this->numProtectedCalls = numProtectedCalls;
-}
-
 void ProtectionScheme::IncrementNumProtectedCalls() {
     this->numProtectedCalls++;
 }
@@ -42,5 +38,12 @@ void ProtectionScheme::IncrementNumProtectedCalls() {
 void ProtectionScheme::IncrementNumNonProtectedCalls() {
      this->numNonProtectedCalls++;
 }
+
+/*void ProtectionScheme::SetPDPPBitRateDistribution(int BitRateDistChoice) {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    this->PDPPBitRateDistribution.resize(numNodes*numNodes);
+    this->PDPPBitRateDistribution.assign(numNodes*numNodes, BitRateDistChoice);
+}*/
+
 
 

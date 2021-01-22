@@ -48,16 +48,31 @@ public:
      * 
      */
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
-
+    /**
+     * @brief Function which returns the number of protected calls of network.
+     * 
+     */
     long long int GetNumProtectedCalls() const;
-
-    void SetNumProtectedCalls(long long int numProtectedCalls);
-    
+     /**
+     * @brief Function which increments the number of protected calls of network.
+     * 
+     */
     void IncrementNumProtectedCalls();
-    
+    /**
+     * @brief Function which increments the number of nonprotected calls of network.
+     * 
+     */
     void IncrementNumNonProtectedCalls();
 
+    //void SetPDPPBitRateDistribution(int BitRateDistChoice);
     
+    /**
+     * @brief vector which stores the distribution Bit rate choice for each route
+     * of PDPP protection scheme. 
+     * 
+     */
+    std::vector<unsigned int> PDPPBitRateDistribution;
+        
 protected:
     ResourceDeviceAlloc* resDevAlloc;
     Resources* resources;
@@ -83,6 +98,7 @@ protected:
     long long int numProtectedCalls;
     
     long int numNonProtectedCalls;
+    
 };
 
 #endif /* PROTECTIONSCHEME_H */

@@ -121,6 +121,8 @@
     0 - Protection Disable
     1 - DPP
     2 - PDPP
+    3 - EPDPP_GA
+    4 - EPDPP_HE
 19-Fragmentation Measure Option
     0 - Disable
     1 - Fragmentation Ratio (FR)

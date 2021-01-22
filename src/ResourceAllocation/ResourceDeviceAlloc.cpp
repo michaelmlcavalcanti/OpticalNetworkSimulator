@@ -26,7 +26,8 @@
 #include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"  
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
-:ResourceAlloc(simulType), regAssAlgorithm(nullptr) {
+:ResourceAlloc(simulType), protectionScheme(this->protectionScheme),
+regAssAlgorithm(nullptr) {
 
 }
 
@@ -42,6 +43,7 @@ void ResourceDeviceAlloc::Load() {
     //Put a else? How proceed when the two options are enabled?
     if(options->GetProtectionOption() != ProtectionDisable)
         this->CreateProtectionScheme();
+
 }
 
 void ResourceDeviceAlloc::AdditionalSettings() {
@@ -56,7 +58,7 @@ void ResourceDeviceAlloc::AdditionalSettings() {
     
         // Put functions to create the offline
         if(options->GetProtectionOption() != ProtectionDisable){
-           protScheme->CreateProtectionRoutes();
+           protScheme->CreateProtectionRoutes();           
         }
     }
 }
@@ -265,6 +267,10 @@ void ResourceDeviceAlloc::CreateProtectionScheme() {
         case ProtectionPDPP:
             protScheme = std::make_shared<PartitioningDedicatedPathProtection>
             (this);
+            break;
+        case ProtectionEPDPP_GA:
+            protScheme = std::make_shared<PartitioningDedicatedPathProtection>
+            (this);  
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;

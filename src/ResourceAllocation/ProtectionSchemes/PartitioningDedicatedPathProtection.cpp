@@ -122,34 +122,118 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     call->GetTranspSegments().clear();
+    numSchProtRoutes = 3;
+    
+    this->CalcPDPPBitRatePoss(call);
+        
     std::shared_ptr<Call> auxCall;
     std::vector<std::shared_ptr<Call>> auxVec(0);
-    numSchProtRoutes = 3;
-    int numWorkRoutes = numSchProtRoutes -1;
+        
+    for(unsigned a = 0; a < numSchProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(), 
+        call->GetDeNode(), NodePairPDPPBitRateDist.at(a), call->GetDeactivationTime());        
+        auxVec.push_back(auxCall);
+    }
+    
+    call->SetTranspSegments(auxVec);
+    this->NodePairPDPPBitRateDist.clear();
+}
+
+void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call) {
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int nodePairIndex = orN * numNodes + deN;
+    unsigned int NodePairBitRateOption = this->PDPPBitRateDistribution.at(nodePairIndex);
     double partialBitRate;
     double callBitRate = call->GetBitRate();
     double beta = parameters->GetBeta();
-   
     
-    partialBitRate = ceil (((callBitRate)/(numWorkRoutes)) - 
-    (((beta) * (callBitRate)) / (numWorkRoutes)));
-    
-    for(unsigned a = 1; a <= numSchProtRoutes; a++){
-        auxCall = std::make_shared<Call>(call->GetOrNode(), 
-        call->GetDeNode(), partialBitRate, call->GetDeactivationTime());
+   /* switch(NodePairBitRateOption){
+        case 0:
+            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+            (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
         
-        /*condition for squeezing 
-        if(parameters->GetBeta() != 0 && a > numSchProtRoutes - 1){            
-            double percent = 100.0;
-            double squeezingInd = (1 - (parameters->GetBeta() / percent));
-            double bitrate = partialBitRate;
-            double protBitRate = ceil (squeezingInd * bitrate);
-            auxCall->SetBitRate(protBitRate);
-        } */
+            for(int a = 0; a < numSchProtRoutes; a++){
+                NodePairPDPPBitRateDist.push_back(partialBitRate);
+            }                
+            break;
+        case != 0:
+            if(beta != 0){
+                double BRdown = ((callBitRate/2) - (beta*callBitRate));
+                double BRup = ((callBitRate/2) + (beta*callBitRate));
+                double BRmin = ((callBitRate*(1 - beta)));       
+                std::vector<std::vector<double>> auxVecBR;
+                std::vector<double> auxVecBR1; 
+
+                for(double a = BRdown; a <= BRup; a = a+5e9){
+                    for(double b = BRdown; b <= BRup; b = b+5e9){
+                        for(double c = BRdown; c <= BRup; c = c+5e9){
+                            if(a + b >= BRmin && b + c >= BRmin && a + c >= BRmin){
+                                auxVecBR1.push_back(a);
+                                auxVecBR1.push_back(b);
+                                auxVecBR1.push_back(c);
+                                auxVecBR.push_back(auxVecBR1);
+                                auxVecBR1.clear();                      
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+                (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
         
-        auxVec.push_back(auxCall);
+                for(int a = 0; a < numSchProtRoutes; a++){
+                    NodePairPDPPBitRateDist.push_back(partialBitRate);
+                } 
+            }
+        default:
+            std::cerr << "Invalid Bit Rate Option" << std::endl;
+            std::abort();
+    }*/
+        
+    if(NodePairBitRateOption == 0){
+        partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+        (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
+        
+        for(int a = 0; a < numSchProtRoutes; a++)
+            NodePairPDPPBitRateDist.push_back(partialBitRate);
     }
-    call->SetTranspSegments(auxVec);
+    else{
+        if(beta != 0){
+            double BRdown = ((callBitRate/2) - (beta*callBitRate));
+            double BRup = ((callBitRate/2) + (beta*callBitRate));
+            double BRmin = ((callBitRate*(1 - beta)));       
+            std::vector<std::vector<double>> auxVecBR;
+            std::vector<double> auxVecBR1; 
+        
+            for(double a = BRdown; a <= BRup; a = a+5e9){
+                for(double b = BRdown; b <= BRup; b = b+5e9){
+                    for(double c = BRdown; c <= BRup; c = c+5e9){
+                        if(a + b >= BRmin && b + c >= BRmin && a + c >= BRmin){
+                            auxVecBR1.push_back(a);
+                            auxVecBR1.push_back(b);
+                            auxVecBR1.push_back(c);
+                            auxVecBR.push_back(auxVecBR1);
+                            auxVecBR1.clear();                      
+                        }
+                    }
+                }
+            }
+            for(int a = 0; a < numSchProtRoutes; a++){
+                partialBitRate = auxVecBR.at(NodePairBitRateOption).at(a);
+                NodePairPDPPBitRateDist.push_back(partialBitRate);
+            }
+        }
+        else{
+            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+            (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
+        
+            for(int a = 0; a < numSchProtRoutes; a++)
+                NodePairPDPPBitRateDist.push_back(partialBitRate);
+        }
+    } 
 }
 
-
+       

@@ -236,8 +236,10 @@ enum ProtectionOption {
     ProtectionDisable,
     ProtectionDPP,
     ProtectionPDPP,
+    ProtectionEPDPP_GA,
+    ProtectionEPDPP_HE,
     FirstProtectionOption = ProtectionDisable,
-    LastProtectionOption = ProtectionPDPP
+    LastProtectionOption = ProtectionEPDPP_HE
 };
 
 enum FragMeasureOption {
