@@ -19,10 +19,15 @@
 
 Route::Route(ResourceAlloc* rsaAlg, const std::vector<int>& path)
 :resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path),
-pathNodes(0), cost(0.0) {
+pathNodes(0), pathLinks(0), cost(0.0) {
     
     for(auto it: this->path){
         this->pathNodes.push_back(this->topology->GetNode(it));
+    }
+    
+    for(unsigned int a = 0; a < this->pathNodes.size()-1; a++){
+        pathLinks.push_back(topology->GetLink(pathNodes.at(a)->GetNodeId(), 
+                                              pathNodes.at(a+1)->GetNodeId()));
     }
     
     this->SetCost();

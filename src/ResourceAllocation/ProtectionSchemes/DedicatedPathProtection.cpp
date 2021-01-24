@@ -138,7 +138,8 @@ CallDevices* call) {
                 this->resDevAlloc->specAlloc->SpecAllocation(call);
 
                 if(topology->IsValidLigthPath(call)){
-                    call->SetRoute(call->GetRoute(a));
+                    call->SetRoute(a);
+                    call->SetModulation(FixedModulation);
                     call->SetFirstSlot(callWork->GetFirstSlot());
                     call->SetLastSlot(callWork->GetLastSlot());
                     call->ClearTrialRoutes();
@@ -146,7 +147,7 @@ CallDevices* call) {
                     call->SetStatus(Accepted);
                     //callWork->SetStatus(Accepted);
                     //callBackup->SetStatus(Accepted);
-                    IncrementNumProtectedCalls();                    
+                    IncrementNumProtectedCalls();
                     return;
                 }
             }

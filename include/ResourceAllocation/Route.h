@@ -165,6 +165,8 @@ private:
      * @brief Container of the nodes pointers of this path.
      */
     std::vector<Node*> pathNodes;
+    
+    std::vector<Link*> pathLinks;
     /**
      * @brief Cost of the route.
      */
