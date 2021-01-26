@@ -145,8 +145,6 @@ CallDevices* call) {
                     call->ClearTrialRoutes();
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
-                    //callWork->SetStatus(Accepted);
-                    //callBackup->SetStatus(Accepted);
                     IncrementNumProtectedCalls();
                     return;
                 }
@@ -155,8 +153,9 @@ CallDevices* call) {
     }
     
     //Delete protection route
-    call->GetTranspSegmentsVec().pop_back();
-    
+    callsVec.pop_back();
+    call->SetTranspSegments(callsVec);
+    int x =0;
     //Try only work connection
     for(unsigned int k = 0; k < numRoutes; k++){
         callWork->SetRoute(call->GetRoute(k));

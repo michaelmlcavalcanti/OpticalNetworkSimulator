@@ -118,6 +118,12 @@ public:
      */
     void SetLastSlot(unsigned int lastSlot);
     /**
+     * @brief Function to reset the first and the last contiguous slot of the 
+     * call request to its default values.
+     * @param Call request.
+     */
+    void ResetFirstLastSlot(Call* call);
+    /**
      * @brief Function to get the number of contiguous slots of the call 
      * request.
      * @return Number of contiguous slots.
