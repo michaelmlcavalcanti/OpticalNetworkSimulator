@@ -24,7 +24,7 @@
 #include "math.h" 
 
 PartitioningDedicatedPathProtection::PartitioningDedicatedPathProtection
-(ResourceDeviceAlloc* rsa): ProtectionScheme(rsa) {
+(ResourceDeviceAlloc* rsa): ProtectionScheme(rsa), NodePairPDPPBitRateDist(0) {
 
 }
 
@@ -35,6 +35,7 @@ PartitioningDedicatedPathProtection::~PartitioningDedicatedPathProtection() {
 void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
     
     routing->ProtectionDisjointYEN();
+    this->CreatePDPPBitRateOptions();
 }
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
@@ -236,4 +237,19 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
     } 
 }
 
-       
+void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
+    unsigned int numNodes = topology->GetNumNodes();
+    PDPPBitRateDistribution.resize(numNodes * numNodes);
+    
+    switch(resDevAlloc->options->GetProtectionOption()){
+        case ProtectionPDPP:
+            PDPPBitRateDistribution.assign(numNodes*numNodes, 0);
+            break;
+        case ProtectionEPDPP_GA:
+            PDPPBitRateDistribution.assign(numNodes*numNodes, 1);
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
+    }
+}

@@ -51,10 +51,11 @@ public:
      
      void CalcPDPPBitRatePoss(CallDevices* call);
      
+     void CreatePDPPBitRateOptions();
+     
     private:
         
-        
-        std::vector<double> NodePairPDPPBitRateDist;
+    std::vector<double> NodePairPDPPBitRateDist;
         
 };
 

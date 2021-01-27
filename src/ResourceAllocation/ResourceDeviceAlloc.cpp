@@ -61,7 +61,7 @@ void ResourceDeviceAlloc::AdditionalSettings() {
            protScheme->CreateProtectionRoutes();
            
         //load the vector with PDPP Bit Rate option of all node pairs
-        this->CreatePDPPBitRateOptions();   
+        //this->CreatePDPPBitRateOptions();
         }
     }
 }
@@ -281,7 +281,7 @@ void ResourceDeviceAlloc::CreateProtectionScheme() {
     }
 }
 
-void ResourceDeviceAlloc::CreatePDPPBitRateOptions() {
+/*void ResourceDeviceAlloc::CreatePDPPBitRateOptions() {
     unsigned int numNodes = this->topology->GetNumNodes();
     protectionScheme->PDPPBitRateDistribution.resize(numNodes * numNodes);
     
@@ -298,4 +298,4 @@ void ResourceDeviceAlloc::CreatePDPPBitRateOptions() {
             std::cerr << "Invalid Protection Option" << std::endl;
             std::abort();
     }
-}
+}*/

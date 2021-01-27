@@ -80,7 +80,7 @@ private:
      * distribution Bit Rate option of each node pair. 
      * @return
      */
-    void CreatePDPPBitRateOptions();
+    //void CreatePDPPBitRateOptions();
 private:
     
     std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;

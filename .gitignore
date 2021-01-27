@@ -34,3 +34,6 @@
 /dist/
 
 /nbproject/private/
+
+/.idea
+/nbproject
