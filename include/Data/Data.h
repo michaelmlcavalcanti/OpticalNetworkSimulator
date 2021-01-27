@@ -242,6 +242,18 @@ public:
      * @param actualIndex Actual simulation point index.
      */
     void SetActualIndex(unsigned int actualIndex);
+    /**
+     * @brief Function to get the network protection calls rate for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    double GetProtRate() const;
+        /**
+     * @brief Function to get the network non protection calls rate for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    double GetNonProtRate() const;
 private:
     /**
      * @brief Saves the data in PBvLoad.txt.

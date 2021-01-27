@@ -400,7 +400,6 @@ void Data::SetBandFrag(const double band, const double netFrag) {
     fragPerTraffic.at(actualIndex).push_back(frag);
 }
 
-
 unsigned int Data::GetActualIndex() const {
     return actualIndex;
 }
@@ -408,6 +407,15 @@ unsigned int Data::GetActualIndex() const {
 void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
 }
+
+double Data::GetProtRate() const {
+   
+}
+
+double Data::GetNonProtRate() const {
+
+}
+
 
 void Data::SaveCallReqBP(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()

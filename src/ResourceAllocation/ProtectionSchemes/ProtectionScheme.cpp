@@ -19,7 +19,8 @@
 ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
 :resDevAlloc(rsa), resources(rsa->GetResources()), topology(rsa->GetTopology()),
 parameters(rsa->parameters), modulation(rsa->GetModulation()), 
-routing(rsa->routing.get()), numSchProtRoutes(2) {
+routing(rsa->routing.get()), protectionScheme(this->protectionScheme),
+numSchProtRoutes(2), PDPPBitRateDistribution(0) {
     
 }
 

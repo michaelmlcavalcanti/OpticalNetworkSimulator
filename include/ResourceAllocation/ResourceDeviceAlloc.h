@@ -75,6 +75,12 @@ private:
     void CreateRegeneratorAssignment();
     
     void CreateProtectionScheme();
+    /**
+     * @brief Carried out the vector PDPPBitRateDistribution which stores the 
+     * distribution Bit Rate option of each node pair. 
+     * @return
+     */
+    void CreatePDPPBitRateOptions();
 private:
     
     std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;

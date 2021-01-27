@@ -155,7 +155,7 @@ CallDevices* call) {
     //Delete protection route
     callsVec.pop_back();
     call->SetTranspSegments(callsVec);
-    int x =0;
+    
     //Try only work connection
     for(unsigned int k = 0; k < numRoutes; k++){
         callWork->SetRoute(call->GetRoute(k));

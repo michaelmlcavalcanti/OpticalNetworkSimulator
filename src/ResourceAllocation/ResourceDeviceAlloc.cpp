@@ -58,7 +58,10 @@ void ResourceDeviceAlloc::AdditionalSettings() {
     
         // Put functions to create the offline
         if(options->GetProtectionOption() != ProtectionDisable){
-           protScheme->CreateProtectionRoutes();           
+           protScheme->CreateProtectionRoutes();
+           
+        //load the vector with PDPP Bit Rate option of all node pairs
+        this->CreatePDPPBitRateOptions();   
         }
     }
 }
@@ -271,6 +274,25 @@ void ResourceDeviceAlloc::CreateProtectionScheme() {
         case ProtectionEPDPP_GA:
             protScheme = std::make_shared<PartitioningDedicatedPathProtection>
             (this);  
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
+    }
+}
+
+void ResourceDeviceAlloc::CreatePDPPBitRateOptions() {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    protectionScheme->PDPPBitRateDistribution.resize(numNodes * numNodes);
+    
+    switch(options->GetProtectionOption()){
+        case ProtectionDPP:
+            break;
+        case ProtectionPDPP:
+            protectionScheme->PDPPBitRateDistribution.assign(numNodes*numNodes, 0);
+            break;
+        case ProtectionEPDPP_GA:
+            protectionScheme->PDPPBitRateDistribution.assign(numNodes*numNodes, 1);
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;
