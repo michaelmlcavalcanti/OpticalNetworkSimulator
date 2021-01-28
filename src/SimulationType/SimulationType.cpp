@@ -20,7 +20,6 @@
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Calls/Traffic.h"
-#include "../../include/Calls/EventGenerator.h"
 #include "../../include/Calls/Event.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 #include "../../include/ResourceAllocation/ResourceDeviceAlloc.h"
@@ -35,16 +34,17 @@ topology(std::make_shared<Topology>(this)),
 inputOutput(boost::make_unique<InputOutput>(this)),
 traffic(std::make_shared<Traffic>(this)),
 callGenerator(std::make_shared<EventGenerator>(this)),
-resourceAlloc(nullptr) {
+resourceAlloc(nullptr),
+numberRequests(0) {
     
 }
 
 SimulationType::~SimulationType() {
     this->parameters.reset();
     this->options.reset();
-    this->data.release();
+    this->data.reset();
     this->topology.reset();
-    this->inputOutput.release();
+    this->inputOutput.reset();
     this->traffic.reset();
     this->callGenerator.reset();
     this->resourceAlloc.reset();
@@ -97,7 +97,7 @@ TypeSimulation SimulationType::GetTypeSimulation() const {
     return typeSimulation;
 }
 
-const SimulIndex SimulationType::GetSimulationIndex() const {
+SimulIndex SimulationType::GetSimulationIndex() const {
     return simulationIndex;
 }
 
@@ -185,7 +185,7 @@ void SimulationType::SimulateNumTotalReq() {
         
       //  std::cout << "requisição número:" << numberRequests << std::endl;        
       //  if(this->numberRequests == 491.0)
-      //      int x = 0;      
+      //      int x = 0;
                
         evt->ImplementEvent();
             

@@ -90,7 +90,7 @@ public:
      * @brief Returns the simulation index
      * @return Simulation index
      */
-    const SimulIndex GetSimulationIndex() const;
+    SimulIndex GetSimulationIndex() const;
     /**
      * @brief Returns a pointer to a Parameters object 
      * in this simulation
@@ -179,7 +179,7 @@ public:
      * This variable is updated when a new call/event is create,
      * in function GenerateCall of CallGenerator class.
      */
-    unsigned long long int numberRequests;
+    NumRequest numberRequests;
 private:
     /**
      * @brief Define the type of simulation based on the option chosen.

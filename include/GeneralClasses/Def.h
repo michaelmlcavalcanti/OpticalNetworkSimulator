@@ -34,11 +34,14 @@ typedef double TIME;
 
 typedef bool UseRegeneration;
 
+// Indices
 typedef unsigned int SimulIndex;
 typedef unsigned int NodeIndex;
 typedef unsigned int CoreIndex;
 typedef unsigned int SlotIndex;
 typedef unsigned int RouteIndex;
+
+typedef unsigned long long int NumRequest;
 
 /**
  * @brief Class responsible to define constants, random engines and other

@@ -15,8 +15,6 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/Options.h"
 
-const int InputOutput::barWidth = 30;
-
 InputOutput::InputOutput(SimulationType* simulType)
 :simulType(simulType) {
     this->LoadLog(logFile);
@@ -34,12 +32,10 @@ InputOutput::InputOutput(SimulationType* simulType)
     
 }
 
-InputOutput::~InputOutput() {
-    
-}
+InputOutput::~InputOutput() = default;
 
 void InputOutput::LoadParameters(std::ifstream& parameters) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         parameters.open("Files/Inputs/Parameters_" + 
@@ -59,7 +55,7 @@ void InputOutput::LoadParameters(std::ifstream& parameters) {
 }
 
 void InputOutput::LoadOptions(std::ifstream& options) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         options.open("Files/Inputs/Options_" + 
@@ -119,7 +115,7 @@ void InputOutput::LoadTraffic(std::ifstream& traffic) {
 }
 
 void InputOutput::LoadGA(std::ifstream& gaParam) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         gaParam.open("Files/Inputs/GA/GA_" + 
@@ -139,7 +135,7 @@ void InputOutput::LoadGA(std::ifstream& gaParam) {
 }
 
 void InputOutput::LoadGA_SO(std::ifstream& gaSoParam) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         gaSoParam.open("Files/Inputs/GA/GA_SO_" + 
@@ -159,7 +155,7 @@ void InputOutput::LoadGA_SO(std::ifstream& gaSoParam) {
 }
 
 void InputOutput::LoadGA_MO(std::ifstream& gaMoParam) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         gaMoParam.open("Files/Inputs/GA/GA_MO_" + 
@@ -196,7 +192,7 @@ void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
 }
 
 void InputOutput::LoadDevicesFile(std::ifstream& devicesFile) {
-    int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         devicesFile.open("Files/Inputs/Devices/Devices_" + 
@@ -216,7 +212,7 @@ void InputOutput::LoadDevicesFile(std::ifstream& devicesFile) {
 }
 
 void InputOutput::LoadPSO(std::ifstream& psoFile) {
-    unsigned int auxInt = simulType->GetSimulationIndex();
+    const SimulIndex auxInt = simulType->GetSimulationIndex();
     std::string auxString = std::to_string(auxInt);
     
     do{
@@ -250,7 +246,7 @@ void InputOutput::LoadCoefficientsSCRA(std::ifstream& coeSCRA) {
 }
 
 void InputOutput::LoadReqBP(std::ofstream& pBvLoad) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         pBvLoad.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -269,7 +265,7 @@ void InputOutput::LoadReqBP(std::ofstream& pBvLoad) {
 }
 
 void InputOutput::LoadBandBP(std::ofstream& bandBP) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         bandBP.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -288,7 +284,7 @@ void InputOutput::LoadBandBP(std::ofstream& bandBP) {
 }
 
 void InputOutput::LoadNetUtiliz(std::ofstream& netUtiliz) {
-unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         netUtiliz.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -307,7 +303,7 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
 }
 
 void InputOutput::LoadNetFrag(std::ofstream& netFrag) {
-unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         netFrag.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -326,7 +322,7 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
 }
 
 void InputOutput::LoadAccumNetFrag(std::ofstream& accumNetFrag) {
-unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         accumNetFrag.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -345,10 +341,10 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
 }
 
 void InputOutput::LoadFragBand(std::ofstream& fragBand) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        fragBand.open("Files/Outputs/" + std::to_string(auxInt) 
+        fragBand.open("Files/Outputs/" + std::to_string(auxInt)
                      + "/FragBand.txt");
         
         if(!fragBand.is_open()){
@@ -364,7 +360,7 @@ void InputOutput::LoadFragBand(std::ofstream& fragBand) {
 }
 
 void InputOutput::LoadLog(std::ofstream& log) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         log.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -383,7 +379,7 @@ void InputOutput::LoadLog(std::ofstream& log) {
 }
 
 void InputOutput::LoadLinksUse(std::ofstream& linksUse) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         linksUse.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -402,7 +398,7 @@ void InputOutput::LoadLinksUse(std::ofstream& linksUse) {
 }
 
 void InputOutput::LoadSlotsRelativeUse(std::ofstream& slotsRelativeUse) {
-unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         slotsRelativeUse.open("Files/Outputs/" + std::to_string(auxInt) 
@@ -422,7 +418,7 @@ unsigned int auxInt = this->simulType->GetSimulationIndex();
 
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
 std::ofstream& worst, std::ofstream& iniPop) {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     do{
         bests.open("Files/Outputs/" + std::to_string(auxInt)
@@ -486,7 +482,7 @@ std::ofstream& worst, std::ofstream& iniPop) {
 }
 
 void InputOutput::LoadPsoFiles(std::ofstream& best, std::ofstream& bests) {
-    unsigned int index = simulType->GetSimulationIndex();
+    const SimulIndex index = simulType->GetSimulationIndex();
     std::string string = std::to_string(index);
     
     do{
@@ -578,7 +574,7 @@ std::ofstream& InputOutput::GetBestParticles() {
 }
 
 std::ofstream& InputOutput::LoadTable() {
-    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     
     table.open("Files/Outputs/" + std::to_string(auxInt) 
                      + "/Table.txt");

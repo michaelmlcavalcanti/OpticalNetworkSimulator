@@ -70,17 +70,17 @@ private:
      * object.
      * @param simul Simulation object.
      */
-    void Pre_Simulation(SimulationType* simul);
+    static void Pre_Simulation(SimulationType* simul);
     /**
      * @brief Print and simulate a specified simulation object.
      * @param simul Simulation object.
      */
-    void Simulation(SimulationType* simul);
+    static void Simulation(SimulationType* simul);
     /**
      * @brief Save the data of the simulation.
      * @param simul Simulation object.
      */
-    void Pos_Simulation(SimulationType* simul);
+    static void Pos_Simulation(SimulationType* simul);
     /**
      * @brief Function to create a simulation based on the input option.
      * @param index Simulation index.

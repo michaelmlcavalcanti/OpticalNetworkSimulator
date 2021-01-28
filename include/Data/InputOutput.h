@@ -31,11 +31,6 @@ public:
      */
     InputOutput(SimulationType* simulType);
     /**
-     * @brief Copy constructor for a InputOutput object.
-     * @param orig original InputOutput object.
-     */
-    InputOutput(const InputOutput& orig);
-    /**
      * @brief Virtual destructor of a InputOutput object.
      */
     virtual ~InputOutput();
@@ -301,7 +296,7 @@ private:
     /**
      * @brief Size of the progress bar.
      */
-    static const int barWidth;
+    static const int barWidth = 30;
 };
 
 #endif /* INPUTOUTPUT_H */

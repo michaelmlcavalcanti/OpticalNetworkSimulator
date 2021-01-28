@@ -32,20 +32,27 @@ Kernel::Kernel()
 }
 
 Kernel::~Kernel() {
-    
+
     simulations.clear();
 }
 
 void Kernel::Run() {
     
     this->CreateSimulations();
-    
-    for(unsigned int a = 0; a < simulations.size(); a++){
-        this->Pre_Simulation(simulations.at(a).get());
-        this->Simulation(simulations.at(a).get());
-        this->Pos_Simulation(simulations.at(a).get());
-        simulations.at(a).reset();
+
+    for(auto& simulation: simulations){
+        Pre_Simulation(simulation.get());
+        Simulation(simulation.get());
+        Pos_Simulation(simulation.get());
+        simulation.reset();
     }
+//
+//    for(unsigned int a = 0; a < simulations.size(); a++){
+//        this->Pre_Simulation(simulations.at(a).get());
+//        this->Simulation(simulations.at(a).get());
+//        this->Pos_Simulation(simulations.at(a).get());
+//        simulations.at(a).reset();
+//    }
 }
 
 void Kernel::CreateSimulations() {
@@ -59,7 +66,7 @@ void Kernel::CreateSimulations() {
     std::cout << "List of simulations types:" << std::endl;
     for(TypeSimulation a = FirstSimulation; a <= LastSimulation; 
     a = TypeSimulation(a+1)){
-        std::cout << a << "-" << this->mapSimulationType.at(a) << std::endl;
+        std::cout << a << "-" << Kernel::mapSimulationType.at(a) << std::endl;
     }
     
     for(unsigned a = 1; a <= this->numberSimulations; a++){
