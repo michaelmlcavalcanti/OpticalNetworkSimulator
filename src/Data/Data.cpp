@@ -62,7 +62,7 @@ numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
 netFragmentationRatio(0), accumNetFragmentationRatio(0) ,fragPerTraffic(0), 
 linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
-actualIndex(0) {
+actualIndex(0), protectedCalls(0), nonProtectedCalls(0) {
     
 }
 
@@ -95,6 +95,8 @@ void Data::Initialize() {
         std::vector<double> vec(numberSlots, 0);
         slotsRelativeUse.at(a) = vec;
     }
+    protectedCalls.resize(size);
+    nonProtectedCalls.resize(size);
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -115,6 +117,8 @@ void Data::Initialize(unsigned int numPos) {
     simulTime.assign(numPos, 0.0);
     realSimulTime.assign(numPos, 0.0);
     slotsRelativeUse.resize(numPos);
+    protectedCalls.resize(numPos);
+    nonProtectedCalls.resize(numPos);
 }
 
 void Data::StorageCall(Call* call) {
@@ -221,6 +225,18 @@ void Data::SaveSlotsRelativeUse() {
             GetSlotsRelativeUse();
     
     this->SaveSlotsRelativeUse(slotsRelativeUse);
+}
+
+void Data::SaveNetProtRate() {
+    std::ofstream &netProtRate = this->simulType->GetInputOutput()->GetNetProtRate();
+    
+    this->SaveNetProtRate(netProtRate);
+}
+
+void Data::SaveNetNonProtRate() {
+    std::ofstream &netNonProtRate = this->simulType->GetInputOutput()->GetNetNonProtRate();
+    
+    this->SaveNetNonProtRate(netNonProtRate);
 }
 
 
@@ -408,12 +424,33 @@ void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
 }
 
+void Data::SetProtectedCalls(double numProtectedCalls) {
+    assert(numProtectedCalls >= 0);
+    this->protectedCalls.at(this->actualIndex) = numProtectedCalls;
+}
+
+double Data::GetProtectedCalls() const {
+    return this->protectedCalls.at(this->actualIndex);
+}
+
+void Data::SetNonProtectedCalls(double numNonProtectedCalls) {
+    assert(numNonProtectedCalls >= 0);
+    this->nonProtectedCalls.at(this->actualIndex) = numNonProtectedCalls;
+}
+
+double Data::GetNonProtectedCalls() const {
+    return this->nonProtectedCalls.at(this->actualIndex);
+}
+
+
 double Data::GetProtRate() const {
-   
+    return this->GetProtectedCalls()/((this->GetProtectedCalls())+
+    (this->GetNonProtectedCalls()));
 }
 
 double Data::GetNonProtRate() const {
-
+    return this->GetNonProtectedCalls()/((this->GetProtectedCalls())+
+    (this->GetNonProtectedCalls()));
 }
 
 
@@ -538,7 +575,7 @@ void Data::SaveLinksUse(std::ostream& ostream) {
 }
 
 void Data::SaveSlotsRelativeUse(std::ostream& ostream) {
- unsigned int numLoadPoints = this->simulType->GetParameters()
+    unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
     double numSlots = simulType->GetParameters()->GetNumberSlots();
         
@@ -554,6 +591,31 @@ void Data::SaveSlotsRelativeUse(std::ostream& ostream) {
         ostream << std::endl;    
     }        
 }
+
+void Data::SaveNetProtRate(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetProtRate() 
+                << std::endl;
+    }
+}
+
+void Data::SaveNetNonProtRate(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetNonProtRate() 
+                << std::endl;
+    }
+}
+
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
 std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {

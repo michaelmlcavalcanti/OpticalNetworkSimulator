@@ -97,16 +97,31 @@ public:
      * @brief Saves the data values in the NetFrag.txt file.
      */
     void SaveNetFrag();
-    
+    /**
+     * @brief Saves the data values in the AccumNetFrag.txt file.
+     */
     void SaveAccumNetFrag();
-    
+    /**
+     * @brief Saves the data values in the FragTraffic.txt file.
+     */
     void SaveFragTraffic();
-        
+    /**
+     * @brief Saves the data values in the LinksUse.txt file.
+     */
     void SaveLinksUse();
-    
+    /**
+     * @brief Saves the data values in the SlotsRelativeUse.txt file.
+     */
     void SaveSlotsRelativeUse();
+    /**
+     * @brief Saves the data values in the NetProtRate.txt file.
+     */
+    void SaveNetProtRate();
+    /**
+     * @brief Saves the data values in the NetNonProtRate.txt file.
+     */
+    void SaveNetNonProtRate();
     
-
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
@@ -248,12 +263,37 @@ public:
      * @return Call request blocking probability.
      */
     double GetProtRate() const;
-        /**
+     /**
      * @brief Function to get the network non protection calls rate for 
      * the actual point.
      * @return Call request blocking probability.
      */
     double GetNonProtRate() const;
+    /**
+     * @brief Function to get the total number of protection calls for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    double GetProtectedCalls() const;
+    /**
+     * @brief Function to set the total number of protection calls for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    void SetProtectedCalls(double numProtectedCalls);
+        /**
+     * @brief Function to get the total number of non protection calls for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    double GetNonProtectedCalls() const;
+    /**
+     * @brief Function to set the total number of non protection calls for 
+     * the actual point.
+     * @return Call request blocking probability.
+     */
+    void SetNonProtectedCalls(double numNonProtectedCalls);
+
 private:
     /**
      * @brief Saves the data in PBvLoad.txt.
@@ -287,6 +327,11 @@ private:
     void SaveLinksUse(std::ostream& ostream);
     
     void SaveSlotsRelativeUse(std::ostream& ostream);
+    
+    void SaveNetProtRate(std::ostream& ostream);
+    
+    void SaveNetNonProtRate(std::ostream& ostream);
+    
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.
@@ -388,7 +433,7 @@ private:
      * per load.
      */
     std::vector<double> numberAccSlots;
-       /**
+     /**
      * @brief Actual Integer number of accepted slots simulated,
      * per load.
      */
@@ -426,7 +471,17 @@ private:
      /**
      * @brief Vector that contain the slots relative uses for each load point.
      */
-    std::vector<std::vector<double>> slotsRelativeUse;
+    std::vector<std::vector<double>> slotsRelativeUse;  
+     /**
+     * @brief Vector that contain the total number of protected calls
+     * for each load point.
+     */
+    std::vector<double> protectedCalls;  
+     /**
+     * @brief Vector that contain the total number of non protected calls
+     * for each load point.
+     */
+    std::vector<double> nonProtectedCalls; 
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

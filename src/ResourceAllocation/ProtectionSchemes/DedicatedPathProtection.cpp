@@ -22,6 +22,8 @@
 #include "../../../include/ResourceAllocation/Modulation.h"
 #include "../../../include/Calls/CallDevices.h"
 #include "../../../include/Data/Parameters.h"
+#include "../../../include/SimulationType/SimulationType.h"
+#include "../../../include/Data/Data.h"
 #include "math.h" 
 
 DedicatedPathProtection::DedicatedPathProtection(ResourceDeviceAlloc* rsa) 
@@ -146,6 +148,8 @@ CallDevices* call) {
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
                     IncrementNumProtectedCalls();
+                    resDevAlloc->simulType->GetData()->SetProtectedCalls
+                    (this->numProtectedCalls);
                     return;
                 }
             }
@@ -171,6 +175,8 @@ CallDevices* call) {
             call->ClearTrialProtRoutes();
             call->SetStatus(Accepted);
             IncrementNumNonProtectedCalls();
+            resDevAlloc->simulType->GetData()->SetNonProtectedCalls
+            (this->numNonProtectedCalls);
             return;
         }
     } 

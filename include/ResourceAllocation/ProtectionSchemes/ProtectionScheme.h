@@ -95,9 +95,9 @@ protected:
     /**
      * @brief Total number of protected calls by the protection scheme. 
      */
-    long long int numProtectedCalls;
+    unsigned long int numProtectedCalls;
     
-    long int numNonProtectedCalls;
+    unsigned long int numNonProtectedCalls;
     
 };
 

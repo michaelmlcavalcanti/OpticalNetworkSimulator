@@ -112,7 +112,6 @@ public:
      * @return Network Fragmentation file.
      */
     std::ofstream& GetNetFragFile();
-    
       /**
      * @brief Function to get the file that storage the Accumulated Network 
      * Fragmentation.
@@ -129,6 +128,16 @@ public:
      * @return Slots Relative Slots output file.
      */
     std::ofstream& GetSlotsRelativeUse();
+    /**
+     * @brief Function to get the file that storage the call Protection Rate.
+     * @return Network call protection Rate file.
+     */
+    std::ofstream& GetNetProtRate();
+    /**
+     * @brief Function to get the file that storage the call non Protection Rate.
+     * @return Network call non protection Rate file.
+     */
+    std::ofstream& GetNetNonProtRate();
     /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
@@ -220,6 +229,16 @@ private:
     
     void LoadFragBand(std::ofstream& fragBand);
     /**
+    * @brief Function to load the call protection Rate file.
+    * @param netProtRate 
+    */
+    void LoadNetProtRate(std::ofstream& netProtRate);
+        /**
+    * @brief Function to load the call non protection Rate file.
+    * @param netNonProtRate 
+    */
+    void LoadNetNonProtRate(std::ofstream& netNonProtRate);
+    /**
      * @brief Function to load the GA algorithm files.
      * @param bests Best individuals file.
      * @param best Best individual file.
@@ -240,24 +259,24 @@ private:
      */
     std::ofstream logFile;
     /**
-     * @brief Request blocking probability outpput file.
+     * @brief Request blocking probability output file.
      */
     std::ofstream reqBpFile;
     /**
-     * @brief Bandwidth blocking probability outpput file.
+     * @brief Bandwidth blocking probability output file.
      */
     std::ofstream bandBpFile;
     /**
-     * @brief Network Utilization outpput file.
+     * @brief Network Utilization output file.
      */
     std::ofstream netUtilizFile;
     /**
-     * @brief Network Fragmentation outpput file.
+     * @brief Network Fragmentation output file.
      */
     std::ofstream netFragFile;
     
     /**
-     * @brief Accumulated Network Fragmentation outpput file.
+     * @brief Accumulated Network Fragmentation output file.
      */
     std::ofstream accumNetFragFile;
     
@@ -265,9 +284,17 @@ private:
     
     std::ofstream linksUse;
     /**
-     * @brief Slots Relative Usage outpput file.
+     * @brief Slots Relative Usage output file.
      */
     std::ofstream slotsRelativeUse;
+    /**
+     * @brief call protection rate output file.
+     */
+    std::ofstream netProtRate;
+    /**
+     * @brief call non protection rate output file.
+     */
+    std::ofstream netNonProtRate;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.

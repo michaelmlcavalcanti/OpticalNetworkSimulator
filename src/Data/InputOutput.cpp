@@ -29,6 +29,8 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadFragBand(fragBand);
     this->LoadLinksUse(linksUse);
     this->LoadSlotsRelativeUse(slotsRelativeUse);
+    this->LoadNetProtRate(netProtRate);
+    this->LoadNetNonProtRate(netNonProtRate);
     
 }
 
@@ -416,6 +418,44 @@ void InputOutput::LoadSlotsRelativeUse(std::ofstream& slotsRelativeUse) {
     }while(!slotsRelativeUse.is_open());
 }
 
+void InputOutput::LoadNetProtRate(std::ofstream& netProtRate) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        netProtRate.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/netProtRate.txt");
+        
+        if(!netProtRate.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!netProtRate.is_open());
+}
+
+void InputOutput::LoadNetNonProtRate(std::ofstream& netNonProtRate) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        netNonProtRate.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/netNonProtRate.txt");
+        
+        if(!netNonProtRate.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!netNonProtRate.is_open());
+}
+
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
 std::ofstream& worst, std::ofstream& iniPop) {
     const SimulIndex auxInt = this->simulType->GetSimulationIndex();
@@ -547,6 +587,14 @@ std::ofstream& InputOutput::GetLinksUse() {
 
 std::ofstream& InputOutput::GetSlotsRelativeUse() {
     return slotsRelativeUse;
+}
+
+std::ofstream& InputOutput::GetNetProtRate() {
+    return netProtRate;
+}
+
+std::ofstream& InputOutput::GetNetNonProtRate() {
+    return netNonProtRate;
 }
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
