@@ -37,6 +37,24 @@ void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
     routing->ProtectionDisjointYEN();
     this->CreatePDPPBitRateOptions();
 }
+
+void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
+    unsigned int numNodes = topology->GetNumNodes();
+    PDPPBitRateDistribution.resize(numNodes * numNodes);
+
+    switch(resDevAlloc->options->GetProtectionOption()){
+        case ProtectionPDPP:
+            PDPPBitRateDistribution.assign(numNodes*numNodes, 0);
+            break;
+        case ProtectionEPDPP_GA:
+            PDPPBitRateDistribution.assign(numNodes*numNodes, 1);
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
+    }
+}
+
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
     this->RoutingOffNoSameSlotProtPDPPSpecAlloc(call);
@@ -124,8 +142,8 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
     call->GetTranspSegments().clear();
     numSchProtRoutes = 3;
-    
-    this->CalcPDPPBitRatePoss(call);
+
+    this->CalcPDPPBitRate(call);
         
     std::shared_ptr<Call> auxCall;
     std::vector<std::shared_ptr<Call>> auxVec(0);
@@ -140,7 +158,7 @@ void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* cal
     this->NodePairPDPPBitRateDist.clear();
 }
 
-void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call) {
+void PartitioningDedicatedPathProtection::CalcPDPPBitRate(CallDevices* call) {
     unsigned int orN = call->GetOrNode()->GetNodeId();
     unsigned int deN = call->GetDeNode()->GetNodeId();
     unsigned int numNodes = this->topology->GetNumNodes();
@@ -149,23 +167,23 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
     double partialBitRate;
     double callBitRate = call->GetBitRate();
     double beta = parameters->GetBeta();
-    
+
    /* switch(NodePairBitRateOption){
         case 0:
-            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) -
             (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
-        
+
             for(int a = 0; a < numSchProtRoutes; a++){
                 NodePairPDPPBitRateDist.push_back(partialBitRate);
-            }                
+            }
             break;
         case != 0:
             if(beta != 0){
                 double BRdown = ((callBitRate/2) - (beta*callBitRate));
                 double BRup = ((callBitRate/2) + (beta*callBitRate));
-                double BRmin = ((callBitRate*(1 - beta)));       
+                double BRmin = ((callBitRate*(1 - beta)));
                 std::vector<std::vector<double>> auxVecBR;
-                std::vector<double> auxVecBR1; 
+                std::vector<double> auxVecBR1;
 
                 for(double a = BRdown; a <= BRup; a = a+5e9){
                     for(double b = BRdown; b <= BRup; b = b+5e9){
@@ -175,29 +193,29 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
                                 auxVecBR1.push_back(b);
                                 auxVecBR1.push_back(c);
                                 auxVecBR.push_back(auxVecBR1);
-                                auxVecBR1.clear();                      
+                                auxVecBR1.clear();
                             }
                         }
                     }
                 }
             }
             else{
-                partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+                partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) -
                 (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
-        
+
                 for(int a = 0; a < numSchProtRoutes; a++){
                     NodePairPDPPBitRateDist.push_back(partialBitRate);
-                } 
+                }
             }
         default:
             std::cerr << "Invalid Bit Rate Option" << std::endl;
             std::abort();
     }*/
-        
+
     if(NodePairBitRateOption == 0){
-        partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+        partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) -
         (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
-        
+
         for(int a = 0; a < numSchProtRoutes; a++)
             NodePairPDPPBitRateDist.push_back(partialBitRate);
     }
@@ -205,10 +223,10 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
         if(beta != 0){
             double BRdown = ((callBitRate/2) - (beta*callBitRate));
             double BRup = ((callBitRate/2) + (beta*callBitRate));
-            double BRmin = ((callBitRate*(1 - beta)));       
+            double BRmin = ((callBitRate*(1 - beta)));
             std::vector<std::vector<double>> auxVecBR;
-            std::vector<double> auxVecBR1; 
-        
+            std::vector<double> auxVecBR1;
+
             for(double a = BRdown; a <= BRup; a = a+5e9){
                 for(double b = BRdown; b <= BRup; b = b+5e9){
                     for(double c = BRdown; c <= BRup; c = c+5e9){
@@ -217,7 +235,7 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
                             auxVecBR1.push_back(b);
                             auxVecBR1.push_back(c);
                             auxVecBR.push_back(auxVecBR1);
-                            auxVecBR1.clear();                      
+                            auxVecBR1.clear();
                         }
                     }
                 }
@@ -228,28 +246,13 @@ void PartitioningDedicatedPathProtection::CalcPDPPBitRatePoss(CallDevices* call)
             }
         }
         else{
-            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) - 
+            partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -1)) -
             (((beta) * (callBitRate)) / (numSchProtRoutes -1)));
-        
+
             for(int a = 0; a < numSchProtRoutes; a++)
                 NodePairPDPPBitRateDist.push_back(partialBitRate);
         }
-    } 
-}
-
-void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
-    unsigned int numNodes = topology->GetNumNodes();
-    PDPPBitRateDistribution.resize(numNodes * numNodes);
-    
-    switch(resDevAlloc->options->GetProtectionOption()){
-        case ProtectionPDPP:
-            PDPPBitRateDistribution.assign(numNodes*numNodes, 0);
-            break;
-        case ProtectionEPDPP_GA:
-            PDPPBitRateDistribution.assign(numNodes*numNodes, 1);
-            break;
-        default:
-            std::cerr << "Invalid Protection Option" << std::endl;
-            std::abort();
     }
 }
+
+

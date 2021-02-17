@@ -49,7 +49,7 @@ public:
      */
      void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
      
-     void CalcPDPPBitRatePoss(CallDevices* call);
+     void CalcPDPPBitRate(CallDevices* call);
      
      void CreatePDPPBitRateOptions();
      

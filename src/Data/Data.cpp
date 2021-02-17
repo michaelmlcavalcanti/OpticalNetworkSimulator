@@ -49,8 +49,8 @@ const Data* data) {
             << "  HopsMed:" << data->GetAverageNumHops() << std::endl;
     ostream << "NetOcc:" << data->GetNetOccupancy() 
             << "  NetUti:" << data->GetAverageNetUtilization() 
-            << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
-    
+            << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl
+            << "ProtRate:" << data->GetProtRate();    
     ostream << std::endl;
     
     return ostream;

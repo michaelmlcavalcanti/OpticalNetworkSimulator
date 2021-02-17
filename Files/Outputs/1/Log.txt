@@ -36,28 +36,28 @@ Number of polarizations: 2
 Guard band size (slots): 0
 
 DATA
-Simulation time:998.616  Real simul time: 1.28984  Number of requests:100000
+Simulation time:998.616  Real simul time: 1.28612  Number of requests:100000
 Load point:100  ReqBP:0.0029  SlotsBP:0.00496816  HopsMed:2.14827
 NetOcc:1.96655e+06  NetUti:0.365664 NetFrag:0
+ProtRate:0.987464
 
-
-Simulation time:798.893  Real simul time: 1.55816  Number of requests:100000
+Simulation time:798.893  Real simul time: 1.57461  Number of requests:100000
 Load point:125  ReqBP:0.01839  SlotsBP:0.031278  HopsMed:2.15053
 NetOcc:1.85203e+06  NetUti:0.430493 NetFrag:0
+ProtRate:0.967236
 
-
-Simulation time:665.744  Real simul time: 1.76792  Number of requests:100000
+Simulation time:665.744  Real simul time: 1.79585  Number of requests:100000
 Load point:150  ReqBP:0.04279  SlotsBP:0.072595  HopsMed:2.14322
 NetOcc:1.68953e+06  NetUti:0.471021 NetFrag:0
+ProtRate:0.943983
 
-
-Simulation time:570.638  Real simul time: 2.00217  Number of requests:100000
+Simulation time:570.638  Real simul time: 2.04534  Number of requests:100000
 Load point:175  ReqBP:0.06793  SlotsBP:0.11461  HopsMed:2.13277
 NetOcc:1.5375e+06  NetUti:0.500085 NetFrag:0
+ProtRate:0.920672
 
-
-Simulation time:499.308  Real simul time: 2.18581  Number of requests:100000
+Simulation time:499.308  Real simul time: 2.2107  Number of requests:100000
 Load point:200  ReqBP:0.09523  SlotsBP:0.159422  HopsMed:2.1186
 NetOcc:1.4009e+06  NetUti:0.521219 NetFrag:0
-
+ProtRate:0.899161
 

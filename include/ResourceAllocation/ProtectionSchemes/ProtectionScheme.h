@@ -50,12 +50,10 @@ public:
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
     /**
      * @brief Function which returns the number of protected calls of network.
-     * 
      */
     long long int GetNumProtectedCalls() const;
      /**
      * @brief Function which increments the number of protected calls of network.
-     * 
      */
     void IncrementNumProtectedCalls();
     /**
@@ -68,7 +66,7 @@ public:
     
     /**
      * @brief vector which stores the distribution Bit rate choice for each route
-     * of PDPP protection scheme. 
+     * of all source-destination node pair in PDPP protection scheme.
      * 
      */
     std::vector<unsigned int> PDPPBitRateDistribution;

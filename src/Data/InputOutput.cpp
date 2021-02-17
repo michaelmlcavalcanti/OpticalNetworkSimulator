@@ -576,7 +576,6 @@ std::ofstream& InputOutput::GetAccumNetFragFile() {
     return accumNetFragFile;
 }
 
-
 std::ofstream& InputOutput::GetFragBandFile() {
     return fragBand;
 }
