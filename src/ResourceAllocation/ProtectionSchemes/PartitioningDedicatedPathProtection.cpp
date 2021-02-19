@@ -48,16 +48,31 @@ void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
 
     switch(resDevAlloc->options->GetProtectionOption()){
         case ProtectionPDPP:
-            LoadPDPPBitRateOptions(0);
-            LoadPDPPBitRateNodePairDist(0);
+            Function();
             break;
         case ProtectionEPDPP_GA:
-            LoadPDPPBitRateOptions(1);
-            LoadPDPPBitRateNodePairDist(1);
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;
             std::abort();
+    }
+    LoadPDPPBitRateNodePairDist();
+}
+
+void PartitioningDedicatedPathProtection::Function() {
+    std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
+    std::vector<double> auxBitRateOption;
+    double partialBitRate;
+    double beta = parameters->GetBeta();
+
+    for(auto it : VecTraffic){
+        partialBitRate = ceil (((it)/(numSchProtRoutes -1)) -
+                               (((beta) * (it)) / (numSchProtRoutes -1)));
+        for(unsigned int a = 0; a < numSchProtRoutes;a++){
+            auxBitRateOption.push_back(partialBitRate);
+        }
+        PDPPBitRateDistOptions.push_back(auxBitRateOption);
+        auxBitRateOption.clear();
     }
 }
 
@@ -77,7 +92,7 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
             }
         PDPPBitRateDistOptions.push_back(auxBitRateOption);
         auxBitRateOption.clear();
-        }   
+        }
     }
     else if(PDPPType == 1){
         if(beta != 0){
@@ -98,7 +113,7 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
                     }
                 }
                 PDPPBitRateDistOptions.push_back(auxBitRateOption);
-            }            
+            }
         }
         else{
             for(auto it : VecTraffic){
@@ -111,20 +126,25 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
                 auxBitRateOption.clear();
             }
         }
-    }  
+    }
 }
 
-void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist(int PDPPType) {
+void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
     unsigned int NumNodes = topology->GetNumNodes();
     PDPPBitRateNodePairsDist.resize(NumNodes * NumNodes);
-    
-    if(PDPPType == 0){
-        for(int a = 0; a < PDPPBitRateNodePairsDist.size(); a++){
-            PDPPBitRateNodePairsDist.at(a) = PDPPBitRateDistOptions;
-        }
-    }
-    else if(PDPPType == 1){
-        
+
+    switch(resDevAlloc->options->GetProtectionOption()){
+        case ProtectionPDPP:
+            for(int a = 0; a < PDPPBitRateNodePairsDist.size(); a++){
+                PDPPBitRateNodePairsDist.at(a) = PDPPBitRateDistOptions;
+            }
+            break;
+        case ProtectionEPDPP_GA:
+            //Criar função de load do indivíduo do GA
+            break;
+        default:
+            std::cerr << "Invalid Protection Option" << std::endl;
+            std::abort();
     }
 }
 
@@ -149,7 +169,12 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
     for(unsigned int k = 0; k < numRoutes; k++){
         callWork0->SetRoute(call->GetRoute(k));
         callWork0->SetModulation(FixedModulation);
-        unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
+//        unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
+        std::deque<std::shared_ptr<Route>> ProtRoutes = call->GetProtRoutes(k);
+
+        ProtRoutes.erase(std::remove(std::begin(ProtRoutes), std::end(ProtRoutes), nullptr),
+                         std::end(ProtRoutes));
+        unsigned int sizeProtRoutes = ProtRoutes.size();
         
         if(sizeProtRoutes >= 2){  //if to skip case which it is no routes enough
             for(unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
@@ -187,12 +212,12 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
             }
         }
     }
-    
-    //Delete protection route
-    
+
+    //Delete protection route (Corrigir)
     for(int a = 0; a < numSchProtRoutes - 1; a++){
-        call->GetTranspSegmentsVec().pop_back();
+        callsVec.pop_back();
     }
+    call->SetTranspSegments(callsVec);
     
     //Try only work connection
     for(unsigned int k = 0; k < numRoutes; k++){

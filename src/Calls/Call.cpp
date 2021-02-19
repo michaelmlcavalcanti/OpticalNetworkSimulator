@@ -206,8 +206,7 @@ unsigned int protRouteIndex) const {
     return this->trialProtRoutes.at(routeIndex).at(protRouteIndex); 
 }
 
-std::deque<std::shared_ptr<Route> > Call::GetProtRoutes(unsigned int routeIndex) 
-const {
+std::deque<std::shared_ptr<Route> > Call::GetProtRoutes(unsigned int routeIndex)  {
     assert(routeIndex < this->trialRoutes.size());
     
     return this->trialProtRoutes.at(routeIndex);

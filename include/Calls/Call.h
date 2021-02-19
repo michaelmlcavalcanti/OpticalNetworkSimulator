@@ -234,8 +234,7 @@ public:
     std::shared_ptr<Route> GetProtRoute(unsigned int routeIndex , 
     unsigned int protRouteIndex) const;
     
-    std::deque<std::shared_ptr<Route>> GetProtRoutes(unsigned int routeIndex) 
-    const;
+    std::deque<std::shared_ptr<Route>> GetProtRoutes(unsigned int routeIndex);
     
     /**
      * @brief Function to get the number of routes the call can be allocated.

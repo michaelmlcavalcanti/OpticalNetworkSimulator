@@ -59,8 +59,10 @@ public:
      /**
      * @brief Function which compute a partial bit rate distribution for all 
       * source-destination pair and for all incoming traffic demand possibilities.
-     */ 
-    void LoadPDPPBitRateNodePairDist(int PDPPType);
+     */
+     void LoadPDPPBitRateNodePairDist();
+
+    void Function();
      
     void CreatePDPPBitRateOptions();
     /**
