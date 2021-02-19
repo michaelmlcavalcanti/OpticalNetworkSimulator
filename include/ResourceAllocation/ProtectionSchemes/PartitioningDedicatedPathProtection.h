@@ -18,6 +18,7 @@ class CallDevices;
 
 #include "ProtectionScheme.h"
 
+
 class PartitioningDedicatedPathProtection : public ProtectionScheme {
 public:
         
@@ -42,21 +43,44 @@ public:
      */
     void ResourceAlloc(CallDevices* call) override;
      /**
-     * @brief Function which perform RSA for Working and protection paths  
+     * @brief Function which performs RSA for Working and protection paths  
      * according with PDPP scheme for offline routing and no same slots 
      * between work and Backup paths.
      * @param call Call request the function will try to allocate.
      */
-     void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
+    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
+    /**
+     * @brief Function which calculates the partial bit rate for each one of 3 
+     * protection routes based in incoming traffic demand. A vector 
+     * PDPPBitRateDistOptions is loaded. 
+     * @param PDPP type (original or GA).
+     */ 
+    void LoadPDPPBitRateOptions(int PDPPType);
+     /**
+     * @brief Function which compute a partial bit rate distribution for all 
+      * source-destination pair and for all incoming traffic demand possibilities.
+     */ 
+    void LoadPDPPBitRateNodePairDist(int PDPPType);
      
-     void CalcPDPPBitRate(CallDevices* call);
-     
-     void CreatePDPPBitRateOptions();
-     
-    private:
-        
-    std::vector<double> NodePairPDPPBitRateDist;
-        
+    void CreatePDPPBitRateOptions();
+    /**
+     * @brief Vector to store the partial bit rate distribution options for each
+     * possible incoming traffic demand. The 1ª dimension is the incoming traffic
+     * demands possibilities and the 2ª dimension is the bit rate distribution
+     * options for the protection routes.
+     */
+    std::vector<std::vector<double>> PDPPBitRateDistOptions;
+        /**
+     * @brief Vector to store the partial bit rate distribution for all 
+     * source-destination pair. The 1ª dimension is the node pair index, the 
+     * 2ª dimension is the traffic demands possibilities and 3ª dimension is the 
+     * bit rate distribution defined for the protection routes.
+     */
+    std::vector<std::vector<std::vector<double>>> 
+    PDPPBitRateNodePairsDist;
+
+private:
+                  
 };
 
 #endif /* PARTITIONINGDEDICATEDPATHPROTECTION_H */
