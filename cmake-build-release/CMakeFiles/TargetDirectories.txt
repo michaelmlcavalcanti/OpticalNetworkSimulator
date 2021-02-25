@@ -1,0 +1,3 @@
+/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/cmake-build-release/CMakeFiles/rebuild_cache.dir
+/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/cmake-build-release/CMakeFiles/edit_cache.dir
+/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/cmake-build-release/CMakeFiles/OpticalNetworkSimulator.dir

@@ -39,5 +39,5 @@
 
 # Clion
 /.idea
-/cmake*
-/CMakeLists.txt
+#/cmake*
+#/CMakeLists.txt
