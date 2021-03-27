@@ -48,21 +48,18 @@ public:
      * between work and Backup paths.
      * @param call Call request the function will try to allocate.
      */
-    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);    
-    /**
-     * @brief Function which calculates the partial bit rate for each one of 3 
-     * protection routes based in incoming traffic demand. A vector 
-     * PDPPBitRateDistOptions is loaded. 
-     * @param PDPP type (original or GA).
-     */ 
-    void LoadPDPPBitRateOptions(int PDPPType);
+    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);        
      /**
      * @brief Function which compute a partial bit rate distribution for all 
       * source-destination pair and for all incoming traffic demand possibilities.
      */
-     void LoadPDPPBitRateNodePairDist();
-
-    void Function();
+    void LoadPDPPBitRateNodePairDist();
+    /**
+     * @brief Function which calculates the partial bit rate for each 
+     * partitioned routes based in incoming traffic demand. A vector 
+     * PDPPBitRateDistOptions is loaded. 
+     */
+    void LoadPDPPBitRateOptions();
      
     void CreatePDPPBitRateOptions();
     /**

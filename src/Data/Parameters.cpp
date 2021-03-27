@@ -55,7 +55,8 @@ Parameters::Parameters(SimulationType* simulType)
 :simulType(simulType), loadPoint(0), minLoadPoint(0.0), maxLoadPoint(0.0), 
 loadPasso(0.0), numberLoadPoints(0), numberReqMax(0.0), mu(0.0), 
 numberBloqMax(0), slotBandwidth(0.0), numberSlots(0), numberCores(0), 
-maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0), beta(0) {
+maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0), beta(0), 
+   numberPDPPprotectionRoutes(2) {
     
 }
 
@@ -109,7 +110,7 @@ void Parameters::Load() {
     this->SetBeta(auxUnsInt);
     std::cout << "Insert the value for K Protection Routes: ";
     std::cin >> auxUnsInt;
-    this->SetNumberProtectionRoutes(auxUnsInt);
+    this->SetNumberPDPPprotectionRoutes(auxUnsInt);
     
     this->SetLoadPointUniform();
     
@@ -149,7 +150,7 @@ void Parameters::LoadFile() {
     auxIfstream >> auxDouble;
     this->SetBeta(auxDouble);
     auxIfstream >> auxInt;
-    this->SetNumberProtectionRoutes(auxInt);
+    this->SetNumberPDPPprotectionRoutes(auxInt);
     
     this->SetLoadPointUniform();
 }
@@ -327,13 +328,13 @@ void Parameters::SetBeta(double beta) {
     this->beta = beta;
 }
 
-unsigned int Parameters::GetNumberProtectionRoutes() const {
-    return numberProtectionRoutes;
+unsigned int Parameters::GetNumberPDPPprotectionRoutes() const {
+    return numberPDPPprotectionRoutes;
 }
 
-void Parameters::SetNumberProtectionRoutes(unsigned int numberProtectionRoutes) {
-    assert(numberProtectionRoutes > 0);
+void Parameters::SetNumberPDPPprotectionRoutes(unsigned int numberPDPPprotectionRoutes) {
+    assert(numberPDPPprotectionRoutes > 0);
     
-    this->numberProtectionRoutes = numberProtectionRoutes;
+    this->numberPDPPprotectionRoutes = numberPDPPprotectionRoutes;
 }
 

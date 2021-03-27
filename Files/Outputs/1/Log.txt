@@ -1,0 +1,63 @@
+MULTIPLE LOADS SIMULATION
+This type of simulation varies the network load and analyzes the network performance. 
+
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: Partitioning Dedicated Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 150
+Maximum load point(erlang): 250
+Number of points: 5
+Total number of requisitions: 100000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+K: 2
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+
+DATA
+Simulation time:665.744  Real simul time: 2.86012  Number of requests:100000
+Load point:150  ReqBP:0.04589  SlotsBP:0.0776232  HopsMed:2.13679
+NetOcc:1.71665e+06  NetUti:0.479224 NetFrag:0
+ProtRate:0.901081
+
+Simulation time:570.638  Real simul time: 3.31072  Number of requests:100000
+Load point:175  ReqBP:0.07646  SlotsBP:0.128478  HopsMed:2.12458
+NetOcc:1.55532e+06  NetUti:0.506125 NetFrag:0
+ProtRate:0.880862
+
+Simulation time:499.308  Real simul time: 4.58686  Number of requests:100000
+Load point:200  ReqBP:0.10837  SlotsBP:0.180387  HopsMed:2.11094
+NetOcc:1.41275e+06  NetUti:0.525974 NetFrag:0
+ProtRate:0.863307
+
+Simulation time:443.829  Real simul time: 4.05872  Number of requests:100000
+Load point:225  ReqBP:0.13531  SlotsBP:0.223863  HopsMed:2.09924
+NetOcc:1.29652e+06  NetUti:0.542191 NetFrag:0
+ProtRate:0.847431
+
+Simulation time:399.446  Real simul time: 4.42289  Number of requests:100000
+Load point:250  ReqBP:0.16091  SlotsBP:0.264233  HopsMed:2.08583
+NetOcc:1.19257e+06  NetUti:0.555228 NetFrag:0
+ProtRate:0.832703
+

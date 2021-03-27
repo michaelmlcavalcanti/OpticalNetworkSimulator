@@ -137,13 +137,7 @@ public:
      * specific source/destination node pair of the topology used.
      */
     std::vector<std::shared_ptr<Route>> ProtectionDisjointYEN(NodeIndex orNode, 
-    NodeIndex deNode, RouteIndex routeIndex);
-    /**
-     * @brief Function to check if the K-working routes are disjoint of their
-     * Kd-protection routes
-     */
-    void CheckProtectionDisjointYEN();
-    
+    NodeIndex deNode, RouteIndex routeIndex);   
     /**
      * @brief YEN semi Disjoint (k-shortest path semi disjoint) routing algorithm 
      * for all source/destination node pairs in the topology used.
@@ -186,18 +180,7 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
-    /**
-     * @brief Get the number k disjoint of shortest routes used in
-     * ProtectionDisjointYEN.
-     * @return Number of disjoint routes.
-     */
-    unsigned int GetKd() const;
-    /**
-     * @brief Set the number k disjoint of shortest routes used in
-     * ProtectionDisjointYEN.
-     * @return Number of disjoint routes.
-     */
-    void SetKd(unsigned int Kd);
+
 private:
     /**
      * @brief Get the number k of shortest routes used in YEN.
@@ -240,10 +223,6 @@ private:
      * @brief Number of routes for the k-shortest path algorithms.
      */
     unsigned int K;
-     /**
-     * @brief Number of disjoint routes for the k-shortest path algorithms.
-     */
-    unsigned int Kd;
 };
 
 #endif /* ROUTING_H */

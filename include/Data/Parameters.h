@@ -225,13 +225,13 @@ public:
      * k-working routes.
      * @return Number of protection routes.
      */
-    unsigned int GetNumberProtectionRoutes() const;
+    unsigned int GetNumberPDPPprotectionRoutes() const;
     /**
      * @brief Function to set the number of of protection routes for each one 
      * k-working routes.
      * @param numberProtectionRoutes Number of protection routes.
      */
-    void SetNumberProtectionRoutes(unsigned int numberProtectionRoutes);
+    void SetNumberPDPPprotectionRoutes(unsigned int numberPDPPprotectionRoutes);
 
     
     
@@ -311,7 +311,7 @@ private:
      * This parameter is used for more than one protection route available 
      * per network node pair.
      */
-    unsigned int numberProtectionRoutes;
+    unsigned int numberPDPPprotectionRoutes;
     /**
      * @brief Calculate the load step.
      */

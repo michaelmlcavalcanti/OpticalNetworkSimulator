@@ -32,7 +32,7 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
 Parameters* parameters)
 :resourceAlloc(rsa), routingOption(option), topology(nullptr), 
-data(data), parameters(parameters), resources(nullptr), K(0), Kd(1) {
+data(data), parameters(parameters), resources(nullptr), K(0) {
     
 }
 
@@ -490,7 +490,6 @@ void Routing::ProtectionDisjointYEN() {
             }
         }
     }
-    this->CheckProtectionDisjointYEN();
 }
 
 std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex 
@@ -524,7 +523,7 @@ orNode, NodeIndex deNode, RouteIndex routeIndex) {
     return routes;
 }
 
-void Routing::CheckProtectionDisjointYEN() {
+/*void Routing::CheckProtectionDisjointYEN() {
     std::vector<std::shared_ptr<Route>> auxWorkRoutes, auxProtRoutes;
     Route* workRoute;
     Route* protRoute;
@@ -584,7 +583,7 @@ void Routing::CheckProtectionDisjointYEN() {
 //        }
 //    }
 //    return nonDisjoint;
-}
+}*/
 
 void Routing::ProtectionYEN() {
     std::vector<std::shared_ptr<Route>> routes;
@@ -680,13 +679,3 @@ unsigned int Routing::GetK() const {
 void Routing::SetK(unsigned int K) {
     this->K = K;
 }
-
-unsigned int Routing::GetKd() const {
-    return Kd;
-}
-
-void Routing::SetKd(unsigned int Kd) {
-    this->Kd = Kd;
-}
-
-

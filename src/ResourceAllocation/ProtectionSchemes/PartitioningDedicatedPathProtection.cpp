@@ -44,11 +44,11 @@ void PartitioningDedicatedPathProtection::CreateProtectionRoutes() {
 }
 
 void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
-    numSchProtRoutes = 3;
+    numSchProtRoutes = parameters->GetNumberPDPPprotectionRoutes();
 
     switch(resDevAlloc->options->GetProtectionOption()){
         case ProtectionPDPP:
-            Function();
+            LoadPDPPBitRateOptions();
             break;
         case ProtectionEPDPP_GA:
             break;
@@ -59,7 +59,7 @@ void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
     LoadPDPPBitRateNodePairDist();
 }
 
-void PartitioningDedicatedPathProtection::Function() {
+void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions() {
     std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
     std::vector<double> auxBitRateOption;
     double partialBitRate;
@@ -76,7 +76,7 @@ void PartitioningDedicatedPathProtection::Function() {
     }
 }
 
-void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
+/*void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
     std::vector<double> VecTraffic;
     VecTraffic = resDevAlloc->traffic->GetVecTraffic();
     std::vector<double> auxBitRateOption;
@@ -127,7 +127,7 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
             }
         }
     }
-}
+}*/
 
 void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
     unsigned int NumNodes = topology->GetNumNodes();
@@ -154,100 +154,213 @@ void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 }
 
 void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
-(CallDevices* call) {
+(CallDevices* call) {      
+    if(numSchProtRoutes == 3){        
+       
+        this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
 
-    this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
-    
-    this->CreateProtectionCalls(call); //loading transpsegments with calls
-    
-    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
-    std::shared_ptr<Call> callWork0 = callsVec.at(0);
-    std::shared_ptr<Call> callWork1 = callsVec.at(1);
-    std::shared_ptr<Call> callWork2 = callsVec.at(2);
-    unsigned int numRoutes = call->GetNumRoutes();
+        this->CreateProtectionCalls(call); //loading transpsegments with calls
 
-    for(unsigned int k = 0; k < numRoutes; k++){
-        callWork0->SetRoute(call->GetRoute(k));
-        callWork0->SetModulation(FixedModulation);
-//        unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
-        std::deque<std::shared_ptr<Route>> ProtRoutes = call->GetProtRoutes(k);
+        //try allocating with 3 routes
+        std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+        std::shared_ptr<Call> callWork0 = callsVec.at(0);
+        std::shared_ptr<Call> callWork1 = callsVec.at(1);
+        std::shared_ptr<Call> callWork2 = callsVec.at(2);
+        unsigned int numRoutes = call->GetNumRoutes();
 
-        ProtRoutes.erase(std::remove(std::begin(ProtRoutes), std::end(ProtRoutes), nullptr),
-                         std::end(ProtRoutes));
-        unsigned int sizeProtRoutes = ProtRoutes.size();
-        
-        if(sizeProtRoutes >= 2){  //if to skip case which it is no routes enough
-            for(unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
-            
-                if(call->GetProtRoute(k , kd0)){  //if to avoid null route pointer
-                    callWork1->SetRoute(call->GetProtRoute(k, kd0));
-                    callWork1->SetModulation(FixedModulation);    
+        for(unsigned int k = 0; k < numRoutes; k++){
+            callWork0->SetRoute(call->GetRoute(k));
+            callWork0->SetModulation(FixedModulation);
+            std::deque<std::shared_ptr<Route>> ProtRoutes = call->GetProtRoutes(k);
 
-                    for(unsigned int kd1 = 0; kd1 < sizeProtRoutes; kd1++) {
-                        
-                        if(kd0 == kd1)
-                            continue;
-                        callWork2->SetRoute(call->GetProtRoute(k, kd1));
-                        callWork2->SetModulation(FixedModulation);
+            ProtRoutes.erase(std::remove(std::begin(ProtRoutes), std::end(ProtRoutes), nullptr),
+                             std::end(ProtRoutes));
+            unsigned int sizeProtRoutes = ProtRoutes.size();
 
-                        //calculate number of slots for the vector of calls (transpsegments)
-                        this->modulation->SetModulationParam(call);
+            if(sizeProtRoutes >= 2){  //if to skip case which it is no routes enough
+                for(unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
 
-                        this->resDevAlloc->specAlloc->SpecAllocation(call);
+                    if(call->GetProtRoute(k , kd0)){  //if to avoid null route pointer
+                        callWork1->SetRoute(call->GetProtRoute(k, kd0));
+                        callWork1->SetModulation(FixedModulation);    
 
-                        if(topology->IsValidLigthPath(call)){
-                            call->SetRoute(call->GetRoute(k));
-                            call->SetFirstSlot(callWork0->GetFirstSlot());
-                            call->SetLastSlot(callWork0->GetLastSlot());
-                            call->ClearTrialRoutes();
-                            call->ClearTrialProtRoutes();
-                            call->SetStatus(Accepted);
-                            IncrementNumProtectedCalls();
-                            resDevAlloc->simulType->GetData()->SetProtectedCalls
-                            (this->numProtectedCalls);
-                            return;           
+                        for(unsigned int kd1 = 0; kd1 < sizeProtRoutes; kd1++) {
+
+                            if(kd0 == kd1)
+                                continue;
+                            callWork2->SetRoute(call->GetProtRoute(k, kd1));
+                            callWork2->SetModulation(FixedModulation);
+
+                            //calculate number of slots for the vector of calls (transpsegments)
+                            this->modulation->SetModulationParam(call);
+
+                            this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+                            if(topology->IsValidLigthPath(call)){
+                                call->SetRoute(call->GetRoute(k));
+                                call->SetFirstSlot(callWork0->GetFirstSlot());
+                                call->SetLastSlot(callWork0->GetLastSlot());
+                                call->ClearTrialRoutes();
+                                call->ClearTrialProtRoutes();
+                                call->SetStatus(Accepted);
+                                IncrementNumProtectedCalls();
+                                resDevAlloc->simulType->GetData()->SetProtectedCalls
+                                (this->numProtectedCalls);
+                                return;           
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    //Delete protection route (Corrigir)
-    for(int a = 0; a < numSchProtRoutes - 1; a++){
-        callsVec.pop_back();
-    }
-    call->SetTranspSegments(callsVec);
-    
-    //Try only work connection
-    for(unsigned int k = 0; k < numRoutes; k++){
+        //Delete one route, recalculate Bit rate and try allocating with 2 routes
+        callsVec.pop_back();        
+        double callBitRate = call->GetBitRate();
+        double beta = parameters->GetBeta();
+        double partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -2)) -
+                           (((beta) * (callBitRate)) / (numSchProtRoutes -2)));
+        callWork0->SetBitRate(partialBitRate);
+        callWork1->SetBitRate(partialBitRate);                
+        call->SetTranspSegments(callsVec);        
+        
+        for(unsigned int k = 0; k < numRoutes; k++){
         callWork0->SetRoute(call->GetRoute(k));
         callWork0->SetModulation(FixedModulation);
-        this->modulation->SetModulationParam(call);
-        this->resDevAlloc->specAlloc->SpecAllocation(call);
+        unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
         
-        if(topology->IsValidLigthPath(call)){
-            call->SetRoute(call->GetRoute(k));
-            call->SetFirstSlot(callWork0->GetFirstSlot());
-            call->SetLastSlot(callWork0->GetLastSlot());
-            call->ClearTrialRoutes();
-            call->ClearTrialProtRoutes();
-            call->SetStatus(Accepted);
-            IncrementNumNonProtectedCalls();
-            resDevAlloc->simulType->GetData()->SetNonProtectedCalls
-            (this->numNonProtectedCalls);
-            return;
+            for(unsigned int kd = 0; kd < sizeProtRoutes; kd++) {
+
+                if(call->GetProtRoute(k , kd)){  //if to avoid null route pointer
+                    callWork1->SetRoute(call->GetProtRoute(k, kd));
+                    callWork1->SetModulation(FixedModulation);
+
+                    //calculate number of slots for the vector of calls (transpsegments)
+                    this->modulation->SetModulationParam(call);
+
+                    this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+                    if(topology->IsValidLigthPath(call)){
+                        call->SetRoute(k);
+                        call->SetModulation(FixedModulation);
+                        call->SetFirstSlot(callWork0->GetFirstSlot());
+                        call->SetLastSlot(callWork0->GetLastSlot());
+                        call->ClearTrialRoutes();
+                        call->ClearTrialProtRoutes();
+                        call->SetStatus(Accepted);
+                        IncrementNumProtectedCalls();
+                        resDevAlloc->simulType->GetData()->SetProtectedCalls
+                        (this->numProtectedCalls);
+                        return;
+                    }
+                }
+            }
         }
-    } 
+        //Delete one route again, recalculate Bit rate and try allocating just 1
+        //route (without protection)
+        callsVec.pop_back();
+        callWork0->SetBitRate(call->GetBitRate());
+        call->SetTranspSegments(callsVec);    
+     
+        for(unsigned int k = 0; k < numRoutes; k++){
+            callWork0->SetRoute(call->GetRoute(k));
+            callWork0->SetModulation(FixedModulation);
+            this->modulation->SetModulationParam(call);
+            this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+            if(topology->IsValidLigthPath(call)){
+                call->SetRoute(call->GetRoute(k));
+                call->SetFirstSlot(callWork0->GetFirstSlot());
+                call->SetLastSlot(callWork0->GetLastSlot());
+                call->ClearTrialRoutes();
+                call->ClearTrialProtRoutes();
+                call->SetStatus(Accepted);
+                IncrementNumNonProtectedCalls();
+                resDevAlloc->simulType->GetData()->SetNonProtectedCalls
+                (this->numNonProtectedCalls);
+                return;
+            }
+        }        
+    }
+    
+    if(numSchProtRoutes == 2){
+        
+        this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+
+        this->CreateProtectionCalls(call); //loading transpsegments with calls
+
+        //try allocating with 2 routes
+        std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+        std::shared_ptr<Call> callWork0 = callsVec.at(0);
+        std::shared_ptr<Call> callWork1 = callsVec.at(1);
+        unsigned int numRoutes = call->GetNumRoutes();
+        
+        for(unsigned int k = 0; k < numRoutes; k++){
+        callWork0->SetRoute(call->GetRoute(k));
+        callWork0->SetModulation(FixedModulation);
+        unsigned int sizeProtRoutes = call->GetProtRoutes(k).size();
+        
+            for(unsigned int kd = 0; kd < sizeProtRoutes; kd++) {
+
+                if(call->GetProtRoute(k , kd)){  //if to avoid null route pointer
+                    callWork1->SetRoute(call->GetProtRoute(k, kd));
+                    callWork1->SetModulation(FixedModulation);
+
+                    //calculate number of slots for the vector of calls (transpsegments)
+                    this->modulation->SetModulationParam(call);
+
+                    this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+                    if(topology->IsValidLigthPath(call)){
+                        call->SetRoute(k);
+                        call->SetModulation(FixedModulation);
+                        call->SetFirstSlot(callWork0->GetFirstSlot());
+                        call->SetLastSlot(callWork0->GetLastSlot());
+                        call->ClearTrialRoutes();
+                        call->ClearTrialProtRoutes();
+                        call->SetStatus(Accepted);
+                        IncrementNumProtectedCalls();
+                        resDevAlloc->simulType->GetData()->SetProtectedCalls
+                        (this->numProtectedCalls);
+                        return;
+                    }
+                }
+            }
+        }
+        //Delete one route, recalculate Bit rate and try allocating just 1
+        //route (without protection)
+        callsVec.pop_back();
+        callWork0->SetBitRate(call->GetBitRate());
+        call->SetTranspSegments(callsVec);    
+     
+        for(unsigned int k = 0; k < numRoutes; k++){
+            callWork0->SetRoute(call->GetRoute(k));
+            callWork0->SetModulation(FixedModulation);
+            this->modulation->SetModulationParam(call);
+            this->resDevAlloc->specAlloc->SpecAllocation(call);
+
+            if(topology->IsValidLigthPath(call)){
+                call->SetRoute(call->GetRoute(k));
+                call->SetFirstSlot(callWork0->GetFirstSlot());
+                call->SetLastSlot(callWork0->GetLastSlot());
+                call->ClearTrialRoutes();
+                call->ClearTrialProtRoutes();
+                call->SetStatus(Accepted);
+                IncrementNumNonProtectedCalls();
+                resDevAlloc->simulType->GetData()->SetNonProtectedCalls
+                (this->numNonProtectedCalls);
+                return;
+            }
+        }        
+    }
 }
 
-void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {
+void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {   
     unsigned int orN = call->GetOrNode()->GetNodeId();
     unsigned int deN = call->GetDeNode()->GetNodeId();
     unsigned int numNodes = this->topology->GetNumNodes();
     unsigned int nodePairIndex = orN * numNodes + deN;
-    call->GetTranspSegments().clear();
-    numSchProtRoutes = 3;
+    call->GetTranspSegments().clear();    
     std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
     double callBitRate = call->GetBitRate();
     unsigned int trafficIndex;
