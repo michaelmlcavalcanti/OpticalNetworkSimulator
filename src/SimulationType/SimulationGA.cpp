@@ -38,7 +38,7 @@ void SimulationGA::Run() {
     this->gaAlgorithm->InitializePopulation();
     this->GetInputOutput()->PrintProgressBar(0, numGenerations);
     this->gaAlgorithm->RunSelectPop();
-    this->gaAlgorithm->KeepInitialPopulation();
+    this->gaAlgorithm->KeepInitialPopulation(); 
     
     for(unsigned int a = 1; a <= numGenerations; a++){
         this->gaAlgorithm->SetActualGeneration(a);

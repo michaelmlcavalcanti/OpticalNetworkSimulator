@@ -69,7 +69,7 @@ public:
      * options for the protection routes.
      */
     std::vector<std::vector<double>> PDPPBitRateDistOptions;
-        /**
+     /**
      * @brief Vector to store the partial bit rate distribution for all 
      * source-destination pair. The 1ª dimension is the node pair index, the 
      * 2ª dimension is the traffic demands possibilities and 3ª dimension is the 

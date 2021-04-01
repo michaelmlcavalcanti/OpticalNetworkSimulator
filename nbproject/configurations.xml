@@ -86,11 +86,13 @@
           <itemPath>include/Algorithms/GA/GACoreOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_MO.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_NumInterRoutesMSCL.h</itemPath>
+          <itemPath>include/Algorithms/GA/GA_PDPPBO.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_RsaOrder.h</itemPath>
           <itemPath>include/Algorithms/GA/GA_SO.h</itemPath>
           <itemPath>include/Algorithms/GA/Individual.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualBool.h</itemPath>
           <itemPath>include/Algorithms/GA/IndividualNumRoutesMSCL.h</itemPath>
+          <itemPath>include/Algorithms/GA/IndividualPDPPBO.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="PSO" projectFiles="true">
           <itemPath>include/Algorithms/PSO/PSO.h</itemPath>
@@ -120,6 +122,7 @@
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
         <logicalFolder name="f2" displayName="ProtectionSchemes" projectFiles="true">
           <itemPath>include/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.h</itemPath>
+          <itemPath>include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h</itemPath>
           <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</itemPath>
           <itemPath>include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h</itemPath>
         </logicalFolder>
@@ -170,7 +173,6 @@
         <itemPath>include/Structure/Topology.h</itemPath>
       </logicalFolder>
       <itemPath>include/Kernel.h</itemPath>
-      <itemPath>include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -186,11 +188,13 @@
           <itemPath>src/Algorithms/GA/GACoreOrder.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_MO.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/GA_PDPPBO.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_RsaOrder.cpp</itemPath>
           <itemPath>src/Algorithms/GA/GA_SO.cpp</itemPath>
           <itemPath>src/Algorithms/GA/Individual.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualBool.cpp</itemPath>
           <itemPath>src/Algorithms/GA/IndividualNumRoutesMSCL.cpp</itemPath>
+          <itemPath>src/Algorithms/GA/IndividualPDPPBO.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="PSO" projectFiles="true">
           <itemPath>src/Algorithms/PSO/PSO.cpp</itemPath>
@@ -219,6 +223,7 @@
       <logicalFolder name="f7" displayName="ResourceAllocation" projectFiles="true">
         <logicalFolder name="f2" displayName="ProtectionSchemes" projectFiles="true">
           <itemPath>src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp</itemPath>
+          <itemPath>src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp</itemPath>
           <itemPath>src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f1"
@@ -266,7 +271,6 @@
         <itemPath>src/Structure/Topology.cpp</itemPath>
       </logicalFolder>
       <itemPath>src/Kernel.cpp</itemPath>
-      <itemPath>src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -519,6 +523,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_PDPPBO.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
             tool="3"
@@ -534,6 +540,11 @@
             flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualNumRoutesMSCL.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualPDPPBO.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -759,6 +770,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/GA_PDPPBO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_SO.cpp" ex="false" tool="1" flavor2="0">
@@ -771,6 +784,11 @@
             flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualNumRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualPDPPBO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
@@ -1172,6 +1190,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="include/Algorithms/GA/GA_PDPPBO.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Algorithms/GA/GA_RsaOrder.h"
             ex="false"
             tool="3"
@@ -1187,6 +1207,11 @@
             flavor2="0">
       </item>
       <item path="include/Algorithms/GA/IndividualNumRoutesMSCL.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="include/Algorithms/GA/IndividualPDPPBO.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -1412,6 +1437,8 @@
             tool="1"
             flavor2="0">
       </item>
+      <item path="src/Algorithms/GA/GA_PDPPBO.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Algorithms/GA/GA_RsaOrder.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Algorithms/GA/GA_SO.cpp" ex="false" tool="1" flavor2="0">
@@ -1424,6 +1451,11 @@
             flavor2="0">
       </item>
       <item path="src/Algorithms/GA/IndividualNumRoutesMSCL.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/Algorithms/GA/IndividualPDPPBO.cpp"
             ex="false"
             tool="1"
             flavor2="0">
