@@ -55,13 +55,23 @@ public:
      */
     void SetBlockProb(double blockProb);
     /**
+     * @brief Gets the beta average of this individual.
+     * @return Blocking probability.
+     */
+    double GetBetaAverage() const;
+    /**
+     * @brief Sets the beta average of this individual.
+     * @param blockProb Blocking probability.
+     */
+    void SetBetaAverage(double betaAverage);
+    /**
      * @brief Gets the first parameter(blocking probability) of this 
      * individual.
      * @return First individual parameter.
      */
     double GetMainParameter() override;
     /**
-     * @brief Gets the second parameter(simulation time) of this individual.
+     * @brief Gets the second parameter(beta average) of this individual.
      * @return Second individual parameter.
      */
     double GetSecondParameter() override;

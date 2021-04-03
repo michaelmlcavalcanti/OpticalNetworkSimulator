@@ -45,6 +45,20 @@ void IndividualPDPPBO::SetBlockProb(double blockProb) {
     this->blockProb = (this->blockProb + blockProb) / 2.0;
 }
 
+double IndividualPDPPBO::GetBetaAverage() const {
+    return betaAverage;
+}
+
+void IndividualPDPPBO::SetBetaAverage(double betaAverage) {
+    assert(this->GetCount() < this->ga->GetMaxNumSimulation());
+    assert(betaAverage >= 0.0);
+    
+    if(this->GetCount() == 1)
+        this->betaAverage = betaAverage;
+    this->betaAverage = (this->betaAverage + betaAverage) / 2.0;
+}
+
+
 double IndividualPDPPBO::GetMainParameter() {
     return this->GetBlockProb();
 }

@@ -62,15 +62,7 @@ public:
      */
     void IncrementNumNonProtectedCalls();
 
-    //void SetPDPPBitRateDistribution(int BitRateDistChoice);
-    
-    /**
-     * @brief vector which stores the distribution Bit rate choice for each route
-     * of all source-destination node pair in PDPP protection scheme.
-     * 
-     */
-    std::vector<unsigned int> PDPPBitRateDistribution;
-        
+          
 protected:
     ResourceDeviceAlloc* resDevAlloc;
     Resources* resources;

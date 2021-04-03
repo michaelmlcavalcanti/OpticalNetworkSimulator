@@ -14,6 +14,7 @@
 #include "../../include/SimulationType/SimulationGA.h"
 #include "../../include/Algorithms/GA/GA_RsaOrder.h"
 #include "../../include/Algorithms/GA/GA_NumInterRoutesMSCL.h"
+#include "../../include/Algorithms/GA/GA_PDPPBO.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
 #include "../../include/Calls/EventGenerator.h"
@@ -107,6 +108,9 @@ void SimulationGA::CreateGA() {
             break;
         case GaNumRoutesCheckMSCL:
             this->gaAlgorithm = std::make_shared<GA_NumInterRoutesMSCL>(this);
+            break;
+        case GaPDPPBO:
+            this->gaAlgorithm = std::make_shared<GA_PDPPBO>(this);
             break;
         default:
             std::cerr << "Invalid GA option" << std::endl;

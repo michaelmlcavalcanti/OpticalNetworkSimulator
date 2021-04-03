@@ -50,7 +50,7 @@ void PartitioningDedicatedPathProtection::CreatePDPPBitRateOptions() {
         case ProtectionPDPP:
             LoadPDPPBitRateOptions();
             break;
-        case ProtectionEPDPP_GA:
+        case ProtectionPDPPBO_GA:
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;
@@ -139,7 +139,7 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
                 PDPPBitRateNodePairsDist.at(a) = PDPPBitRateDistOptions;
             }
             break;
-        case ProtectionEPDPP_GA:
+        case ProtectionPDPPBO_GA:
             //Criar função de load do indivíduo do GA
             break;
         default:

@@ -7,7 +7,7 @@
 0
 2
 0
-0
+4
 1
 0
 0
@@ -79,6 +79,7 @@
     1 - GA RSA Order
     2 - GA Core Order
     3 - GA Number of Interfering Routes Check
+    4 - GA PDPP Bit rate Optimization
 11-Devices Option
     0 - Disabled
     1 - Enabled
@@ -121,8 +122,8 @@
     0 - Protection Disable
     1 - DPP
     2 - PDPP
-    3 - EPDPP_GA
-    4 - EPDPP_HE
+    3 - PDPPBO_GA
+    4 - PDPPSO_GA
 19-Fragmentation Measure Option
     0 - Disable
     1 - Fragmentation Ratio (FR)

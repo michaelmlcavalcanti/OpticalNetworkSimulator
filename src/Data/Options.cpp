@@ -96,7 +96,8 @@ Options::mapGaOption = boost::assign::map_list_of
     (GaOptionDisabled, "GA Disabled")
     (GaRsaOrder, "GA RSA Order")
     (GaCoreOrder, "GA Core Order")
-    (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check");
+    (GaNumRoutesCheckMSCL, "GA Number of Interfering Routes Check")
+    (GaPDPPBO, "GA PDPP Bit Rate Optimization");
 
 const boost::unordered_map<DevicesOption, std::string>
 Options::mapDevicesOption = boost::assign::map_list_of
@@ -156,8 +157,8 @@ Options::mapProtectionOption = boost::assign::map_list_of
     (ProtectionDisable, "No Protection")
     (ProtectionDPP, "Dedicated Path Protection")
     (ProtectionPDPP, "Partitioning Dedicated Path Protection")
-    (ProtectionEPDPP_GA, "Enhanced Partitioning Dedicated Path Protection (GA)")
-    (ProtectionEPDPP_HE, "Enhanced Partitioning Dedicated Path Protection (HE)");
+    (ProtectionPDPPBO_GA, "Partitioning Dedicated Path Protection Bit Rate Optimization(GA)")
+    (ProtectionPDPPSO_GA, "Partitioning Dedicated Path Protection Squeezing Optimizagion(GA)");
 
 const boost::unordered_map<FragMeasureOption, std::string>
 Options::mapFragMeasureOption = boost::assign::map_list_of
@@ -456,6 +457,7 @@ bool Options::IsGA_SO() const {
 bool Options::IsGA_MO() const {
     
     switch(this->GetGaOption()){
+        case GaPDPPBO:
         case GaNumRoutesCheckMSCL:
             return true;
         default:

@@ -20,7 +20,7 @@ ProtectionScheme::ProtectionScheme(ResourceDeviceAlloc* rsa)
 :resDevAlloc(rsa), resources(rsa->GetResources()), topology(rsa->GetTopology()),
 parameters(rsa->parameters), modulation(rsa->GetModulation()), 
 routing(rsa->routing.get()), protectionScheme(this->protectionScheme),
-numSchProtRoutes(2), PDPPBitRateDistribution(0) {
+numSchProtRoutes(2) {
     
 }
 
@@ -39,12 +39,5 @@ void ProtectionScheme::IncrementNumProtectedCalls() {
 void ProtectionScheme::IncrementNumNonProtectedCalls() {
      this->numNonProtectedCalls++;
 }
-
-/*void ProtectionScheme::SetPDPPBitRateDistribution(int BitRateDistChoice) {
-    unsigned int numNodes = this->topology->GetNumNodes();
-    this->PDPPBitRateDistribution.resize(numNodes*numNodes);
-    this->PDPPBitRateDistribution.assign(numNodes*numNodes, BitRateDistChoice);
-}*/
-
 
 

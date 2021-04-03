@@ -149,8 +149,9 @@ enum GAOption {
     GaRsaOrder,
     GaCoreOrder,
     GaNumRoutesCheckMSCL,
+    GaPDPPBO,
     FirstGaOption = GaRsaOrder,
-    LastGaOption = GaNumRoutesCheckMSCL
+    LastGaOption = GaPDPPBO
 };
 
 /**
@@ -236,10 +237,10 @@ enum ProtectionOption {
     ProtectionDisable,
     ProtectionDPP,
     ProtectionPDPP,
-    ProtectionEPDPP_GA,
-    ProtectionEPDPP_HE,
+    ProtectionPDPPBO_GA,
+    ProtectionPDPPSO_GA,
     FirstProtectionOption = ProtectionDisable,
-    LastProtectionOption = ProtectionEPDPP_HE
+    LastProtectionOption = ProtectionPDPPSO_GA
 };
 
 enum FragMeasureOption {
