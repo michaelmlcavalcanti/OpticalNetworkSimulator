@@ -16,9 +16,15 @@
 #include "../../../include/Algorithms/GA/GA_PDPPBO.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Structure/Topology.h"
+#include "../../../include/Calls/Traffic.h"
+#include "../../../include/ResourceAllocation/ResourceDeviceAlloc.h"
+#include "../../../include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
 
-GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), numNodes(0) {
-
+GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), numNodes(0), numTraffic(0) {
+    ResourceDeviceAlloc* resource_alloc;
+    resource_alloc = dynamic_cast<ResourceDeviceAlloc*>(simul->GetResourceAlloc());
+    pdppbo = dynamic_cast<PartitioningDedicatedPathProtection*>(resource_alloc->GetProtectionScheme());
+    // Include asserts (Simulation is protection is active, if the protection is the right one, etc.)
 }
 
 GA_PDPPBO::~GA_PDPPBO() {
@@ -28,11 +34,20 @@ GA_PDPPBO::~GA_PDPPBO() {
 void GA_PDPPBO::Initialize() {
     GA_MO::Initialize();
     this->SetNumNodes(this->GetSimul()->GetTopology()->GetNumNodes());
+    //Mudar pra função interna
+    numTraffic = simul->GetTraffic()->GetVecTraffic().size();
     this->LoadPDPPBitRateAllDistOption();
+    // Chamar função que inicializa as indexDistOption
 }
 
 void GA_PDPPBO::InitializePopulation() {
+    assert(this->actualParetoFronts.empty() && this->totalPopulation.empty());
+    std::vector<std::shared_ptr<Individual>> auxVecInd(0);
 
+    for(unsigned int a = 0; a < this->GetNumberIndividuals(); a++)
+        auxVecInd.push_back(std::make_shared<IndividualPDPPBO>(this));
+
+    this->actualParetoFronts.push_back(auxVecInd);
 }
 
 void GA_PDPPBO::CreateNewPopulation() {
@@ -40,6 +55,7 @@ void GA_PDPPBO::CreateNewPopulation() {
 }
 
 void GA_PDPPBO::ApplyIndividual(Individual* ind) {
+    IndividualPDPPBO* auxInd = dynamic_cast<IndividualPDPPBO*>(ind);
 
 }
 
@@ -108,7 +124,16 @@ void GA_PDPPBO::LoadPDPPBitRateAllDistOption() {
             }
         }
     }*/
-    
+}
+
+unsigned int GA_PDPPBO::GetNumTraffic() const {
+    return numTraffic;
+}
+
+std::vector<double> GA_PDPPBO::CreateGene(unsigned int trIndex) {
+    unsigned int select_index;
+    select_index = indexDistOption.at(trIndex)(this->random_generator);
+    return PDPPBitRateAllDistOption.at(trIndex).at(select_index);
 }
 
 

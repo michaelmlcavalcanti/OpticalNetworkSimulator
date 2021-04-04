@@ -64,6 +64,8 @@ public:
     void RoutingTransponderSpecAlloc(CallDevices* call);
     
     RegeneratorAssignment* GetRegeneratorAssignment() const;
+
+    ProtectionScheme* GetProtectionScheme() const;
 private:
     /**
      * @brief Function to check the OSNR for a call request with devices.

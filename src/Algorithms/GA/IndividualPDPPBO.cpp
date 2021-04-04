@@ -16,9 +16,22 @@
 
 IndividualPDPPBO::IndividualPDPPBO(GA_PDPPBO* ga) : Individual(ga), ga(ga), 
 blockProb(0.0), betaAverage(0.0), genes(0) {
+    unsigned int nodeIndex;
     const unsigned int numNodes = this->ga->GetNumNodes();
-    
-    //Creation of genes    
+    const unsigned int numTraffic = ga->GetNumTraffic();
+    std::vector<std::vector<double>> auxDist(0);
+
+    //Creation of genes
+    this->genes.resize(numNodes*numNodes);
+    for(unsigned int orN = 0; orN < numNodes; orN++) {
+        for (unsigned int deN = 0; deN < numNodes; deN++) {
+            nodeIndex = orN*numNodes+deN;
+            genes.at(nodeIndex).resize(numTraffic);
+            for(unsigned int trIndex = 0; trIndex < numTraffic; trIndex++){
+                genes.at(nodeIndex).at(trIndex) = ga->CreateGene(trIndex);
+            }
+        }
+    }
 }
 
 IndividualPDPPBO::IndividualPDPPBO(
@@ -64,6 +77,25 @@ double IndividualPDPPBO::GetMainParameter() {
 }
 
 double IndividualPDPPBO::GetSecondParameter() {
+    return this->GetBetaAverage();
+}
+
+std::vector<std::vector<std::vector<double>>> IndividualPDPPBO::GetGenes() const {
+    return this->genes;
+}
+
+double IndividualPDPPBO::GetGene(unsigned int orIndex, unsigned int deIndex, unsigned int traffIndex) const {
+    return this->genes.at(orIndex * ga->GetNumNodes() + deIndex).at(traffIndex);
+}
+
+void IndividualPDPPBO::SetGenes(std::vector<std::vector<std::vector<double>>> genes) {
 
 }
+
+void
+IndividualPDPPBO::SetGene(unsigned int orIndex, unsigned int deIndex, unsigned int traffIndex, std::vector<gene> gene) {
+
+}
+
+
 

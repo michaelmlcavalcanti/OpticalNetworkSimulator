@@ -177,6 +177,10 @@ RegeneratorAssignment* ResourceDeviceAlloc::GetRegeneratorAssignment() const {
     return regAssAlgorithm.get();
 }
 
+ProtectionScheme* ResourceDeviceAlloc::GetProtectionScheme() const {
+    return protScheme.get();
+}
+
 bool ResourceDeviceAlloc::CheckOSNR(CallDevices* call) {
     std::vector<Call*> calls = call->GetTranspSegments();
     

@@ -15,6 +15,7 @@
 #define GA_PDPPBO_H
 
 class IndividualPDPPBO;
+class PartitioningDedicatedPathProtection;
 
 #include "GA_MO.h"
 
@@ -71,25 +72,34 @@ public:
      * @param numNodes Number of nodes.
      */
     void SetNumNodes(unsigned int numNodes);
+
+    unsigned int GetNumTraffic() const;
     /**
      * @brief This function Loads the PDPPBitRateAllDistOption container with 
      * all PDPP bit rate distribution option (3 routes) for each traffic demand.
      */
     void LoadPDPPBitRateAllDistOption();
+
+    std::vector<double> CreateGene(unsigned int trIndex);
     
 private:
+
+    PartitioningDedicatedPathProtection* pdppbo;
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.
      */
     unsigned int numNodes;
+
+    unsigned int numTraffic;
     /**
      * @brief Container with the all possibilities of PDPP bit rate distribution
      * for each traffic demand option. The first dimension is traffic demand option,
      * the second one is the number of Bit rate distribution possibilities and 
      * the third one is the container with the Bit Rate distribution (3 routes)
      */
-    std::vector<std::vector<std::vector<double>>> PDPPBitRateAllDistOption ;
-    
+    std::vector<std::vector<std::vector<double>>> PDPPBitRateAllDistOption;
+
+    std::vector<std::uniform_int_distribution<unsigned int>> indexDistOption;
 };
 
 #endif /* GA_PDPPBO_H */

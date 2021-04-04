@@ -14,6 +14,8 @@
 #ifndef INDIVIDUALPDPPBO_H
 #define INDIVIDUALPDPPBO_H
 
+#include <ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h>
+
 class GA_PDPPBO;
 
 #include "Individual.h"
@@ -76,6 +78,14 @@ public:
      */
     double GetSecondParameter() override;
 
+    std::vector<std::vector<std::vector<double>>> GetGenes() const;
+
+    std::vector<double> GetGene(unsigned orIndex, unsigned deIndex, unsigned traffIndex) const;
+
+    void SetGenes(std::vector<std::vector<std::vector<double>>> genes);
+
+    void SetGene(unsigned orIndex, unsigned deIndex, unsigned traffIndex, std::vector<gene> gene);
+
 private:
     /**
      * @brief GA_PDPPBO that owns this individual.
@@ -92,7 +102,7 @@ private:
      /**
      * @brief Container of individual genes.
      */
-    std::vector<std::vector<double>> genes;
+    std::vector<std::vector<std::vector<double>>> genes;
 };
 
 #endif /* INDIVIDUALPDPPBO_H */
