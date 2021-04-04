@@ -76,59 +76,6 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions() {
     }
 }
 
-/*void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions(int PDPPType) {
-    std::vector<double> VecTraffic;
-    VecTraffic = resDevAlloc->traffic->GetVecTraffic();
-    std::vector<double> auxBitRateOption;
-    double partialBitRate;
-    double beta = parameters->GetBeta();
-
-    if(PDPPType == 0){
-        for(auto it : VecTraffic){
-            partialBitRate = ceil (((it)/(numSchProtRoutes -1)) -
-            (((beta) * (it)) / (numSchProtRoutes -1)));
-            for(unsigned int a = 0; a < numSchProtRoutes;a++){
-                auxBitRateOption.push_back(partialBitRate);                        
-            }
-        PDPPBitRateDistOptions.push_back(auxBitRateOption);
-        auxBitRateOption.clear();
-        }
-    }
-    else if(PDPPType == 1){
-        if(beta != 0){
-            for(auto it : VecTraffic){
-                double BRdown = ((it/2) - (beta*it));
-                double BRup = ((it/2) + (beta*it));
-                double BRmin = ((it*(1 - beta)));
-                   
-                for(double a = BRdown; a <= BRup; a = a+5e9){
-                    for(double b = BRdown; b <= BRup; b = b+5e9){
-                        for(double c = BRdown; c <= BRup; c = c+5e9){
-                            if(a + b >= BRmin && b + c >= BRmin && a + c >= BRmin){
-                                auxBitRateOption.push_back(a);
-                                auxBitRateOption.push_back(b);
-                                auxBitRateOption.push_back(c);
-                            }
-                        }
-                    }
-                }
-                PDPPBitRateDistOptions.push_back(auxBitRateOption);
-            }
-        }
-        else{
-            for(auto it : VecTraffic){
-                partialBitRate = ceil (((it)/(numSchProtRoutes -1)) -
-                                       (((beta) * (it)) / (numSchProtRoutes -1)));
-                for(unsigned int a = 0; a < numSchProtRoutes;a++){
-                    auxBitRateOption.push_back(partialBitRate);
-                }
-                PDPPBitRateDistOptions.push_back(auxBitRateOption);
-                auxBitRateOption.clear();
-            }
-        }
-    }
-}*/
-
 void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
     unsigned int NumNodes = topology->GetNumNodes();
     PDPPBitRateNodePairsDist.resize(NumNodes * NumNodes);
@@ -203,9 +150,10 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                                 call->ClearTrialRoutes();
                                 call->ClearTrialProtRoutes();
                                 call->SetStatus(Accepted);
-                                IncrementNumProtectedCalls();
+                                IncrementNumProtectedCalls();                                
                                 resDevAlloc->simulType->GetData()->SetProtectedCalls
                                 (this->numProtectedCalls);
+                                this->CalcBetaAverage(call);
                                 return;           
                             }
                         }
@@ -251,6 +199,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         IncrementNumProtectedCalls();
                         resDevAlloc->simulType->GetData()->SetProtectedCalls
                         (this->numProtectedCalls);
+                        this->CalcBetaAverage(call);
                         return;
                     }
                 }
@@ -322,6 +271,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         IncrementNumProtectedCalls();
                         resDevAlloc->simulType->GetData()->SetProtectedCalls
                         (this->numProtectedCalls);
+                        this->CalcBetaAverage(call);
                         return;
                     }
                 }
@@ -382,4 +332,24 @@ void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* cal
     call->SetTranspSegments(auxVec); 
 }
 
+void PartitioningDedicatedPathProtection::CalcBetaAverage(CallDevices* call) {
+    double betaAverage;
+ 
+    if(call->GetTranspSegmentsVec().size() == 3){
+        double BR0 = call->GetTranspSegments().at(0)->GetBitRate();
+        double BR1 = call->GetTranspSegments().at(1)->GetBitRate();
+        double BR2 = call->GetTranspSegments().at(2)->GetBitRate();
+        double BRT = call->GetBitRate();
+        
+        betaAverage = ((1 - ((BR0 + BR1)/BRT)) + (1 - ((BR0 + BR2)/BRT)) +
+        (1 - ((BR1 + BR2)/BRT)))/3;
+
+        callBetaAverage.push_back(betaAverage);        
+    }
+    
+    if(call->GetTranspSegmentsVec().size() == 2){
+        betaAverage = parameters->GetBeta();
+        callBetaAverage.push_back(betaAverage);              
+    }
+}
 

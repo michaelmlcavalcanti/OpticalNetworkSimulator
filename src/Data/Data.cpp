@@ -207,7 +207,6 @@ void Data::SaveAccumNetFrag() {
     this->SaveAccumNetFrag(accumNetFrag);
 }
 
-
 void Data::SaveFragTraffic() {
     std::ofstream &netFrag = this->simulType->GetInputOutput()
                                  ->GetFragBandFile();
@@ -238,7 +237,6 @@ void Data::SaveNetNonProtRate() {
     
     this->SaveNetNonProtRate(netNonProtRate);
 }
-
 
 void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
@@ -442,7 +440,6 @@ double Data::GetNonProtectedCalls() const {
     return this->nonProtectedCalls.at(this->actualIndex);
 }
 
-
 double Data::GetProtRate() const {
     return this->GetProtectedCalls()/((this->GetProtectedCalls())+
     (this->GetNonProtectedCalls()));
@@ -452,7 +449,6 @@ double Data::GetNonProtRate() const {
     return this->GetNonProtectedCalls()/((this->GetProtectedCalls())+
     (this->GetNonProtectedCalls()));
 }
-
 
 void Data::SaveCallReqBP(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -536,7 +532,6 @@ unsigned int numLoadPoints = this->simulType->GetParameters()
     }        
 }
 
-
 void Data::SaveBandFrag(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()
                                      ->GetNumberLoadPoints();
@@ -615,7 +610,6 @@ void Data::SaveNetNonProtRate(std::ostream& ostream) {
                 << std::endl;
     }
 }
-
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
 std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {
