@@ -14,13 +14,12 @@
 #ifndef INDIVIDUALPDPPBO_H
 #define INDIVIDUALPDPPBO_H
 
-#include <ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h>
-
 class GA_PDPPBO;
 
 #include "Individual.h"
 #include "../../Calls/EventGenerator.h"
 #include "GA_PDPPBO.h"
+#include "../../ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
 
 /**
  * @brief Specific individual for GA_PDPPBO, 
@@ -80,11 +79,11 @@ public:
 
     std::vector<std::vector<std::vector<double>>> GetGenes() const;
 
-    std::vector<double> GetGene(unsigned orIndex, unsigned deIndex, unsigned traffIndex) const;
+    std::vector<double> GetGene(unsigned orN, unsigned deN, unsigned traffIndex) const;
 
     void SetGenes(std::vector<std::vector<std::vector<double>>> genes);
 
-    void SetGene(unsigned orIndex, unsigned deIndex, unsigned traffIndex, std::vector<gene> gene);
+    void SetGene(unsigned orN, unsigned deN, unsigned traffIndex, std::vector<double> gene);
 
 private:
     /**

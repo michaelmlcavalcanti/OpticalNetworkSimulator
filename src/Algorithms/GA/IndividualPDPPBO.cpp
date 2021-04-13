@@ -71,7 +71,6 @@ void IndividualPDPPBO::SetBetaAverage(double betaAverage) {
     this->betaAverage = (this->betaAverage + betaAverage) / 2.0;
 }
 
-
 double IndividualPDPPBO::GetMainParameter() {
     return this->GetBlockProb();
 }
@@ -84,17 +83,18 @@ std::vector<std::vector<std::vector<double>>> IndividualPDPPBO::GetGenes() const
     return this->genes;
 }
 
-double IndividualPDPPBO::GetGene(unsigned int orIndex, unsigned int deIndex, unsigned int traffIndex) const {
-    return this->genes.at(orIndex * ga->GetNumNodes() + deIndex).at(traffIndex);
+std::vector<double> IndividualPDPPBO::GetGene(unsigned int orN, 
+unsigned int deN, unsigned int traffIndex) const {
+    return this->genes.at(orN * ga->GetNumNodes() + deN).at(traffIndex);
 }
 
 void IndividualPDPPBO::SetGenes(std::vector<std::vector<std::vector<double>>> genes) {
-
+    this->genes = genes;
 }
 
-void
-IndividualPDPPBO::SetGene(unsigned int orIndex, unsigned int deIndex, unsigned int traffIndex, std::vector<gene> gene) {
-
+void IndividualPDPPBO::SetGene(unsigned int orN, unsigned int deN, unsigned int traffIndex, 
+std::vector<double> gene) {
+    this->genes.at(orN * ga->GetNumNodes() + deN).at(traffIndex) = gene;
 }
 
 

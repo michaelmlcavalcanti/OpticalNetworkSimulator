@@ -18,6 +18,7 @@ class IndividualPDPPBO;
 class PartitioningDedicatedPathProtection;
 
 #include "GA_MO.h"
+#include "IndividualPDPPBO.h"
 
 /**
  * @brief GA algorithm applied for reaching a optimized Bit Rate distribution 
@@ -79,11 +80,59 @@ public:
      * all PDPP bit rate distribution option (3 routes) for each traffic demand.
      */
     void LoadPDPPBitRateAllDistOption();
-
+    /**
+     * @brief Function to search a Bit Rate available in the vector of Bit Rate options
+     * and create a gene 
+     * @param trIndex
+     * @return 
+     */
     std::vector<double> CreateGene(unsigned int trIndex);
     
 private:
-
+    /**
+     * @brief Function to create new individuals by crossover.
+     * Uses each individual only one time to generate new ones.
+     */
+    void Crossover();
+    /**
+     * @brief Function to generate two new individuals of two specified 
+     * parents.
+     * @param ind1 First parent.
+     * @param ind2 Second parent.
+     */
+    void GenerateNewIndividuals(const IndividualPDPPBO* const ind1,
+                                const IndividualPDPPBO* const ind2);
+     /**
+     * @brief Uniform crossover, in which two parents generate two new
+     * individuals. the crossover is done by gene, in which the first new
+     * individual has a crossover probability to receive the gene of the first
+     * parent. The other new individual will receive the gene of the other 
+     * parent.
+     * @param ind1 First parent.
+     * @param ind2 Second parent.
+     */
+    void UniformCrossover(const IndividualPDPPBO* const ind1,
+                          const IndividualPDPPBO* const ind2);
+    /**
+     * @brief Apply the mutation in all the new individuals created by the 
+     * crossover process. After that, this function add the possible parents,
+     * in the selected population container, to the total population container.
+     * The selected population is clean.
+     */
+    void Mutation();    
+    /**
+     * @brief Apply the mutation in a specified individual. Each gene of this 
+     * individual has the mutation probability to be generated randomly.
+     * @param ind Specified individual.
+     */
+    void MutateIndividual(IndividualPDPPBO* const ind);
+     /**
+     * @brief Function to update the total number of Bit Rate distribution to check
+     * for all individuals of the population.
+     */
+    void UpdatePDPPBO();
+    
+private:
     PartitioningDedicatedPathProtection* pdppbo;
     /**
      * @brief Number of nodes in the network, used to construct the gene vector.
