@@ -321,7 +321,7 @@ public:
      * @brief Function to get the network beta average for the actual point.
      * @return Call request blocking probability.
      */
-    double GetNetBetaAverege() const;
+    double GetNetBetaAverage() const;
 
 private:
     /**

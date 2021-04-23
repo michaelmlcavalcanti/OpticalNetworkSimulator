@@ -51,7 +51,7 @@ const Data* data) {
             << "  NetUti:" << data->GetAverageNetUtilization() 
             << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
     ostream << "ProtRate:" << data->GetProtRate()
-            << "  BetaAverg:" << data->GetNetBetaAverege() << std::endl;
+            << "  BetaAverg:" << data->GetNetBetaAverage() << std::endl;
     
     return ostream;
 }
@@ -465,7 +465,7 @@ void Data::SetCallsBetaAverage(std::vector<double> callsBetaAverage) {
     this->callsBetaAverage = callsBetaAverage;
 }
 
-double Data::GetNetBetaAverege() const {
+double Data::GetNetBetaAverage() const {
     double sumBetaAverage = 0;
     double netBetaAverage = 0;
     
@@ -644,7 +644,7 @@ void Data::SaveNetBetaAverage(std::ostream& ostream) {
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetNetBetaAverege() 
+                   this->GetActualIndex()) << "\t" << this->GetNetBetaAverage() 
                 << std::endl;
     }
 }
