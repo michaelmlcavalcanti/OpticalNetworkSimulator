@@ -318,19 +318,10 @@ public:
      */
     void SetCallsBetaAverage(std::vector<double> callsBetaAverage);
     /**
-     * @brief Function to calculate and update the network beta average for the actual 
-     * load point. 
+     * @brief Function to get the network beta average for the actual point.
+     * @return Call request blocking probability.
      */
-    void UpdateNetworkBetaAverage();
-
-    
-    /**
-     * @brief Function to get the Vector that contain the network beta average 
-     * for each load point.     
-        */
-    double GetNetworkBetaAverage() const;
-
-    void SetNetworkBetaAverage(double networkBetaAverage);
+    double GetNetBetaAverege() const;
 
 private:
     /**
@@ -545,10 +536,7 @@ private:
      * @brief Vector that contain all calls beta average stored in the its indexes
      */
     std::vector<double> callsBetaAverage;
-    /**
-     * @brief Vector that contain the network beta average for each load point.
-     */
-    std::vector<double> networkBetaAverage;
+
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

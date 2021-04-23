@@ -51,7 +51,7 @@ const Data* data) {
             << "  NetUti:" << data->GetAverageNetUtilization() 
             << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
     ostream << "ProtRate:" << data->GetProtRate()
-            << "  BetaAverg:" << data->GetNetworkBetaAverage() << std::endl;
+            << "  BetaAverg:" << data->GetNetBetaAverege() << std::endl;
     
     return ostream;
 }
@@ -62,8 +62,7 @@ numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
 netFragmentationRatio(0), accumNetFragmentationRatio(0) ,fragPerTraffic(0), 
 linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
-actualIndex(0), protectedCalls(0), nonProtectedCalls(0), callsBetaAverage(0),
-networkBetaAverage(0){
+actualIndex(0), protectedCalls(0), nonProtectedCalls(0), callsBetaAverage(0){
     
 }
 
@@ -98,8 +97,7 @@ void Data::Initialize() {
     }
     protectedCalls.resize(size);
     nonProtectedCalls.resize(size);
-    callsBetaAverage.resize(size);
-    networkBetaAverage.resize(size);
+    callsBetaAverage.resize(size);    
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -122,8 +120,7 @@ void Data::Initialize(unsigned int numPos) {
     slotsRelativeUse.resize(numPos);
     protectedCalls.resize(numPos);
     nonProtectedCalls.resize(numPos);
-    callsBetaAverage.resize(numPos);
-    networkBetaAverage.resize(numPos);
+    callsBetaAverage.resize(numPos);    
 }
 
 void Data::StorageCall(Call* call) {
@@ -468,7 +465,7 @@ void Data::SetCallsBetaAverage(std::vector<double> callsBetaAverage) {
     this->callsBetaAverage = callsBetaAverage;
 }
 
-void Data::UpdateNetworkBetaAverage() {
+double Data::GetNetBetaAverege() const {
     double sumBetaAverage = 0;
     double netBetaAverage = 0;
     
@@ -476,18 +473,8 @@ void Data::UpdateNetworkBetaAverage() {
         sumBetaAverage += it; 
     }
     netBetaAverage = sumBetaAverage / this->callsBetaAverage.size();
-    this->SetNetworkBetaAverage(netBetaAverage);
+    return netBetaAverage;
 }
-
-double Data::GetNetworkBetaAverage() const {
-    return networkBetaAverage.at(actualIndex);
-}
-
-void Data::SetNetworkBetaAverage(double networkBetaAverage) {
-    this->networkBetaAverage.at(actualIndex) = networkBetaAverage;
-}
-
-
 
 void Data::SaveCallReqBP(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -657,7 +644,7 @@ void Data::SaveNetBetaAverage(std::ostream& ostream) {
     for(unsigned int a = 0; a < numLoadPoints; a++){
         this->SetActualIndex(a);
         ostream << this->simulType->GetParameters()->GetLoadPoint(
-                   this->GetActualIndex()) << "\t" << this->GetNetworkBetaAverage() 
+                   this->GetActualIndex()) << "\t" << this->GetNetBetaAverege() 
                 << std::endl;
     }
 }

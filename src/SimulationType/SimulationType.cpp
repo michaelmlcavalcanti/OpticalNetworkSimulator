@@ -201,11 +201,7 @@ void SimulationType::SimulateNumTotalReq() {
             double netFrag = resourceAlloc->CalcNetworkFragmentation();
             this->GetData()->SetBandFrag(countBand, netFrag);
             countBand += 1E8;
-        }
-        
-        if(protOption != ProtectionDisable && countEvent == 1000){
-            this->GetData()->UpdateNetworkBetaAverage();
-        }
+        }        
     }
 }
 
