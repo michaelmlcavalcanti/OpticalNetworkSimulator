@@ -26,8 +26,7 @@
 #include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"  
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
-:ResourceAlloc(simulType), protectionScheme(this->protectionScheme),
-regAssAlgorithm(nullptr) {
+:ResourceAlloc(simulType), regAssAlgorithm(nullptr), protScheme(this->protScheme) {
 
 }
 

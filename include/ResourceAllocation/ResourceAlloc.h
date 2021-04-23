@@ -431,8 +431,7 @@ public:
     /**
      * @breif Pointer to the Parameters object of this simulation.
      */
-    Parameters* parameters;
-    
+    Parameters* parameters;    
     /**
      * @brief Resource allocation option chosen.
      */
@@ -456,6 +455,6 @@ public:
     /**
      * @brief Resource object owned by the object.
      */
-    std::shared_ptr<Resources> resources;
+    std::shared_ptr<Resources> resources;      
 };
 #endif /* RESOURCEALLOC_H */

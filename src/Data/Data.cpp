@@ -49,9 +49,9 @@ const Data* data) {
             << "  HopsMed:" << data->GetAverageNumHops() << std::endl;
     ostream << "NetOcc:" << data->GetNetOccupancy() 
             << "  NetUti:" << data->GetAverageNetUtilization() 
-            << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl
-            << "ProtRate:" << data->GetProtRate();    
-    ostream << std::endl;
+            << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
+    ostream << "ProtRate:" << data->GetProtRate()
+            << "  BetaAverg:" << data->GetNetworkBetaAverage() << std::endl;
     
     return ostream;
 }
@@ -62,7 +62,8 @@ numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
 numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
 netFragmentationRatio(0), accumNetFragmentationRatio(0) ,fragPerTraffic(0), 
 linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
-actualIndex(0), protectedCalls(0), nonProtectedCalls(0) {
+actualIndex(0), protectedCalls(0), nonProtectedCalls(0), callsBetaAverage(0),
+networkBetaAverage(0){
     
 }
 
@@ -97,6 +98,8 @@ void Data::Initialize() {
     }
     protectedCalls.resize(size);
     nonProtectedCalls.resize(size);
+    callsBetaAverage.resize(size);
+    networkBetaAverage.resize(size);
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -119,6 +122,8 @@ void Data::Initialize(unsigned int numPos) {
     slotsRelativeUse.resize(numPos);
     protectedCalls.resize(numPos);
     nonProtectedCalls.resize(numPos);
+    callsBetaAverage.resize(numPos);
+    networkBetaAverage.resize(numPos);
 }
 
 void Data::StorageCall(Call* call) {
@@ -238,6 +243,13 @@ void Data::SaveNetNonProtRate() {
     this->SaveNetNonProtRate(netNonProtRate);
 }
 
+void Data::SaveNetBetaAverage() {
+    std::ofstream &netBetaAverage = this->simulType->GetInputOutput()->GetNetBetaAverage();
+    
+    this->SaveNetBetaAverage(netBetaAverage);
+}
+
+
 void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
                                         ->GetReqBpFile();
@@ -355,8 +367,6 @@ void Data::UpdateFragmentationRatio(double ratio) {
     accumNetFragmentationRatio.at(actualIndex).push_back(ratio);
     netFragmentationRatio.at(actualIndex) += ratio;
     netFragmentationRatio.at(actualIndex) /= 2;
- /* accumNetFragmentationRatio.at(actualIndex).push_back(
-    netFragmentationRatio.at(actualIndex)); */
 }
 
 double Data::GetNetworkFragmentationRatio() const {
@@ -449,6 +459,35 @@ double Data::GetNonProtRate() const {
     return this->GetNonProtectedCalls()/((this->GetProtectedCalls())+
     (this->GetNonProtectedCalls()));
 }
+
+std::vector<double> Data::GetCallsBetaAverage() const {
+    return callsBetaAverage;
+}
+
+void Data::SetCallsBetaAverage(std::vector<double> callsBetaAverage) {
+    this->callsBetaAverage = callsBetaAverage;
+}
+
+void Data::UpdateNetworkBetaAverage() {
+    double sumBetaAverage = 0;
+    double netBetaAverage = 0;
+    
+    for(auto it : this->callsBetaAverage){
+        sumBetaAverage += it; 
+    }
+    netBetaAverage = sumBetaAverage / this->callsBetaAverage.size();
+    this->SetNetworkBetaAverage(netBetaAverage);
+}
+
+double Data::GetNetworkBetaAverage() const {
+    return networkBetaAverage.at(actualIndex);
+}
+
+void Data::SetNetworkBetaAverage(double networkBetaAverage) {
+    this->networkBetaAverage.at(actualIndex) = networkBetaAverage;
+}
+
+
 
 void Data::SaveCallReqBP(std::ostream& ostream) {
     unsigned int numLoadPoints = this->simulType->GetParameters()
@@ -610,6 +649,19 @@ void Data::SaveNetNonProtRate(std::ostream& ostream) {
                 << std::endl;
     }
 }
+
+void Data::SaveNetBetaAverage(std::ostream& ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+                                     ->GetNumberLoadPoints();
+    
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                   this->GetActualIndex()) << "\t" << this->GetNetworkBetaAverage() 
+                << std::endl;
+    }
+}
+
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
 std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {

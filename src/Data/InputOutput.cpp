@@ -31,7 +31,8 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadSlotsRelativeUse(slotsRelativeUse);
     this->LoadNetProtRate(netProtRate);
     this->LoadNetNonProtRate(netNonProtRate);
-    
+    this->LoadNetNonProtRate(netNonProtRate);
+    this->LoadNetBetaAverage(netBetaaverage);
 }
 
 InputOutput::~InputOutput() = default;
@@ -456,6 +457,26 @@ void InputOutput::LoadNetNonProtRate(std::ofstream& netNonProtRate) {
     }while(!netNonProtRate.is_open());
 }
 
+void InputOutput::LoadNetBetaAverage(std::ofstream& netBetaAverage) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+    
+    do{
+        netBetaaverage.open("Files/Outputs/" + std::to_string(auxInt) 
+                     + "/netBetaAverage.txt");
+        
+        if(!netBetaaverage.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt 
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+            
+            std::cin.get();
+        }
+    }while(!netBetaAverage.is_open());
+}
+
+
 void InputOutput::LoadGaFiles(std::ofstream& bests, std::ofstream& best, 
 std::ofstream& worst, std::ofstream& iniPop) {
     const SimulIndex auxInt = this->simulType->GetSimulationIndex();
@@ -595,6 +616,11 @@ std::ofstream& InputOutput::GetNetProtRate() {
 std::ofstream& InputOutput::GetNetNonProtRate() {
     return netNonProtRate;
 }
+
+std::ofstream& InputOutput::GetNetBetaAverage() {
+    return netBetaaverage;
+}
+
 
 std::ofstream& InputOutput::GetBestIndividualsFile() {
     return this->bestIndividuals;

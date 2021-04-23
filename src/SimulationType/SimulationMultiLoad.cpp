@@ -76,6 +76,7 @@ void SimulationMultiLoad::Save() {
     this->GetData()->SaveSlotsRelativeUse();
     this->GetData()->SaveNetProtRate();
     this->GetData()->SaveNetNonProtRate();
+    this->GetData()->SaveNetBetaAverage();
 }
 
 std::ostream& SimulationMultiLoad::Help(std::ostream& ostream) {

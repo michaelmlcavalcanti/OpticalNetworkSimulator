@@ -150,10 +150,8 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                                 call->ClearTrialRoutes();
                                 call->ClearTrialProtRoutes();
                                 call->SetStatus(Accepted);
-                                IncrementNumProtectedCalls();                                
-                                resDevAlloc->simulType->GetData()->SetProtectedCalls
-                                (this->numProtectedCalls);
-                                this->CalcBetaAverage(call);
+                                IncrementNumProtectedCalls();                               
+                                CalcBetaAverage(call);
                                 return;           
                             }
                         }
@@ -197,9 +195,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->ClearTrialProtRoutes();
                         call->SetStatus(Accepted);
                         IncrementNumProtectedCalls();
-                        resDevAlloc->simulType->GetData()->SetProtectedCalls
-                        (this->numProtectedCalls);
-                        this->CalcBetaAverage(call);
+                        CalcBetaAverage(call);
                         return;
                     }
                 }
@@ -224,9 +220,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 call->ClearTrialRoutes();
                 call->ClearTrialProtRoutes();
                 call->SetStatus(Accepted);
-                IncrementNumNonProtectedCalls();
-                resDevAlloc->simulType->GetData()->SetNonProtectedCalls
-                (this->numNonProtectedCalls);
+                IncrementNumNonProtectedCalls();                
                 return;
             }
         }        
@@ -269,9 +263,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->ClearTrialProtRoutes();
                         call->SetStatus(Accepted);
                         IncrementNumProtectedCalls();
-                        resDevAlloc->simulType->GetData()->SetProtectedCalls
-                        (this->numProtectedCalls);
-                        this->CalcBetaAverage(call);
+                        CalcBetaAverage(call);
                         return;
                     }
                 }
@@ -297,8 +289,6 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 call->ClearTrialProtRoutes();
                 call->SetStatus(Accepted);
                 IncrementNumNonProtectedCalls();
-                resDevAlloc->simulType->GetData()->SetNonProtectedCalls
-                (this->numNonProtectedCalls);
                 return;
             }
         }        
@@ -331,25 +321,3 @@ void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* cal
     }
     call->SetTranspSegments(auxVec); 
 }
-
-void PartitioningDedicatedPathProtection::CalcBetaAverage(CallDevices* call) {
-    double betaAverage;
- 
-    if(call->GetTranspSegmentsVec().size() == 3){
-        double BR0 = call->GetTranspSegments().at(0)->GetBitRate();
-        double BR1 = call->GetTranspSegments().at(1)->GetBitRate();
-        double BR2 = call->GetTranspSegments().at(2)->GetBitRate();
-        double BRT = call->GetBitRate();
-        
-        betaAverage = ((1 - ((BR0 + BR1)/BRT)) + (1 - ((BR0 + BR2)/BRT)) +
-        (1 - ((BR1 + BR2)/BRT)))/3;
-
-        callBetaAverage.push_back(betaAverage);        
-    }
-    
-    if(call->GetTranspSegmentsVec().size() == 2){
-        betaAverage = parameters->GetBeta();
-        callBetaAverage.push_back(betaAverage);              
-    }
-}
-

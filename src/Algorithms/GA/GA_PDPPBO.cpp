@@ -25,7 +25,7 @@ GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), numNodes(0), numTraf
     resource_alloc = dynamic_cast<ResourceDeviceAlloc*>(simul->GetResourceAlloc());
     pdppbo = dynamic_cast<PartitioningDedicatedPathProtection*>(resource_alloc->GetProtectionScheme());
     // Include asserts (Simulation is protection is active, if the protection is the right one, etc.)
-    assert(this->GetSimul()->GetOptions()->GetProtectionOption() == ProtectionPDPPBO_GA);
+   // assert(this->GetSimul()->GetOptions()->GetProtectionOption() == ProtectionPDPPBO_GA);
 }
 
 GA_PDPPBO::~GA_PDPPBO() {
@@ -197,21 +197,61 @@ void GA_PDPPBO::LoadPDPPBitRateAllDistOption() {
   
     if(beta != 0){     
         for(auto it : VecTraffic){
-            double BRdown = ((it/2) - (beta*it));
-            double BRup = ((it/2) + (beta*it));
+            double BR = it;
             double BRmin = ((it*(1 - beta)));
-                   
-            for(double a = BRdown; a <= BRup; a = a+5e9){
-                for(double b = BRdown; b <= BRup; b = b+5e9){
-                    for(double c = BRdown; c <= BRup; c = c+5e9){
-                        if(a + b >= BRmin && b + c >= BRmin && a + c >= BRmin){                            
-                            auxBitRateOption.push_back(a);
-                            auxBitRateOption.push_back(b);
-                            auxBitRateOption.push_back(c);
-                            PDPPBitRateAllDistOption.at(trIndex).push_back(auxBitRateOption);                       
-                        }
+            double BRdown = ((it/2) - (0.2*it));
+            double BRup = ((it/2) + (0.2*it));
+            
+            if(BR == 100000000000){
+                for(double a = BRdown; a <= BRup; a = a+5e9){
+                    for(double b = BRdown; b <= BRup; b = b+5e9){                    
+                        for(double c = BRdown; c <= BRup; c = c+5e9){
+                            if (a + b >= BRmin && b + c >= BRmin && a + c >= BRmin 
+                                && a + b + c <= 1.3*BR){                            
+                                auxBitRateOption.push_back(a);
+                                auxBitRateOption.push_back(b);
+                                auxBitRateOption.push_back(c);
+                                PDPPBitRateAllDistOption.at(trIndex).push_back(auxBitRateOption);                       
+                                auxBitRateOption.clear();
+                            }
+                        }             
                     }
                 }
+            }
+            else if(BR == 200000000000){
+                for(double a = BRdown; a <= BRup; a = a+10e9){
+                    for(double b = BRdown; b <= BRup; b = b+10e9){                    
+                        for(double c = BRdown; c <= BRup; c = c+10e9){
+                            if (a + b >= BRmin && b + c >= BRmin && a + c >= BRmin 
+                                && a + b + c <= 1.3*BR){                            
+                                auxBitRateOption.push_back(a);
+                                auxBitRateOption.push_back(b);
+                                auxBitRateOption.push_back(c);
+                                PDPPBitRateAllDistOption.at(trIndex).push_back(auxBitRateOption);                       
+                                auxBitRateOption.clear();
+                            }
+                        }             
+                    }
+                }
+            }
+            else if(BR == 400000000000){
+                for(double a = BRdown; a <= BRup; a = a+20e9){
+                    for(double b = BRdown; b <= BRup; b = b+20e9){                    
+                        for(double c = BRdown; c <= BRup; c = c+20e9){
+                            if (a + b >= BRmin && b + c >= BRmin && a + c >= BRmin 
+                                && a + b + c <= 1.3*BR){                            
+                                auxBitRateOption.push_back(a);
+                                auxBitRateOption.push_back(b);
+                                auxBitRateOption.push_back(c);
+                                PDPPBitRateAllDistOption.at(trIndex).push_back(auxBitRateOption);                       
+                                auxBitRateOption.clear();
+                            }
+                        }             
+                    }
+                }
+            }
+            else {
+                std::cout << "Invalid traffic option. Traffic option should be 100/200/400 GB";
             }
             trIndex++;
         }
@@ -220,6 +260,7 @@ void GA_PDPPBO::LoadPDPPBitRateAllDistOption() {
     else if(beta == 0){
         std::cout << "Invalid beta Squeezing. Beta should be different of zero";
     }
+    PDPPBitRateAllDistOption = PDPPBitRateAllDistOption;
 }
 
 unsigned int GA_PDPPBO::GetNumTraffic() const {

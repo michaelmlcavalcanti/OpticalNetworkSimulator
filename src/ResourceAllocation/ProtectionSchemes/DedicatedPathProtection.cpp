@@ -148,8 +148,7 @@ CallDevices* call) {
                     call->ClearTrialProtRoutes();
                     call->SetStatus(Accepted);
                     IncrementNumProtectedCalls();
-                    resDevAlloc->simulType->GetData()->SetProtectedCalls
-                    (this->numProtectedCalls);
+                    CalcBetaAverage(call);
                     return;
                 }
             }
@@ -175,8 +174,6 @@ CallDevices* call) {
             call->ClearTrialProtRoutes();
             call->SetStatus(Accepted);
             IncrementNumNonProtectedCalls();
-            resDevAlloc->simulType->GetData()->SetNonProtectedCalls
-            (this->numNonProtectedCalls);
             return;
         }
     } 

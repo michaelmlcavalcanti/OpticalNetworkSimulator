@@ -77,17 +77,7 @@ public:
      */
     std::vector<std::vector<std::vector<double>>> 
     PDPPBitRateNodePairsDist;
-     /**
-     * @brief Function which calculates the call beta average. 
-     */
-    void CalcBetaAverage(CallDevices* call);
-
-private:
-     /**
-     * @brief Vector to store the all call beta average. 
-     */
-    std::vector<double> callBetaAverage;
-                  
+         
 };
 
 #endif /* PARTITIONINGDEDICATEDPATHPROTECTION_H */

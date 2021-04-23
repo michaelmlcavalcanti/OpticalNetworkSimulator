@@ -61,7 +61,10 @@ public:
      * 
      */
     void IncrementNumNonProtectedCalls();
-
+     /**
+     * @brief Function which calculates the current call beta average. 
+     */
+    void CalcBetaAverage(CallDevices* call);
           
 protected:
     ResourceDeviceAlloc* resDevAlloc;
@@ -89,6 +92,11 @@ protected:
     
     unsigned long int numNonProtectedCalls;
     
+private:
+     /**
+     * @brief Vector to store the all call beta average. 
+     */
+    std::vector<double> callBetaAverage;
 };
 
 #endif /* PROTECTIONSCHEME_H */

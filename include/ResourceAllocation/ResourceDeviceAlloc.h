@@ -83,13 +83,17 @@ private:
      * @return
      */
     //void CreatePDPPBitRateOptions();
-private:
     
-    std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;
-    
+private:    
+    /**
+     * @brief Pointer to the Regenerator assignment object of this simulation.
+     */
+    std::shared_ptr<RegeneratorAssignment> regAssAlgorithm;  
+    /**
+     * @brief Pointer to the protection scheme object of this simulation.
+     */
     std::shared_ptr<ProtectionScheme> protScheme;
     
-    ProtectionScheme* protectionScheme;
 };
 
 #endif /* RESOURCEDEVICEALLOC_H */

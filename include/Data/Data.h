@@ -121,16 +121,20 @@ public:
      * @brief Saves the data values in the NetNonProtRate.txt file.
      */
     void SaveNetNonProtRate();
-    
+    /**
+     * @brief Saves the data values in the NetBetaAverage.txt file.
+     */
+    void SaveNetBetaAverage();
     /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
      * generation.
      */
     void SaveGaFiles();
-    
-    void SaveFilesPSO();
-    
+    /**
+     * @brief Saves the Particle Swarm Optimization files.
+     */
+    void SaveFilesPSO();    
     /**
      * @brief Set the number of request of the actual load point.
      * @param numReq Number of requests.
@@ -241,11 +245,21 @@ public:
      * @param simulTime Computer simulation time.
      */
     void SetRealSimulTime(const TIME simulTime);
-    
+    /**
+     * @brief Set the links use number for the actual load point.
+     * @param topology pointer.
+     */    
     void SetLinksUse(Topology* topology);
-    
+    /**
+     * @brief Set the slots relative use number of request of the actual load point.
+     * @param call pointer.
+     */
     void SetSlotsRelativeUse(Call* call);
-     
+    /**
+     * @brief Set the network fragmentation ratio on dependence of a accumulated band
+     * for the actual load point.
+     * @param band current accumulated band .
+     */ 
     void SetBandFrag(const double band, const double netFrag);
     /**
      * @brief Function to get the index of the actual simulation point.
@@ -293,6 +307,30 @@ public:
      * @return Call request blocking probability.
      */
     void SetNonProtectedCalls(double numNonProtectedCalls);
+    /**
+     * @brief Function to get the Vector that contain all calls beta average stored 
+     * in its indexes
+     */
+    std::vector<double> GetCallsBetaAverage() const;
+    /**
+     * @brief Function to set the Vector that contain all calls beta average stored 
+     * in its indexes
+     */
+    void SetCallsBetaAverage(std::vector<double> callsBetaAverage);
+    /**
+     * @brief Function to calculate and update the network beta average for the actual 
+     * load point. 
+     */
+    void UpdateNetworkBetaAverage();
+
+    
+    /**
+     * @brief Function to get the Vector that contain the network beta average 
+     * for each load point.     
+        */
+    double GetNetworkBetaAverage() const;
+
+    void SetNetworkBetaAverage(double networkBetaAverage);
 
 private:
     /**
@@ -305,8 +343,7 @@ private:
      * stream.
      * @param ostream Output stream.
      */
-    void SaveBandwidthBP(std::ostream& ostream);
-    
+    void SaveBandwidthBP(std::ostream& ostream);    
     /**
      * @brief Function to save the Average Network Utilization into a output
      * stream.
@@ -314,24 +351,46 @@ private:
      */
     void SaveNetUtiliz(std::ostream& ostream);
     /**
-     * @brief Function to save the Network Fragmentation into a output
-     * stream.
+     * @brief Function to save the Network Fragmentation into a output stream.
      * @param ostream Output stream.
      */
     void SaveNetFrag(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the accumulated Network Fragmentation into a output stream.
+     * @param ostream Output stream.
+     */
     void SaveAccumNetFrag(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Fragmentatio on depending of band into a 
+     * output stream.
+     * @param ostream Output stream.
+     */
     void SaveBandFrag(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Links Usage into a output stream.
+     * @param ostream Output stream.
+     */
     void SaveLinksUse(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Slot relative Use into a output stream.
+     * @param ostream Output stream.
+     */
     void SaveSlotsRelativeUse(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Protection Rate into a output stream.
+     * @param ostream Output stream.
+     */
     void SaveNetProtRate(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Non Protection Rate into a output stream.
+     * @param ostream Output stream.
+     */
     void SaveNetNonProtRate(std::ostream& ostream);
-    
+    /**
+     * @brief Function to save the Network Beta Average into a output stream.
+     * @param ostream Output stream.
+     */
+    void SaveNetBetaAverage(std::ostream& ostream);   
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.
@@ -400,6 +459,7 @@ private:
      * @param bestInd Output file for the GA last Pareto front individuals.
      */
     void SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd);
+    
 private:
     /**
      * @brief A pointer to the simulation this object belong
@@ -458,7 +518,6 @@ private:
      * @brief Network fragmentation ratio, the mean of all links fragmentation.
      */
     std::vector<double> netFragmentationRatio;
-
     /**
      * @brief Vector which accumulates all the Network fragmentation ratio
      * measured between the event interval, the mean of all links fragmentation.
@@ -482,6 +541,14 @@ private:
      * for each load point.
      */
     std::vector<double> nonProtectedCalls; 
+    /**
+     * @brief Vector that contain all calls beta average stored in the its indexes
+     */
+    std::vector<double> callsBetaAverage;
+    /**
+     * @brief Vector that contain the network beta average for each load point.
+     */
+    std::vector<double> networkBetaAverage;
     /**
      * @brief Vector that contain the simulation time of each load point.
      */

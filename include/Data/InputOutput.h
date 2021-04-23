@@ -139,6 +139,11 @@ public:
      */
     std::ofstream& GetNetNonProtRate();
     /**
+     * @brief Function to get the file that storage the network beta average.
+     * @return Network call protection Rate file.
+     */
+    std::ofstream& GetNetBetaAverage();
+    /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
      * @return Best individuals output file.
@@ -238,6 +243,11 @@ private:
     * @param netNonProtRate 
     */
     void LoadNetNonProtRate(std::ofstream& netNonProtRate);
+        /**
+    * @brief Function to load the network beta average file.
+    * @param netProtRate 
+    */
+    void LoadNetBetaAverage(std::ofstream& netBetaAverage);
     /**
      * @brief Function to load the GA algorithm files.
      * @param bests Best individuals file.
@@ -295,6 +305,10 @@ private:
      * @brief call non protection rate output file.
      */
     std::ofstream netNonProtRate;
+    /**
+     * @brief network beta average output file.
+     */
+    std::ofstream netBetaaverage;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.
