@@ -57,11 +57,28 @@ public:
     /**
      * @brief Function which calculates the partial bit rate for each 
      * partitioned routes based in incoming traffic demand. A vector 
-     * PDPPBitRateDistOptions is loaded. 
+     * PDPPBitRateDistOptions is loaded with equally distribution between routes. 
      */
     void LoadPDPPBitRateOptions();
-     
+    /**
+     * @brief Function which create a partial bit rate distribution according on scheme
+     * (equally for PDPP and not equally for GA_PDPPBO) for each 
+     * partitioned routes based in incoming traffic demand. A vector 
+     * PDPPBitRateNodePairDist is loaded. 
+     */
     void CreatePDPPBitRateOptions();
+    /**
+     * @brief Function which get the PDPPBitRateNodePairDist container. 
+     */
+    std::vector<std::vector<std::vector<double>>> GetPDPPBitRateNodePairsDist() const;
+    /**
+     * @brief Function which set the PDPPBitRateNodePairDist container. 
+     */
+    void SetPDPPBitRateNodePairsDist(std::vector<std::vector<std::vector<double>>>
+    PDPPBitRateNodePairsDist);
+
+      
+private:
     /**
      * @brief Vector to store the partial bit rate distribution options for each
      * possible incoming traffic demand. The 1ª dimension is the incoming traffic
@@ -75,8 +92,7 @@ public:
      * 2ª dimension is the traffic demands possibilities and 3ª dimension is the 
      * bit rate distribution defined for the protection routes.
      */
-    std::vector<std::vector<std::vector<double>>> 
-    PDPPBitRateNodePairsDist;
+    std::vector<std::vector<std::vector<double>>> PDPPBitRateNodePairsDist;
          
 };
 

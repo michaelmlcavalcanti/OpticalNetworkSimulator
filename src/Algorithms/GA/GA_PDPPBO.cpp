@@ -19,6 +19,7 @@
 #include "../../../include/Calls/Traffic.h"
 #include "../../../include/ResourceAllocation/ResourceDeviceAlloc.h"
 #include "../../../include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
+#include "../../../include/Data/Data.h"
 
 GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), numNodes(0), numTraffic(0) {
     ResourceDeviceAlloc* resource_alloc;
@@ -169,11 +170,17 @@ void GA_PDPPBO::UpdatePDPPBO() {
 
 void GA_PDPPBO::ApplyIndividual(Individual* ind) {
     IndividualPDPPBO* auxInd = dynamic_cast<IndividualPDPPBO*>(ind);
+    this->pdppbo->SetPDPPBitRateNodePairsDist(auxInd->GetGenes());
 
 }
 
 void GA_PDPPBO::SetIndParameters(Individual* ind) {
-
+    double blockProb = this->GetSimul()->GetData()->GetReqBP();
+    double betaAverage = this->GetSimul()->GetData()->GetNetBetaAverage();
+    
+    IndividualPDPPBO* auxInd = dynamic_cast<IndividualPDPPBO*>(ind);
+    auxInd->SetBlockProb(blockProb);
+    auxInd->SetBetaAverage(betaAverage);
 }
 
 unsigned int GA_PDPPBO::GetNumNodes() const {

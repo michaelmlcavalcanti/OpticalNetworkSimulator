@@ -321,3 +321,15 @@ void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* cal
     }
     call->SetTranspSegments(auxVec); 
 }
+
+std::vector<std::vector<std::vector<double>>> PartitioningDedicatedPathProtection::
+GetPDPPBitRateNodePairsDist() const {
+    return PDPPBitRateNodePairsDist;
+
+}
+
+void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairsDist
+(std::vector<std::vector<std::vector<double>>> PDPPBitRateNodePairsDist) {
+    this->PDPPBitRateNodePairsDist = PDPPBitRateNodePairsDist;
+}
+
