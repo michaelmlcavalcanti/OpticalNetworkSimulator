@@ -523,68 +523,6 @@ orNode, NodeIndex deNode, RouteIndex routeIndex) {
     return routes;
 }
 
-/*void Routing::CheckProtectionDisjointYEN() {
-    std::vector<std::shared_ptr<Route>> auxWorkRoutes, auxProtRoutes;
-    Route* workRoute;
-    Route* protRoute;
-    unsigned int numNodes = topology->GetNumNodes();
-    unsigned int numK = parameters->GetNumberRoutes();
-    unsigned int numKd = parameters->GetNumberProtectionRoutes();
-    
-    for(unsigned int sourceNode = 0; sourceNode < numNodes; sourceNode++){
-        for(unsigned int destNode = 0; destNode < numNodes; destNode++){
-            if(sourceNode == destNode)
-                continue;
-            
-            auxWorkRoutes = resources->GetRoutes(sourceNode, destNode);
-            
-            for(unsigned int k = 0; k < numK; k++){
-                workRoute = auxWorkRoutes.at(k).get();
-                auxProtRoutes = resources->GetProtRoutes(sourceNode, destNode, k);
-                
-                for(unsigned int a = 0; a < numKd; a++){
-                    protRoute = auxProtRoutes.at(a).get();
-                    
-                    if(protRoute != nullptr){
-                        if(workRoute == protRoute){
-                            std::cout << "Same route" << std::endl;
-                        }
-                        if(workRoute->checkShareLink(protRoute)){
-                            std::cout << "Share links"<< std::endl;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-//    for(unsigned int NodeI = 0; NodeI < resources->protectionAllRoutes.
-//    size(); NodeI++){
-//        
-//        for(unsigned int k = 0; k < resources->protectionAllRoutes.at(NodeI).
-//        size(); k++){
-//            workRoute = resources->allRoutes.at(NodeI).at(k).get();
-//            
-//            for(unsigned int kd = 0; kd < resources->protectionAllRoutes.
-//            at(NodeI).at(k).size(); kd++){
-//                protRoute = resources->protectionAllRoutes.at(NodeI).at(k).at(kd).get();
-//                
-//                if(protRoute == nullptr){
-//                    std::cout << "Null point" << std::endl;
-//                    std::cout << "NodeId: " << NodeI << std::endl;
-//                    std::cout << "k: " << k << std::endl;
-//                    std::cout << "kd: " << kd << std::endl;
-//                }
-//                if(workRoute == protRoute){
-//                    nonDisjoint.push_back(resources->protectionAllRoutes.
-//                    at(NodeI).at(k).at(kd));
-//                }
-//            }
-//        }
-//    }
-//    return nonDisjoint;
-}*/
-
 void Routing::ProtectionYEN() {
     std::vector<std::shared_ptr<Route>> routes;
     unsigned int numNodes = this->topology->GetNumNodes();
@@ -645,6 +583,28 @@ NodeIndex deNode, RouteIndex routeIndex) {
     
     return routes;
     
+}
+
+void Routing::ProtectionMIR() {
+    unsigned int numNodes = this->topology->GetNumNodes();
+    
+    /*for(unsigned int orN = 0; orN < numNodes; orN++){
+        for(unsigned int deN = 0; deN < numNodes; deN++){
+            if(orN != deN){
+                routes = this->ProtectionMIR(orN, deN);
+            }
+            else{
+                routes.resize(1, nullptr);
+            }
+            //resources->SetRoutes(orN, deN, routes);
+            routes.clear();
+        }
+    }*/
+}
+
+std::vector<std::shared_ptr<Route> > Routing::ProtectionMIR(NodeIndex orNode, 
+NodeIndex deNode) {
+
 }
 
 

@@ -198,6 +198,15 @@ std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
     return this->trialRoutes.at(index);
 }
 
+std::deque<std::shared_ptr<Route> > Call::GetTrialRoutes() {
+    return this->trialRoutes;
+}
+
+void Call::SetTrialRoutes(std::deque<std::shared_ptr<Route>> routes) {
+    this->trialRoutes = routes;
+}
+
+
 std::shared_ptr<Route> Call::GetProtRoute(unsigned int routeIndex, 
 unsigned int protRouteIndex) const {
     assert(routeIndex < this->trialRoutes.size());

@@ -344,6 +344,14 @@ private:
      */
     void RoutingSpec(Call* call);
     /**
+     * @brief Function for routing then spectral allocation for a specified 
+     * call with shuffle of the routes previously ordered by YEN in order to promote load
+     * balance. For each route in the set of routes (shuffled/random), try the spectral 
+     * allocation.
+     * @param call Call request that the function will try to allocate.
+     */
+    void RoutingSpecRandom(Call* call);
+    /**
      * @brief Function for spectral allocation then routing for a specified 
      * call. Try the first possible set of slots in each possible route. If
      * not possible, try the second set of slots, and so on.

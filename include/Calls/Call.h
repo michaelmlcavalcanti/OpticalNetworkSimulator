@@ -225,15 +225,34 @@ public:
      */
     std::shared_ptr<Route> GetRoute(unsigned int index) const;
     /**
+     * @brief Function to get a all possible routes of a specified 
+     * node pair index.
+     * @return Call request possible routes (vector trialRoutes).
+     */
+    std::deque<std::shared_ptr<Route>> GetTrialRoutes();
+        /**
+     * @brief Function to set all possible route index of a specified node pair index. 
+     * index.
+     */
+    void SetTrialRoutes(std::deque<std::shared_ptr<Route>> routes);
+    
+    
+    /**
      * @brief Function to get a specified protection route of the possible 
      * protection routes of a specified working route.
      * @param routeIndex working route index, protRouteIndex protection route
      * index.
-     * @return Call request possible route.
+     * @return Call request possible protection route.
      */
     std::shared_ptr<Route> GetProtRoute(unsigned int routeIndex , 
     unsigned int protRouteIndex) const;
-    
+      /**
+     * @brief Function to get a all possible  protection routes of a specified 
+     * working route.
+     * @param routeIndex working route index, protRouteIndex protection route
+     * index.
+     * @return Call request possible route (vector trialProtRoutes).
+     */
     std::deque<std::shared_ptr<Route>> GetProtRoutes(unsigned int routeIndex);
     
     /**

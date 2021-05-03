@@ -112,6 +112,7 @@ void ResourceAlloc::RSA(Call* call) {
         this->RoutingSpec(call);
     else
         this->SpecRouting(call);
+        //this->RoutingSpecRandom(call);
 }
 
 void ResourceAlloc::RMSA(Call* call) {
@@ -124,6 +125,41 @@ void ResourceAlloc::RMSA(Call* call) {
 
 void ResourceAlloc::RoutingSpec(Call* call) {
     this->routing->RoutingCall(call);
+    call->RepeatModulation();
+    unsigned int numRoutes = call->GetNumRoutes();
+    
+    for(unsigned int a = 0; a < numRoutes; a++){
+        call->SetRoute(call->GetRoute(a));
+        call->SetModulation(call->GetModulation(a));
+        this->modulation->SetModulationParam(call);
+        
+        if(!this->CheckOSNR(call))
+            continue;
+            
+        this->specAlloc->SpecAllocation(call);
+            
+        if(this->topology->IsValidLigthPath(call)){
+            call->SetStatus(Accepted);
+            break;
+        }
+    }
+    call->ClearTrialRoutes();
+    call->ClearTrialModulations();
+}
+
+void ResourceAlloc::RoutingSpecRandom(Call* call) {
+    this->routing->RoutingCall(call);    
+
+    //shuffle the k routes
+    std::deque<std::shared_ptr<Route>> auxTrialRoutes;
+    auxTrialRoutes = call->GetTrialRoutes();    
+    std::shuffle(auxTrialRoutes.begin(), auxTrialRoutes.end(), Def::randomEngine);
+    /*for(unsigned int index = 0; index < rand() % 2 + 1; index++){
+        std::shuffle(std::begin(auxTrialRoutes), std::end(auxTrialRoutes), 
+        std::default_random_engine());
+    }*/
+    call->SetTrialRoutes(auxTrialRoutes);   
+    
     call->RepeatModulation();
     unsigned int numRoutes = call->GetNumRoutes();
     

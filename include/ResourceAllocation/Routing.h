@@ -148,8 +148,19 @@ public:
      * for a specific source/destination node pair of the topology used.
      */
     std::vector<std::shared_ptr<Route>> ProtectionYEN(NodeIndex orNode, 
-    NodeIndex deNode, RouteIndex routeIndex);
-    
+    NodeIndex deNode, RouteIndex routeIndex);    
+    /**
+     * @brief Minimum interference routing algorithm for all source/destination node 
+     * pairs in the topology used. It creates groups of 2 or 3 minimal interfering
+     * routes to use by PDPP.
+     */
+    void ProtectionMIR();
+    /**
+     * @brief Minimum interference routing algorithm for a specific source/destination
+     * node pair of the topology used.
+     */
+    std::vector<std::shared_ptr<Route>> ProtectionMIR(NodeIndex orNode, 
+    NodeIndex deNode);     
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.
