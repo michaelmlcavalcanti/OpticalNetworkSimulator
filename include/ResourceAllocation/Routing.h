@@ -160,7 +160,13 @@ public:
      * node pair of the topology used.
      */
     std::vector<std::shared_ptr<Route>> ProtectionMIR(NodeIndex orNode, 
-    NodeIndex deNode);     
+    NodeIndex deNode);
+    /**
+    * @brief Create minimal interference routes groups to use in PDPP algorithm.
+    */
+    std::vector<std::shared_ptr<Route>> CreateMinInterfRouteGroups(
+    std::vector<std::shared_ptr<Route>> routes);
+
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.

@@ -194,6 +194,23 @@ void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     }while(!orderRsa.is_open());
 }
 
+void InputOutput::LoadPDPPBitRateNodePairsDistFirstSimul(std::ifstream& bitRateDist){
+
+    do{
+        bitRateDist.open("Files/Outputs/1/GA/BestIndividual.txt");
+
+        if(!bitRateDist.is_open()) {
+            std::cerr << "Wrong Bit Rate Distribuition file." << std::endl;
+            std::cerr << "The file required is: Files/Outputs/"
+                         "1/GA/BestIndividual.txt" << std::endl;
+            std::cerr << "Add/Fix the file then press 'Enter'"
+                      << std::endl;
+
+            std::cin.get();
+        }
+    }while(!bitRateDist.is_open());
+}
+
 void InputOutput::LoadDevicesFile(std::ifstream& devicesFile) {
     const SimulIndex auxInt = this->simulType->GetSimulationIndex();
     

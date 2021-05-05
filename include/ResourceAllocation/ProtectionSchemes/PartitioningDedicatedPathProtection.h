@@ -76,6 +76,11 @@ public:
      */
     void SetPDPPBitRateNodePairsDist(std::vector<std::vector<std::vector<double>>>
     PDPPBitRateNodePairsDist);
+    /**
+    * @brief Set the container that indicate the PDPP Bit rate distribution option for
+     * each node pair in the network of the output of the first simulation.
+    */
+    void SetPDPPBitRateNodePairDistGA();
 
       
 private:

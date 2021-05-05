@@ -25,6 +25,7 @@
 #include "../../../include/Calls/Traffic.h"
 #include "../../../include/SimulationType/SimulationType.h"
 #include "../../../include/Data/Data.h"
+#include "../../../include/Data/InputOutput.h"
 #include "math.h" 
 
 PartitioningDedicatedPathProtection::PartitioningDedicatedPathProtection
@@ -87,7 +88,7 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
             }
             break;
         case ProtectionPDPPBO_GA:
-            //Criar função de load do indivíduo do GA
+            this->SetPDPPBitRateNodePairDistGA();
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;
@@ -331,5 +332,28 @@ GetPDPPBitRateNodePairsDist() const {
 void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairsDist
 (std::vector<std::vector<std::vector<double>>> PDPPBitRateNodePairsDist) {
     this->PDPPBitRateNodePairsDist = PDPPBitRateNodePairsDist;
+}
+
+void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairDistGA(){
+    std::ifstream auxIfstream;
+    std::vector<std::vector<std::vector<double>>> auxPDPPBitRateNodePairsDist;
+    double auxBR;
+    unsigned int numNodes = this->topology->GetNumNodes();
+    this->resDevAlloc->GetSimulType()->GetInputOutput()->
+    LoadPDPPBitRateNodePairsDistFirstSimul(auxIfstream);
+    unsigned int numTraffic = resDevAlloc->GetSimulType()->GetTraffic()->
+    GetVecTraffic().size();
+    unsigned int numPDPPRoutes = resDevAlloc->GetSimulType()->GetParameters()->
+    GetNumberPDPPprotectionRoutes();
+
+    for(unsigned int a = 0; a < numNodes*numNodes; a++){
+        for(unsigned int trIndex = 0; trIndex < numTraffic; trIndex++) {
+            for(unsigned int numRoutes = 0; numRoutes < numPDPPRoutes; numRoutes++){
+            auxIfstream >> auxBR;
+            auxPDPPBitRateNodePairsDist.at(a).at(trIndex).push_back(auxBR);
+            }
+        }
+    }
+    this->SetPDPPBitRateNodePairsDist(auxPDPPBitRateNodePairsDist);
 }
 

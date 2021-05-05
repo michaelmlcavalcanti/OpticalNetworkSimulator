@@ -76,6 +76,12 @@ public:
      */
     void LoadRsaOrderFirstSimul(std::ifstream& orderRsa);
     /**
+    * @brief Loads the PDPP bit rate distribution for all pair S-D input file from
+    * the first simulation made.
+    * @param bitRateDist Ifstream with the input file.
+    */
+    void LoadPDPPBitRateNodePairsDistFirstSimul(std::ifstream& bitRateDist);
+    /**
      * @brief Function to load the devices file, with fixed number of each one.
      * @param devicesFile Input devices file.
      */

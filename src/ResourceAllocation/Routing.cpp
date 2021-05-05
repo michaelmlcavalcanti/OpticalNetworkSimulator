@@ -586,27 +586,140 @@ NodeIndex deNode, RouteIndex routeIndex) {
 }
 
 void Routing::ProtectionMIR() {
+    std::vector<std::shared_ptr<Route>> routesAll;
     unsigned int numNodes = this->topology->GetNumNodes();
-    
-    /*for(unsigned int orN = 0; orN < numNodes; orN++){
+
+    for(unsigned int orN = 0; orN < numNodes; orN++){
         for(unsigned int deN = 0; deN < numNodes; deN++){
             if(orN != deN){
-                routes = this->ProtectionMIR(orN, deN);
+                routesAll = this->ProtectionMIR(orN, deN);
             }
             else{
-                routes.resize(1, nullptr);
+                routesAll.resize(this->GetK(), nullptr);
             }
-            //resources->SetRoutes(orN, deN, routes);
-            routes.clear();
+            this->CreateMinInterfRouteGroups(routesAll);
+
+            resources->SetRoutes(orN, deN, routesAll);
+            routesAll.clear();
         }
-    }*/
+    }
 }
 
-std::vector<std::shared_ptr<Route> > Routing::ProtectionMIR(NodeIndex orNode, 
+std::vector<std::shared_ptr<Route>> Routing::ProtectionMIR(NodeIndex orNode,
 NodeIndex deNode) {
+    assert(orNode != deNode);
+    std::vector<std::shared_ptr<Route>> routes;
+    std::priority_queue<std::shared_ptr<Route>,
+            std::vector<std::shared_ptr<Route>>,
+            RouteCompare> candidateRoutes;
+    Node* spurNode;
+    std::shared_ptr<Route> spurPath;
+    std::shared_ptr<Route> rootPath;
+    std::shared_ptr<Route> totalPath;
 
+    // Determine the shortest path from the source to the destination.
+    std::shared_ptr<Route> newRoute = this->Dijkstra(orNode, deNode);
+    routes.push_back(newRoute);
+
+    //declaring auxiliar variables to check duplicated/ Null values in routes container
+    unsigned int counter = 2;
+    auto i1 = std::adjacent_find(routes.begin(), routes.end());
+    bool route;
+
+    for(unsigned int k = 1; k < counter; k++){
+        unsigned int auxSize = routes.at(k - 1)->GetNumNodes() - 2;
+
+        //The spurNode ranges from the first node to the next to last node
+        //in the previous k-shortest path.
+        for(unsigned int i = 0; i <= auxSize; i++){
+            //spurNode is retrieved from the previous k-shortest path, k − 1.
+            spurNode = routes.at(k - 1)->GetNode(i);
+            // The sequence of nodes from the source to the spurNode of the
+            //previous k-shortest path.
+            rootPath = routes.at(k - 1)->CreatePartialRoute(0, i);
+
+            for(auto it: routes){
+                //Remove the links that are part of the previous shortest
+                //paths which share the same rootPath.
+                if(i < it->GetNumNodes()){
+                    newRoute = it->CreatePartialRoute(0, i);
+                    if(rootPath->GetPath() == newRoute->GetPath()){
+                        it->GetLink(i)->SetLinkState(false);
+                    }
+                }
+            }
+
+            for(unsigned int  a = 0; a < rootPath->GetNumNodes(); a++){
+                if(rootPath->GetNode(a)->GetNodeId() == spurNode->GetNodeId())
+                    continue;
+                rootPath->GetNode(a)->SetNodeState(false);
+            }
+
+            // Calculate the spurPath from the spurNode to the destination.
+            spurPath = this->Dijkstra(spurNode->GetNodeId(), deNode);
+
+            if(spurPath != nullptr){
+                // Entire path is made up of the rootPath and spurPath.
+                totalPath = rootPath->AddRoute(spurPath);
+                // Add the potential k-shortest path to the queue.
+                candidateRoutes.push(totalPath);
+            }
+
+            // Add back the edges and nodes that were removed from the graph.
+            this->topology->SetAllLinksWorking();
+            rootPath->SetAllNodesWorking();
+        }
+        if(candidateRoutes.empty())
+            break;
+
+        //Get the first route and store it in vector candidateRoutes
+        routes.push_back(candidateRoutes.top());
+        candidateRoutes.pop();
+
+        //checking for duplicated values in container routes
+        i1 = std::adjacent_find(routes.begin(), routes.end());
+        for(auto it : routes){
+            if(it == nullptr)
+                route = false;
+        }
+        if (i1 == routes.end() && route == true)  //routes have no duplicated/Null values
+            counter++;
+    }
+
+    while(routes.size() < counter){
+        routes.push_back(nullptr);
+    }
+
+    return routes;
 }
 
+std::vector<std::shared_ptr<Route>> Routing::CreateMinInterfRouteGroups(
+std::vector<std::shared_ptr<Route>> routes){
+    std::vector<std::shared_ptr<Route>> routesMIR = routes;
+
+    if(parameters->GetNumberPDPPprotectionRoutes() == 2) {
+        for (auto it1 : routesMIR) {
+            for (auto it2 : routesMIR) {
+                if(it1 != it2){
+
+                }
+            }
+        }
+    }
+
+    if(parameters->GetNumberPDPPprotectionRoutes() == 3) {
+        for (auto it1 : routesMIR) {
+            for (auto it2 : routesMIR) {
+                for (auto it3 :routesMIR) {
+                    if(it1 != it2 && it1 != it3 && it2 != it3){
+
+                    }
+                }
+            }
+        }
+    }
+    return routesMIR;
+}
 
 ResourceAlloc* Routing::GetResourceAlloc() const {
     return resourceAlloc;
