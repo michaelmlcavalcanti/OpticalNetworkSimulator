@@ -64,7 +64,6 @@ void ProtectionScheme::CalcBetaAverage(CallDevices* call) {
         betaAverage = parameters->GetBeta();
         callBetaAverage.push_back(betaAverage);
         resDevAlloc->simulType->GetData()->SetCallsBetaAverage(this->callBetaAverage);
-   
     }
 }
 

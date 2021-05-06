@@ -21,7 +21,8 @@
 #include "../../../include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h"
 #include "../../../include/Data/Data.h"
 
-GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), numNodes(0), numTraffic(0) {
+GA_PDPPBO::GA_PDPPBO(SimulationType* simul) : GA_MO(simul), pdppbo(nullptr), numNodes(0), numTraffic(0),
+PDPPBitRateAllDistOption(0), indexDistOption(0) {
     ResourceDeviceAlloc* resource_alloc;
     resource_alloc = dynamic_cast<ResourceDeviceAlloc*>(simul->GetResourceAlloc());
     pdppbo = dynamic_cast<PartitioningDedicatedPathProtection*>(resource_alloc->GetProtectionScheme());
@@ -39,7 +40,7 @@ void GA_PDPPBO::Initialize() {
     //Mudar pra função interna
     numTraffic = this->GetSimul()->GetTraffic()->GetVecTraffic().size();
     this->LoadPDPPBitRateAllDistOption();
-    // Chamar função que inicializa as indexDistOption
+    this->CreateIndexDistributions();
 }
 
 void GA_PDPPBO::InitializePopulation() {
@@ -168,6 +169,14 @@ void GA_PDPPBO::UpdatePDPPBO() {
     }
 }
 
+void GA_PDPPBO::CreateIndexDistributions(void) {
+    indexDistOption.resize(PDPPBitRateAllDistOption.size());
+    for(unsigned int a = 0; a < PDPPBitRateAllDistOption.size(); a++) {
+        indexDistOption.at(a) = std::uniform_int_distribution<unsigned  int>(0,
+                                                                             PDPPBitRateAllDistOption.at(a).size()-1);
+    }
+}
+
 void GA_PDPPBO::ApplyIndividual(Individual* ind) {
     IndividualPDPPBO* auxInd = dynamic_cast<IndividualPDPPBO*>(ind);
     this->pdppbo->SetPDPPBitRateNodePairsDist(auxInd->GetGenes());
@@ -279,5 +288,7 @@ std::vector<double> GA_PDPPBO::CreateGene(unsigned int trIndex) {
     select_index = indexDistOption.at(trIndex)(this->random_generator);
     return PDPPBitRateAllDistOption.at(trIndex).at(select_index);
 }
+
+
 
 

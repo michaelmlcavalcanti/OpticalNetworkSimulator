@@ -131,6 +131,8 @@ private:
      * for all individuals of the population.
      */
     void UpdatePDPPBO();
+
+    void CreateIndexDistributions(void);
     
 private:
     PartitioningDedicatedPathProtection* pdppbo;
