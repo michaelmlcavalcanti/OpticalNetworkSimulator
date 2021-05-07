@@ -224,7 +224,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 IncrementNumNonProtectedCalls();                
                 return;
             }
-        }        
+        }     
     }
     
     if(numSchProtRoutes == 2){

@@ -172,8 +172,8 @@ void GA_PDPPBO::UpdatePDPPBO() {
 void GA_PDPPBO::CreateIndexDistributions(void) {
     indexDistOption.resize(PDPPBitRateAllDistOption.size());
     for(unsigned int a = 0; a < PDPPBitRateAllDistOption.size(); a++) {
-        indexDistOption.at(a) = std::uniform_int_distribution<unsigned  int>(0,
-                                                                             PDPPBitRateAllDistOption.at(a).size()-1);
+        indexDistOption.at(a) = std::uniform_int_distribution<unsigned int>
+                (0,PDPPBitRateAllDistOption.at(a).size()-1);
     }
 }
 
@@ -276,7 +276,6 @@ void GA_PDPPBO::LoadPDPPBitRateAllDistOption() {
     else if(beta == 0){
         std::cout << "Invalid beta Squeezing. Beta should be different of zero";
     }
-    PDPPBitRateAllDistOption = PDPPBitRateAllDistOption;
 }
 
 unsigned int GA_PDPPBO::GetNumTraffic() const {

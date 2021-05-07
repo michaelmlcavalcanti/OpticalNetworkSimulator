@@ -15,7 +15,7 @@
 #include "../../../include/Algorithms/GA/GA_PDPPBO.h"
 
 IndividualPDPPBO::IndividualPDPPBO(GA_PDPPBO* ga) : Individual(ga), ga(ga), 
-blockProb(0.0), betaAverage(0.0), genes(0), x(0) {
+blockProb(0.0), betaAverage(0.0), genes(0) {
     unsigned int nodeIndex;
     const unsigned int numNodes = this->ga->GetNumNodes();
     const unsigned int numTraffic = ga->GetNumTraffic();
