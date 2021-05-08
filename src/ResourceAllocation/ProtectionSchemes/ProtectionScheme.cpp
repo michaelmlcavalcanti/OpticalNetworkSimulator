@@ -30,22 +30,8 @@ ProtectionScheme::~ProtectionScheme() {
     
 }
 
-long long int ProtectionScheme::GetNumProtectedCalls() const {
-    return numProtectedCalls;
-}
-
-void ProtectionScheme::IncrementNumProtectedCalls() {
-    this->numProtectedCalls++;
-    resDevAlloc->simulType->GetData()->SetProtectedCalls(this->numProtectedCalls);
-}
-
-void ProtectionScheme::IncrementNumNonProtectedCalls() {
-     this->numNonProtectedCalls++;
-     resDevAlloc->simulType->GetData()->SetNonProtectedCalls(this->numNonProtectedCalls);
-}
-
 void ProtectionScheme::CalcBetaAverage(CallDevices* call) {
-    double betaAverage;
+    double callBetaAverage;
  
     if(call->GetTranspSegmentsVec().size() == 3){
         double BR0 = call->GetTranspSegments().at(0)->GetBitRate();
@@ -53,17 +39,17 @@ void ProtectionScheme::CalcBetaAverage(CallDevices* call) {
         double BR2 = call->GetTranspSegments().at(2)->GetBitRate();
         double BRT = call->GetBitRate();
         
-        betaAverage = ((1 - ((BR0 + BR1)/BRT)) + (1 - ((BR0 + BR2)/BRT)) +
+        callBetaAverage = ((1 - ((BR0 + BR1)/BRT)) + (1 - ((BR0 + BR2)/BRT)) +
         (1 - ((BR1 + BR2)/BRT)))/3;
 
-        callBetaAverage.push_back(betaAverage);
-        resDevAlloc->simulType->GetData()->SetCallsBetaAverage(this->callBetaAverage);
+        this->callBetaAverage.push_back(callBetaAverage);
+        resDevAlloc->simulType->GetData()->SetSumCallsBetaAverage(callBetaAverage);
     }
     
     if(call->GetTranspSegmentsVec().size() == 2){
-        betaAverage = parameters->GetBeta();
-        callBetaAverage.push_back(betaAverage);
-        resDevAlloc->simulType->GetData()->SetCallsBetaAverage(this->callBetaAverage);
+        callBetaAverage = parameters->GetBeta();
+        this->callBetaAverage.push_back(callBetaAverage);
+        resDevAlloc->simulType->GetData()->SetSumCallsBetaAverage(callBetaAverage);
     }
 }
 

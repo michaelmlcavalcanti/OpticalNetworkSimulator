@@ -151,7 +151,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                                 call->ClearTrialRoutes();
                                 call->ClearTrialProtRoutes();
                                 call->SetStatus(Accepted);
-                                IncrementNumProtectedCalls();                               
+                                resDevAlloc->simulType->GetData()->SetProtectedCalls();
                                 CalcBetaAverage(call);
                                 return;           
                             }
@@ -195,7 +195,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->ClearTrialRoutes();
                         call->ClearTrialProtRoutes();
                         call->SetStatus(Accepted);
-                        IncrementNumProtectedCalls();
+                        resDevAlloc->simulType->GetData()->SetProtectedCalls();
                         CalcBetaAverage(call);
                         return;
                     }
@@ -221,7 +221,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 call->ClearTrialRoutes();
                 call->ClearTrialProtRoutes();
                 call->SetStatus(Accepted);
-                IncrementNumNonProtectedCalls();                
+                resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
                 return;
             }
         }     
@@ -263,7 +263,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->ClearTrialRoutes();
                         call->ClearTrialProtRoutes();
                         call->SetStatus(Accepted);
-                        IncrementNumProtectedCalls();
+                        resDevAlloc->simulType->GetData()->SetProtectedCalls();
                         CalcBetaAverage(call);
                         return;
                     }
@@ -289,7 +289,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 call->ClearTrialRoutes();
                 call->ClearTrialProtRoutes();
                 call->SetStatus(Accepted);
-                IncrementNumNonProtectedCalls();
+                resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
                 return;
             }
         }        

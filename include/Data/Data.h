@@ -290,11 +290,10 @@ public:
      */
     double GetProtectedCalls() const;
     /**
-     * @brief Function to set the total number of protection calls for 
+     * @brief Function to set/increment the total number of protection calls for
      * the actual point.
-     * @return Call request blocking probability.
      */
-    void SetProtectedCalls(double numProtectedCalls);
+    void SetProtectedCalls();
         /**
      * @brief Function to get the total number of non protection calls for 
      * the actual point.
@@ -302,21 +301,18 @@ public:
      */
     double GetNonProtectedCalls() const;
     /**
-     * @brief Function to set the total number of non protection calls for 
+     * @brief Function to set/increment the total number of non protection calls for
      * the actual point.
-     * @return Call request blocking probability.
      */
-    void SetNonProtectedCalls(double numNonProtectedCalls);
+    void SetNonProtectedCalls();
     /**
-     * @brief Function to get the Vector that contain all calls beta average stored 
-     * in its indexes
+     * @brief Function to get the sum of all calls beta average for actual load point.
      */
-    std::vector<double> GetCallsBetaAverage() const;
+    double GetSumCallsBetaAverage() const;
     /**
-     * @brief Function to set the Vector that contain all calls beta average stored 
-     * in its indexes
+     * @brief Function to set/update the sum of all calls beta average on actual load point.
      */
-    void SetCallsBetaAverage(std::vector<double> callsBetaAverage);
+    void SetSumCallsBetaAverage(double callBetaAverage);
     /**
      * @brief Function to get the network beta average for the actual point.
      * @return Call request blocking probability.
@@ -533,9 +529,9 @@ private:
      */
     std::vector<double> nonProtectedCalls; 
     /**
-     * @brief Vector that contain all calls beta average stored in the its indexes
+     * @brief Vector that contain the summation of calls beta average for each load point.
      */
-    std::vector<double> callsBetaAverage;
+    std::vector<double> sumCallsBetaAverage;
 
     /**
      * @brief Vector that contain the simulation time of each load point.

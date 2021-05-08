@@ -57,12 +57,12 @@ const Data* data) {
 }
 
 Data::Data(SimulationType* simulType) 
-:simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0), 
-numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
-numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0), 
-netFragmentationRatio(0), accumNetFragmentationRatio(0) ,fragPerTraffic(0), 
-linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
-actualIndex(0), protectedCalls(0), nonProtectedCalls(0), callsBetaAverage(0){
+: simulType(simulType), numberReq(0), numberBlocReq(0), numberAccReq(0),
+  numberSlotsReq(0), numberBlocSlots(0), numberAccSlots(0), numberAccSlotsInt(0),
+  numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0),
+  netFragmentationRatio(0), accumNetFragmentationRatio(0) , fragPerTraffic(0),
+  linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
+  actualIndex(0), protectedCalls(0), nonProtectedCalls(0), sumCallsBetaAverage(0){
     
 }
 
@@ -97,7 +97,7 @@ void Data::Initialize() {
     }
     protectedCalls.resize(size);
     nonProtectedCalls.resize(size);
-    callsBetaAverage.resize(size);    
+    sumCallsBetaAverage.resize(size);
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -120,7 +120,7 @@ void Data::Initialize(unsigned int numPos) {
     slotsRelativeUse.resize(numPos);
     protectedCalls.resize(numPos);
     nonProtectedCalls.resize(numPos);
-    callsBetaAverage.resize(numPos);    
+    sumCallsBetaAverage.resize(numPos);
 }
 
 void Data::StorageCall(Call* call) {
@@ -429,18 +429,16 @@ void Data::SetActualIndex(unsigned int actualIndex) {
     this->actualIndex = actualIndex;
 }
 
-void Data::SetProtectedCalls(double numProtectedCalls) {
-    assert(numProtectedCalls >= 0);
-    this->protectedCalls.at(this->actualIndex) = numProtectedCalls;
+void Data::SetProtectedCalls() {
+    this->protectedCalls.at(this->actualIndex)++;
 }
 
 double Data::GetProtectedCalls() const {
     return this->protectedCalls.at(this->actualIndex);
 }
 
-void Data::SetNonProtectedCalls(double numNonProtectedCalls) {
-    assert(numNonProtectedCalls >= 0);
-    this->nonProtectedCalls.at(this->actualIndex) = numNonProtectedCalls;
+void Data::SetNonProtectedCalls() {
+    this->nonProtectedCalls.at(this->actualIndex)++;
 }
 
 double Data::GetNonProtectedCalls() const {
@@ -457,23 +455,16 @@ double Data::GetNonProtRate() const {
     (this->GetNonProtectedCalls()));
 }
 
-std::vector<double> Data::GetCallsBetaAverage() const {
-    return callsBetaAverage;
+double Data::GetSumCallsBetaAverage() const {
+    return this->sumCallsBetaAverage.at(actualIndex);
 }
 
-void Data::SetCallsBetaAverage(std::vector<double> callsBetaAverage) {
-    this->callsBetaAverage = callsBetaAverage;
+void Data::SetSumCallsBetaAverage(double callBetaAverage) {
+    this->sumCallsBetaAverage.at(actualIndex) += callBetaAverage;
 }
 
 double Data::GetNetBetaAverage() const {
-    double sumBetaAverage = 0;
-    double netBetaAverage = 0;
-    
-    for(auto it : this->callsBetaAverage){
-        sumBetaAverage += it; 
-    }
-    netBetaAverage = sumBetaAverage / this->callsBetaAverage.size();
-    return netBetaAverage;
+    return this->GetSumCallsBetaAverage() / this->GetProtectedCalls();
 }
 
 void Data::SaveCallReqBP(std::ostream& ostream) {

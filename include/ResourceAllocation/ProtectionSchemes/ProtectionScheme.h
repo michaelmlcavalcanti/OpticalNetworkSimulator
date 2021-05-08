@@ -48,19 +48,7 @@ public:
      * 
      */
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
-    /**
-     * @brief Function which returns the number of protected calls of network.
-     */
-    long long int GetNumProtectedCalls() const;
-     /**
-     * @brief Function which increments the number of protected calls of network.
-     */
-    void IncrementNumProtectedCalls();
-    /**
-     * @brief Function which increments the number of nonprotected calls of network.
-     * 
-     */
-    void IncrementNumNonProtectedCalls();
+
      /**
      * @brief Function which calculates the current call beta average. 
      */
@@ -85,12 +73,7 @@ protected:
      * Used if the simulation make use of protection. 
      */
     std::vector<std::shared_ptr<Call>> protectionCalls;
-    /**
-     * @brief Total number of protected calls by the protection scheme. 
-     */
-    unsigned long int numProtectedCalls;
-    
-    unsigned long int numNonProtectedCalls;
+
     
 private:
      /**
