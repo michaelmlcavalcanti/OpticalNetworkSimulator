@@ -57,7 +57,7 @@ void GA_PDPPBO::CreateNewPopulation() {
     this->totalPopulation.clear();
     this->Crossover();
     this->Mutation();
-    this->UpdatePDPPBO();
+    //this->UpdatePDPPBO();
 }
 
 void GA_PDPPBO::Crossover() {
