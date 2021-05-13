@@ -149,6 +149,16 @@ Link* Route::GetLink(unsigned int index) const {
                                    this->GetNodeId(index + 1));
 }
 
+std::vector<Link*> Route::GetLinks(std::shared_ptr<Route> &route) const {
+    std::vector<int> path = route->GetPath();
+    std::vector<Link*> links;
+
+    for(auto it : path){
+        links.push_back(this->GetLink(it));
+    }
+    return links;
+}
+
 void Route::SetAllNodesWorking() {
     
     for(auto it: this->pathNodes){

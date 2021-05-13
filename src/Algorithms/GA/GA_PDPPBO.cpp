@@ -120,7 +120,10 @@ const IndividualPDPPBO * const ind2) {
                 }
             }
         }
-    }    
+    }
+
+    this->totalPopulation.push_back(newInd1);
+    this->totalPopulation.push_back(newInd2);
 }
 
 void GA_PDPPBO::Mutation() {

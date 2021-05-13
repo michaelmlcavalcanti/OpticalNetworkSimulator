@@ -128,6 +128,13 @@ public:
      */
     Link* GetLink(unsigned int index) const;
     /**
+     * @brief Function that return all links of this route.
+     * @param route Link index.
+     * @return all Link pointers vector.
+     */
+    std::vector<Link*> GetLinks(std::shared_ptr<Route>& route) const;
+
+    /**
      * @brief Set all nodes in this route as working.
      */
     void SetAllNodesWorking();
