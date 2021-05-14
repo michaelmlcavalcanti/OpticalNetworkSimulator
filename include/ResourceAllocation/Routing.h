@@ -236,6 +236,7 @@ private:
      * @brief Resources pointer of this simulation.
      */
     Resources* resources;
+
     /**
      * @brief Number of routes for the k-shortest path algorithms.
      */

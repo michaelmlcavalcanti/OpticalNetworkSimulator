@@ -463,6 +463,10 @@ public:
     /**
      * @brief Resource object owned by the object.
      */
-    std::shared_ptr<Resources> resources;      
+    std::shared_ptr<Resources> resources;
+    /**
+     * @brief Route object owned by this object.
+     */
+    std::shared_ptr<Route> route;
 };
 #endif /* RESOURCEALLOC_H */

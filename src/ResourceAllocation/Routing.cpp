@@ -23,7 +23,7 @@
 #include "../../include/Data/Data.h"
 #include "../../include/Data/Parameters.h"
 
-bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA, 
+bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
                               const std::shared_ptr<Route>& routeB) {
     
     return (routeA->GetCost() > routeB->GetCost());
@@ -42,7 +42,7 @@ Routing::~Routing() {
 void Routing::Load() {
     topology = resourceAlloc->GetTopology();
     resources = resourceAlloc->GetResources();
-    
+
     if(routingOption == RoutingYEN || routingOption == RoutingBSR_YEN)
         this->SetK(parameters->GetNumberRoutes());
 }
@@ -695,29 +695,110 @@ NodeIndex deNode) {
 
 std::vector<std::shared_ptr<Route>> Routing::CreateMinInterfRouteGroups(
 std::vector<std::shared_ptr<Route>> routes){
-    std::vector<std::shared_ptr<Route>> routesMIR = routes;
+    std::vector<std::shared_ptr<Route>> routesAll = routes;
+    std::vector<std::shared_ptr<Route>> routesMIR;
+    std::vector<Link*> linksR1;
+    std::vector<Link*> linksR2;
+    std::vector<Link*> linksR3;
+    unsigned int countLinkInter = 0;
+    unsigned int countRouteGroup = 0;
+    unsigned int minNumLinkInter;
+    unsigned int maxNumLinkInter;
+    std::vector<unsigned int> numLinkInter;
+    std::vector<unsigned int> valuesLinkInter;
+    std::vector<std::vector<std::shared_ptr<Route>>> routesGroupInter;
 
-    if(parameters->GetNumberPDPPprotectionRoutes() == 2) {
-        for (auto it1 : routesMIR) {
-            for (auto it2 : routesMIR) {
-                if(it1 != it2){
-
+    if(parameters->GetNumberPDPPprotectionRoutes() == 3) {
+        for (auto r1 : routesAll) {  //begin loop of routes from actual s-d pair
+            for (auto r2 : routesAll) {
+                for (auto r3 : routesAll) {
+                    if (r1 != r2 && r1 != r3 &&
+                        r2 != r3) { //find a group of routes to check
+                        countRouteGroup++;
+                        linksR1 = resourceAlloc->route->GetLinks(r1);
+                        linksR2 = resourceAlloc->route->GetLinks(r2);
+                        linksR3 = resourceAlloc->route->GetLinks(r3);
+                        for (auto l1 : routesAll) { //begin loop of links from actual group of routes
+                            for (auto l2 : routesAll) {
+                                for (auto l3 :routesAll) {
+                                    if (l1 == l2 && l1 == r3 && l2 == l3) {
+                                        countLinkInter++;
+                                    }
+                                }
+                            }
+                        }
+                        numLinkInter.push_back(countLinkInter);
+                        routesGroupInter.at(countRouteGroup).push_back(r1);
+                        routesGroupInter.at(countRouteGroup).push_back(r2);
+                        routesGroupInter.at(countRouteGroup).push_back(r3);
+                        countLinkInter = 0;
+                    }
                 }
             }
         }
-    }
-
-    if(parameters->GetNumberPDPPprotectionRoutes() == 3) {
-        for (auto it1 : routesMIR) {
-            for (auto it2 : routesMIR) {
-                for (auto it3 :routesMIR) {
-                    if(it1 != it2 && it1 != it3 && it2 != it3){
-
+        //removing duplicate values from vector valuesLinkInter
+        for (unsigned int it = 0; it < numLinkInter.size(); it++) {
+            if (numLinkInter.at(it) != valuesLinkInter.at(it))
+                valuesLinkInter.push_back(numLinkInter.at(it));
+        }
+        //sorting vector valuesLinkInter in a crescent order
+        for (const auto &i: valuesLinkInter) {
+            sort(valuesLinkInter.begin(), valuesLinkInter.end());
+        }
+        //inserting groups of minimal interference routes in vector routesMIR
+        for (auto v : valuesLinkInter) {
+            for (auto n : numLinkInter) {
+                if (n == v) {
+                    for (auto it : routesGroupInter.at(n)) {
+                        routesMIR.push_back(it);
                     }
                 }
             }
         }
     }
+
+    if(parameters->GetNumberPDPPprotectionRoutes() == 2) {
+        for (auto r1 : routesAll) {
+            for (auto r2 : routesAll) {
+                if(r1 != r2){
+                    countRouteGroup++;
+                    linksR1 = resourceAlloc->route->GetLinks(r1);
+                    linksR2 = resourceAlloc->route->GetLinks(r2);
+                    for (auto l1 : routesAll) { //begin loop of links from actual group of routes
+                        for (auto l2 : routesAll) {
+                            if (l1 == l2 ) {
+                                countLinkInter++;
+                            }
+                        }
+                    }
+                    numLinkInter.push_back(countLinkInter);
+                    routesGroupInter.at(countRouteGroup).push_back(r1);
+                    routesGroupInter.at(countRouteGroup).push_back(r2);
+                    countLinkInter = 0;
+                }
+            }
+        }
+        //removing duplicate values from vector valuesLinkInter
+        for(unsigned int it = 0; it < numLinkInter.size(); it++){
+            if(numLinkInter.at(it) != valuesLinkInter.at(it))
+                valuesLinkInter.push_back(numLinkInter.at(it));
+        }
+        //sorting vector valuesLinkInter in a crescent order
+        for (const auto &i: valuesLinkInter){
+            sort(valuesLinkInter.begin(), valuesLinkInter.end());
+        }
+        //inserting groups of minimal interference routes in vector routesMIR
+        for(auto v : valuesLinkInter) {
+            for (auto n : numLinkInter) {
+                if (n == v) {
+                    for (auto it : routesGroupInter.at(n)) {
+                        routesMIR.push_back(it);
+                    }
+                }
+            }
+        }
+    }
+
     return routesMIR;
 }
 

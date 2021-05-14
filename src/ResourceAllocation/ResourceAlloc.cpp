@@ -32,7 +32,7 @@
 ResourceAlloc::ResourceAlloc(SimulationType *simulType)
 :topology(nullptr), traffic(nullptr), options(nullptr), simulType(simulType),
 parameters(nullptr), routing(nullptr), specAlloc(nullptr), modulation(nullptr),
-resources(nullptr) {
+resources(nullptr), route(nullptr) {
     
 }
 
@@ -63,7 +63,7 @@ void ResourceAlloc::Load() {
     
     unsigned int numNodes = this->topology->GetNumNodes();
     resources->allRoutes.resize(numNodes*numNodes);
-    
+
     routing->Load();
 }
 
