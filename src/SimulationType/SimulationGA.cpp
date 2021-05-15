@@ -48,6 +48,7 @@ void SimulationGA::Run() {
         
         if(a == numGenerations)
             this->gaAlgorithm->CheckMinSimul();
+
         this->gaAlgorithm->SelectPopulation();
         this->gaAlgorithm->SaveIndividuals();
         std::cout << this->gaAlgorithm << std::endl;

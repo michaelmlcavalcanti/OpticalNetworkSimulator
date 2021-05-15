@@ -22,6 +22,7 @@
 #include "../../include/ResourceAllocation/Route.h"
 #include "../../include/Algorithms/Algorithms.h"
 #include "../../include/Structure/Topology.h"
+#include "../../include/Algorithms/GA/IndividualPDPPBO.h"
 
 std::ostream& operator<<(std::ostream& ostream, 
 const Data* data) {
@@ -727,15 +728,16 @@ std::ostream& bestInds) {
 void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
     //Make function to check the cast for the best individual
     //and a switch function for casting according to the individual.
-    IndividualNumRoutesMSCL* ind;
+
     ga->SetActualGeneration(ga->GetNumberGenerations());
     std::vector<Individual*> auxVecInd = ga->GetParetoFront();
     std::vector<std::vector<unsigned int>> auxGenes(0);
-    
+    IndividualNumRoutesMSCL* ind;
+
     for(auto it1: auxVecInd){
         ind = dynamic_cast<IndividualNumRoutesMSCL*>(it1);
         auxGenes = ind->GetGenes();
-        
+
         for(unsigned int a = 0; a < auxGenes.size(); a++){
             if(auxGenes.at(a).empty()){
                 bestInd << 0 << "\t";
@@ -746,4 +748,49 @@ void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
         }
         bestInd << std::endl;
     }
+/*
+    if(this->simulType->GetOptions()->GetGaOption() == GaNumRoutesCheckMSCL){
+        ga->SetActualGeneration(ga->GetNumberGenerations());
+        std::vector<Individual*> auxVecInd = ga->GetParetoFront();
+        std::vector<std::vector<unsigned int>> auxGenes(0);
+        IndividualNumRoutesMSCL* ind;
+        for(auto it1: auxVecInd){
+            ind = dynamic_cast<IndividualNumRoutesMSCL*>(it1);
+            auxGenes = ind->GetGenes();
+
+            for(unsigned int a = 0; a < auxGenes.size(); a++){
+                if(auxGenes.at(a).empty()){
+                    bestInd << 0 << "\t";
+                }
+                for(unsigned int b = 0; b < auxGenes.at(a).size(); b++){
+                    bestInd << auxGenes.at(a).at(b) << "\t";
+                }
+            }
+            bestInd << std::endl;
+        }
+    }
+
+    if(this->simulType->GetOptions()->GetGaOption() == GaPDPPBO){
+        ga->SetActualGeneration(ga->GetNumberGenerations());
+        std::vector<Individual*> auxVecInd = ga->GetParetoFront();
+        std::vector<std::vector<std::vector<double>>> auxGenes(0);
+        IndividualPDPPBO* ind;
+        for(auto it1: auxVecInd){
+            ind = dynamic_cast<IndividualPDPPBO*>(it1);
+            auxGenes = ind->GetGenes();
+
+            for(unsigned int a = 0; a < auxGenes.size(); a++){
+                for(unsigned int b = 0; b < auxGenes.at(a).at(b).size(); b++){
+                    if(auxGenes.at(a).empty()){
+                        bestInd << 0 << "\t";
+                    }
+                    for(unsigned int c = 0; c < auxGenes.at(a).at(b).size(); c++) {
+                        bestInd << auxGenes.at(a).at(b).at(c) << "\t";
+                    }
+                }
+            }
+            bestInd << std::endl;
+        }
+    }*/
+
 }

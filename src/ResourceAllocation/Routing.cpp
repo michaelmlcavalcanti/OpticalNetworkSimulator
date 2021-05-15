@@ -588,6 +588,7 @@ NodeIndex deNode, RouteIndex routeIndex) {
 void Routing::ProtectionMIR() {
     std::vector<std::shared_ptr<Route>> routesAll;
     unsigned int numNodes = this->topology->GetNumNodes();
+    std::vector<std::shared_ptr<Route>> routesPairMIR;
 
     for(unsigned int orN = 0; orN < numNodes; orN++){
         for(unsigned int deN = 0; deN < numNodes; deN++){
@@ -742,9 +743,10 @@ std::vector<std::shared_ptr<Route>> routes){
                 valuesLinkInter.push_back(numLinkInter.at(it));
         }
         //sorting vector valuesLinkInter in a crescent order
-        for (const auto &i: valuesLinkInter) {
-            sort(valuesLinkInter.begin(), valuesLinkInter.end());
-        }
+        sort(valuesLinkInter.begin(), valuesLinkInter.end());
+        //for (const auto &i: valuesLinkInter) {
+        //    sort(valuesLinkInter.begin(), valuesLinkInter.end());
+        //}
         //inserting groups of minimal interference routes in vector routesMIR
         for (auto v : valuesLinkInter) {
             for (auto n : numLinkInter) {

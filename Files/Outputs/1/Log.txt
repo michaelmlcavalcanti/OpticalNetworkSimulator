@@ -1,0 +1,51 @@
+GA SIMULATION
+This type of simulation applies the genetic algorithm.
+
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA PDPP Bit Rate Optimization
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: Partitioning Dedicated Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 90
+Maximum load point(erlang): 130
+Number of points: 5
+Total number of requisitions: 1000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+K: 3
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+
+GA PARAMETERS
+Network load(erlang): 110
+Number of individuals: 50
+Number of generations: 10
+Crossover probability: 0.5
+Mutation probability: 0.1
+Number of maximum simulation: 3
+
+GA MO PARAMETERS
+Step of generation to save: 10
+
+Generation: 10
+Number of individuals of the first Pareto front: 2
+

@@ -149,9 +149,8 @@ void GA_MO::RunTotalPop() {
 
 void GA_MO::CheckMinSimul() {
     unsigned int maxNumSimulPerInd = this->GetMaxNumSimulation();
-    
+
     for(auto it: this->totalPopulation){
-        
         while(it->GetCount() < maxNumSimulPerInd){
             this->ApplyIndividual(it.get());
             this->GetSimul()->RunBase();

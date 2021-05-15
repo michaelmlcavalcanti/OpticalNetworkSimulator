@@ -193,6 +193,7 @@ void GA_PDPPBO::SetIndParameters(Individual* ind) {
     IndividualPDPPBO* auxInd = dynamic_cast<IndividualPDPPBO*>(ind);
     auxInd->SetBlockProb(blockProb);
     auxInd->SetBetaAverage(betaAverage);
+    auxInd->SetCount(auxInd->GetCount() + 1);
 }
 
 unsigned int GA_PDPPBO::GetNumNodes() const {
