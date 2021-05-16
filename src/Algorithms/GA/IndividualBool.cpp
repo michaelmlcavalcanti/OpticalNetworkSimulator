@@ -78,3 +78,8 @@ double IndividualBool::GetMainParameter() {
 double IndividualBool::GetSecondParameter() {
     return this->GetMainParameter();
 }
+
+void IndividualBool::Save(std::ostream &bestInd) {
+
+}
+

@@ -731,10 +731,13 @@ void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
 
     ga->SetActualGeneration(ga->GetNumberGenerations());
     std::vector<Individual*> auxVecInd = ga->GetParetoFront();
-    std::vector<std::vector<unsigned int>> auxGenes(0);
-    IndividualNumRoutesMSCL* ind;
 
-    for(auto it1: auxVecInd){
+    for(auto ind: auxVecInd){
+        ind->Save(bestInd);
+        bestInd << std::endl;
+    }
+
+    /*for(auto it1: auxVecInd){
         ind = dynamic_cast<IndividualNumRoutesMSCL*>(it1);
         auxGenes = ind->GetGenes();
 
@@ -747,7 +750,7 @@ void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
             }
         }
         bestInd << std::endl;
-    }
+    }*/
 /*
     if(this->simulType->GetOptions()->GetGaOption() == GaNumRoutesCheckMSCL){
         ga->SetActualGeneration(ga->GetNumberGenerations());

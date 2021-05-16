@@ -115,6 +115,8 @@ public:
      * @return Second individual parameter.
      */
     double GetSecondParameter() override;
+
+    void Save(std::ostream& bestInd) override;
 private:
     /**
      * @brief GA_NumInterRoutesMSCL that owns this individual.

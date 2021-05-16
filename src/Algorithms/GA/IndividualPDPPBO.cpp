@@ -97,5 +97,22 @@ std::vector<double> gene) {
     this->genes.at(orN * ga->GetNumNodes() + deN).at(traffIndex) = gene;
 }
 
+void IndividualPDPPBO::Save(std::ostream &bestInd) {
 
+    /*for(auto nodeItem: this->genes){
+        for(traffItem: nodeItem){
+            for(distItem: traffItem){
+                bestInd << distItem << "\t";
+            }
+        }
+        bestInd << "\n";
+    }*/
+    for(auto nodeItem: this->genes){
+        for(traffItem: nodeItem){
+            for(distItem: traffItem){
+                bestInd << distItem << "\n";
+            }
+        }
+    }
+}
 

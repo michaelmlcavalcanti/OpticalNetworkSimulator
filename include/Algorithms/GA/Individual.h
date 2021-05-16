@@ -75,6 +75,8 @@ public:
      * @return Second parameter.
      */
     virtual double GetSecondParameter() = 0;
+
+    virtual void Save(std::ostream& bestInd) = 0;
 private:
     /**
      * @brief Generic GA that owns this individual.

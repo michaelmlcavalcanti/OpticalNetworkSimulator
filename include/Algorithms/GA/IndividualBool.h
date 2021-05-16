@@ -91,6 +91,8 @@ public:
      * @return Second parameter.
      */
     double GetSecondParameter() override;
+
+    void Save(std::ostream& bestInd) override;
 private:
     /**
      * @brief GA_RsaOrder that owns this individual.

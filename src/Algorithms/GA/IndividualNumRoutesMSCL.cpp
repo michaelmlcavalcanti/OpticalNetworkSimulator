@@ -113,3 +113,7 @@ double IndividualNumRoutesMSCL::GetMainParameter() {
 double IndividualNumRoutesMSCL::GetSecondParameter() {
     return (double) this->GetTotalNumInterRoutes();
 }
+
+void IndividualNumRoutesMSCL::Save(std::ostream &bestInd) {
+
+}

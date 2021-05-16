@@ -85,6 +85,7 @@ public:
 
     void SetGene(unsigned orN, unsigned deN, unsigned traffIndex, std::vector<double> gene);
 
+    void Save(std::ostream& bestInd) override;
 private:
     /**
      * @brief GA_PDPPBO that owns this individual.
