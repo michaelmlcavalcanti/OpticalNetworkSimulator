@@ -108,8 +108,8 @@ void IndividualPDPPBO::Save(std::ostream &bestInd) {
         bestInd << "\n";
     }*/
     for(auto nodeItem: this->genes){
-        for(traffItem: nodeItem){
-            for(distItem: traffItem){
+        for(auto traffItem: nodeItem){
+            for(auto distItem: traffItem){
                 bestInd << distItem << "\n";
             }
         }

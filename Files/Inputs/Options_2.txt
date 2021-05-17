@@ -6,17 +6,17 @@
 1
 0
 2
-1
-0
-0
-0
-0
-0
-0
-0
 0
 0
 1
+0
+0
+0
+0
+0
+0
+2
+0
 
 1-Topology
     0 - Invalid
@@ -37,6 +37,7 @@
     1 - DJK
     2 - YEN
     3 - BSR
+    4 - BSR-YEN
 3-Spectral allocation algorithm
     0 - Invalid
     1 - Random
@@ -78,6 +79,7 @@
     1 - GA RSA Order
     2 - GA Core Order
     3 - GA Number of Interfering Routes Check
+    4 - GA PDPP Bit rate Optimization
 11-Devices Option
     0 - Disabled
     1 - Enabled
@@ -107,6 +109,8 @@
     12- SCRA 4
     13- SCRA 5
     14- SCRA PSO
+    15- Modified SCRA
+    16- Modified SCRA PSO
 16-Stop Criteria
     0 - Total number of call requests
     1 - Number of blocked call requests
@@ -116,7 +120,10 @@
     2 - Random generation
 18-Protection Option
     0 - Protection Disable
-    1 - DDP
+    1 - DPP
+    2 - PDPP
+    3 - PDPPBO_GA
+    4 - PDPPSO_GA
 19-Fragmentation Measure Option
     0 - Disable
     1 - Fragmentation Ratio (FR)

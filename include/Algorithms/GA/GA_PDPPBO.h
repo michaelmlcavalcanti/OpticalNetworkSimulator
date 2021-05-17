@@ -126,11 +126,6 @@ private:
      * @param ind Specified individual.
      */
     void MutateIndividual(IndividualPDPPBO* const ind);
-     /**
-     * @brief Function to update the total number of Bit Rate distribution to check
-     * for all individuals of the population.
-     */
-    void UpdatePDPPBO();
 
     void CreateIndexDistributions(void);
     

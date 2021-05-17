@@ -1,15 +1,17 @@
 128
 1
 1
-240
-300
-6
-1E7
+100
+160
+5
+1E3
 500
 3
-70
+80
 2
 0
+0.2
+3
 
 1-Number of slots per fiber
 2-Number of cores per link
@@ -23,3 +25,5 @@
 10-Maximum section length(km)
 11-Number of polarizations
 12-Guard band size(slots)
+13-Protection Squeezing Beta 
+14-PDPP Number of protection routes (2 or 3)

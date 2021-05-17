@@ -24,8 +24,8 @@ PARAMETERS
 Number of slots per fiber: 128
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 90
-Maximum load point(erlang): 130
+Minimum load point(erlang): 100
+Maximum load point(erlang): 160
 Number of points: 5
 Total number of requisitions: 1000
 Maximum blocked requests: 500
@@ -36,7 +36,7 @@ Number of polarizations: 2
 Guard band size (slots): 0
 
 GA PARAMETERS
-Network load(erlang): 110
+Network load(erlang): 130
 Number of individuals: 50
 Number of generations: 10
 Crossover probability: 0.5

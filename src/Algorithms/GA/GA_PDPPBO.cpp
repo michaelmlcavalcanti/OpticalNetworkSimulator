@@ -163,15 +163,6 @@ void GA_PDPPBO::MutateIndividual(IndividualPDPPBO * const ind) {
     }
 }
 
-void GA_PDPPBO::UpdatePDPPBO() {
-    std::shared_ptr<IndividualPDPPBO> auxInd;
-    
-    for(auto it: totalPopulation){
-        auxInd = std::dynamic_pointer_cast<IndividualPDPPBO>(it);
-       //auxInd->SetTotalNumInterRoutes();
-    }
-}
-
 void GA_PDPPBO::CreateIndexDistributions(void) {
     indexDistOption.resize(PDPPBitRateAllDistOption.size());
     for(unsigned int a = 0; a < PDPPBitRateAllDistOption.size(); a++) {

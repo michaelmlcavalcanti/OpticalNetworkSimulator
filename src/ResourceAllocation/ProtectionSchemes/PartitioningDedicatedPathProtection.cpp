@@ -336,8 +336,7 @@ void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairsDist
 
 void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairDistGA(){
     std::ifstream auxIfstream;
-    std::vector<std::vector<std::vector<double>>> auxPDPPBitRateNodePairsDist;
-    double auxBR;
+    double auxBR = 0;
     unsigned int numNodes = this->topology->GetNumNodes();
     this->resDevAlloc->GetSimulType()->GetInputOutput()->
     LoadPDPPBitRateNodePairsDistFirstSimul(auxIfstream);
@@ -345,12 +344,15 @@ void PartitioningDedicatedPathProtection::SetPDPPBitRateNodePairDistGA(){
     GetVecTraffic().size();
     unsigned int numPDPPRoutes = resDevAlloc->GetSimulType()->GetParameters()->
     GetNumberPDPPprotectionRoutes();
+    std::vector<std::vector<std::vector<double>>> auxPDPPBitRateNodePairsDist;
+    auxPDPPBitRateNodePairsDist.resize(numNodes*numNodes);
 
     for(unsigned int a = 0; a < numNodes*numNodes; a++){
+        auxPDPPBitRateNodePairsDist.at(a).resize(numTraffic);
         for(unsigned int trIndex = 0; trIndex < numTraffic; trIndex++) {
             for(unsigned int numRoutes = 0; numRoutes < numPDPPRoutes; numRoutes++){
-            auxIfstream >> auxBR;
-            auxPDPPBitRateNodePairsDist.at(a).at(trIndex).push_back(auxBR);
+                auxIfstream >> auxBR;
+                auxPDPPBitRateNodePairsDist.at(a).at(trIndex).push_back(auxBR);
             }
         }
     }
