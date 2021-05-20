@@ -263,7 +263,8 @@ void ResourceDeviceAlloc::CreateRegeneratorAssignment() {
 }
 
 void ResourceDeviceAlloc::CreateProtectionScheme() {
-    
+    protScheme.reset();
+
     switch (options->GetProtectionOption()){
         case ProtectionDPP:
             protScheme = std::make_shared<DedicatedPathProtection>(this);

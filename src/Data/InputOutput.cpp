@@ -197,8 +197,8 @@ void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
 void InputOutput::LoadPDPPBitRateNodePairsDistFirstSimul(std::ifstream& bitRateDist){
 
     do{
-        bitRateDist.open("Files/Outputs/1/GA/BestIndividual.txt");
-        //bitRateDist.open("Files/Inputs/GA/BestIndividual.txt");
+        //bitRateDist.open("Files/Outputs/1/GA/BestIndividual.txt");
+        bitRateDist.open("Files/Inputs/GA/BestIndividual.txt");
 
         if(!bitRateDist.is_open()) {
             std::cerr << "Wrong Bit Rate Distribuition file." << std::endl;

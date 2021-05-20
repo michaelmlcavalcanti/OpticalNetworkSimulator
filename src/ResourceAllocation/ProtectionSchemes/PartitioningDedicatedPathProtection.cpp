@@ -146,6 +146,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 
                             if(topology->IsValidLigthPath(call)){
                                 call->SetRoute(call->GetRoute(k));
+                                call->SetModulation(FixedModulation);
                                 call->SetFirstSlot(callWork0->GetFirstSlot());
                                 call->SetLastSlot(callWork0->GetLastSlot());
                                 call->ClearTrialRoutes();
@@ -216,6 +217,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 
             if(topology->IsValidLigthPath(call)){
                 call->SetRoute(call->GetRoute(k));
+                call->SetModulation(FixedModulation);
                 call->SetFirstSlot(callWork0->GetFirstSlot());
                 call->SetLastSlot(callWork0->GetLastSlot());
                 call->ClearTrialRoutes();
@@ -284,6 +286,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 
             if(topology->IsValidLigthPath(call)){
                 call->SetRoute(call->GetRoute(k));
+                call->SetModulation(FixedModulation);
                 call->SetFirstSlot(callWork0->GetFirstSlot());
                 call->SetLastSlot(callWork0->GetLastSlot());
                 call->ClearTrialRoutes();
