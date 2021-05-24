@@ -12,57 +12,53 @@ Physical Layer: Disabled
 Network Type: EON
 RSA Order: Routing-SA
 GA: GA Disabled
-Devices: Disabled
+Devices: Enabled
 Transponders: Disabled
 Regeneration: Disabled
 Stop criteria: Number of call requests
 Random generation: Same pseudo-random generation
-Protection: No Protection
-Fragmentation Option: Access Blocking Probability (ABP)
+Protection: Partitioning Dedicated Path Protection Bit Rate Optimization(GA)
+Fragmentation Option: Disabled
 
 PARAMETERS
 Number of slots per fiber: 128
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 240
-Maximum load point(erlang): 300
-Number of points: 6
-Total number of requisitions: 1e+07
+Minimum load point(erlang): 100
+Maximum load point(erlang): 160
+Number of points: 5
+Total number of requisitions: 1000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 K: 3
-Maximum section length (km): 70
+Maximum section length (km): 80
 Number of polarizations: 2
 Guard band size (slots): 0
+Number of PDPP Routes: 3
 
 DATA
-Simulation time:41666.1  Real simul time: 43.9913  Number of requests:1e+07
-Load point:240  ReqBP:0.0007717  SlotsBP:0.00131152  HopsMed:2.15091
-NetOcc:7.89284e+07  NetUti:0.35245 NetFrag:0.0814199
+Simulation time:9.76763  Real simul time: 0.022013  Number of requests:1000
+Load point:100  ReqBP:0.003  SlotsBP:0.00528402  HopsMed:2.14443
+NetOcc:19151  NetUti:0.385017 NetFrag:0
+ProtRate:1  BetaAverg:0.161163
 
+Simulation time:8.49359  Real simul time: 0.021427  Number of requests:1000
+Load point:115  ReqBP:0.013  SlotsBP:0.0211361  HopsMed:2.16515
+NetOcc:18862  NetUti:0.437416 NetFrag:0
+ProtRate:1  BetaAverg:0.161174
 
-Simulation time:39682  Real simul time: 45.0748  Number of requests:1e+07
-Load point:252  ReqBP:0.0016271  SlotsBP:0.00276856  HopsMed:2.15473
-NetOcc:7.90373e+07  NetUti:0.370584 NetFrag:0.091242
+Simulation time:7.51356  Real simul time: 0.026948  Number of requests:1000
+Load point:130  ReqBP:0.028  SlotsBP:0.0462351  HopsMed:2.17901
+NetOcc:18358  NetUti:0.478379 NetFrag:0
+ProtRate:1  BetaAverg:0.160893
 
+Simulation time:6.7363  Real simul time: 0.032018  Number of requests:1000
+Load point:145  ReqBP:0.071  SlotsBP:0.112285  HopsMed:2.19699
+NetOcc:17189  NetUti:0.513191 NetFrag:0
+ProtRate:1  BetaAverg:0.160549
 
-Simulation time:37878.3  Real simul time: 46.2373  Number of requests:1e+07
-Load point:264  ReqBP:0.0031626  SlotsBP:0.00538111  HopsMed:2.15909
-NetOcc:7.90862e+07  NetUti:0.38851 NetFrag:0.0932262
-
-
-Simulation time:36231.4  Real simul time: 47.4185  Number of requests:1e+07
-Load point:276  ReqBP:0.0056014  SlotsBP:0.00953059  HopsMed:2.16347
-NetOcc:7.90138e+07  NetUti:0.405703 NetFrag:0.113044
-
-
-Simulation time:34721.7  Real simul time: 48.9162  Number of requests:1e+07
-Load point:288  ReqBP:0.0090627  SlotsBP:0.0154097  HopsMed:2.16745
-NetOcc:7.87809e+07  NetUti:0.422101 NetFrag:0.109367
-
-
-Simulation time:33332.9  Real simul time: 50.3143  Number of requests:1e+07
-Load point:300  ReqBP:0.013676  SlotsBP:0.0232397  HopsMed:2.17034
-NetOcc:7.83281e+07  NetUti:0.437173 NetFrag:0.119507
-
+Simulation time:6.10477  Real simul time: 0.030308  Number of requests:1000
+Load point:160  ReqBP:0.096  SlotsBP:0.152356  HopsMed:2.17367
+NetOcc:16396  NetUti:0.531691 NetFrag:0
+ProtRate:1  BetaAverg:0.160424
 

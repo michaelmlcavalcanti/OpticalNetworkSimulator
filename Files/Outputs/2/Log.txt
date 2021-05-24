@@ -17,7 +17,7 @@ Transponders: Disabled
 Regeneration: Disabled
 Stop criteria: Number of call requests
 Random generation: Same pseudo-random generation
-Protection: Partitioning Dedicated Path Protection Bit Rate Optimization(GA)
+Protection: Dedicated Path Protection
 Fragmentation Option: Disabled
 
 PARAMETERS
@@ -27,37 +27,38 @@ Mu: 1
 Minimum load point(erlang): 100
 Maximum load point(erlang): 160
 Number of points: 5
-Total number of requisitions: 10000
+Total number of requisitions: 1000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
 K: 3
 Maximum section length (km): 80
 Number of polarizations: 2
 Guard band size (slots): 0
+Number of PDPP Routes: 2
 
 DATA
-Simulation time:99.5576  Real simul time: 0.172977  Number of requests:10000
-Load point:100  ReqBP:0  SlotsBP:0  HopsMed:2.1315
-NetOcc:109326  NetUti:0.202617 NetFrag:0
+Simulation time:9.76763  Real simul time: 0.013144  Number of requests:1000
+Load point:100  ReqBP:0.011  SlotsBP:0.0193747  HopsMed:2.1547
+NetOcc:19114  NetUti:0.393623 NetFrag:0
 ProtRate:1  BetaAverg:0.2
 
-Simulation time:86.5718  Real simul time: 0.209653  Number of requests:10000
-Load point:115  ReqBP:0  SlotsBP:0  HopsMed:2.1315
-NetOcc:109326  NetUti:0.233009 NetFrag:0
+Simulation time:8.49359  Real simul time: 0.016419  Number of requests:1000
+Load point:115  ReqBP:0.03  SlotsBP:0.0493175  HopsMed:2.17526
+NetOcc:18651  NetUti:0.437631 NetFrag:0
 ProtRate:1  BetaAverg:0.2
 
-Simulation time:76.5828  Real simul time: 0.17237  Number of requests:10000
-Load point:130  ReqBP:0  SlotsBP:0  HopsMed:2.1315
-NetOcc:109326  NetUti:0.263402 NetFrag:0
+Simulation time:7.51356  Real simul time: 0.025233  Number of requests:1000
+Load point:130  ReqBP:0.046  SlotsBP:0.0774989  HopsMed:2.16876
+NetOcc:18165  NetUti:0.482112 NetFrag:0
 ProtRate:1  BetaAverg:0.2
 
-Simulation time:68.6604  Real simul time: 0.129344  Number of requests:10000
-Load point:145  ReqBP:0  SlotsBP:0  HopsMed:2.1315
-NetOcc:109326  NetUti:0.293794 NetFrag:0
+Simulation time:6.7363  Real simul time: 0.028689  Number of requests:1000
+Load point:145  ReqBP:0.08  SlotsBP:0.130339  HopsMed:2.19348
+NetOcc:17163  NetUti:0.506812 NetFrag:0
 ProtRate:1  BetaAverg:0.2
 
-Simulation time:62.2235  Real simul time: 0.122938  Number of requests:10000
-Load point:160  ReqBP:0  SlotsBP:0  HopsMed:2.1315
-NetOcc:109326  NetUti:0.324187 NetFrag:0
+Simulation time:6.10477  Real simul time: 0.025956  Number of requests:1000
+Load point:160  ReqBP:0.106  SlotsBP:0.17129  HopsMed:2.217
+NetOcc:16472  NetUti:0.538236 NetFrag:0
 ProtRate:1  BetaAverg:0.2
 

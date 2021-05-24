@@ -34,13 +34,35 @@ void ProtectionScheme::CalcBetaAverage(CallDevices* call) {
     double callBetaAverage;
  
     if(call->GetTranspSegmentsVec().size() == 3){
+        //getting bit rate of each route
         double BR0 = call->GetTranspSegments().at(0)->GetBitRate();
         double BR1 = call->GetTranspSegments().at(1)->GetBitRate();
         double BR2 = call->GetTranspSegments().at(2)->GetBitRate();
         double BRT = call->GetBitRate();
-        
-        callBetaAverage = ((1 - ((BR0 + BR1)/BRT)) + (1 - ((BR0 + BR2)/BRT)) +
-        (1 - ((BR1 + BR2)/BRT)))/3;
+        double BRmin = call->GetBitRate()*parameters->GetBeta();
+        //getting number of links of each route
+        double NL0 = (call->GetTranspSegments().at(0)->GetRoute()->GetNumHops() - 1);
+        double NL1 = (call->GetTranspSegments().at(1)->GetRoute()->GetNumHops() - 1);
+        double NL2 = (call->GetTranspSegments().at(2)->GetRoute()->GetNumHops() - 1);
+        double NLT = NL0+NL1+NL2;
+        //getting beta result from failure of each route
+        double betaR0 = 0;   //beta result due route 0 failure
+        double betaR1 = 0;
+        double betaR2 = 0;
+        if(BRmin <= BR1+BR2 < BRT)
+            betaR0 = (1 - ((BR1 + BR2)/BRT));
+        else if(BR1+BR2 >= BRT)
+            betaR0 = 0;
+        if(BRmin <= BR0+BR2 < BRT)
+            betaR1 = (1 - ((BR0 + BR2)/BRT));
+        else if(BR0+BR2 >= BRT)
+            betaR1 = 0;
+        if(BRmin <= BR0+BR1 < BRT)
+            betaR2 = (1 - ((BR1 + BR2)/BRT));
+        else if(BR0+BR1 >= BRT)
+            betaR2 = 0;
+
+        callBetaAverage = (betaR0*(NL0/NLT)) + (betaR1*(NL1/NLT)) + (betaR2*(NL2/NLT));
 
         this->callBetaAverage.push_back(callBetaAverage);
         resDevAlloc->simulType->GetData()->SetSumCallsBetaAverage(callBetaAverage);

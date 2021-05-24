@@ -47,6 +47,8 @@ const Parameters* parameters) {
             << parameters->GetNumberPolarizations() << std::endl;
     ostream << "Guard band size (slots): " << parameters->GetGuardBand()
             << std::endl;
+    ostream << "Number of PDPP Routes: " << parameters->GetNumberPDPPprotectionRoutes()
+            << std::endl;
     
     return ostream;
 }

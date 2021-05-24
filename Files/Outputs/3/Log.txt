@@ -1,0 +1,64 @@
+MULTIPLE LOADS SIMULATION
+This type of simulation varies the network load and analyzes the network performance. 
+
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: Partitioning Dedicated Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 100
+Maximum load point(erlang): 160
+Number of points: 5
+Total number of requisitions: 1000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+K: 3
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+Number of PDPP Routes: 2
+
+DATA
+Simulation time:9.76763  Real simul time: 0.012808  Number of requests:1000
+Load point:100  ReqBP:0.007  SlotsBP:0.0114487  HopsMed:2.14804
+NetOcc:18645  NetUti:0.381014 NetFrag:0
+ProtRate:1  BetaAverg:0.2
+
+Simulation time:8.49359  Real simul time: 0.013687  Number of requests:1000
+Load point:115  ReqBP:0.028  SlotsBP:0.0457948  HopsMed:2.15432
+NetOcc:18093  NetUti:0.431741 NetFrag:0
+ProtRate:1  BetaAverg:0.2
+
+Simulation time:7.51356  Real simul time: 0.015326  Number of requests:1000
+Load point:130  ReqBP:0.04  SlotsBP:0.0660502  HopsMed:2.16562
+NetOcc:17733  NetUti:0.470748 NetFrag:0
+ProtRate:1  BetaAverg:0.2
+
+Simulation time:6.7363  Real simul time: 0.023594  Number of requests:1000
+Load point:145  ReqBP:0.059  SlotsBP:0.0968736  HopsMed:2.18385
+NetOcc:17227  NetUti:0.502879 NetFrag:0
+ProtRate:1  BetaAverg:0.2
+
+Simulation time:6.10477  Real simul time: 0.0213  Number of requests:1000
+Load point:160  ReqBP:0.092  SlotsBP:0.147952  HopsMed:2.19493
+NetOcc:16408  NetUti:0.530011 NetFrag:0
+ProtRate:1  BetaAverg:0.2
+

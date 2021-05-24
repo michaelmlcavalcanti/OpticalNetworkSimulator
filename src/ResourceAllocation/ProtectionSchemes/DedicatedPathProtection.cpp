@@ -90,11 +90,11 @@ CallDevices* call) {
         }
     }
     
-    //Delete protection route
+    /*//Delete protection route
     callsVec.pop_back();
     call->SetTranspSegments(callsVec);
     
-    //Try only work connection
+    //Try only work connection (without protection)
     for(unsigned int k = 0; k < numRoutes; k++){
         callWork->SetRoute(call->GetRoute(k));
         callWork->SetModulation(FixedModulation);
@@ -111,7 +111,7 @@ CallDevices* call) {
             resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
             return;
         }
-    } 
+    } */
 }
 
 void DedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {

@@ -103,8 +103,7 @@ void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
 void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 (CallDevices* call) {      
-    if(numSchProtRoutes == 3){        
-       
+    if(numSchProtRoutes == 3){
         this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
 
         this->CreateProtectionCalls(call); //loading transpsegments with calls
@@ -203,7 +202,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 }
             }
         }
-        //Delete one route again, recalculate Bit rate and try allocating just 1
+        /*//Delete one route again, recalculate Bit rate and try allocating just 1
         //route (without protection)
         callsVec.pop_back();
         callWork0->SetBitRate(call->GetBitRate());
@@ -226,7 +225,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
                 return;
             }
-        }     
+        }*/
     }
     
     if(numSchProtRoutes == 2){
@@ -272,7 +271,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 }
             }
         }
-        //Delete one route, recalculate Bit rate and try allocating just 1
+        /*//Delete one route, recalculate Bit rate and try allocating just 1
         //route (without protection)
         callsVec.pop_back();
         callWork0->SetBitRate(call->GetBitRate());
@@ -295,7 +294,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                 resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
                 return;
             }
-        }        
+        } */
     }
 }
 
