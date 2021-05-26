@@ -1,0 +1,29 @@
+128
+1
+1
+95
+135
+5
+1E6
+500
+3
+80
+2
+0
+0
+3
+
+1-Number of slots per fiber
+2-Number of cores per link
+3-Deactivation time
+4-Minimum load
+5-Maximum load
+6-Number of points
+7-Maximum number  of requisitions
+8-Maximum  number of blocked requests
+9-Value for k-shortest routes
+10-Maximum section length(km)
+11-Number of polarizations
+12-Guard band size(slots)
+13-Protection Squeezing Beta 
+14-PDPP Number of protection routes (2 or 3)

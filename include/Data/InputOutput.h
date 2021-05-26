@@ -150,6 +150,11 @@ public:
      */
     std::ofstream& GetNetBetaAverage();
     /**
+    * @brief Function to get the file that storage the number of Hops per Route list.
+    * @return number of Hops per Route list file.
+    */
+    std::ofstream& GetNumHopsRoutes();
+    /**
      * @brief Get the output file that will contain the best individuals, with
      * their correspondent generation and blocking probability.
      * @return Best individuals output file.
@@ -255,6 +260,12 @@ private:
     */
     void LoadNetBetaAverage(std::ofstream& netBetaAverage);
     /**
+    * @brief Function to load the number of Hops per Route list.
+    * @param numHopsRoute
+    */
+    void LoadNumHopsRoutes(std::ofstream& numHopsRoutes);
+
+    /**
      * @brief Function to load the GA algorithm files.
      * @param bests Best individuals file.
      * @param best Best individual file.
@@ -314,7 +325,11 @@ private:
     /**
      * @brief network beta average output file.
      */
-    std::ofstream netBetaaverage;
+    std::ofstream netBetaAverage;
+    /**
+    * @brief number of hops per route list output file.
+    */
+    std::ofstream numHopsRoutes;
     /**
      * @brief Output file to save the best individuals for a GA single 
      * objective.

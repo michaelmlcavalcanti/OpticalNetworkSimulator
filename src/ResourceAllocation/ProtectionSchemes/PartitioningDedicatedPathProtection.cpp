@@ -67,9 +67,8 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateOptions() {
     double beta = parameters->GetBeta();
 
     for(auto it : VecTraffic){
-        partialBitRate = ceil (((it)/(numSchProtRoutes -1)) -
-                               (((beta) * (it)) / (numSchProtRoutes -1)));
-        for(unsigned int a = 0; a < numSchProtRoutes;a++){
+        partialBitRate = ceil (((1 - beta) * it) / (numSchProtRoutes -1));
+        for(unsigned int a = 0; a < numSchProtRoutes; a++){
             auxBitRateOption.push_back(partialBitRate);
         }
         PDPPBitRateDistOptions.push_back(auxBitRateOption);
@@ -165,8 +164,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
         callsVec.pop_back();        
         double callBitRate = call->GetBitRate();
         double beta = parameters->GetBeta();
-        double partialBitRate = ceil (((callBitRate)/(numSchProtRoutes -2)) -
-                           (((beta) * (callBitRate)) / (numSchProtRoutes -2)));
+        double partialBitRate = ceil (((1 - beta) * callBitRate) / (numSchProtRoutes-2));
         callWork0->SetBitRate(partialBitRate);
         callWork1->SetBitRate(partialBitRate);                
         call->SetTranspSegments(callsVec);        

@@ -102,7 +102,8 @@ GA* SimulationGA::GetGA() const {
 
 void SimulationGA::CreateGA() {
     assert(this->GetOptions()->GetGaOption() != GaOptionDisabled);
-    
+    this->gaAlgorithm.reset();
+
     switch(this->GetOptions()->GetGaOption()){
         case GaRsaOrder:
             this->gaAlgorithm = std::make_shared<GA_RsaOrder>(this);

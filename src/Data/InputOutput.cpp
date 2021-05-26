@@ -32,7 +32,8 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadNetProtRate(netProtRate);
     this->LoadNetNonProtRate(netNonProtRate);
     this->LoadNetNonProtRate(netNonProtRate);
-    this->LoadNetBetaAverage(netBetaaverage);
+    this->LoadNetBetaAverage(netBetaAverage);
+    this->LoadNumHopsRoutes(numHopsRoutes);
 }
 
 InputOutput::~InputOutput() = default;
@@ -479,10 +480,10 @@ void InputOutput::LoadNetBetaAverage(std::ofstream& netBetaAverage) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
     
     do{
-        netBetaaverage.open("Files/Outputs/" + std::to_string(auxInt) 
-                     + "/netBetaAverage.txt");
+        netBetaAverage.open("Files/Outputs/" + std::to_string(auxInt)
+                            + "/netBetaAverage.txt");
         
-        if(!netBetaaverage.is_open()){
+        if(!netBetaAverage.is_open()){
             std::cerr << "Wrong log file." << std::endl;
             std::cerr << "The folder required is: " << auxInt 
                       << "/" << std::endl;
@@ -492,6 +493,25 @@ void InputOutput::LoadNetBetaAverage(std::ofstream& netBetaAverage) {
             std::cin.get();
         }
     }while(!netBetaAverage.is_open());
+}
+
+void InputOutput::LoadNumHopsRoutes(std::ofstream &numHopsRoutes) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+
+    do{
+        numHopsRoutes.open("Files/Outputs/" + std::to_string(auxInt)
+                            + "/numHopsRoutes.txt");
+
+        if(!numHopsRoutes.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+
+            std::cin.get();
+        }
+    }while(!numHopsRoutes.is_open());
 }
 
 
@@ -636,7 +656,11 @@ std::ofstream& InputOutput::GetNetNonProtRate() {
 }
 
 std::ofstream& InputOutput::GetNetBetaAverage() {
-    return netBetaaverage;
+    return netBetaAverage;
+}
+
+std::ofstream &InputOutput::GetNumHopsRoutes() {
+    return numHopsRoutes;
 }
 
 
@@ -710,3 +734,7 @@ void InputOutput::PrintProgressBar(unsigned actual, unsigned min, unsigned max) 
     std::cout << "]" << int(division * 100.0) << "%" << std::endl;
     std::cout.flush();
 }
+
+
+
+

@@ -126,6 +126,10 @@ public:
      */
     void SaveNetBetaAverage();
     /**
+    * @brief Saves the data values in the numHopsRoutes.txt file.
+    */
+    void SaveNumHopsRoutes();
+    /**
      * @brief Saves the genetic algorithms files. Log, initial population, 
      * best individuals, worst individuals and best individual of the last
      * generation.
@@ -377,7 +381,13 @@ private:
      * @brief Function to save the Network Beta Average into a output stream.
      * @param ostream Output stream.
      */
-    void SaveNetBetaAverage(std::ostream& ostream);   
+    void SaveNetBetaAverage(std::ostream& ostream);
+    /**
+    * @brief Function to save number of Hops per Routes into a output stream.
+    * @param ostream Output stream.
+    */
+    void SaveNumHopsRoutes(std::ostream& ostream);
+
     /**
      * @brief Function to save specified paramters with the main result(BP) to 
      * a file.

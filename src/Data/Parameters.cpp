@@ -49,6 +49,8 @@ const Parameters* parameters) {
             << std::endl;
     ostream << "Number of PDPP Routes: " << parameters->GetNumberPDPPprotectionRoutes()
             << std::endl;
+    ostream << "Beta Squeezing: " << parameters->GetBeta()
+            << std::endl;
     
     return ostream;
 }

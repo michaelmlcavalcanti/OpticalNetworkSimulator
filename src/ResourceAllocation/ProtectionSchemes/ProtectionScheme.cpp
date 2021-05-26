@@ -39,11 +39,11 @@ void ProtectionScheme::CalcBetaAverage(CallDevices* call) {
         double BR1 = call->GetTranspSegments().at(1)->GetBitRate();
         double BR2 = call->GetTranspSegments().at(2)->GetBitRate();
         double BRT = call->GetBitRate();
-        double BRmin = call->GetBitRate()*parameters->GetBeta();
-        //getting number of links of each route
-        double NL0 = (call->GetTranspSegments().at(0)->GetRoute()->GetNumHops() - 1);
-        double NL1 = (call->GetTranspSegments().at(1)->GetRoute()->GetNumHops() - 1);
-        double NL2 = (call->GetTranspSegments().at(2)->GetRoute()->GetNumHops() - 1);
+        double BRmin = call->GetBitRate()*(1-parameters->GetBeta());
+        //getting number of links of each route (numLink = numHop)
+        double NL0 = (call->GetTranspSegments().at(0)->GetRoute()->GetNumHops());
+        double NL1 = (call->GetTranspSegments().at(1)->GetRoute()->GetNumHops());
+        double NL2 = (call->GetTranspSegments().at(2)->GetRoute()->GetNumHops());
         double NLT = NL0+NL1+NL2;
         //getting beta result from failure of each route
         double betaR0 = 0;   //beta result due route 0 failure

@@ -164,6 +164,8 @@ void SimulationType::FinalizeAll() {
 }
 
 void SimulationType::CreateLoadResourceAlloc() {
+    this->resourceAlloc.reset();
+
     if(this->options->GetDevicesOption() == DevicesDisabled)
         this->resourceAlloc = std::make_shared<ResourceAlloc>(this);
     else

@@ -247,6 +247,12 @@ void Data::SaveNetBetaAverage() {
     this->SaveNetBetaAverage(netBetaAverage);
 }
 
+void Data::SaveNumHopsRoutes() {
+    std::ofstream &numHopsRoutes = this->simulType->GetInputOutput()->GetNumHopsRoutes();
+
+    this->SaveNumHopsRoutes(numHopsRoutes);
+}
+
 
 void Data::SaveBP(std::vector<unsigned> vecParam) {
     std::ofstream &callReqBP = this->simulType->GetInputOutput()
@@ -641,6 +647,41 @@ void Data::SaveNetBetaAverage(std::ostream& ostream) {
     }
 }
 
+void Data::SaveNumHopsRoutes(std::ostream &ostream) {
+    std::vector<std::vector<std::shared_ptr<Route>>> auxAllRoutes = this->simulType->
+            GetResourceAlloc()->resources->allRoutes;
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>
+            auxProtectionAllRoutes = this->simulType->GetResourceAlloc()->
+            resources->protectionAllRoutes;
+    unsigned int numNodes = this->simulType->GetTopology()->GetNumNodes();
+
+    for(unsigned int orN = 0; orN < numNodes; orN++) {
+        for (unsigned int deN = 0; deN < numNodes; deN++) {
+            if (orN != deN && auxAllRoutes.at(orN*numNodes+deN).front() != nullptr) {
+                std::vector<int> path = auxAllRoutes.at(orN*numNodes+deN).front().get()->GetPath();
+                for(unsigned int a = 0; a < path.size(); a++){
+                    ostream << path.at(a) <<"-";
+                }
+                ostream << "\t" << auxAllRoutes.at(orN*numNodes+deN).front().get()->GetNumHops()
+                << std::endl;
+                unsigned int numDisjRoutes = auxProtectionAllRoutes.at(orN*numNodes+deN).front().size();
+                for(unsigned int kd = 0; kd < numDisjRoutes; kd++) {
+                    if(auxProtectionAllRoutes.at(orN * numNodes + deN).front().at(kd) == nullptr)
+                        continue;
+                    std::vector<int> path = auxProtectionAllRoutes.at(
+                            orN * numNodes + deN).front().at(kd).get()->GetPath();
+                    for (unsigned int a = 0; a < path.size(); a++) {
+                        ostream << path.at(a) <<"-";
+                    }
+                    ostream << "\t" << auxProtectionAllRoutes.at(orN * numNodes + deN)
+                    .front().at(kd).get()->GetNumHops()  << std::endl;
+                }
+            }
+            ostream << std::endl;
+        }
+    }
+}
+
 
 void Data::SaveGaSoFiles(std::ostream& logOfstream, std::ostream& initPop, 
 std::ostream& bestInds, std::ostream& worstInds, std::ostream& bestInd) {
@@ -737,3 +778,7 @@ void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
         bestInd << std::endl;
     }
 }
+
+
+
+

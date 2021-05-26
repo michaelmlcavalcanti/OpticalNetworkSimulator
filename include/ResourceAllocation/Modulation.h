@@ -33,7 +33,7 @@ enum TypeModulation{
     QAM_64,
     FirstModulation = QAM_4,
     LastModulation = QAM_64,
-    FixedModulation = QAM_8
+    FixedModulation = QAM_4
 };
 
 /**
