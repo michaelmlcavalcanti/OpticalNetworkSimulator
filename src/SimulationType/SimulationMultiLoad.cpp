@@ -77,6 +77,7 @@ void SimulationMultiLoad::Save() {
     this->GetData()->SaveNetProtRate();
     this->GetData()->SaveNetNonProtRate();
     this->GetData()->SaveNetBetaAverage();
+    this->GetData()->SaveNetAlphaAverage();
     this->GetData()->SaveNumHopsRoutes();
 }
 

@@ -33,6 +33,7 @@ InputOutput::InputOutput(SimulationType* simulType)
     this->LoadNetNonProtRate(netNonProtRate);
     this->LoadNetNonProtRate(netNonProtRate);
     this->LoadNetBetaAverage(netBetaAverage);
+    this->LoadNetAlphaAverage(netAlphaAverage);
     this->LoadNumHopsRoutes(numHopsRoutes);
 }
 
@@ -495,6 +496,25 @@ void InputOutput::LoadNetBetaAverage(std::ofstream& netBetaAverage) {
     }while(!netBetaAverage.is_open());
 }
 
+void InputOutput::LoadNetAlphaAverage(std::ofstream &netAlphaAverage) {
+    unsigned int auxInt = this->simulType->GetSimulationIndex();
+
+    do{
+        netAlphaAverage.open("Files/Outputs/" + std::to_string(auxInt)
+                            + "/netAlphaAverage.txt");
+
+        if(!netAlphaAverage.is_open()){
+            std::cerr << "Wrong log file." << std::endl;
+            std::cerr << "The folder required is: " << auxInt
+                      << "/" << std::endl;
+            std::cerr << "Add/Fix the folder, then press 'Enter'"
+                      << std::endl;
+
+            std::cin.get();
+        }
+    }while(!netAlphaAverage.is_open());
+}
+
 void InputOutput::LoadNumHopsRoutes(std::ofstream &numHopsRoutes) {
     unsigned int auxInt = this->simulType->GetSimulationIndex();
 
@@ -659,6 +679,10 @@ std::ofstream& InputOutput::GetNetBetaAverage() {
     return netBetaAverage;
 }
 
+std::ofstream &InputOutput::GetNetAlphaAverage() {
+    return netAlphaAverage;
+}
+
 std::ofstream &InputOutput::GetNumHopsRoutes() {
     return numHopsRoutes;
 }
@@ -734,6 +758,10 @@ void InputOutput::PrintProgressBar(unsigned actual, unsigned min, unsigned max) 
     std::cout << "]" << int(division * 100.0) << "%" << std::endl;
     std::cout.flush();
 }
+
+
+
+
 
 
 

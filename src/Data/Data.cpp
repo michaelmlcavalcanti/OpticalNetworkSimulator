@@ -52,7 +52,8 @@ const Data* data) {
             << "  NetUti:" << data->GetAverageNetUtilization() 
             << " NetFrag:" << data->GetNetworkFragmentationRatio() << std::endl;
     ostream << "ProtRate:" << data->GetProtRate()
-            << "  BetaAverg:" << data->GetNetBetaAverage() << std::endl;
+            << "  BetaAvrg:" << data->GetNetBetaAverage()
+            << "   AlphaAvrg:" << data->GetNetAlphaAverage() << std::endl;
     
     return ostream;
 }
@@ -63,7 +64,8 @@ Data::Data(SimulationType* simulType)
   numHopsPerRoute(0), netOccupancy(0), accReqUtilization(0),
   netFragmentationRatio(0), accumNetFragmentationRatio(0) , fragPerTraffic(0),
   linksUse(0), slotsRelativeUse(0), simulTime(0), realSimulTime(0),
-  actualIndex(0), protectedCalls(0), nonProtectedCalls(0), sumCallsBetaAverage(0){
+  actualIndex(0), protectedCalls(0), nonProtectedCalls(0), sumCallsBetaAverage(0),
+  sumCallsAlpha(0){
     
 }
 
@@ -99,6 +101,7 @@ void Data::Initialize() {
     protectedCalls.resize(size);
     nonProtectedCalls.resize(size);
     sumCallsBetaAverage.resize(size);
+    sumCallsAlpha.resize(size);
 }
 
 void Data::Initialize(unsigned int numPos) {
@@ -122,6 +125,7 @@ void Data::Initialize(unsigned int numPos) {
     protectedCalls.resize(numPos);
     nonProtectedCalls.resize(numPos);
     sumCallsBetaAverage.resize(numPos);
+    sumCallsAlpha.resize(numPos);
 }
 
 void Data::StorageCall(Call* call) {
@@ -245,6 +249,12 @@ void Data::SaveNetBetaAverage() {
     std::ofstream &netBetaAverage = this->simulType->GetInputOutput()->GetNetBetaAverage();
     
     this->SaveNetBetaAverage(netBetaAverage);
+}
+
+void Data::SaveNetAlphaAverage() {
+    std::ofstream &netAlphaAverage = this->simulType->GetInputOutput()->GetNetAlphaAverage();
+
+    this->SaveNetAlphaAverage(netAlphaAverage);
 }
 
 void Data::SaveNumHopsRoutes() {
@@ -470,8 +480,20 @@ void Data::SetSumCallsBetaAverage(double callBetaAverage) {
     this->sumCallsBetaAverage.at(actualIndex) += callBetaAverage;
 }
 
+double Data::GetSumCallsAlpha() const {
+    return this->sumCallsAlpha.at(actualIndex);
+}
+
+void Data::SetSumCallsAlpha(double callAlpha) {
+    this->sumCallsAlpha.at(actualIndex) += callAlpha;
+}
+
 double Data::GetNetBetaAverage() const {
     return this->GetSumCallsBetaAverage() / this->GetProtectedCalls();
+}
+
+double Data::GetNetAlphaAverage() const {
+    return this->GetSumCallsAlpha() / this->GetProtectedCalls();
 }
 
 void Data::SaveCallReqBP(std::ostream& ostream) {
@@ -647,6 +669,18 @@ void Data::SaveNetBetaAverage(std::ostream& ostream) {
     }
 }
 
+void Data::SaveNetAlphaAverage(std::ostream &ostream) {
+    unsigned int numLoadPoints = this->simulType->GetParameters()
+            ->GetNumberLoadPoints();
+
+    for(unsigned int a = 0; a < numLoadPoints; a++){
+        this->SetActualIndex(a);
+        ostream << this->simulType->GetParameters()->GetLoadPoint(
+                this->GetActualIndex()) << "\t" << this->GetNetAlphaAverage()
+                << std::endl;
+    }
+}
+
 void Data::SaveNumHopsRoutes(std::ostream &ostream) {
     std::vector<std::vector<std::shared_ptr<Route>>> auxAllRoutes = this->simulType->
             GetResourceAlloc()->resources->allRoutes;
@@ -778,6 +812,16 @@ void Data::SaveLastIndividuals(GA_MO* ga, std::ostream& bestInd) {
         bestInd << std::endl;
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

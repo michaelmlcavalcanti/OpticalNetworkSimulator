@@ -84,6 +84,7 @@ CallDevices* call) {
                     call->SetStatus(Accepted);
                     resDevAlloc->simulType->GetData()->SetProtectedCalls();
                     CalcBetaAverage(call);
+                    CalcAlpha(call);
                     return;
                 }
             }

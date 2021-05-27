@@ -48,11 +48,14 @@ public:
      * 
      */
     virtual void CreateProtectionCalls(CallDevices* call) = 0;
-
      /**
      * @brief Function which calculates the current call beta average. 
      */
     void CalcBetaAverage(CallDevices* call);
+    /**
+    * @brief Function which calculates the current call alpha.
+    */
+    void CalcAlpha(CallDevices* call);
           
 protected:
     ResourceDeviceAlloc* resDevAlloc;

@@ -126,6 +126,10 @@ public:
      */
     void SaveNetBetaAverage();
     /**
+    * @brief Saves the data values in the NetAlphaAverage.txt file.
+    */
+    void SaveNetAlphaAverage();
+    /**
     * @brief Saves the data values in the numHopsRoutes.txt file.
     */
     void SaveNumHopsRoutes();
@@ -318,10 +322,23 @@ public:
      */
     void SetSumCallsBetaAverage(double callBetaAverage);
     /**
+    * @brief Function to get the sum of all calls alpha on actual load point.
+    */
+    double GetSumCallsAlpha() const;
+    /**
+    * @brief Function to set/update the sum of all calls alpha on actual load point.
+    */
+    void SetSumCallsAlpha(double callAlpha);
+    /**
      * @brief Function to get the network beta average for the actual point.
-     * @return Call request blocking probability.
+     * @return network beta average.
      */
     double GetNetBetaAverage() const;
+    /**
+    * @brief Function to get the network alpha average for the actual point.
+    * @return network alpha average.
+    */
+    double GetNetAlphaAverage() const;
 
 private:
     /**
@@ -382,6 +399,11 @@ private:
      * @param ostream Output stream.
      */
     void SaveNetBetaAverage(std::ostream& ostream);
+    /**
+    * @brief Function to save the Network Alpha Average into a output stream.
+    * @param ostream Output stream.
+    */
+    void SaveNetAlphaAverage(std::ostream& ostream);
     /**
     * @brief Function to save number of Hops per Routes into a output stream.
     * @param ostream Output stream.
@@ -542,6 +564,10 @@ private:
      * @brief Vector that contain the summation of calls beta average for each load point.
      */
     std::vector<double> sumCallsBetaAverage;
+    /**
+    * @brief Vector that contain the summation of calls alpha for each load point.
+    */
+    std::vector<double> sumCallsAlpha;
 
     /**
      * @brief Vector that contain the simulation time of each load point.

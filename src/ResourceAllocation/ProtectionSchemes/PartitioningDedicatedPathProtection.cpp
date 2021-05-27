@@ -152,6 +152,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                                 call->SetStatus(Accepted);
                                 resDevAlloc->simulType->GetData()->SetProtectedCalls();
                                 CalcBetaAverage(call);
+                                CalcAlpha(call);
                                 return;           
                             }
                         }
@@ -161,7 +162,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
         }
 
         //Delete one route, recalculate Bit rate and try allocating with 2 routes
-        callsVec.pop_back();        
+        callsVec.pop_back();
         double callBitRate = call->GetBitRate();
         double beta = parameters->GetBeta();
         double partialBitRate = ceil (((1 - beta) * callBitRate) / (numSchProtRoutes-2));
@@ -195,6 +196,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->SetStatus(Accepted);
                         resDevAlloc->simulType->GetData()->SetProtectedCalls();
                         CalcBetaAverage(call);
+                        CalcAlpha(call);
                         return;
                     }
                 }
@@ -264,6 +266,7 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                         call->SetStatus(Accepted);
                         resDevAlloc->simulType->GetData()->SetProtectedCalls();
                         CalcBetaAverage(call);
+                        CalcAlpha(call);
                         return;
                     }
                 }

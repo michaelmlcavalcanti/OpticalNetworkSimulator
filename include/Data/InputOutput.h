@@ -146,9 +146,14 @@ public:
     std::ofstream& GetNetNonProtRate();
     /**
      * @brief Function to get the file that storage the network beta average.
-     * @return Network call protection Rate file.
+     * @return Network call beta average file.
      */
     std::ofstream& GetNetBetaAverage();
+    /**
+    * @brief Function to get the file that storage the network alpha average.
+    * @return Network call alpha average file.
+    */
+    std::ofstream& GetNetAlphaAverage();
     /**
     * @brief Function to get the file that storage the number of Hops per Route list.
     * @return number of Hops per Route list file.
@@ -249,16 +254,21 @@ private:
     * @param netProtRate 
     */
     void LoadNetProtRate(std::ofstream& netProtRate);
-        /**
+    /**
     * @brief Function to load the call non protection Rate file.
     * @param netNonProtRate 
     */
     void LoadNetNonProtRate(std::ofstream& netNonProtRate);
-        /**
+    /**
     * @brief Function to load the network beta average file.
-    * @param netProtRate 
+    * @param netBetaAverage
     */
     void LoadNetBetaAverage(std::ofstream& netBetaAverage);
+    /**
+    * @brief Function to load the network alpha average file.
+    * @param netAlphaAverage
+    */
+    void LoadNetAlphaAverage(std::ofstream& netAlphaAverage);
     /**
     * @brief Function to load the number of Hops per Route list.
     * @param numHopsRoute
@@ -326,6 +336,10 @@ private:
      * @brief network beta average output file.
      */
     std::ofstream netBetaAverage;
+    /**
+    * @brief network alpha average output file.
+    */
+    std::ofstream netAlphaAverage;
     /**
     * @brief number of hops per route list output file.
     */
