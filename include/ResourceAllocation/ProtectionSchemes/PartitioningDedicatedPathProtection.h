@@ -43,13 +43,20 @@ public:
      */
     void ResourceAlloc(CallDevices* call) override;
      /**
-     * @brief Function which performs RSA for Working and protection paths  
-     * according with PDPP scheme for offline routing and no same slots 
-     * between work and Backup paths.
+     * @brief Function which performs Routing-Spectrum RSA ordering for all Partitioned
+     * routes according with PDPP scheme for offline routing and no same slots
+     * between routes.
      * @param call Call request the function will try to allocate.
      */
-    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);        
-     /**
+    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);
+    /**
+    * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
+    * routes according with PDPP scheme for offline routing and no same slots
+    * between routes.
+    * @param call Call request the function will try to allocate.
+    */
+    void SpecRoutingPDPP(CallDevices* call);
+    /**
      * @brief Function which compute a partial bit rate distribution for all 
       * source-destination pair and for all incoming traffic demand possibilities.
      */

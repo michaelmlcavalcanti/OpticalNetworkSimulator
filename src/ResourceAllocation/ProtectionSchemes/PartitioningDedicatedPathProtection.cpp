@@ -98,22 +98,24 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
     this->RoutingOffNoSameSlotProtPDPPSpecAlloc(call);
+    //this->SpecRoutingPDPP(call);
 }
 
 void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
 (CallDevices* call) {      
     if(numSchProtRoutes == 3){
         this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+        unsigned int numRoutes = call->GetNumRoutes();
 
-        this->CreateProtectionCalls(call); //loading transpsegments with calls
+        this->CreateProtectionCalls(call); //loading transpsegments with protection calls
 
-        //try allocating with 3 routes
+        //seting 3 protection calls to allocation
         std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
         std::shared_ptr<Call> callWork0 = callsVec.at(0);
         std::shared_ptr<Call> callWork1 = callsVec.at(1);
         std::shared_ptr<Call> callWork2 = callsVec.at(2);
-        unsigned int numRoutes = call->GetNumRoutes();
 
+        //try allocating with 3 routes
         for(unsigned int k = 0; k < numRoutes; k++){
             callWork0->SetRoute(call->GetRoute(k));
             callWork0->SetModulation(FixedModulation);
@@ -137,9 +139,9 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
                             callWork2->SetRoute(call->GetProtRoute(k, kd1));
                             callWork2->SetModulation(FixedModulation);
 
-                            //calculate number of slots for the vector of calls (transpsegments)
+                            //calculate number of slots for the vector of calls
                             this->modulation->SetModulationParam(call);
-
+                            //check if the slots are available in the 3 routes
                             this->resDevAlloc->specAlloc->SpecAllocation(call);
 
                             if(topology->IsValidLigthPath(call)){
@@ -229,17 +231,17 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
     }
     
     if(numSchProtRoutes == 2){
-        
         this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+        unsigned int numRoutes = call->GetNumRoutes();
 
         this->CreateProtectionCalls(call); //loading transpsegments with calls
 
-        //try allocating with 2 routes
+        //setting 2 protection calls to allocation
         std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
         std::shared_ptr<Call> callWork0 = callsVec.at(0);
         std::shared_ptr<Call> callWork1 = callsVec.at(1);
-        unsigned int numRoutes = call->GetNumRoutes();
-        
+
+        //try allocating with 2 routes
         for(unsigned int k = 0; k < numRoutes; k++){
         callWork0->SetRoute(call->GetRoute(k));
         callWork0->SetModulation(FixedModulation);
@@ -298,6 +300,101 @@ void PartitioningDedicatedPathProtection::RoutingOffNoSameSlotProtPDPPSpecAlloc
         } */
     }
 }
+
+void PartitioningDedicatedPathProtection::SpecRoutingPDPP(CallDevices* call) {
+    if(numSchProtRoutes == 3){
+        this->routing->RoutingCall(call); //loading trialRoutes and trialprotRoutes
+        unsigned int numRoutes = call->GetNumRoutes();
+
+        this->CreateProtectionCalls(call); //loading transpsegments with calls
+
+        //seting 3 protection calls to allocation
+        std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+        std::shared_ptr<Call> callWork0 = callsVec.at(0);
+        std::shared_ptr<Call> callWork1 = callsVec.at(1);
+        std::shared_ptr<Call> callWork2 = callsVec.at(2);
+
+        //call->RepeatModulation();
+        bool allocFound = false;
+        const unsigned int topNumSlots = topology->GetNumSlots();
+        std::vector<unsigned int> possibleSlots(0);
+        possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
+        unsigned int auxSlot;
+
+        for (unsigned int s = 0; s < possibleSlots.size(); s++) {
+            auxSlot = possibleSlots.at(s);
+
+            for (unsigned int k = 0; k < numRoutes; k++) {
+                callWork0->SetRoute(call->GetRoute(k));
+                callWork0->SetModulation(FixedModulation);
+
+                //getting protection routes to use in next loop (FOR)
+                std::deque<std::shared_ptr<Route>> ProtRoutes = call->GetProtRoutes(k);
+                ProtRoutes.erase(std::remove(std::begin(ProtRoutes),
+                       std::end(ProtRoutes), nullptr), std::end(ProtRoutes));
+                unsigned int sizeProtRoutes = ProtRoutes.size();
+
+                this->modulation->SetModulationParam(callWork0.get());
+
+                if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
+                    continue;
+                //checking if callWork0 slots are available in its route
+                if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
+                                         auxSlot + callWork0->GetNumberSlots() - 1)) {
+                    if (sizeProtRoutes >= 2) {  //if to skip case which it is no routes enough
+
+                        for (unsigned int kd0 = 0; kd0 < sizeProtRoutes; kd0++) {
+                            if (call->GetProtRoute(k, kd0)) {  //if to avoid null route pointer
+                                callWork1->SetRoute(call->GetProtRoute(k, kd0));
+                                callWork1->SetModulation(FixedModulation);
+
+                                this->modulation->SetModulationParam(callWork1.get());
+
+                                if (auxSlot + callWork1->GetNumberSlots() - 1 >= topNumSlots)
+                                    continue;
+                                //checking if callWork1 slots are available in its route
+                                if (this->resDevAlloc->CheckSlotsDisp(callWork1->GetRoute(), auxSlot,
+                                                 auxSlot + callWork1->GetNumberSlots() - 1)) {
+                                    for (unsigned int kd1 = 0; kd1 < sizeProtRoutes; kd1++) {
+                                        if (kd0 == kd1)
+                                            continue;
+                                        callWork2->SetRoute(call->GetProtRoute(k, kd1));
+                                        callWork2->SetModulation(FixedModulation);
+
+                                        this->modulation->SetModulationParam(callWork2.get());
+
+                                        if (auxSlot + callWork2->GetNumberSlots() - 1 >= topNumSlots)
+                                            continue;
+                                        //checking if callWork2 slots are available in its route
+                                        if (this->resDevAlloc->CheckSlotsDisp(callWork2->GetRoute(), auxSlot,
+                                                    auxSlot + callWork2->GetNumberSlots() - 1)) {
+                                            call->SetRoute(call->GetRoute(k));
+                                            call->SetModulation(FixedModulation);
+                                            call->SetFirstSlot(callWork0->GetFirstSlot());
+                                            call->SetLastSlot(callWork0->GetLastSlot());
+                                            call->ClearTrialRoutes();
+                                            call->ClearTrialProtRoutes();
+                                            call->SetStatus(Accepted);
+                                            resDevAlloc->simulType->GetData()->SetProtectedCalls();
+                                            CalcBetaAverage(call);
+                                            CalcAlpha(call);
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if(numSchProtRoutes == 2){
+
+    }
+
+}
+
 
 void PartitioningDedicatedPathProtection::CreateProtectionCalls(CallDevices* call) {   
     unsigned int orN = call->GetOrNode()->GetNodeId();
