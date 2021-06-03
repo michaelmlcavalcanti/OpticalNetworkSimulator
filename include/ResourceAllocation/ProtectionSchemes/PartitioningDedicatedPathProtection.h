@@ -48,11 +48,11 @@ public:
      * between routes.
      * @param call Call request the function will try to allocate.
      */
-    void RoutingOffNoSameSlotProtPDPPSpecAlloc(CallDevices* call);
+    void RoutingSpecPDPP(CallDevices* call);
     /**
     * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
-    * routes according with PDPP scheme for offline routing and no same slots
-    * between routes.
+    * routes according with PDPP scheme for offline routing and same slots set for each
+    * route.
     * @param call Call request the function will try to allocate.
     */
     void SpecRoutingPDPP(CallDevices* call);

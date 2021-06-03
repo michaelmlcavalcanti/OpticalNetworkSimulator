@@ -11,7 +11,7 @@
 1
 0
 0.2
-3
+2
 
 1-Number of slots per fiber
 2-Number of cores per link

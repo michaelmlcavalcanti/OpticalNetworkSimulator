@@ -114,7 +114,6 @@ void Call::ResetFirstLastSlot(Call* call) {
     call->lastSlot = Def::Max_UnInt;
 }
 
-
 unsigned int Call::GetNumberSlots() const {
     return this->numberSlots;
 }

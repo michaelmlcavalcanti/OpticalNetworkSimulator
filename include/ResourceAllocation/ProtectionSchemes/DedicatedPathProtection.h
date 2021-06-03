@@ -46,13 +46,20 @@ public:
      * @param call Call request the function will try to allocate.
      */
     void ResourceAlloc(CallDevices* call) override;
-      /**
-     * @brief Function which perform RSA for Working and protection paths  
-     * according with DPP scheme for offline routing and no same slots 
-     * between work and Backup paths.
-     * @param call Call request the function will try to allocate.
-     */
-     void RoutingOffNoSameSlotProtDPPSpecAlloc(CallDevices* call);
+    /**
+    * @brief Function which performs Routing-Spectrum RSA ordering for all Partitioned
+    * routes according with DPP scheme for offline routing and no same slots
+    * between routes.
+    * @param call Call request the function will try to allocate.
+    */
+    void RoutingSpecDPP(CallDevices* call);
+    /**
+    * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
+    * routes according with DPP scheme for offline routing and same slots set for each
+    * route.
+    * @param call Call request the function will try to allocate.
+    */
+    void SpecRoutingDPP(CallDevices* call);
     
 private:
     ProtectionScheme* protectionScheme;
