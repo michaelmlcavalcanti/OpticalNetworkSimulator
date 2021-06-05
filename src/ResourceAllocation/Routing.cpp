@@ -484,12 +484,13 @@ void Routing::ProtectionDisjointYEN() {
                 else {
                     routes.assign(1, nullptr);
                 }
-                resources->protectionAllRoutes.at(nodePairIndex).at(routeIndex) = 
-                routes;
+                resources->protectionAllRoutes.at(nodePairIndex).at(routeIndex) =  routes;
                 routes.clear();                
             }
         }
     }
+    resources->allRoutes = resources->allRoutes;
+    resources->protectionAllRoutes = resources->protectionAllRoutes;
 }
 
 std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex 
@@ -497,18 +498,19 @@ orNode, NodeIndex deNode, RouteIndex routeIndex) {
     unsigned int numNodes = topology->GetNumNodes();
     unsigned int nodePairIndex = orNode * numNodes + deNode;
   // Kd = parameters->GetNumberProtectionRoutes();
-    std::shared_ptr<Route> orRoute = resources->allRoutes.at(nodePairIndex)
-    .at(routeIndex);
+    std::shared_ptr<Route> orRoute = resources->allRoutes.at(nodePairIndex).at(routeIndex);
     std::shared_ptr<Route> auxRoute;
     std::vector<std::shared_ptr<Route> > routes(0);
     resourceAlloc->DisableRouteLinks(orRoute.get());    
     auxRoute = this->Dijkstra(orNode, deNode);
-    routes.push_back(auxRoute);
+    if(auxRoute != nullptr)
+        routes.push_back(auxRoute);
         
     while (auxRoute != nullptr) {
         resourceAlloc->DisableRouteLinks(auxRoute.get());
         auxRoute = this->Dijkstra(orNode, deNode);
-        routes.push_back(auxRoute);
+        if(auxRoute != nullptr)
+            routes.push_back(auxRoute);
     }
 /*for (unsigned int a = 0; a < Kd; a++){
         auxRoute = this->Dijkstra(orNode, deNode);

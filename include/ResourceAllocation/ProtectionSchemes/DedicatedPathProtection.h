@@ -48,18 +48,25 @@ public:
     void ResourceAlloc(CallDevices* call) override;
     /**
     * @brief Function which performs Routing-Spectrum RSA ordering for all Partitioned
-    * routes according with DPP scheme for offline routing and no same slots
+    * routes according with DPP scheme for offline routing and no same set of slots
     * between routes.
     * @param call Call request the function will try to allocate.
     */
     void RoutingSpecDPP(CallDevices* call);
     /**
+    * @brief Function which performs Spectrum-Routi
+    * routes according with DPP scheme for offline
+    * route.
+    * @param call Call request the function will tr
+    */
+    void SpecRoutingDPP(CallDevices* call);
+    /**
     * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
-    * routes according with DPP scheme for offline routing and same slots set for each
+    * routes according with DPP scheme for offline routing and same set of slots for each
     * route.
     * @param call Call request the function will try to allocate.
     */
-    void SpecRoutingDPP(CallDevices* call);
+    void SpecRoutingSameSlotDPP(CallDevices* call);
     
 private:
     ProtectionScheme* protectionScheme;
