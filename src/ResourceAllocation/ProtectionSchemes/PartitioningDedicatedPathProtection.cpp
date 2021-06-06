@@ -97,16 +97,20 @@ void PartitioningDedicatedPathProtection::LoadPDPPBitRateNodePairDist() {
 
 void PartitioningDedicatedPathProtection::ResourceAlloc(CallDevices* call) {
 
-    switch(resDevAlloc->simulType->GetOptions()->GetOrderRSA()){
-        case OrderRoutingSa:
-            this->RoutingSpecPDPP(call);
-            break;
-        case OrderSaRouting:
-            this->SpecRoutingPDPP(call);
-            break;
-        default:
-            std::cout << "Invalid RSA Ordering" << std::endl;
-    }
+    if(resDevAlloc->CheckResourceAllocOrder(call) == r_sa)
+        this->RoutingSpecPDPP(call);
+    else
+        this->SpecRoutingPDPP(call);
+//    switch(resDevAlloc->CheckResourceAllocOrder(call)){
+//        case r_sa:
+//            this->RoutingSpecPDPP(call);
+//            break;
+//        case sa_r:
+//            this->SpecRoutingPDPP(call);
+//            break;
+//        default:
+//            std::cout << "Invalid RSA Ordering" << std::endl;
+//    }
 }
 
 void PartitioningDedicatedPathProtection::RoutingSpecPDPP
