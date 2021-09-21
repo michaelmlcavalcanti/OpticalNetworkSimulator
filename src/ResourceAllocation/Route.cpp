@@ -48,9 +48,7 @@ bool Route::operator==(const Route& right) const {
 bool Route::checkShareLink(Route* route) const {
     
     for(unsigned int hop = 0; hop < this->GetNumHops(); hop++){
-        
         for(unsigned int hop2 = 0; hop2 < route->GetNumHops(); hop2++){
-            
             if(this->GetLink(hop) == route->GetLink(hop2))
                 return true;
         }
@@ -200,7 +198,12 @@ bool Route::IsNode(NodeIndex node) {
 void Route::AddNodeAtEnd(NodeIndex node) {
     Node* Node = this->topology->GetNode(node);
     assert(this->topology->IsValidNode(Node));
-    for(unsigned int i = 0; i < path.size(); i++)
-        assert(node != path.at(i)); //Avoid Loop
-    path.push_back(node);
+
+    for(int i : path)
+        assert(node != i); //Avoid Loop
+
+    path.push_back(int(node));
+    pathNodes.push_back(this->topology->GetNode(node));
+    pathLinks.push_back(topology->GetLink(pathNodes.at(pathNodes.size()-2)->GetNodeId(),
+                                          pathNodes.at(pathNodes.size()-1)->GetNodeId()));
 }
