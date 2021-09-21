@@ -188,3 +188,19 @@ std::shared_ptr<Route> Route::AddRoute(std::shared_ptr<Route>& route) {
     
     return std::make_shared<Route>(this->resourceAlloc, newPath);
 }
+
+bool Route::IsNode(NodeIndex node) {
+    for(unsigned int i = 0; i < path.size(); i++) {
+        if (path.at(i) == node)
+            return true;
+    }
+    return false;
+}
+
+void Route::AddNodeAtEnd(NodeIndex node) {
+    Node* Node = this->topology->GetNode(node);
+    assert(this->topology->IsValidNode(Node));
+    for(unsigned int i = 0; i < path.size(); i++)
+        assert(node != path.at(i)); //Avoid Loop
+    path.push_back(node);
+}

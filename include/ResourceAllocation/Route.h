@@ -18,6 +18,7 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include "../GeneralClasses/Def.h"
 
 class Link;
 class ResourceAlloc;
@@ -155,6 +156,19 @@ public:
      * @return Created route.
      */
     std::shared_ptr<Route> AddRoute(std::shared_ptr<Route>& route);
+    /**
+     * @brief Check if the node is into route path vector.
+     * @param node Node to check.
+     * @return True if node is into route path vector or false to otherwise.
+     */
+    bool IsNode(NodeIndex node);
+    /**
+     * @brief Add the node in the end of route path vector.
+     * @param node Node to add.
+     */
+    void AddNodeAtEnd(NodeIndex node);
+
+
 private:
     /**
      * @brief ResourceAlloc used by this route.

@@ -171,19 +171,18 @@ public:
      * in the network. Groups of 2 and 3 disjoint routes are formed to be used in PDPP
      * scheme.
      */
-    //void MultiPathRouting();
+    void MultiPathRouting();
     /**
     * @brief Function to get all routes between all source-destination pair on the topology.
      * These routes are stored in allRoutes vector.
      */
-    //static void AllRoutes();
+    void AllRoutes();
     /**
     * @brief Function to get all routes between a specific source-destination pair on
      * the topology.
      */
-    //static void AllRoutes(int orN, int deN, Route* route, std::vector<Route*>& vRoutes);
-
-
+    void AllRoutes(NodeIndex curNode, NodeIndex deNode, std::shared_ptr<Route> route,
+                   std::vector<std::shared_ptr<Route>> vRoutes);
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
      * @return ResourceAlloc pointer.

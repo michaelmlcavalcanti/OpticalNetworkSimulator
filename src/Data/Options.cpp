@@ -26,7 +26,7 @@ Options::mapTopologyOptions = boost::assign::map_list_of
     (TopologyGermany,  "Germany")
     (TopologyEON_RT, "EON_RT")
     (TopologyItaly, "Italy")
-    (Topogy3_Nodes, "3_Nodes")
+    (Topogy4_Nodes, "4_Nodes")
     (TopologyCoreNet, "CoreNet")
     (TopologySmallNet, "SmallNet")
     (TopologyWaxman, "Waxman")
@@ -39,7 +39,8 @@ Options::mapRoutingOptions = boost::assign::map_list_of
     (RoutingDJK, "Dijkstra")
     (RoutingYEN, "YEN")
     (RoutingBSR, "BSR")
-    (RoutingBSR_YEN, "BSR_YEN");
+    (RoutingBSR_YEN, "BSR_YEN")
+     (RoutingMP, "MPR");
 
 const boost::unordered_map<SpectrumAllocationOption, std::string>
 Options::mapSpecAlgOptions = boost::assign::map_list_of
