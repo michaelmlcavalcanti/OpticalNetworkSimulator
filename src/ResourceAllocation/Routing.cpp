@@ -489,8 +489,6 @@ void Routing::ProtectionDisjointYEN() {
             }
         }
     }
-    resources->allRoutes = resources->allRoutes;
-    resources->protectionAllRoutes = resources->protectionAllRoutes;
 }
 
 std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex 

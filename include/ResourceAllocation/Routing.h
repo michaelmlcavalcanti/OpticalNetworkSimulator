@@ -166,6 +166,23 @@ public:
     */
     std::vector<std::shared_ptr<Route>> CreateMinInterfRouteGroups(
     std::vector<std::shared_ptr<Route>> routes);
+    /**
+     * @brief Function to apply the Multipath routing algorithm for all node pairs
+     * in the network. Groups of 2 and 3 disjoint routes are formed to be used in PDPP
+     * scheme.
+     */
+    //void MultiPathRouting();
+    /**
+    * @brief Function to get all routes between all source-destination pair on the topology.
+     * These routes are stored in allRoutes vector.
+     */
+    //static void AllRoutes();
+    /**
+    * @brief Function to get all routes between a specific source-destination pair on
+     * the topology.
+     */
+    //static void AllRoutes(int orN, int deN, Route* route, std::vector<Route*>& vRoutes);
+
 
     /**
      * @brief Get a pointer to the ResourceAlloc object that own this routing.
