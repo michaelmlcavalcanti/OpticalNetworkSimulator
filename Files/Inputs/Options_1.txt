@@ -1,4 +1,4 @@
-1
+3
 2
 2
 1
@@ -6,15 +6,15 @@
 1
 0
 2
-1
-4
-1
-0
-0
-0
 0
 0
 1
+0
+0
+0
+0
+0
+0
 2
 0
 
@@ -26,7 +26,7 @@
     4 - Germany
     5 - EON-RT
     6 - Italy
-    7 - 3 Nodes
+    7 - 4 Nodes
     8 - Core Net
     9 - Small Net
     10- Waxman
@@ -38,6 +38,7 @@
     2 - YEN
     3 - BSR
     4 - BSR-YEN
+    5 - MPRouting
 3-Spectral allocation algorithm
     0 - Invalid
     1 - Random

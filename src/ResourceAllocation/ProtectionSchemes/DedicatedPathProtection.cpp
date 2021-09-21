@@ -100,11 +100,11 @@ void DedicatedPathProtection::RoutingSpecDPP(CallDevices* call) {
         }
     }
     
-    /*//Delete protection route
-    callsVec.pop_back();
-    call->SetTranspSegments(callsVec);
+    //Delete protection route
+    //callsVec.pop_back();
+    //call->SetTranspSegments(callsVec);
     
-    //Try only work connection (without protection)
+    /*//Try only work connection (without protection)
     for(unsigned int k = 0; k < numRoutes; k++){
         callWork->SetRoute(call->GetRoute(k));
         callWork->SetModulation(FixedModulation);
@@ -121,7 +121,7 @@ void DedicatedPathProtection::RoutingSpecDPP(CallDevices* call) {
             resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
             return;
         }
-    } */
+    }*/
 }
 
 void DedicatedPathProtection::SpecRoutingDPP(CallDevices* call) {

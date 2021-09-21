@@ -54,6 +54,7 @@ void Routing::RoutingCall(Call* call) {
         case RoutingYEN:
         case RoutingBSR:
         case RoutingBSR_YEN:
+        case RoutingMP:
             this->SetOfflineRouting(call);
             break;
         default:
@@ -489,8 +490,6 @@ void Routing::ProtectionDisjointYEN() {
             }
         }
     }
-    resources->allRoutes = resources->allRoutes;
-    resources->protectionAllRoutes = resources->protectionAllRoutes;
 }
 
 std::vector<std::shared_ptr<Route> > Routing::ProtectionDisjointYEN(NodeIndex 
@@ -806,6 +805,83 @@ std::vector<std::shared_ptr<Route>> routes){
     return routesMIR;
 }
 
+void Routing::MultiPathRouting() {
+    this->AllRoutes();
+    std::vector<Link*> linksRi;
+    std::vector<Link*> linksRj;
+    bool interference = false;
+    std::vector<std::vector<std::shared_ptr<Route>>> auxDisjointRoutes;
+    auxDisjointRoutes.resize(resources->allRoutes.size());
+
+    for(int pairIndex = 0; pairIndex < resources->allRoutes.size(); pairIndex++) {
+        for(auto ri : resources->allRoutes.at(pairIndex)) {
+            linksRi = ri->GetLinks(ri);
+            for(auto rj : resources->allRoutes.at(pairIndex)) {
+                linksRj = rj->GetLinks(rj);
+                for(auto li : linksRi){
+                    for(auto lj : linksRj){
+                        if(li == lj){
+                            linksRi.clear();
+                            linksRj.clear();
+                            interference = true;
+                            break;
+                        }
+                    auxDisjointRoutes.at(pairIndex).push_back(ri);
+                    auxDisjointRoutes.at(pairIndex).push_back(rj);
+                    }
+                }if(interference)
+                    break;
+            }
+        }
+    }
+
+
+}
+
+void Routing::AllRoutes() {
+    std::shared_ptr<Route> route;
+    std::vector<std::shared_ptr<Route>> vRoutes;
+    unsigned int numNodes = this->topology->GetNumNodes();
+
+    for(int orN = 0; orN < numNodes; orN++){
+        for(int deN = 0; deN < numNodes; deN++){
+            if(orN != deN) {   // Check if orN and deN are different
+                std::vector<int> empty;
+                //route = std::make_shared<Route>(empty);
+                vRoutes.clear();
+                AllRoutes(orN, deN, route, vRoutes);
+                resources->SetRoutes(orN, deN, vRoutes);
+            }
+        }
+    }
+}
+
+void Routing::AllRoutes(NodeIndex curNode, NodeIndex deNode, std::shared_ptr<Route> route,
+                        std::vector<std::shared_ptr<Route>> vRoutes) {
+    Link* link;
+    std::shared_ptr<Route> newRoute;
+
+    if(!route->IsNode(curNode)){   //curNode does not cause loop
+        route->AddNodeAtEnd(curNode);
+        if(deNode == route->GetDeNodeId()){   //check if destine was reached;
+            vRoutes.push_back(route);
+        }
+        else{
+            for(int nextNode = 0; nextNode < this->topology->GetNumNodes(); nextNode++){
+                link = this->topology->GetLink(curNode, nextNode);
+                if(link != NULL && link->IsLinkWorking()){ //There is a connection between orN and nextNode
+                    newRoute = route;
+                    AllRoutes(nextNode, deNode, newRoute, vRoutes);
+                }
+            }
+            route.reset();
+        }
+    }
+    else //curNode would cause loop
+        route.reset();
+}
+
+
 ResourceAlloc* Routing::GetResourceAlloc() const {
     return resourceAlloc;
 }
@@ -837,3 +913,11 @@ unsigned int Routing::GetK() const {
 void Routing::SetK(unsigned int K) {
     this->K = K;
 }
+
+
+
+
+
+
+
+

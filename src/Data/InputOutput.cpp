@@ -183,7 +183,8 @@ void InputOutput::LoadRsaOrderFirstSimul(std::ifstream& orderRsa) {
     
     do{
         orderRsa.open("Files/Outputs/1/GA/BestIndividual.txt");
-        
+        //orderRsa.open("Files/Inputs/GA/BestIndividual.txt");
+
         if(!orderRsa.is_open()) {
             std::cerr << "Wrong RSA order file." << std::endl;
             std::cerr << "The file required is: Files/Outputs/"

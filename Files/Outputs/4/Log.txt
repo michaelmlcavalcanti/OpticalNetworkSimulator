@@ -1,0 +1,65 @@
+MULTIPLE LOADS SIMULATION
+This type of simulation varies the network load and analyzes the network performance. 
+
+OPTIONS
+Topology: NSFNet
+Routing algorithm: YEN
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: Routing-SA
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: Dedicated Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 60
+Maximum load point(erlang): 80
+Number of points: 5
+Total number of requisitions: 1e+06
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+K: 3
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+Number of PDPP Routes: 2
+Beta Squeezing: 0.4
+
+DATA
+Simulation time:16676.5  Real simul time: 12.4764  Number of requests:1e+06
+Load point:60  ReqBP:9.5e-05  SlotsBP:0.00015855  HopsMed:2.14219
+NetOcc:2.20497e+07  NetUti:0.245914 NetFrag:0
+ProtRate:1  BetaAvrg:0.4   AlphaAvrg:0.6
+
+Simulation time:15393.7  Real simul time: 12.4383  Number of requests:1e+06
+Load point:65  ReqBP:0.000272  SlotsBP:0.000454652  HopsMed:2.14332
+NetOcc:2.20493e+07  NetUti:0.266401 NetFrag:0
+ProtRate:1  BetaAvrg:0.4   AlphaAvrg:0.6
+
+Simulation time:14294.2  Real simul time: 12.7378  Number of requests:1e+06
+Load point:70  ReqBP:0.00082  SlotsBP:0.00138238  HopsMed:2.14547
+NetOcc:2.20417e+07  NetUti:0.286803 NetFrag:0
+ProtRate:1  BetaAvrg:0.4   AlphaAvrg:0.6
+
+Simulation time:13341.2  Real simul time: 13.2442  Number of requests:1e+06
+Load point:75  ReqBP:0.00205  SlotsBP:0.00344995  HopsMed:2.14924
+NetOcc:2.20187e+07  NetUti:0.306949 NetFrag:0
+ProtRate:1  BetaAvrg:0.4   AlphaAvrg:0.6
+
+Simulation time:12507.4  Real simul time: 13.8218  Number of requests:1e+06
+Load point:80  ReqBP:0.004614  SlotsBP:0.00774322  HopsMed:2.15432
+NetOcc:2.19549e+07  NetUti:0.326537 NetFrag:0
+ProtRate:1  BetaAvrg:0.4   AlphaAvrg:0.6
+

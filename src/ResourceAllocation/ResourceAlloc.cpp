@@ -275,6 +275,9 @@ void ResourceAlloc::RoutingOffline() {
             this->CreateRsaOrder();
             this->routing->BSR_YEN();
             break;
+        case RoutingMP:
+            this->routing->MultiPathRouting();
+            break;
         default:
             std::cerr << "Invalid offline routing option" << std::endl;
             std::abort();

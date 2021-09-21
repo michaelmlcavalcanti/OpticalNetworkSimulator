@@ -33,7 +33,7 @@ enum TopologyOption {
     TopologyGermany,
     TopologyEON_RT,
     TopologyItaly,
-    Topogy3_Nodes,
+    Topogy4_Nodes,
     TopologyCoreNet,
     TopologySmallNet,
     TopologyWaxman,
@@ -52,8 +52,9 @@ enum RoutingOption {
      RoutingYEN,
      RoutingBSR,
      RoutingBSR_YEN,
+     RoutingMP,
      FirstRoutingOption = RoutingDJK,
-     LastRoutingOption = RoutingBSR_YEN
+     LastRoutingOption = RoutingMP
 };
 
 /**
