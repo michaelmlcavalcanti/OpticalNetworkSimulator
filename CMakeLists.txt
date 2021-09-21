@@ -14,9 +14,11 @@ set(SOURCE_FILES
         src/Algorithms/GA/GA_RsaOrder.cpp
         src/Algorithms/GA/GA_SO.cpp
         src/Algorithms/GA/GACoreOrder.cpp
+        src/Algorithms/GA/GA_PDPPBO.cpp
         src/Algorithms/GA/Individual.cpp
         src/Algorithms/GA/IndividualBool.cpp
         src/Algorithms/GA/IndividualNumRoutesMSCL.cpp
+        src/Algorithms/GA/IndividualPDPPBO.cpp
         src/Algorithms/PSO/ParticlePSO.cpp
         src/Algorithms/PSO/ParticlePSO_SCRA.cpp
         src/Algorithms/PSO/ParticlePSO_SCRA2.cpp

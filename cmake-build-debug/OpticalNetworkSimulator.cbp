@@ -103,6 +103,9 @@
 		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp">
 			<Option target="OpticalNetworkSimulator"/>
 		</Unit>
+		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/GA/GA_PDPPBO.cpp">
+			<Option target="OpticalNetworkSimulator"/>
+		</Unit>
 		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/GA/GA_RsaOrder.cpp">
 			<Option target="OpticalNetworkSimulator"/>
 		</Unit>
@@ -116,6 +119,9 @@
 			<Option target="OpticalNetworkSimulator"/>
 		</Unit>
 		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/GA/IndividualNumRoutesMSCL.cpp">
+			<Option target="OpticalNetworkSimulator"/>
+		</Unit>
+		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/GA/IndividualPDPPBO.cpp">
 			<Option target="OpticalNetworkSimulator"/>
 		</Unit>
 		<Unit filename="/mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/src/Algorithms/PSO/PSO.cpp">

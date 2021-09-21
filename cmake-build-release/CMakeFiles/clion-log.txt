@@ -1,4 +1,4 @@
-/snap/clion/139/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator
+/opt/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /mnt/Bruno_Data/GoogleDrive/Material_Academico/UFPE/Pesquisa/Simuladores/OpticalNetworkSimulator/cmake-build-release
