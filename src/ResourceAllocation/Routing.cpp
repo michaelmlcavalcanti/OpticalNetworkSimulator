@@ -32,7 +32,7 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
 Parameters* parameters)
 :resourceAlloc(rsa), routingOption(option), topology(nullptr), 
-data(data), parameters(parameters), resources(nullptr), K(0) {
+data(data), parameters(parameters), resources(nullptr), K(0), auxRoutes(0) {
     
 }
 
@@ -54,7 +54,6 @@ void Routing::RoutingCall(Call* call) {
         case RoutingYEN:
         case RoutingBSR:
         case RoutingBSR_YEN:
-        case RoutingMP:
             this->SetOfflineRouting(call);
             break;
         default:
@@ -827,15 +826,17 @@ void Routing::AllRoutes() {
     std::shared_ptr<Route> route;
     std::vector<std::shared_ptr<Route>> vRoutes;
     unsigned int numNodes = this->topology->GetNumNodes();
+    std::vector<std::shared_ptr<Route>> auxRoutes;
 
     for(int orN = 0; orN < numNodes; orN++){
         for(int deN = 0; deN < numNodes; deN++){
             if(orN != deN) {   // Check if orN and deN are different
-                std::vector<int> empty;
-                route = std::make_shared<Route>(this->GetResourceAlloc(), empty);
+                std::vector<int> empty(0);
                 vRoutes.clear();
+                this->auxRoutes.clear();
+                route = std::make_shared<Route>(this->GetResourceAlloc(), empty);
                 AllRoutes(orN, deN, route, vRoutes);
-                resources->SetRoutes(orN, deN, vRoutes);
+                resources->SetRoutes(orN, deN, this->auxRoutes);
             }
         }
     }
@@ -844,18 +845,18 @@ void Routing::AllRoutes() {
 void Routing::AllRoutes(NodeIndex curNode, NodeIndex deNode, std::shared_ptr<Route> route,
                         std::vector<std::shared_ptr<Route>> vRoutes) {
     Link* link;
-    std::shared_ptr<Route> newRoute;
 
     if(!route->IsNode(curNode)){   //curNode does not cause loop
         route->AddNodeAtEnd(curNode);
         if(deNode == route->GetDeNodeId()){   //check if destine was reached;
             vRoutes.push_back(route);
+            this->auxRoutes.push_back(route);
         }
         else{
             for(int nextNode = 0; nextNode < this->topology->GetNumNodes(); nextNode++){
                 link = this->topology->GetLink(curNode, nextNode);
                 if(link != nullptr && link->IsLinkWorking()){ //There is a connection between orN and nextNode
-                    newRoute = std::make_shared<Route>(this->GetResourceAlloc(), route->GetPath());
+                    std::shared_ptr<Route> newRoute = std::make_shared<Route>(this->GetResourceAlloc(), route->GetPath());
                     AllRoutes(nextNode, deNode, newRoute, vRoutes);
                 }
             }

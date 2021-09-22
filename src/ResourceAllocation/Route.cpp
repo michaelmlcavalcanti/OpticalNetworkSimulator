@@ -20,17 +20,20 @@
 Route::Route(ResourceAlloc* rsaAlg, const std::vector<int>& path)
 :resourceAlloc(rsaAlg), topology(rsaAlg->GetTopology()), path(path),
 pathNodes(0), pathLinks(0), cost(0.0) {
-    
-    for(auto it: this->path){
-        this->pathNodes.push_back(this->topology->GetNode(it));
+
+    if(path.size() != 0) {
+        for (auto it: this->path) {
+            this->pathNodes.push_back(this->topology->GetNode(it));
+        }
+
+        for (unsigned int a = 0; a < this->pathNodes.size() - 1; a++) {
+            pathLinks.push_back(topology->GetLink(pathNodes.at(a)->GetNodeId(),
+                                                  pathNodes.at(a + 1)->GetNodeId()));
+        }
+
+        this->SetCost();
     }
-    
-    for(unsigned int a = 0; a < this->pathNodes.size()-1; a++){
-        pathLinks.push_back(topology->GetLink(pathNodes.at(a)->GetNodeId(), 
-                                              pathNodes.at(a+1)->GetNodeId()));
-    }
-    
-    this->SetCost();
+
 }
 
 Route::~Route() {
@@ -204,6 +207,8 @@ void Route::AddNodeAtEnd(NodeIndex node) {
 
     path.push_back(int(node));
     pathNodes.push_back(this->topology->GetNode(node));
-    pathLinks.push_back(topology->GetLink(pathNodes.at(pathNodes.size()-2)->GetNodeId(),
+
+    if(pathNodes.size() >= 2)
+        pathLinks.push_back(topology->GetLink(pathNodes.at(pathNodes.size()-2)->GetNodeId(),
                                           pathNodes.at(pathNodes.size()-1)->GetNodeId()));
 }

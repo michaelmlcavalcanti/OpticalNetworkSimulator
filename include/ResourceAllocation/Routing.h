@@ -214,6 +214,8 @@ public:
      */
     void SetTopology(Topology* topology);
 
+    std::vector<std::shared_ptr<Route>> auxRoutes;
+
 private:
     /**
      * @brief Get the number k of shortest routes used in YEN.
