@@ -31,8 +31,8 @@ bool RouteCompare::operator()(const std::shared_ptr<Route>& routeA,
 
 Routing::Routing(ResourceAlloc* rsa, RoutingOption option, Data* data, 
 Parameters* parameters)
-:resourceAlloc(rsa), routingOption(option), topology(nullptr), 
-data(data), parameters(parameters), resources(nullptr), K(0), auxRoutes(0) {
+: resourceAlloc(rsa), routingOption(option), topology(nullptr),
+  data(data), parameters(parameters), resources(nullptr), K(0), auxNodePairAllRoutes(0) {
     
 }
 
@@ -805,21 +805,105 @@ std::vector<std::shared_ptr<Route>> routes){
 }
 
 void Routing::MultiPathRouting() {
-    this->AllRoutes();
-    std::vector<std::vector<std::shared_ptr<Route>>> auxDisjointRoutes;
-    auxDisjointRoutes.resize(resources->allRoutes.size());
+    this->AllRoutes();  //generate all routes between each source-destination pair
 
+    unsigned int nodePairIndex;
+    unsigned int orN, deN, numNodes;
+    numNodes = this->topology->GetNumNodes();
+    std::vector<std::shared_ptr<Route>> auxVec;
+    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> auxProtectionAllRoutes;
+    auxProtectionAllRoutes.resize(numNodes * numNodes);
+
+ /*   for(unsigned int NodePair = 0; NodePair < auxAllRoutes.size(); NodePair++){
+        for(unsigned int route1 = 0; route1 <  auxAllRoutes.at(NodePair).size(); route1++){
+            for(unsigned int route2 = 0; route2 <  auxAllRoutes.at(NodePair).size(); route2++){
+                if(auxAllRoutes.at(NodePair).at(route2).get() == auxAllRoutes.at(NodePair).at(route1).get())
+                    continue;
+                if(auxAllRoutes.at(NodePair).at(route1) != nullptr && auxAllRoutes.at(NodePair).at(route2) != nullptr){
+                    if(!auxAllRoutes.at(NodePair).at(route1)->checkShareLink(auxAllRoutes.at(NodePair).at(route2).get())) {
+                        auxVec.push_back(auxAllRoutes.at(NodePair).at(route1));
+                        auxVec.push_back(auxAllRoutes.at(NodePair).at(route2));
+                        vecGroup2.push_back(auxVec);
+                        auxVec.clear();
+                        for (unsigned int route3 = 0;
+                             route3 < auxAllRoutes.at(NodePair).size(); route3++) {
+                            if (auxAllRoutes.at(NodePair).at(route3).get() ==
+                                auxAllRoutes.at(NodePair).at(route1).get() ||
+                                auxAllRoutes.at(NodePair).at(route3).get() ==
+                                auxAllRoutes.at(NodePair).at(route2).get())
+                                continue;
+                            if (!auxAllRoutes.at(NodePair).at(route2)->checkShareLink(
+                                    auxAllRoutes.at(NodePair).at(route3).get())) {
+                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route1));
+                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route2));
+                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route3));
+                                vecGroup3.push_back(auxVec);
+                                auxVec.clear();
+                                for (const auto &route4: routesNodePair) {
+                                    if (route4 == route1 || route4 == route2 || route4 == route3)
+                                        continue;
+                                    if (!route3->checkShareLink(route4.get())) {
+                                        auxVec.push_back(route1);
+                                        auxVec.push_back(route2);
+                                        auxVec.push_back(route3);
+                                        auxVec.push_back(route4);
+                                        vecGroup4.push_back(auxVec);
+                                        auxVec.clear();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+
+    //generate groups of 2 or 3 disjoint routes for each source-destination pair
     for(auto& routesNodePair: resources->allRoutes) {
         for(const auto& route1: routesNodePair) {
             for(const auto& route2: routesNodePair){
-                if(route1 == route2)
+                if(route2 == route1)
                     continue;
-                if(!route1->checkShareLink(route2.get())){
-                    //Alguma coisa
+                if(!route2->checkShareLink(route1.get())) {
+                    auxVec.push_back(route1);
+                    auxVec.push_back(route2);
+                    orN = route1->GetPath().front();
+                    deN = route1->GetPath().back();
+                    nodePairIndex = orN * numNodes + deN;
+                    auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                    auxVec.clear();
+                    for (const auto &route3: routesNodePair) {
+                        if (route3 == route1 || route3 == route2)
+                            continue;
+                        if (!route3->checkShareLink(route1.get()) && !route3->checkShareLink(route2.get())){
+                            auxVec.push_back(route1);
+                            auxVec.push_back(route2);
+                            auxVec.push_back(route3);
+                            auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                            auxVec.clear();
+/*                            for (const auto &route4: routesNodePair) {
+                                if (route4 == route1 || route4 == route2 || route4 == route3)
+                                    continue;
+                                if (!route4->checkShareLink(route3.get() &&
+                                !route4->checkShareLink(route2.get() &&
+                                !route4->checkShareLink(route3.get()) {
+                                    auxVec.push_back(route1);
+                                    auxVec.push_back(route2);
+                                    auxVec.push_back(route3);
+                                    auxVec.push_back(route4);
+                                    auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                                    auxVec.clear();
+                                }
+                            }*/
+                        }
+                    }
                 }
             }
         }
     }
+
+    resources->protectionAllRoutes = auxProtectionAllRoutes;
 }
 
 void Routing::AllRoutes() {
@@ -833,10 +917,10 @@ void Routing::AllRoutes() {
             if(orN != deN) {   // Check if orN and deN are different
                 std::vector<int> empty(0);
                 vRoutes.clear();
-                this->auxRoutes.clear();
+                this->auxNodePairAllRoutes.clear();
                 route = std::make_shared<Route>(this->GetResourceAlloc(), empty);
                 AllRoutes(orN, deN, route, vRoutes);
-                resources->SetRoutes(orN, deN, this->auxRoutes);
+                resources->SetRoutes(orN, deN, this->auxNodePairAllRoutes);
             }
         }
     }
@@ -850,7 +934,7 @@ void Routing::AllRoutes(NodeIndex curNode, NodeIndex deNode, std::shared_ptr<Rou
         route->AddNodeAtEnd(curNode);
         if(deNode == route->GetDeNodeId()){   //check if destine was reached;
             vRoutes.push_back(route);
-            this->auxRoutes.push_back(route);
+            this->auxNodePairAllRoutes.push_back(route);
         }
         else{
             for(int nextNode = 0; nextNode < this->topology->GetNumNodes(); nextNode++){

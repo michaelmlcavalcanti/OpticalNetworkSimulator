@@ -213,8 +213,11 @@ public:
      * @param topology Topology object.
      */
     void SetTopology(Topology* topology);
-
-    std::vector<std::shared_ptr<Route>> auxRoutes;
+    /**
+     * @brief Vector to store all routes between a specific node pair, temporarily,
+     * during the AllRoutes() function running.
+     */
+    std::vector<std::shared_ptr<Route>> auxNodePairAllRoutes;
 
 private:
     /**
