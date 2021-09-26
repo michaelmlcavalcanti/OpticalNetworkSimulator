@@ -811,53 +811,15 @@ void Routing::MultiPathRouting() {
     unsigned int orN, deN, numNodes;
     numNodes = this->topology->GetNumNodes();
     std::vector<std::shared_ptr<Route>> auxVec;
-    std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> auxProtectionAllRoutes;
-    auxProtectionAllRoutes.resize(numNodes * numNodes);
+    std::vector<std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>> auxProtectionAllRoutesGroups;
+    unsigned int numNodePair = numNodes * numNodes;
+    auxProtectionAllRoutesGroups.resize(numNodePair);
 
- /*   for(unsigned int NodePair = 0; NodePair < auxAllRoutes.size(); NodePair++){
-        for(unsigned int route1 = 0; route1 <  auxAllRoutes.at(NodePair).size(); route1++){
-            for(unsigned int route2 = 0; route2 <  auxAllRoutes.at(NodePair).size(); route2++){
-                if(auxAllRoutes.at(NodePair).at(route2).get() == auxAllRoutes.at(NodePair).at(route1).get())
-                    continue;
-                if(auxAllRoutes.at(NodePair).at(route1) != nullptr && auxAllRoutes.at(NodePair).at(route2) != nullptr){
-                    if(!auxAllRoutes.at(NodePair).at(route1)->checkShareLink(auxAllRoutes.at(NodePair).at(route2).get())) {
-                        auxVec.push_back(auxAllRoutes.at(NodePair).at(route1));
-                        auxVec.push_back(auxAllRoutes.at(NodePair).at(route2));
-                        vecGroup2.push_back(auxVec);
-                        auxVec.clear();
-                        for (unsigned int route3 = 0;
-                             route3 < auxAllRoutes.at(NodePair).size(); route3++) {
-                            if (auxAllRoutes.at(NodePair).at(route3).get() ==
-                                auxAllRoutes.at(NodePair).at(route1).get() ||
-                                auxAllRoutes.at(NodePair).at(route3).get() ==
-                                auxAllRoutes.at(NodePair).at(route2).get())
-                                continue;
-                            if (!auxAllRoutes.at(NodePair).at(route2)->checkShareLink(
-                                    auxAllRoutes.at(NodePair).at(route3).get())) {
-                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route1));
-                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route2));
-                                auxVec.push_back(auxAllRoutes.at(NodePair).at(route3));
-                                vecGroup3.push_back(auxVec);
-                                auxVec.clear();
-                                for (const auto &route4: routesNodePair) {
-                                    if (route4 == route1 || route4 == route2 || route4 == route3)
-                                        continue;
-                                    if (!route3->checkShareLink(route4.get())) {
-                                        auxVec.push_back(route1);
-                                        auxVec.push_back(route2);
-                                        auxVec.push_back(route3);
-                                        auxVec.push_back(route4);
-                                        vecGroup4.push_back(auxVec);
-                                        auxVec.clear();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }*/
+    //defining vector size for number of group types (2 and 3)
+    unsigned int numGroupTypes = 2;
+    for(auto& groupTypes : auxProtectionAllRoutesGroups){
+        groupTypes.resize(numGroupTypes);
+    }
 
     //generate groups of 2 or 3 disjoint routes for each source-destination pair
     for(auto& routesNodePair: resources->allRoutes) {
@@ -871,7 +833,7 @@ void Routing::MultiPathRouting() {
                     orN = route1->GetPath().front();
                     deN = route1->GetPath().back();
                     nodePairIndex = orN * numNodes + deN;
-                    auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                    auxProtectionAllRoutesGroups.at(nodePairIndex).at(0).push_back(auxVec);
                     auxVec.clear();
                     for (const auto &route3: routesNodePair) {
                         if (route3 == route1 || route3 == route2)
@@ -880,7 +842,7 @@ void Routing::MultiPathRouting() {
                             auxVec.push_back(route1);
                             auxVec.push_back(route2);
                             auxVec.push_back(route3);
-                            auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                            auxProtectionAllRoutesGroups.at(nodePairIndex).at(1).push_back(auxVec);
                             auxVec.clear();
 /*                            for (const auto &route4: routesNodePair) {
                                 if (route4 == route1 || route4 == route2 || route4 == route3)
@@ -892,7 +854,7 @@ void Routing::MultiPathRouting() {
                                     auxVec.push_back(route2);
                                     auxVec.push_back(route3);
                                     auxVec.push_back(route4);
-                                    auxProtectionAllRoutes.at(nodePairIndex).push_back(auxVec);
+                                    auxProtectionAllRoutesGroups.at(nodePairIndex).push_back(auxVec);
                                     auxVec.clear();
                                 }
                             }*/
@@ -903,7 +865,134 @@ void Routing::MultiPathRouting() {
         }
     }
 
-    resources->protectionAllRoutes = auxProtectionAllRoutes;
+    //ordering groups in protectionAllRoutes vector by number of hops
+    int numTotalHopsG = 0;
+    std::vector<int> auxTotalHopGroupsVec;
+    std::vector<std::vector<std::shared_ptr<Route>>> auxTotalRouteGroupsVec;
+
+    for(auto& nodePair : auxProtectionAllRoutesGroups) {
+        for (auto& groupType: nodePair) {
+            if(groupType.empty())
+                break;
+            //Filling total hops and routes groups vectors of actual node pair
+            for (auto& group : groupType) {  //create
+                for(const auto& route : group){
+                numTotalHopsG += route->GetNumHops();
+                }
+                auxTotalHopGroupsVec.push_back(numTotalHopsG);
+                auxTotalRouteGroupsVec.push_back(group);
+                numTotalHopsG = 0;
+            }
+            //ordering groups in aux vectors by hop number
+            for (int gi = 1; gi < auxTotalHopGroupsVec.size(); gi++) {
+                int Ci = auxTotalHopGroupsVec[gi];
+                std::vector<std::shared_ptr<Route>> Ri = auxTotalRouteGroupsVec[gi];
+                int gj;
+                for (gj = gi; gj > 0 && Ci < auxTotalHopGroupsVec[gj - 1]; gj--) {
+                    auxTotalHopGroupsVec[gj] = auxTotalHopGroupsVec[gj - 1];
+                    auxTotalRouteGroupsVec[gj] = auxTotalRouteGroupsVec[gj - 1];
+                }
+                auxTotalHopGroupsVec[gj] = Ci;
+                auxTotalRouteGroupsVec[gj] = Ri;
+            }
+            //updating type group in auxProtectionAllRoutesGroups with ordered group
+            groupType = auxTotalRouteGroupsVec;
+            auxTotalHopGroupsVec.clear();
+            auxTotalRouteGroupsVec.clear();
+        }
+    }
+    resources->protectionAllRoutesGroups = auxProtectionAllRoutesGroups;
+/*    int numTotalHopsG = 0;
+    std::vector<int> auxTotalHopGroupsVec;
+    for(unsigned int nodePair = 0; nodePair < numNodePair; nodePair++) {
+        for (unsigned int groupType = 0; groupType < numGroupTypes; groupType++) {
+            if (auxProtectionAllRoutesGroups.at(nodePair).at(groupType).empty())
+                break;
+            for (unsigned int g = 0; g < auxProtectionAllRoutesGroups.at(nodePair).at(
+                    groupType).size()-1; g++) {
+                for (auto &route : auxProtectionAllRoutesGroups.at(nodePair).at(
+                        groupType).at(g)) {
+                    numTotalHopsG += route->GetNumHops();
+                }
+                auxTotalHopGroupsVec.push_back(numTotalHopsG);
+                numTotalHopsG = 0;
+            }
+            for (int gi = 1; gi < auxTotalHopGroupsVec.size(); gi++) {
+                int Ci = auxTotalHopGroupsVec[gi];
+                int gj;
+                for (gj = gi; gj > 0 && Ci < auxTotalHopGroupsVec[gj-1]; gj--) {
+                    auxTotalHopGroupsVec[gj] = auxTotalHopGroupsVec[gj - 1];
+                }
+                auxTotalHopGroupsVec[gj] = Ci;
+            }
+        }
+    }*/
+/*    int numTotalHopsGi = 0;
+    int numTotalHopsGj = 0;
+    for(unsigned int nodePair = 0; nodePair < numNodePair; nodePair++) {
+        for (unsigned int groupType = 0; groupType < numGroupTypes; groupType++) {
+            if (auxProtectionAllRoutesGroups.at(nodePair).at(groupType).empty())
+                break;
+            for (unsigned int gi = 1; gi < auxProtectionAllRoutesGroups.at(nodePair).at(
+                    groupType).size(); gi++) {
+                for (const auto &route: auxProtectionAllRoutesGroups.at(nodePair).at(
+                        groupType).at(gi)) {
+                    numTotalHopsGi += route->GetNumHops();
+                }
+                if(gi == 1) {
+                    for (const auto &route: auxProtectionAllRoutesGroups.at(nodePair).at(
+                            groupType).at(gi - 1)) {
+                        numTotalHopsGj += route->GetNumHops();
+                    }
+                }
+                for (unsigned int gj = gi; gj > 0 && numTotalHopsGi < numTotalHopsGj; gj--){
+                    auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(gj) =
+                    auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(gi);
+                }
+                numTotalHopsGj = numTotalHopsGi;
+                numTotalHopsGi = 0;
+            }
+        }
+    }*/
+  /*  int numTotalHopsGi = 0;
+    int numTotalHopsGj = 0;
+    std::vector<std::shared_ptr<Route>> auxTotalHopGroupsVec;
+    std::shared_ptr<std::vector<Route>> Gi;
+    for(unsigned int nodePair = 0; nodePair < numNodePair; nodePair++){
+        for(unsigned int groupType = 0; groupType < numGroupTypes; groupType++) {
+            if(auxProtectionAllRoutesGroups.at(nodePair).at(groupType).empty())
+                break;
+            for (unsigned int gi = 0; gi < auxProtectionAllRoutesGroups.at(nodePair).at(
+                    groupType).size() - 1; gi++) {
+                Gi = & auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(gi);
+                for (const auto &route: auxProtectionAllRoutesGroups.at(nodePair).at(
+                        groupType).at(gi)) {
+                    numTotalHopsGi += route->GetNumHops();
+                }
+                int minCost = numTotalHopsGi;
+                for (unsigned int gj = gi + 1; gj < auxProtectionAllRoutesGroups.at(
+                        nodePair).at(groupType).size() - 1; gj++) {
+                    for (const auto &route: auxProtectionAllRoutesGroups.at(nodePair).at(
+                            groupType).at(gj)) {
+                        numTotalHopsGj += route->GetNumHops();
+                    }
+                    if (numTotalHopsGj < minCost) { //Change Gj with Gi
+                        minCost = numTotalHopsGj;
+                        auxTotalHopGroupsVec = auxProtectionAllRoutesGroups.at(nodePair).at(
+                                groupType).at(Gj);
+                        auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(
+                                Gj) = auxProtectionAllRoutesGroups.at(nodePair).at(
+                                groupType).at(Gi);
+                        auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(
+                                Gi) = auxTotalHopGroupsVec;
+                        auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(Gi) = auxProtectionAllRoutesGroups.at(nodePair).at(groupType).at(Gj);
+                    }
+                    numTotalHopsGj = 0;
+                }
+                numTotalHopsGi = 0;
+            }
+        }
+    }*/
 }
 
 void Routing::AllRoutes() {
@@ -933,6 +1022,7 @@ void Routing::AllRoutes(NodeIndex curNode, NodeIndex deNode, std::shared_ptr<Rou
     if(!route->IsNode(curNode)){   //curNode does not cause loop
         route->AddNodeAtEnd(curNode);
         if(deNode == route->GetDeNodeId()){   //check if destine was reached;
+            route->SetCost();
             vRoutes.push_back(route);
             this->auxNodePairAllRoutes.push_back(route);
         }

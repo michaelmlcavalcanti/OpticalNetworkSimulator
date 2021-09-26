@@ -299,6 +299,13 @@ public:
     std::vector<std::vector<std::vector<std::shared_ptr<Route>>>> 
     protectionAllRoutes;
     /**
+    * @brief Vector that contain all groups of 2 or 3 disjoint routes for each
+    * origin-destine pair ordered by Hops. This 4 dimension vector (1-pair, 2-groupType,
+     * 3-group, 4-routes) is used in Multi path Routing Option.
+    */
+    std::vector<std::vector<std::vector<std::vector<std::shared_ptr<Route>>>>>
+            protectionAllRoutesGroups;
+    /**
      *@brief Vector of vector of vector of route pointers to store interfering 
      * routes of all routes in the network
      */
