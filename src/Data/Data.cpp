@@ -259,8 +259,8 @@ void Data::SaveNetAlphaAverage() {
 
 void Data::SaveNumHopsRoutes() {
     std::ofstream &numHopsRoutes = this->simulType->GetInputOutput()->GetNumHopsRoutes();
-
-    this->SaveNumHopsRoutes(numHopsRoutes);
+    if(this->simulType->GetOptions()->GetRoutingOption() == RoutingYEN)
+        this->SaveNumHopsRoutes(numHopsRoutes);
 }
 
 

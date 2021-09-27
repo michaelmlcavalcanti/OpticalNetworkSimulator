@@ -833,7 +833,7 @@ void Routing::MultiPathRouting() {
                     orN = route1->GetPath().front();
                     deN = route1->GetPath().back();
                     nodePairIndex = orN * numNodes + deN;
-                    auxProtectionAllRoutesGroups.at(nodePairIndex).at(0).push_back(auxVec);
+                    auxProtectionAllRoutesGroups.at(nodePairIndex).at(1).push_back(auxVec);
                     auxVec.clear();
                     for (const auto &route3: routesNodePair) {
                         if (route3 == route1 || route3 == route2)
@@ -842,7 +842,7 @@ void Routing::MultiPathRouting() {
                             auxVec.push_back(route1);
                             auxVec.push_back(route2);
                             auxVec.push_back(route3);
-                            auxProtectionAllRoutesGroups.at(nodePairIndex).at(1).push_back(auxVec);
+                            auxProtectionAllRoutesGroups.at(nodePairIndex).at(0).push_back(auxVec);
                             auxVec.clear();
 /*                            for (const auto &route4: routesNodePair) {
                                 if (route4 == route1 || route4 == route2 || route4 == route3)
@@ -875,7 +875,7 @@ void Routing::MultiPathRouting() {
             if(groupType.empty())
                 break;
             //Filling total hops and routes groups vectors of actual node pair
-            for (auto& group : groupType) {  //create
+            for (auto& group : groupType) {
                 for(const auto& route : group){
                 numTotalHopsG += route->GetNumHops();
                 }
@@ -901,6 +901,7 @@ void Routing::MultiPathRouting() {
             auxTotalRouteGroupsVec.clear();
         }
     }
+
     resources->protectionAllRoutesGroups = auxProtectionAllRoutesGroups;
 /*    int numTotalHopsG = 0;
     std::vector<int> auxTotalHopGroupsVec;
@@ -1010,6 +1011,29 @@ void Routing::AllRoutes() {
                 route = std::make_shared<Route>(this->GetResourceAlloc(), empty);
                 AllRoutes(orN, deN, route, vRoutes);
                 resources->SetRoutes(orN, deN, this->auxNodePairAllRoutes);
+            }
+        }
+    }
+
+    //sorting AllRoutes vector by number of hops
+    for(auto& nodeIndex : resources->allRoutes){
+        if(nodeIndex.empty())
+            continue;
+        std::shared_ptr<Route> route1;
+        std::shared_ptr<Route> route2;
+        std::shared_ptr<Route> routeAux;
+        for (int i = 0; i < nodeIndex.size()-1; i++) {
+            route1 = nodeIndex.at(i);
+            double minCost = route1->GetCost();
+            for(unsigned int j = i+1; j < nodeIndex.size(); j++) {
+                route2 = nodeIndex.at(j);
+                if (route2->GetCost() < minCost) { //Change route 2 with route 1
+                    minCost = route2->GetCost();
+                    routeAux = route2;
+                    nodeIndex.at(j) = route1;
+                    nodeIndex.at(i) = routeAux;
+                    route1 = route2;
+                }
             }
         }
     }

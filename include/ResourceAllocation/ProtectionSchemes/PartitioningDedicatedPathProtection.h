@@ -44,18 +44,32 @@ public:
     void ResourceAlloc(CallDevices* call) override;
      /**
      * @brief Function which performs Routing-Spectrum RSA ordering for all Partitioned
-     * routes according with PDPP scheme for offline routing and no same set of slots
+     * routes according with PDPP scheme for offline YEN routing and no same set of slots
      * between routes.
      * @param call Call request the function will try to allocate.
      */
     void RoutingSpecPDPP(CallDevices* call);
     /**
+    * @brief Function which performs Routing-Spectrum RSA ordering for all Partitioned
+    * routes according with PDPP scheme for offline MP routing and no same set of slots
+    * between routes.
+    * @param call Call request the function will try to allocate.
+    */
+    void RoutingSpecPDPP_MP(CallDevices* call);
+    /**
     * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
-    * routes according with PDPP scheme for offline routing and no same set of slots
+    * routes according with PDPP scheme for offline YEN routing and no same set of slots
      * between routes route.
     * @param call Call request the function will try to allocate.
     */
     void SpecRoutingPDPP(CallDevices* call);
+    /**
+    * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
+    * routes according with PDPP scheme for offline MP routing and no same set of slots
+     * between routes route.
+    * @param call Call request the function will try to allocate.
+    */
+    void SpecRoutingPDPP_MP(CallDevices* call);
     /**
     * @brief Function which performs Spectrum-Routing RSA ordering for all Partitioned
     * routes according with PDPP scheme for offline routing and same set of slots
