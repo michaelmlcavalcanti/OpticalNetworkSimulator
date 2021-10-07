@@ -18,7 +18,7 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Structure/Topology.h"
 #include "../../include/Structure/Link.h"
-#include "../../include/GeneralClasses/Def.h"
+//#include "../../include/GeneralClasses/Def.h"
 #include "../../include/Calls/Call.h"
 #include "../../include/Data/Data.h"
 #include "../../include/Data/Parameters.h"
