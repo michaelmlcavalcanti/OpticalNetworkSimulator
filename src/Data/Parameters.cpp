@@ -38,8 +38,7 @@ const Parameters* parameters) {
             << parameters->GetNumberBloqMax() << std::endl;
     ostream << "Slot bandwidth (GHz): "
             << parameters->GetSlotBandwidth()/1E9 << std::endl;
-    if(parameters->simulType->GetOptions()->GetRoutingOption() ==
-    RoutingYEN)
+    if(parameters->simulType->GetOptions()->GetRoutingOption() == RoutingYEN)
         ostream << "K: " << parameters->GetNumberRoutes() << std::endl;
     ostream << "Maximum section length (km): "
             << parameters->GetMaxSectionLegnth()/1E3 << std::endl;
@@ -51,6 +50,8 @@ const Parameters* parameters) {
             << std::endl;
     ostream << "Beta Squeezing: " << parameters->GetBeta()
             << std::endl;
+    ostream << "Number of MPR Groups: " << parameters->GetNumberMPRGroups()
+            << std::endl;
     
     return ostream;
 }
@@ -60,7 +61,7 @@ Parameters::Parameters(SimulationType* simulType)
 loadPasso(0.0), numberLoadPoints(0), numberReqMax(0.0), mu(0.0), 
 numberBloqMax(0), slotBandwidth(0.0), numberSlots(0), numberCores(0), 
 maxSectionLegnth(0.0), numberPolarizations(0), guardBand(0), beta(0), 
-   numberPDPPprotectionRoutes(2) {
+   numberPDPPprotectionRoutes(2), numberMPRGroups(0) {
     
 }
 
@@ -112,10 +113,13 @@ void Parameters::Load() {
     std::cout << "Insert the Protection Squeezing Beta: ";
     std::cin >> auxUnsInt;
     this->SetBeta(auxUnsInt);
-    std::cout << "Insert the value for K Protection Routes: ";
+    std::cout << "Insert the value for number of Protection Routes: ";
     std::cin >> auxUnsInt;
     this->SetNumberPDPPprotectionRoutes(auxUnsInt);
-    
+    std::cout << "Insert the value for number of MPR groups: ";
+    std::cin >> auxUnsInt;
+    this->SetNumberMPRGroups(auxUnsInt);
+
     this->SetLoadPointUniform();
     
     std::cout << std::endl;
@@ -155,7 +159,9 @@ void Parameters::LoadFile() {
     this->SetBeta(auxDouble);
     auxIfstream >> auxInt;
     this->SetNumberPDPPprotectionRoutes(auxInt);
-    
+    auxIfstream >> auxInt;
+    this->SetNumberMPRGroups(auxInt);
+
     this->SetLoadPointUniform();
 }
 
@@ -338,7 +344,15 @@ unsigned int Parameters::GetNumberPDPPprotectionRoutes() const {
 
 void Parameters::SetNumberPDPPprotectionRoutes(unsigned int numberPDPPprotectionRoutes) {
     assert(numberPDPPprotectionRoutes > 0);
-    
     this->numberPDPPprotectionRoutes = numberPDPPprotectionRoutes;
+}
+
+unsigned int Parameters::GetNumberMPRGroups() const {
+    return numberMPRGroups;
+}
+
+void Parameters::SetNumberMPRGroups(unsigned int numberMPRGroups) {
+    assert(numberMPRGroups > 0);
+    this->numberMPRGroups = numberMPRGroups;
 }
 

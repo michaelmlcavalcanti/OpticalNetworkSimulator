@@ -1,0 +1,64 @@
+MULTIPLE LOADS SIMULATION
+This type of simulation varies the network load and analyzes the network performance. 
+
+OPTIONS
+Topology: NSFNet
+Routing algorithm: MPR
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: SA-Routing
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: Partitioning Dedicated Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 50
+Maximum load point(erlang): 80
+Number of points: 5
+Total number of requisitions: 100000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+Number of PDPP Routes: 3
+Beta Squeezing: 0.2
+
+DATA
+Simulation time:1997.23  Real simul time: 7.69792  Number of requests:100000
+Load point:50  ReqBP:1e-05  SlotsBP:1.71316e-05  HopsMed:2.14163
+NetOcc:2.58697e+06  NetUti:0.240792 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.310089
+
+Simulation time:1736.72  Real simul time: 5.96535  Number of requests:100000
+Load point:57.5  ReqBP:0.00018  SlotsBP:0.000308368  HopsMed:2.14155
+NetOcc:2.58454e+06  NetUti:0.276663 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.310044
+
+Simulation time:1536.33  Real simul time: 5.06437  Number of requests:100000
+Load point:65  ReqBP:0.00108  SlotsBP:0.00183308  HopsMed:2.14132
+NetOcc:2.58172e+06  NetUti:0.312214 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.309931
+
+Simulation time:1377.4  Real simul time: 5.31003  Number of requests:100000
+Load point:72.5  ReqBP:0.00473  SlotsBP:0.00791479  HopsMed:2.14034
+NetOcc:2.56221e+06  NetUti:0.345956 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.30955
+
+Simulation time:1248.27  Real simul time: 5.50776  Number of requests:100000
+Load point:80  ReqBP:0.01347  SlotsBP:0.0223567  HopsMed:2.13857
+NetOcc:2.52464e+06  NetUti:0.376159 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.309089
+

@@ -124,8 +124,8 @@
 123	inf
 124	inf
 125	inf
-126	inf
-127	inf
+126	-nan
+127	-nan
 
 0	inf
 1	inf

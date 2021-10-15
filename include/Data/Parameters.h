@@ -220,19 +220,30 @@ public:
      * with Protection option enabled.
      */
     void SetBeta(double beta);
-   /**
-     * @brief Function to get the number of protection routes for each one 
-     * k-working routes.
-     * @return Number of protection routes.
-     */
+    /**
+    * @brief Function to get the number of protection routes for each one
+    * k-working routes.
+    * @return Number of protection routes.
+    */
     unsigned int GetNumberPDPPprotectionRoutes() const;
     /**
-     * @brief Function to set the number of of protection routes for each one 
-     * k-working routes.
-     * @param numberProtectionRoutes Number of protection routes.
-     */
+    * @brief Function to set the number of of protection routes for each one
+    * k-working routes.
+    * @param numberProtectionRoutes Number of protection routes.
+    */
     void SetNumberPDPPprotectionRoutes(unsigned int numberPDPPprotectionRoutes);
-
+    /**
+    * @brief Function to get the number of groups of disjoint routes defined to be
+     * generated in multipath routing algorithm. These groups will be used by PDPP Squeme.
+    * @return Number of MPR groups.
+    */
+    unsigned int GetNumberMPRGroups() const;
+    /**
+    * @brief Function to set the number of groups of disjoint routes defined to be
+     * generated in multipath routing algorithm. These groups will be used by PDPP Squeme.
+    * @param numberMPRGroups Number of MPR groups of disjoint routes.
+    */
+    void SetNumberMPRGroups(unsigned int numberMPRGroups);
     
     
 private:
@@ -312,6 +323,13 @@ private:
      * per network node pair.
      */
     unsigned int numberPDPPprotectionRoutes;
+    /**
+    * @brief Number of multipath groups of routes generated in MP Routing for using
+     * by PDPP Scheme.
+    */
+    unsigned int numberMPRGroups;
+
+private:
     /**
      * @brief Calculate the load step.
      */

@@ -12,6 +12,7 @@
 0
 0.2
 3
+5
 
 1-Number of slots per fiber
 2-Number of cores per link
@@ -27,3 +28,4 @@
 12-Guard band size(slots)
 13-Protection Squeezing Beta 
 14-PDPP Number of protection routes (2 or 3)
+15-Number of MPR groups of disjoint routes

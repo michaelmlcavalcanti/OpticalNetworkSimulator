@@ -824,18 +824,22 @@ void Routing::MultiPathRouting() {
     //generate groups of 2 or 3 disjoint routes for each source-destination pair
     for(auto& routesNodePair: resources->allRoutes) {
         for(const auto& route1: routesNodePair) {
+            orN = route1->GetPath().front();
+            deN = route1->GetPath().back();
+            nodePairIndex = orN * numNodes + deN;
             for(const auto& route2: routesNodePair){
+                if(auxProtectionAllRoutesGroups.at(nodePairIndex).at(1).size() == parameters->GetNumberMPRGroups())
+                    break;
                 if(route2 == route1)
                     continue;
                 if(!route2->checkShareLink(route1.get())) {
                     auxVec.push_back(route1);
                     auxVec.push_back(route2);
-                    orN = route1->GetPath().front();
-                    deN = route1->GetPath().back();
-                    nodePairIndex = orN * numNodes + deN;
                     auxProtectionAllRoutesGroups.at(nodePairIndex).at(1).push_back(auxVec);
                     auxVec.clear();
                     for (const auto &route3: routesNodePair) {
+                        if(auxProtectionAllRoutesGroups.at(nodePairIndex).at(0).size() == parameters->GetNumberMPRGroups())
+                            break;
                         if (route3 == route1 || route3 == route2)
                             continue;
                         if (!route3->checkShareLink(route1.get()) && !route3->checkShareLink(route2.get())){

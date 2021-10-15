@@ -3,7 +3,7 @@ This type of simulation varies the network load and analyzes the network perform
 
 OPTIONS
 Topology: NSFNet
-Routing algorithm: YEN
+Routing algorithm: MPR
 Spectral allocation algorithm: First Fit
 Links cost type: Hops
 Traffic requests(Gbps): 100-200-400
@@ -17,49 +17,48 @@ Transponders: Disabled
 Regeneration: Disabled
 Stop criteria: Number of call requests
 Random generation: Same pseudo-random generation
-Protection: Dedicated Path Protection
+Protection: Partitioning Dedicated Path Protection
 Fragmentation Option: Disabled
 
 PARAMETERS
 Number of slots per fiber: 128
 Number of cores per link: 1
 Mu: 1
-Minimum load point(erlang): 60
+Minimum load point(erlang): 50
 Maximum load point(erlang): 80
 Number of points: 5
-Total number of requisitions: 1e+06
+Total number of requisitions: 100000
 Maximum blocked requests: 500
 Slot bandwidth (GHz): 12.5
-K: 3
 Maximum section length (km): 80
 Number of polarizations: 2
 Guard band size (slots): 0
-Number of PDPP Routes: 2
+Number of PDPP Routes: 3
 Beta Squeezing: 0.2
 
 DATA
-Simulation time:16676.5  Real simul time: 26.7677  Number of requests:1e+06
-Load point:60  ReqBP:0.002335  SlotsBP:0.00390546  HopsMed:2.14779
-NetOcc:2.56135e+07  NetUti:0.285652 NetFrag:0
-ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.8
+Simulation time:1997.23  Real simul time: 1.48363  Number of requests:100000
+Load point:50  ReqBP:3e-05  SlotsBP:5.13947e-05  HopsMed:2.14162
+NetOcc:2.45385e+06  NetUti:0.228452 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.310087
 
-Simulation time:15393.7  Real simul time: 25.6317  Number of requests:1e+06
-Load point:65  ReqBP:0.005516  SlotsBP:0.00923187  HopsMed:2.15323
-NetOcc:2.55192e+07  NetUti:0.308323 NetFrag:0
-ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.8
+Simulation time:1736.72  Real simul time: 1.85586  Number of requests:100000
+Load point:57.5  ReqBP:0.00026  SlotsBP:0.000445421  HopsMed:2.14189
+NetOcc:2.45371e+06  NetUti:0.262671 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.310021
 
-Simulation time:14294.2  Real simul time: 27.9772  Number of requests:1e+06
-Load point:70  ReqBP:0.01085  SlotsBP:0.0180948  HopsMed:2.16014
-NetOcc:2.53417e+07  NetUti:0.329772 NetFrag:0
-ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.8
+Simulation time:1536.33  Real simul time: 4.09564  Number of requests:100000
+Load point:65  ReqBP:0.00119  SlotsBP:0.00202153  HopsMed:2.14259
+NetOcc:2.45267e+06  NetUti:0.296732 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.309867
 
-Simulation time:13341.2  Real simul time: 29.3929  Number of requests:1e+06
-Load point:75  ReqBP:0.018915  SlotsBP:0.0315959  HopsMed:2.16751
-NetOcc:2.50407e+07  NetUti:0.349201 NetFrag:0
-ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.8
+Simulation time:1377.4  Real simul time: 10.7212  Number of requests:100000
+Load point:72.5  ReqBP:0.0041  SlotsBP:0.00692972  HopsMed:2.14474
+NetOcc:2.44929e+06  NetUti:0.330633 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.309324
 
-Simulation time:12507.4  Real simul time: 31.5369  Number of requests:1e+06
-Load point:80  ReqBP:0.028931  SlotsBP:0.0481841  HopsMed:2.17464
-NetOcc:2.46548e+07  NetUti:0.36673 NetFrag:0
-ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.8
+Simulation time:1248.27  Real simul time: 31.2939  Number of requests:100000
+Load point:80  ReqBP:0.01192  SlotsBP:0.0201382  HopsMed:2.1469
+NetOcc:2.42916e+06  NetUti:0.361981 NetFrag:0
+ProtRate:1  BetaAvrg:0.2   AlphaAvrg:0.308307
 
