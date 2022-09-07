@@ -23,7 +23,8 @@
 #include "../../include/Structure/NodeDevices.h"
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/Data/InputOutput.h"
-#include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"  
+#include "../../include/ResourceAllocation/ProtectionSchemes/ProtectionSchemes.h"
+#include "../../include/ResourceAllocation/ProtectionSchemes/NewPathProtection.h"
 
 ResourceDeviceAlloc::ResourceDeviceAlloc(SimulationType *simulType)
 :ResourceAlloc(simulType), regAssAlgorithm(nullptr), protScheme(this->protScheme) {
@@ -273,6 +274,9 @@ void ResourceDeviceAlloc::CreateProtectionScheme() {
         case ProtectionPDPPBO_GA:
             protScheme = std::make_shared<PartitioningDedicatedPathProtection>
             (this);
+            break;
+        case ProtectionNPP:
+            protScheme = std::make_shared<NewPathProtection>(this);
             break;
         default:
             std::cerr << "Invalid Protection Option" << std::endl;

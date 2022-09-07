@@ -45,6 +45,7 @@ set(SOURCE_FILES
         src/ResourceAllocation/CSA.cpp
         src/ResourceAllocation/Signal.cpp
         src/ResourceAllocation/ProtectionSchemes/DedicatedPathProtection.cpp
+        src/ResourceAllocation/ProtectionSchemes/NewPathProtection.cpp
         src/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.cpp
         src/ResourceAllocation/ProtectionSchemes/ProtectionScheme.cpp
         src/ResourceAllocation/RegeneratorAssignment/DRE2BR.cpp

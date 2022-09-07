@@ -151,9 +151,9 @@ TIME EventGenerator::GetRealSimulationTime() const {
     return realSimulationTime;
 }
 
-void EventGenerator::SetRealSimulationTime(TIME realSimullationTime) {
-    assert(realSimullationTime > 0.0);
-    this->realSimulationTime = realSimullationTime;
+void EventGenerator::SetRealSimulationTime(TIME realSimulationTime) {
+    assert(realSimulationTime > 0.0);
+    this->realSimulationTime = realSimulationTime;
 }
 
 std::shared_ptr<Call> EventGenerator::CreateCall(unsigned orNodeIndex, 

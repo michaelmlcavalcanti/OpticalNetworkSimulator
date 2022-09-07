@@ -1,0 +1,65 @@
+MULTIPLE LOADS SIMULATION
+This type of simulation varies the network load and analyzes the network performance. 
+
+OPTIONS
+Topology: Toroidal
+Routing algorithm: MPR
+Spectral allocation algorithm: First Fit
+Links cost type: Hops
+Traffic requests(Gbps): 100-200-400
+Resource Allocation: RSA
+Physical Layer: Disabled
+Network Type: EON
+RSA Order: SA-Routing
+GA: GA Disabled
+Devices: Enabled
+Transponders: Disabled
+Regeneration: Disabled
+Stop criteria: Number of call requests
+Random generation: Same pseudo-random generation
+Protection: New Path Protection
+Fragmentation Option: Disabled
+
+PARAMETERS
+Number of slots per fiber: 128
+Number of cores per link: 1
+Mu: 1
+Minimum load point(erlang): 50
+Maximum load point(erlang): 80
+Number of points: 5
+Total number of requisitions: 100000
+Maximum blocked requests: 500
+Slot bandwidth (GHz): 12.5
+Maximum section length (km): 80
+Number of polarizations: 2
+Guard band size (slots): 0
+Number of PDPP Routes: 3
+Beta Squeezing: 0.2
+Number of MPR Groups: 1000
+
+DATA
+Simulation time:1982.05  Real simul time: 0.340246  Number of requests:100000
+Load point:50  ReqBP:1  SlotsBP:1  HopsMed:-nan
+NetOcc:0  NetUti:0 NetFrag:0
+ProtRate:-nan  BetaAvrg:-nan   AlphaAvrg:-nan
+
+Simulation time:1723.52  Real simul time: 0.336479  Number of requests:100000
+Load point:57.5  ReqBP:1  SlotsBP:1  HopsMed:-nan
+NetOcc:0  NetUti:0 NetFrag:0
+ProtRate:-nan  BetaAvrg:-nan   AlphaAvrg:-nan
+
+Simulation time:1524.66  Real simul time: 0.342842  Number of requests:100000
+Load point:65  ReqBP:1  SlotsBP:1  HopsMed:-nan
+NetOcc:0  NetUti:0 NetFrag:0
+ProtRate:-nan  BetaAvrg:-nan   AlphaAvrg:-nan
+
+Simulation time:1366.93  Real simul time: 0.310542  Number of requests:100000
+Load point:72.5  ReqBP:1  SlotsBP:1  HopsMed:-nan
+NetOcc:0  NetUti:0 NetFrag:0
+ProtRate:-nan  BetaAvrg:-nan   AlphaAvrg:-nan
+
+Simulation time:1238.78  Real simul time: 0.306726  Number of requests:100000
+Load point:80  ReqBP:1  SlotsBP:1  HopsMed:-nan
+NetOcc:0  NetUti:0 NetFrag:0
+ProtRate:-nan  BetaAvrg:-nan   AlphaAvrg:-nan
+

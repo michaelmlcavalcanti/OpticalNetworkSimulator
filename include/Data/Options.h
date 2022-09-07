@@ -238,6 +238,7 @@ enum ProtectionOption {
     ProtectionDisable,
     ProtectionDPP,
     ProtectionPDPP,
+    ProtectionNPP,
     ProtectionPDPPBO_GA,
     ProtectionPDPPSO_GA,
     FirstProtectionOption = ProtectionDisable,
