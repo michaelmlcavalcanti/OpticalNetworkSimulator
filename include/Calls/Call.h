@@ -41,9 +41,9 @@ enum CallStatus{
  * @brief Class that represents a simulation call request.
  */
 class Call {
-    
-    friend std::ostream& operator<<(std::ostream& ostream, 
-    const Call* call);    
+
+    friend std::ostream& operator<<(std::ostream& ostream,
+                                    const Call* call);
 public:
     /**
      * @brief Standard constructor of a Call object.
@@ -52,11 +52,12 @@ public:
      * @param bitRate call bit rate.
      */
     Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
+    Call(Node *orNode, Node *deNode, double bitRate, TIME deacTime, bool protectionCall);
     /**
      * @brief Standard destructor of a simulation call request.
      */
     virtual ~Call();
-    
+
     /**
      * @brief Return the status of this Call.
      * @return Call status.
@@ -118,36 +119,36 @@ public:
      */
     void SetLastSlot(unsigned int lastSlot);
     /**
-     * @brief Function to reset the first and the last contiguous slot of the 
+     * @brief Function to reset the first and the last contiguous slot of the
      * call request to its default values.
      * @param Call request.
      */
     void ResetFirstLastSlot(Call* call);
     /**
-     * @brief Function to get the number of contiguous slots of the call 
+     * @brief Function to get the number of contiguous slots of the call
      * request.
      * @return Number of contiguous slots.
      */
     unsigned int GetNumberSlots() const;
     /**
-     * @brief Function to set the number of contiguous slots of the call 
+     * @brief Function to set the number of contiguous slots of the call
      * request.
      * @param numberSlots Number of contiguous slots.
      */
     void SetNumberSlots(unsigned int numberSlots);
     /**
-     * @brief Function to get the total number of slots (in the entire route) 
+     * @brief Function to get the total number of slots (in the entire route)
      * occupied by the call request.
      * @return Total number of slots.
      */
     virtual unsigned int GetTotalNumSlots() const;
     /**
-     * @brief Function to calculate the total number of slots (in the entire 
+     * @brief Function to calculate the total number of slots (in the entire
      * route) occupied by the call request.
      */
     virtual void SetTotalNumSlots();
     /**
-     * @brief Function to set the total number of slots (in the entire 
+     * @brief Function to set the total number of slots (in the entire
      * route) occupied by the call request.
      * @param numSlots Total number of slots
      */
@@ -191,7 +192,7 @@ public:
      * @brief Inputs the bitrate value of this Call.
      * @param bitRate Bitrate value.
      */
-    void SetBitRate(double bitRate); 
+    void SetBitRate(double bitRate);
     /**
      * @brief Function to get the modulation format used by the call request.
      * @return Call request modulation format.
@@ -225,36 +226,36 @@ public:
      */
     std::shared_ptr<Route> GetRoute(unsigned int index) const;
     /**
-     * @brief Function to get a all possible routes of a specified 
+     * @brief Function to get a all possible routes of a specified
      * node pair index.
      * @return Call request possible routes (vector trialRoutes).
      */
     std::deque<std::shared_ptr<Route>> GetTrialRoutes();
-        /**
-     * @brief Function to set all possible route index of a specified node pair index. 
-     * index.
-     */
-    void SetTrialRoutes(std::deque<std::shared_ptr<Route>> routes);
-    
-    
     /**
-     * @brief Function to get a specified protection route of the possible 
+ * @brief Function to set all possible route index of a specified node pair index.
+ * index.
+ */
+    void SetTrialRoutes(std::deque<std::shared_ptr<Route>> routes);
+
+
+    /**
+     * @brief Function to get a specified protection route of the possible
      * protection routes of a specified working route.
      * @param routeIndex working route index, protRouteIndex protection route
      * index.
      * @return Call request possible protection route.
      */
-    std::shared_ptr<Route> GetProtRoute(unsigned int routeIndex , 
-    unsigned int protRouteIndex) const;
-      /**
-     * @brief Function to get a all possible  protection routes of a specified 
-     * working route.
-     * @param routeIndex working route index, protRouteIndex protection route
-     * index.
-     * @return Call request possible route (vector trialProtRoutes).
-     */
+    std::shared_ptr<Route> GetProtRoute(unsigned int routeIndex ,
+                                        unsigned int protRouteIndex) const;
+    /**
+   * @brief Function to get a all possible  protection routes of a specified
+   * working route.
+   * @param routeIndex working route index, protRouteIndex protection route
+   * index.
+   * @return Call request possible route (vector trialProtRoutes).
+   */
     std::deque<std::shared_ptr<Route>> GetProtRoutes(unsigned int routeIndex);
-    
+
     /**
      * @brief Function to get the number of routes the call can be allocated.
      * @return Number of routes.
@@ -272,7 +273,7 @@ public:
      */
     void SetRoute(unsigned int routeIndex);
     /**
-     * @brief Function to add a route to the container of possible routes to 
+     * @brief Function to add a route to the container of possible routes to
      * allocate the call request.
      * @param route Call request possible route.
      */
@@ -284,18 +285,18 @@ public:
      */
     void PushTrialRoutes(std::vector<std::shared_ptr<Route>> routes);
     /**
-     * @brief Function to set a container of possible protection routes for  
+     * @brief Function to set a container of possible protection routes for
      * each working route to allocate the call request.
      * @param protection routes Call request possible routes.
      */
-    void PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes);  
+    void PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes);
     /**
      * @brief Function to clear the container of possible routes to allocate
      * the call request.
      */
     void ClearTrialRoutes();
     /**
-     * @brief Function to clear the container of possible protection routes 
+     * @brief Function to clear the container of possible protection routes
      * to allocate the call request.
      */
     void ClearTrialProtRoutes();
@@ -318,7 +319,7 @@ public:
      */
     void RepeatModulation();
     /**
-     * @brief Function to get a specified modulation format from the container 
+     * @brief Function to get a specified modulation format from the container
      * of possible modulation formats.
      * @param index Modulation format index.
      * @return Modulation format.
@@ -328,6 +329,11 @@ public:
      * @brief Function to clear the container of possible modulation formats.
      */
     void ClearTrialModulations();
+
+    bool isProtected() const;
+
+    void setProtected(bool protectType);
+
 private:
     /**
      * @brief Status of this Call.
@@ -355,30 +361,30 @@ private:
     SlotIndex lastSlot;
     /**
      * @brief Number of slots occupied by this call.
-     * This value is calculate based in modulation used 
-     * and bitrate of this Call and the size of slots of 
+     * This value is calculate based in modulation used
+     * and bitrate of this Call and the size of slots of
      * the fibers.
      */
     unsigned int numberSlots;
     /**
-     * @brief Total number of slots occupied by the call request. This value 
+     * @brief Total number of slots occupied by the call request. This value
      * is calculated taking into account the entire route the call is allocated.
      */
     unsigned int totalNumSlots;
     /**
-     * @brief Core index of the call request. If the call request is not 
+     * @brief Core index of the call request. If the call request is not
      * allocated or if the simulation presents only one core, this value is
      * the maximum  integer possible value.
      */
     CoreIndex core;
     /**
-     * @brief OSNr of the call calculated based 
+     * @brief OSNr of the call calculated based
      * in the distance of origin and destination node,
      * modulation used and the bitrate of this Call.
      */
     double osnrTh;
     /**
-     * @brief Bandwidth occupied by this call, based 
+     * @brief Bandwidth occupied by this call, based
      * in the bitrate and modulation used.
      */
     double bandwidth;
@@ -410,20 +416,20 @@ private:
      */
     std::deque<std::shared_ptr<Route>> trialRoutes;
     /**
-     * @brief Container of possible protection routes to each working route to  
+     * @brief Container of possible protection routes to each working route to
      * allocate the call request.
      */
     std::deque<std::deque<std::shared_ptr<Route>>> trialProtRoutes;
     Resources* resources;
-    
+
     /**
-     * @brief Map that keeps the Events options 
+     * @brief Map that keeps the Events options
      * and the name of each one.
      */
     static const boost::unordered_map<CallStatus,
-    std::string> mapCallStatus;
-    
+            std::string> mapCallStatus;
+
+    bool protectionCall;
 };
 
 #endif /* CALL_H */
-

@@ -20,14 +20,14 @@
 #include "../../include/SimulationType/SimulationType.h"
 #include "../../include/ResourceAllocation/ResourceAlloc.h"
 
-const boost::unordered_map<CallStatus, std::string> 
-Call::mapCallStatus = boost::assign::map_list_of
-    (NotEvaluated, "Not evaluated")
-    (Accepted, "Accepted call")
-    (Blocked, "Blocked call");
+const boost::unordered_map<CallStatus, std::string>
+        Call::mapCallStatus = boost::assign::map_list_of
+        (NotEvaluated, "Not evaluated")
+        (Accepted, "Accepted call")
+        (Blocked, "Blocked call");
 
 std::ostream& operator<<(std::ostream& ostream, const Call* call) {
-    
+
     ostream << "Status: " << call->GetStatusName() << std::endl;
     ostream << "OrNode: " << call->GetOrNode()->GetNodeId() << std::endl;
     ostream << "DeNode: " << call->GetDeNode()->GetNodeId() << std::endl;
@@ -35,34 +35,45 @@ std::ostream& operator<<(std::ostream& ostream, const Call* call) {
     ostream << "Bandwidth: " << call->GetBandwidth()/1E9 << std::endl;
     ostream << "OSNR: " << call->GetOsnrTh() << std::endl;
     ostream << "DeacTime: " << call->GetDeactivationTime() << std::endl;
+    ostream << "Protected Call: " << call->isProtected() << std::endl;
     ostream << "Number of Slots: " << call->GetNumberSlots() << std::endl;
-    
+
     return ostream;
 }
 
 Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime)
-:status(NotEvaluated), orNode(orNode), deNode(deNode), 
-firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0), 
-totalNumSlots(0), core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0), 
-bitRate(bitRate), modulation(InvalidModulation), trialModulation(0), 
-deactivationTime(deacTime), route(nullptr), trialRoutes(0), trialProtRoutes(0) {
+        :status(NotEvaluated), orNode(orNode), deNode(deNode),
+         firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0),
+         totalNumSlots(0), core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0),
+         bitRate(bitRate), modulation(InvalidModulation), trialModulation(0),
+         deactivationTime(deacTime), route(nullptr), trialRoutes(0), trialProtRoutes(0) {
     resources = orNode->GetTopology()->GetSimulType()->GetResourceAlloc()->
-    GetResources();
+            GetResources();
+}
+
+Call::Call(Node* orNode, Node* deNode, double bitRate, TIME deacTime, bool protectionCall)
+        :status(NotEvaluated), orNode(orNode), deNode(deNode),
+         firstSlot(Def::Max_UnInt), lastSlot(Def::Max_UnInt), numberSlots(0),
+         totalNumSlots(0), core(Def::Max_UnInt), osnrTh(0.0), bandwidth(0.0),
+         bitRate(bitRate), modulation(InvalidModulation), trialModulation(0),
+         deactivationTime(deacTime), protectionCall(protectionCall), route(nullptr), trialRoutes(0), trialProtRoutes(0) {
+    resources = orNode->GetTopology()->GetSimulType()->GetResourceAlloc()->
+            GetResources();
 }
 
 Call::~Call() {
     this->route.reset();
-    
+
     for(auto it : trialRoutes){
-       it.reset(); 
+        it.reset();
     }
     this->trialRoutes.clear();
-    
-   // for(auto it : trialProtRoutes){
-   //    it.reset(); 
-   // }
+
+    // for(auto it : trialProtRoutes){
+    //    it.reset();
+    // }
     this->trialProtRoutes.clear();
-    
+
 }
 
 CallStatus Call::GetStatus() const {
@@ -169,9 +180,9 @@ void Call::SetBitRate(double bitRate) {
 }
 
 void Call::SetModulation(TypeModulation modulation) {
-    assert(modulation >= FirstModulation && 
+    assert(modulation >= FirstModulation &&
            modulation <= LastModulation);
-    
+
     this->modulation = modulation;
 }
 
@@ -193,7 +204,7 @@ Route* Call::GetRoute() const {
 
 std::shared_ptr<Route> Call::GetRoute(unsigned int index) const {
     assert(index < this->trialRoutes.size());
-    
+
     return this->trialRoutes.at(index);
 }
 
@@ -206,17 +217,17 @@ void Call::SetTrialRoutes(std::deque<std::shared_ptr<Route>> routes) {
 }
 
 
-std::shared_ptr<Route> Call::GetProtRoute(unsigned int routeIndex, 
-unsigned int protRouteIndex) const {
+std::shared_ptr<Route> Call::GetProtRoute(unsigned int routeIndex,
+                                          unsigned int protRouteIndex) const {
     assert(routeIndex < this->trialRoutes.size());
     assert(protRouteIndex < this->trialProtRoutes.at(routeIndex).size());
-    
-    return this->trialProtRoutes.at(routeIndex).at(protRouteIndex); 
+
+    return this->trialProtRoutes.at(routeIndex).at(protRouteIndex);
 }
 
 std::deque<std::shared_ptr<Route> > Call::GetProtRoutes(unsigned int routeIndex)  {
     assert(routeIndex < this->trialRoutes.size());
-    
+
     return this->trialProtRoutes.at(routeIndex);
 }
 
@@ -238,7 +249,7 @@ void Call::PushTrialRoute(std::shared_ptr<Route> route) {
 }
 
 void Call::PushTrialRoutes(std::vector<std::shared_ptr<Route> > routes) {
-    
+
     for(auto it : routes)
         if(it != nullptr)
             this->trialRoutes.push_back(it);
@@ -251,19 +262,19 @@ void Call::PushTrialProtRoutes(std::vector<std::shared_ptr<Route>> routes) {
     std::vector<std::shared_ptr<Route>> protRoutes;
     unsigned int numRoutes = routes.size();
     this->trialProtRoutes.resize(numRoutes);
-    
+
     for(unsigned int a = 0; a < routes.size(); a++){
         protRoutes = resources->GetProtRoutes(orNode, deNode, a);
-        
+
         for(auto it : protRoutes)
             this->trialProtRoutes.at(a).push_back(it);
-                     
+
     }
     routes.clear();
 }
 
 void Call::ClearTrialRoutes() {
-    
+
     while(!this->trialRoutes.empty()){
         this->trialRoutes.front().reset();
         this->trialRoutes.pop_front();
@@ -272,7 +283,7 @@ void Call::ClearTrialRoutes() {
 
 void Call::ClearTrialProtRoutes() {
     for(unsigned int a = 0; a < trialProtRoutes.size(); a++){
-        
+
         while(!this->trialProtRoutes.at(a).empty()){
             this->trialProtRoutes.at(a).front().reset();
             this->trialProtRoutes.at(a).pop_front();
@@ -282,7 +293,7 @@ void Call::ClearTrialProtRoutes() {
 
 
 void Call::PushTrialModulations(std::vector<TypeModulation> modulations) {
-    
+
     for(auto it: modulations){
         this->trialModulation.push_back(it);
     }
@@ -293,7 +304,7 @@ void Call::PushTrialModulation(TypeModulation modulation) {
 }
 
 void Call::RepeatModulation() {
-    
+
     while(trialModulation.size() < trialRoutes.size()){
         trialModulation.push_back(trialModulation.front());
     }
@@ -306,3 +317,13 @@ void Call::ClearTrialModulations() {
 TypeModulation Call::GetModulation(unsigned int index) {
     return this->trialModulation.at(index);
 }
+
+bool Call::isProtected() const{
+    return protectionCall;
+}
+
+void Call::setProtected(bool protectType){
+    protectionCall = protectType;
+}
+
+
