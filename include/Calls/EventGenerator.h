@@ -156,6 +156,9 @@ private:
      */
     std::shared_ptr<Call> CreateCall(unsigned orNodeIndex, unsigned deNodeIndex, 
                                      unsigned trafficIndex, TIME deactTime);
+
+    std::shared_ptr<Call> CreateCall(unsigned orNodeIndex, unsigned deNodeIndex,
+                                     unsigned trafficIndex, TIME deactTime, bool protectionCall);
     
     void LoadRandomGenerator();
     

@@ -34,7 +34,10 @@ public:
      * @param deacTime Call request deactivation time.
      */
     CallDevices(Node* orNode, Node* deNode, double bitRate, TIME deacTime);
-    /**
+
+    CallDevices(Node *orNode, Node *deNode, double bitRate, TIME deacTime, bool protectionCall);
+
+/**
      * @brief Standard destructor of a call request with devices.
      */
     virtual ~CallDevices();
