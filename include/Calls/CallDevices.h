@@ -124,6 +124,11 @@ public:
      * call request.
      */
     void ClearTransponders();
+
+    bool isProtected() const;
+
+    void setProtected(bool protectType);
+
 private:
     /**
      * @brief Container of call request transparent segments. Used if the
@@ -143,6 +148,8 @@ private:
      * @brief Container of BVTs used by the call request.
      */
     std::vector<std::shared_ptr<BVT>> transponders;
+
+    bool protectionCall;
 };
 
 #endif /* CALLDEVICES_H */

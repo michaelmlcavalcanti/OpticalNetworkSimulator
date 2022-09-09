@@ -21,7 +21,7 @@ regenerators(0), useRegeneration(false), transponders(0) {
 }
 
 CallDevices::CallDevices(Node* orNode, Node* deNode, double bitRate,
-                         TIME deacTime, bool protectionCall):Call(orNode, deNode, bitRate, deacTime), transpSegments(0),
+                         TIME deacTime, bool protectionCall):Call(orNode, deNode, bitRate, deacTime, protectionCall), transpSegments(0),
                                         regenerators(0), useRegeneration(false), transponders(0) {
 
 }
@@ -38,7 +38,7 @@ subroutes) {
     
     for(auto it: subroutes){
         auxCall = std::make_shared<Call>(it->GetOrNode(), 
-        it->GetDeNode(), this->GetBitRate(), this->GetDeactivationTime());
+        it->GetDeNode(), this->GetBitRate(), this->GetDeactivationTime(), this->isProtected());
         auxCall->SetRoute(it);
         transpSegments.push_back(auxCall);
     }
@@ -130,4 +130,12 @@ transponders) {
 
 void CallDevices::ClearTransponders() {
     transponders.clear();
+}
+
+bool CallDevices::isProtected() const{
+    return protectionCall;
+}
+
+void CallDevices::setProtected(bool protectType){
+    protectionCall = protectType;
 }
