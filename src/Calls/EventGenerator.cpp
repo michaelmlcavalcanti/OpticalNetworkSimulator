@@ -176,16 +176,7 @@ std::shared_ptr<Call> EventGenerator::CreateCall(unsigned orNodeIndex,
     Node* deNode = this->topology->GetNode(deNodeIndex);
     double traffic = this->traffic->GetTraffic(trafficIndex);
 
-    newCall = std::make_shared<CallDevices>(orNode, deNode, traffic,deactTime, protectionCall);
-    /*
-    if(protectionCall == false){
-        newCall = std::make_shared<Call>(orNode, deNode, traffic,deactTime, protectionCall);
-    }else{
-        newCall = std::make_shared<CallDevices>(orNode, deNode, traffic,deactTime, protectionCall);
-    }
-    */
-    /*
-    switch(this->simulType->GetOptions()->GetDevicesOption()){
+    switch(this->simulType->GetOptions()->GetDevicesOption()) {
         case DevicesDisabled:
             newCall = std::make_shared<Call>(orNode, deNode, traffic,
                                              deactTime, protectionCall);
@@ -198,7 +189,6 @@ std::shared_ptr<Call> EventGenerator::CreateCall(unsigned orNodeIndex,
             std::cerr << "Invalid device option" << std::endl;
             std::abort();
     }
-    */
 
     return newCall;
 }
