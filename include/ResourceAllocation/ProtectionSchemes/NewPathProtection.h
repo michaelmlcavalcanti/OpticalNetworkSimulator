@@ -83,6 +83,7 @@ private:
     */
     std::vector<std::vector<std::vector<double>>> BitRateNodePairsDist;
 
+    void CreateUnprotectionCalls(CallDevices *call);
 };
 
 #endif //NEWPATHPROTECTION_H
