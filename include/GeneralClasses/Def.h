@@ -18,9 +18,11 @@
 #include <limits>
 
 typedef bool CarrierState;
-typedef bool SlotState;
-#define free false
-#define occupied true
+typedef int SlotState;
+#define free 0
+#define occupied 1
+#define reserved 2
+#define reutilized 3
 
 typedef bool State;
 #define notWorking false
