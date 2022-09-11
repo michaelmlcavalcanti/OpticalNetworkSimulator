@@ -38,7 +38,8 @@ public:
     * between routes.
     * @param call Call request the function will try to allocate.
     */
-    void RoutingSpec(CallDevices* call);
+    void RoutingSpecProtected(CallDevices* call);
+    void RoutingSpecUnprotected(CallDevices* call);
     /**
      * @brief Function which calculates the partial bit rate for each
      * partitioned routes based in incoming traffic demand. A vector
