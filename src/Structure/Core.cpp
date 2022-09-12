@@ -44,6 +44,25 @@ bool Core::IsSlotOccupied(SlotIndex sPosition){
     return false;
 }
 
+bool Core::IsSlotOccupied(SlotIndex sPosition, SlotState type){
+    bool statusSlot;
+    if(type == free){
+        if(slotsStatus.at(sPosition) == free){
+            statusSlot = false;
+        }else{
+            statusSlot = true;
+        }
+
+    }else{
+        if(slotsStatus.at(sPosition) == free || slotsStatus.at(sPosition) == reserved){
+            statusSlot = false;
+        }else{
+            statusSlot = true;
+        }
+    }
+    return statusSlot;
+}
+
 bool Core::IsSlotFree(SlotIndex sPosition) {
     return !this->IsSlotOccupied(sPosition);
 }

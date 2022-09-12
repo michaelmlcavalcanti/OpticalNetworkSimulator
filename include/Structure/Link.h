@@ -221,6 +221,9 @@ public:
      * @return Pointer to topology
      */
     Topology* GetTopology() const;
+
+    bool IsSlotOccupied1(const SlotIndex index, SlotState type) const;
+
 private:
     /**
      * @brief Pointer to a Topology object that
@@ -266,6 +269,9 @@ private:
      * the link in the allocation path.
      */
     unsigned int use;
+
+    bool IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId, SlotState type);
+
 };
 
 #endif /* LINK_H */

@@ -160,14 +160,25 @@ void Link::ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId) {
 }
 
 bool Link::IsSlotOccupied(const SlotIndex index) const {
-    
+
     return cores.front()->IsSlotOccupied(index);
+}
+
+bool Link::IsSlotOccupied1(const SlotIndex index, SlotState type) const {
+
+    return cores.front()->IsSlotOccupied(index, type);
 }
 
 bool Link::IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId) {
     assert(coreId < cores.size());
     
     return cores.at(coreId)->IsSlotOccupied(slotId);
+}
+
+bool Link::IsSlotOccupied(const CoreIndex coreId, const SlotIndex slotId, SlotState type) {
+    assert(coreId < cores.size());
+
+    return cores.at(coreId)->IsSlotOccupied(slotId, type);
 }
 
 bool Link::IsSlotFree(const SlotIndex index) const {

@@ -322,6 +322,19 @@ bool ResourceAlloc::CheckSlotDisp(Route* route, SlotIndex slot) const {
     return true;
 }
 
+bool ResourceAlloc::CheckSlotDisp(Route* route, SlotIndex slot, SlotState type) const {
+    Link* link;
+    unsigned int numHops = route->GetNumHops();
+
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+
+        if(link->IsSlotOccupied1(slot, type))
+            return false;
+    }
+    return true;
+}
+
 bool ResourceAlloc::CheckSlotsDisp(Route* route, SlotIndex firstSlot, 
 SlotIndex lastSlot) const {
     
@@ -330,6 +343,17 @@ SlotIndex lastSlot) const {
             return false;
     }
     
+    return true;
+}
+
+bool ResourceAlloc::CheckSlotsDisp(Route* route, SlotIndex firstSlot,
+                                   SlotIndex lastSlot, SlotState type) const {
+
+    for(unsigned int a = firstSlot; a <= lastSlot; a++){
+        if(!this->CheckSlotDisp(route, a, type))
+            return false;
+    }
+
     return true;
 }
 

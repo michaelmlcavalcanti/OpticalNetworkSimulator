@@ -94,6 +94,9 @@ public:
      * @return Core slots state.
      */
     std::vector<SlotState> GetSlotsStatus() const;
+
+    bool IsSlotOccupied(SlotIndex sPosition, SlotState type);
+
 private:
     /**
      * @brief Link in which this core is inserted.
@@ -111,6 +114,7 @@ private:
      * @brief Core state (working or notWorking).
      */
     State coreState;
+
 };
 
 #endif /* CORE_H */

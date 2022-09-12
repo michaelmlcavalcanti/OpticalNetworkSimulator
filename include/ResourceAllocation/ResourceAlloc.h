@@ -468,5 +468,9 @@ public:
      * @brief Route object owned by this object.
      */
     std::shared_ptr<Route> route;
+
+    bool CheckSlotsDisp(Route *route, SlotIndex firstSlot, SlotIndex lastSlot, SlotState type) const;
+
+    bool CheckSlotDisp(Route *route, SlotIndex slot, SlotState type) const;
 };
 #endif /* RESOURCEALLOC_H */
