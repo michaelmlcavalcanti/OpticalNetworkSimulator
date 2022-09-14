@@ -39,32 +39,36 @@ CoreIndex Core::GetCoreId(){
 
 bool Core::IsSlotOccupied(SlotIndex sPosition){
     
-    if(slotsStatus.at(sPosition) == occupied)
+    if(slotsStatus.at(sPosition) == occupied || slotsStatus.at(sPosition) == reserved || slotsStatus.at(sPosition) == reutilized)
         return true;
     return false;
 }
 
 bool Core::IsSlotOccupied(SlotIndex sPosition, SlotState type){
-    bool statusSlot;
-    if(type == free){
-        if(slotsStatus.at(sPosition) == free){
-            statusSlot = false;
-        }else{
-            statusSlot = true;
-        }
 
-    }else{
-        if(slotsStatus.at(sPosition) == free || slotsStatus.at(sPosition) == reserved){
-            statusSlot = false;
+    if(type == occupied || type == reserved){
+        if(slotsStatus.at(sPosition) == free){
+            return false;
         }else{
-            statusSlot = true;
+            return true;
         }
+    }else if(type == reutilized){
+        if(slotsStatus.at(sPosition) == free || slotsStatus.at(sPosition) == reserved){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return false;
     }
-    return statusSlot;
 }
 
 bool Core::IsSlotFree(SlotIndex sPosition) {
     return !this->IsSlotOccupied(sPosition);
+}
+
+bool Core::IsSlotFree(SlotIndex sPosition, SlotState state) {
+    return !this->IsSlotOccupied(sPosition, state);
 }
 
 void Core::OccupySlot(SlotIndex sPosition){
@@ -73,11 +77,36 @@ void Core::OccupySlot(SlotIndex sPosition){
     slotsStatus.at(sPosition) = occupied;
 }
 
+void Core::OccupySlot(SlotIndex sPosition, SlotState state){
+    if(state == occupied){
+        assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
+        slotsStatus.at(sPosition) = occupied;
+    }else if(state == reserved){
+        assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
+        slotsStatus.at(sPosition) = reserved;
+    }else if(state == reutilized){
+        if(slotsStatus.at(sPosition) == free){
+            assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
+            slotsStatus.at(sPosition) = occupied;
+        }else if(slotsStatus.at(sPosition) == reserved){
+            assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == reserved);
+            slotsStatus.at(sPosition) = reutilized;
+        }
+    }
+}
+
 void Core::ReleaseSlot(SlotIndex sPosition){
-    assert(sPosition < slotsStatus.size() && 
-    slotsStatus.at(sPosition) == occupied);
-    
-    slotsStatus.at(sPosition) = free;
+
+    if(slotsStatus.at(sPosition) == occupied){
+        assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == occupied);
+        slotsStatus.at(sPosition) = free;
+    }else if(slotsStatus.at(sPosition) == reserved){
+        assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == reserved);
+        slotsStatus.at(sPosition) = free;
+    }else if(slotsStatus.at(sPosition) == reutilized){
+        assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == reutilized);
+        slotsStatus.at(sPosition) = reserved;
+    }
 }
 
 State Core::IsCoreWorking() {

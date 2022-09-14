@@ -152,6 +152,14 @@ void Link::OccupySlot(const CoreIndex coreId, const SlotIndex slotId) {
     cores.at(coreId)->OccupySlot(slotId);
 }
 
+void Link::OccupySlot(const CoreIndex coreId, const SlotIndex slotId, SlotState state) {
+        assert(coreId < cores.size());
+
+        assert(cores.at(coreId)->IsSlotFree(slotId, state));
+
+        cores.at(coreId)->OccupySlot(slotId, state);
+}
+
 void Link::ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId) {
     assert(coreId < cores.size());
     assert(cores.at(coreId)->IsSlotOccupied(slotId));

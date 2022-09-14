@@ -97,6 +97,10 @@ public:
 
     bool IsSlotOccupied(SlotIndex sPosition, SlotState type);
 
+    bool IsSlotFree(SlotIndex sPosition, SlotState state);
+
+    void OccupySlot(SlotIndex sPosition, SlotState state);
+
 private:
     /**
      * @brief Link in which this core is inserted.

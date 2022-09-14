@@ -357,6 +357,8 @@ private:
      * @brief Number of transponders in the network.
      */
     unsigned int numTransponders;
+
+    void ConnectWithoutDevices(Call *call, SlotState state);
 };
 
 #endif /* TOPOLOGY_H */

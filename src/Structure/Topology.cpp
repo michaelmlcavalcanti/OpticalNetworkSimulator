@@ -492,6 +492,26 @@ void Topology::ConnectWithoutDevices(Call* call) {
     }
 }
 
+void Topology::ConnectWithoutDevices(Call* call, SlotState state) {
+    Link* link;
+    Route* route = call->GetRoute();
+    unsigned int numHops = route->GetNumHops();
+    unsigned int core = call->GetCore();
+
+    for(unsigned int a = 0; a < numHops; a++){
+        link = route->GetLink(a);
+
+        if(this->IsValidLink(link)){
+
+            for(unsigned int slot = call->GetFirstSlot();
+                slot <= call->GetLastSlot(); slot++){
+                link->OccupySlot(core, slot, state);
+                link->IncrementUse();
+            }
+        }
+    }
+}
+
 void Topology::ConnectWithDevices(Call* call) {
     CallDevices* callDev = dynamic_cast<CallDevices*>(call);
     
@@ -503,9 +523,15 @@ void Topology::ConnectWithDevices(Call* call) {
     
     //Connect the transparent segments
     std::vector<Call*> transpSeg = callDev->GetTranspSegments();
-    for(auto it: transpSeg){
-        this->ConnectWithoutDevices(it);
+
+    if(transpSeg.size() == 3){
+        this->ConnectWithoutDevices(transpSeg[0], occupied);
+        this->ConnectWithoutDevices(transpSeg[1], occupied);
+        this->ConnectWithoutDevices(transpSeg[2], reserved);
+    }else if(transpSeg.size() == 1){
+        this->ConnectWithoutDevices(transpSeg[0], reutilized);
     }
+
     
     //Connect the regenerators
     std::vector<std::shared_ptr<Regenerator>> vecReg = 

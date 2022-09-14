@@ -224,6 +224,8 @@ public:
 
     bool IsSlotOccupied1(const SlotIndex index, SlotState type) const;
 
+    void OccupySlot(const CoreIndex coreId, const SlotIndex slotId, SlotState state);
+
 private:
     /**
      * @brief Pointer to a Topology object that

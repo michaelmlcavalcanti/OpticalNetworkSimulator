@@ -113,7 +113,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                 if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
                     break;
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                                                      auxSlot + callWork0->GetNumberSlots() - 1, free)) {
+                                                      auxSlot + callWork0->GetNumberSlots() - 1, occupied)) {
                     firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                     sumFirstSlots = auxSlot;
                     allocCallWork0Found = true;
@@ -129,7 +129,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                     if (auxSlot + callWork1->GetNumberSlots() - 1 >= topNumSlots)
                         break;
                     if (this->resDevAlloc->CheckSlotsDisp(callWork1->GetRoute(),
-                                                          auxSlot, auxSlot + callWork1->GetNumberSlots() - 1, free)) {
+                                                          auxSlot, auxSlot + callWork1->GetNumberSlots() - 1, occupied)) {
                         firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                         sumFirstSlots += auxSlot;
                         allocCallWork1Found = true;
@@ -146,7 +146,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                     if (auxSlot + callWork2->GetNumberSlots() - 1 >= topNumSlots)
                         break;
                     if (this->resDevAlloc->CheckSlotsDisp(callWork2->GetRoute(),
-                                                          auxSlot, auxSlot + callWork2->GetNumberSlots() - 1, free)) {
+                                                          auxSlot, auxSlot + callWork2->GetNumberSlots() - 1, reserved)) {
                         firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                         sumFirstSlots += auxSlot;
                         firstSlotIndexesSum.at(groupIndex) = sumFirstSlots;
@@ -179,7 +179,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
                                                       firstSlotIndexes.at(counterIndex).at(0),
                                                       firstSlotIndexes.at(counterIndex).at(0) +
-                                                      callWork0->GetNumberSlots() - 1, free)) {
+                                                      callWork0->GetNumberSlots() - 1, occupied)) {
                     callWork0->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(0));
                     callWork0->SetLastSlot(firstSlotIndexes.at(counterIndex).at(0) +
                                            callWork0->GetNumberSlots() - 1);
@@ -192,7 +192,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                 if (this->resDevAlloc->CheckSlotsDisp(callWork1->GetRoute(),
                                                       firstSlotIndexes.at(counterIndex).at(1),
                                                       firstSlotIndexes.at(counterIndex).at(1) +
-                                                      callWork1->GetNumberSlots() - 1, free)) {
+                                                      callWork1->GetNumberSlots() - 1, occupied)) {
                     callWork1->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(1));
                     callWork1->SetLastSlot(firstSlotIndexes.at(counterIndex).at(1) +
                                            callWork1->GetNumberSlots() - 1);
@@ -205,7 +205,7 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                 if (this->resDevAlloc->CheckSlotsDisp(callWork2->GetRoute(),
                                                       firstSlotIndexes.at(counterIndex).at(2),
                                                       firstSlotIndexes.at(counterIndex).at(2) +
-                                                      callWork2->GetNumberSlots() - 1, free)) {
+                                                      callWork2->GetNumberSlots() - 1, reserved)) {
                     callWork2->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(2));
                     callWork2->SetLastSlot(firstSlotIndexes.at(counterIndex).at(2) +
                                            callWork2->GetNumberSlots() - 1);
@@ -290,7 +290,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
 //                if(groupIndex == parameters->GetNumberRoutes())
 //                    break;
             sumFirstSlots = 0;
-            callWork0->SetRoute(group3.at(0));
+            callWork0->SetRoute(group3.at(2));
             callWork0->SetModulation(FixedModulation);
             this->modulation->SetModulationParam(callWork0.get());
             for (unsigned int s = 0; s < possibleSlots.size(); s++) {
@@ -298,7 +298,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
                 if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
                     break;
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                                                      auxSlot + callWork0->GetNumberSlots() - 1, reserved)) {
+                                                      auxSlot + callWork0->GetNumberSlots() - 1, reutilized)) {
                     firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                     sumFirstSlots = auxSlot;
                     break;
@@ -319,13 +319,13 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
         for (auto index: firstSlotIndexesSum) {
             if (index == minSlotIndexSum && index != Def::Max_Int) {
                 callWork0->SetRoute(resources->protectionAllRoutesGroups.at(
-                        nodePairIndex).front().at(counterIndex).at(0));
+                        nodePairIndex).front().at(counterIndex).at(2));
                 callWork0->SetModulation(FixedModulation);
                 this->modulation->SetModulationParam(callWork0.get());
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
                                                       firstSlotIndexes.at(counterIndex).at(0),
                                                       firstSlotIndexes.at(counterIndex).at(0) +
-                                                      callWork0->GetNumberSlots() - 1, reserved)) {
+                                                      callWork0->GetNumberSlots() - 1, reutilized)) {
                     callWork0->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(0));
                     callWork0->SetLastSlot(firstSlotIndexes.at(counterIndex).at(0) +
                                            callWork0->GetNumberSlots() - 1);
