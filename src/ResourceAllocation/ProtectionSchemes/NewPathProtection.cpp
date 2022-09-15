@@ -284,13 +284,19 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
                 nodePairIndex).front().size();
         firstSlotIndexes.resize(numGroups);
         firstSlotIndexesSum.resize(numGroups);
+
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> distribution(0,2);
+        int type = distribution(gen);
+
         //computing the first slot indexes available of each group for current call and its sum
         for (auto &group3: resources->protectionAllRoutesGroups.at(
                 nodePairIndex).front()) {
 //                if(groupIndex == parameters->GetNumberRoutes())
 //                    break;
             sumFirstSlots = 0;
-            callWork0->SetRoute(group3.at(2));
+            callWork0->SetRoute(group3.at(type));
             callWork0->SetModulation(FixedModulation);
             this->modulation->SetModulationParam(callWork0.get());
             for (unsigned int s = 0; s < possibleSlots.size(); s++) {
@@ -319,7 +325,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
         for (auto index: firstSlotIndexesSum) {
             if (index == minSlotIndexSum && index != Def::Max_Int) {
                 callWork0->SetRoute(resources->protectionAllRoutesGroups.at(
-                        nodePairIndex).front().at(counterIndex).at(2));
+                        nodePairIndex).front().at(counterIndex).at(type));
                 callWork0->SetModulation(FixedModulation);
                 this->modulation->SetModulationParam(callWork0.get());
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
