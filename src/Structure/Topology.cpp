@@ -528,11 +528,14 @@ void Topology::ConnectWithDevices(Call* call) {
         this->ConnectWithoutDevices(transpSeg[0], occupied);
         this->ConnectWithoutDevices(transpSeg[1], occupied);
         this->ConnectWithoutDevices(transpSeg[2], reserved);
-    }else if(transpSeg.size() == 1){
+    }else if(transpSeg.size() == 2){
+        this->ConnectWithoutDevices(transpSeg[0], occupied);
+        this->ConnectWithoutDevices(transpSeg[1], occupied);
+    }
+    else if(transpSeg.size() == 1){
         this->ConnectWithoutDevices(transpSeg[0], reutilized);
     }
 
-    
     //Connect the regenerators
     std::vector<std::shared_ptr<Regenerator>> vecReg = 
     callDev->GetRegenerators();
