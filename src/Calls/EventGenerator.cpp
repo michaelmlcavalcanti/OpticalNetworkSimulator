@@ -92,10 +92,8 @@ void EventGenerator::GenerateCall() {
 
     // generates number in the range 0..1
     // if 0 call is non-protected, if 1 call is protected
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> distribution(0,1);
-    int type = distribution(gen);
+    std::srand(time(0));
+    int type = rand()%2;
     bool typeCall;
     if(type == 0){
         typeCall = false;

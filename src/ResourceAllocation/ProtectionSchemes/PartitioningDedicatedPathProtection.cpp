@@ -967,7 +967,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                     if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
                         break;
                     if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                             auxSlot +callWork0->GetNumberSlots() -1)) {
+                             auxSlot +callWork0->GetNumberSlots() -1), occupied) {
                         firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                         sumFirstSlots = auxSlot;
                         allocCallWork0Found = true;
@@ -983,7 +983,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                         if (auxSlot + callWork1->GetNumberSlots() - 1 >= topNumSlots)
                             break;
                         if (this->resDevAlloc->CheckSlotsDisp(callWork1->GetRoute(),
-                          auxSlot,auxSlot +callWork1->GetNumberSlots() -1)) {
+                          auxSlot,auxSlot +callWork1->GetNumberSlots() -1), occupied) {
                             firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                             sumFirstSlots += auxSlot;
                             allocCallWork1Found = true;
@@ -1000,7 +1000,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                         if (auxSlot + callWork2->GetNumberSlots() - 1 >= topNumSlots)
                             break;
                         if (this->resDevAlloc->CheckSlotsDisp(callWork2->GetRoute(),
-                            auxSlot, auxSlot +callWork2->GetNumberSlots() -1)) {
+                            auxSlot, auxSlot +callWork2->GetNumberSlots() -1), reserved) {
                             firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                             sumFirstSlots += auxSlot;
                             firstSlotIndexesSum.at(groupIndex) = sumFirstSlots;
@@ -1032,7 +1032,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                     this->modulation->SetModulationParam(callWork0.get());
                     if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
                      firstSlotIndexes.at(counterIndex).at(0),
-                     firstSlotIndexes.at(counterIndex).at(0) +callWork0->GetNumberSlots() -1)) {
+                     firstSlotIndexes.at(counterIndex).at(0) +callWork0->GetNumberSlots() -1), occupied) {
                         callWork0->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(0));
                         callWork0->SetLastSlot(firstSlotIndexes.at(counterIndex).at(0) +
                                                callWork0->GetNumberSlots() - 1);
@@ -1044,7 +1044,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                     this->modulation->SetModulationParam(callWork1.get());
                     if (this->resDevAlloc->CheckSlotsDisp(callWork1->GetRoute(),
                     firstSlotIndexes.at(counterIndex).at(1),
-                    firstSlotIndexes.at(counterIndex).at(1) +callWork1->GetNumberSlots() -1)) {
+                    firstSlotIndexes.at(counterIndex).at(1) +callWork1->GetNumberSlots() -1), occupied) {
                         callWork1->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(1));
                         callWork1->SetLastSlot(firstSlotIndexes.at(counterIndex).at(1) +
                                                callWork1->GetNumberSlots() - 1);
@@ -1056,7 +1056,7 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                     this->modulation->SetModulationParam(callWork2.get());
                     if (this->resDevAlloc->CheckSlotsDisp(callWork2->GetRoute(),
                      firstSlotIndexes.at(counterIndex).at(2),
-                     firstSlotIndexes.at(counterIndex).at(2) +callWork2->GetNumberSlots() -1)) {
+                     firstSlotIndexes.at(counterIndex).at(2) +callWork2->GetNumberSlots() -1), reserved) {
                         callWork2->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(2));
                         callWork2->SetLastSlot(firstSlotIndexes.at(counterIndex).at(2) +
                                                callWork2->GetNumberSlots() - 1);
@@ -1202,49 +1202,6 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                 }
             }
         }
-      /*  if(callAllocated == false) {
-            //Delete one route and try allocating just 1 route (without protection)
-            callsVec.pop_back();
-            callWork0->SetBitRate(call->GetBitRate());
-            call->SetTranspSegments(callsVec);
-
-            for (unsigned int s = 0; s < possibleSlots.size(); s++) {
-                auxSlot = possibleSlots.at(s);
-                for(auto& route : resources->allRoutes.at(nodePairIndex)){
-                    callWork0->SetRoute(route);
-                    callWork0->SetModulation(FixedModulation);
-
-                    //calculate number of slots for current of call
-                    this->modulation->SetModulationParam(callWork0.get());
-
-                    if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
-                        continue;
-                    //checking if callWork0 number of slots are available in its route
-                    if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                                                          auxSlot +
-                                                          callWork0->GetNumberSlots() - 1)) {
-                        callWork0->SetFirstSlot(auxSlot);
-                        callWork0->SetLastSlot(auxSlot + callWork0->GetNumberSlots() - 1);
-                        callWork0->SetCore(0);
-
-                        call->SetRoute(route);
-                        call->SetModulation(FixedModulation);
-                        call->SetFirstSlot(callWork0->GetFirstSlot());
-                        call->SetLastSlot(callWork0->GetLastSlot());
-                        call->SetStatus(Accepted);
-                        //increment proCalls counter
-                        resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
-                        CalcBetaAverage(call);
-                        CalcAlpha(call);
-                        callAllocated = true;
-                        break;
-                    }
-                }
-                if(callAllocated == true){
-                    break;
-                }
-            }
-        }*/
     }
     if(numSchProtRoutes == 2){
         this->CreateProtectionCalls(call); //loading transpsegments with calls
@@ -1378,49 +1335,6 @@ void PartitioningDedicatedPathProtection::SpecRoutingPDPP_MP(CallDevices* call) 
                 counterIndex++;
             }
         }
-        /*  if(callAllocated == false) {
-            //Delete one route and try allocating just 1 route (without protection)
-            callsVec.pop_back();
-            callWork0->SetBitRate(call->GetBitRate());
-            call->SetTranspSegments(callsVec);
-
-            for (unsigned int s = 0; s < possibleSlots.size(); s++) {
-                auxSlot = possibleSlots.at(s);
-                for(auto& route : resources->allRoutes.at(nodePairIndex)){
-                    callWork0->SetRoute(route);
-                    callWork0->SetModulation(FixedModulation);
-
-                    //calculate number of slots for current of call
-                    this->modulation->SetModulationParam(callWork0.get());
-
-                    if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
-                        continue;
-                    //checking if callWork0 number of slots are available in its route
-                    if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                                                          auxSlot +
-                                                          callWork0->GetNumberSlots() - 1)) {
-                        callWork0->SetFirstSlot(auxSlot);
-                        callWork0->SetLastSlot(auxSlot + callWork0->GetNumberSlots() - 1);
-                        callWork0->SetCore(0);
-
-                        call->SetRoute(route);
-                        call->SetModulation(FixedModulation);
-                        call->SetFirstSlot(callWork0->GetFirstSlot());
-                        call->SetLastSlot(callWork0->GetLastSlot());
-                        call->SetStatus(Accepted);
-                        //increment proCalls counter
-                        resDevAlloc->simulType->GetData()->SetNonProtectedCalls();
-                        CalcBetaAverage(call);
-                        CalcAlpha(call);
-                        callAllocated = true;
-                        break;
-                    }
-                }
-                if(callAllocated == true){
-                    break;
-                }
-            }
-        }*/
     }
 }
 

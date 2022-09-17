@@ -185,10 +185,6 @@ void SimulationType::SimulateNumTotalReq() {
     while(this->numberRequests < numReqMax){
         evt = this->callGenerator->GetNextEvent();
         countEvent++;
-
-//        std::cout << "requisição número:" << numberRequests << std::endl;
-//        if(this->numberRequests == 18)
-//            int x = 0;
                
         evt->ImplementEvent();
             
