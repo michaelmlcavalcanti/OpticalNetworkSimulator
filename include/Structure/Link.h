@@ -140,7 +140,7 @@ public:
      * @param coreId Core index.
      * @param slotId Slot index.
      */
-    void ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId);
+    void ReleaseSlot(const CoreIndex coreId, const SlotIndex slotId, bool b);
     /**
      * @brief Check if an specified slot is occupied in
      * the link.

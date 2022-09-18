@@ -73,7 +73,7 @@ public:
      * @param Represents the position of the slot
      * in the core. 
      */
-    void ReleaseSlot(SlotIndex sPosition);
+     void ReleaseSlot(SlotIndex sPosition, bool b);
     /**
      * @brief Function to check if the core is working.
      * @return Core state.

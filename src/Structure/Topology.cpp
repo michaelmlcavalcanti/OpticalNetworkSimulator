@@ -502,11 +502,38 @@ void Topology::ConnectWithoutDevices(Call* call, SlotState state) {
         link = route->GetLink(a);
 
         if(this->IsValidLink(link)){
-
-            for(unsigned int slot = call->GetFirstSlot();
-                slot <= call->GetLastSlot(); slot++){
-                link->OccupySlot(core, slot, state);
-                link->IncrementUse();
+            if(state != reserved){
+                for(unsigned int slot = call->GetFirstSlot();
+                    slot <= call->GetLastSlot(); slot++){
+                    link->OccupySlot(core, slot, state);
+                    link->IncrementUse();
+                }
+            }else{
+                int qtdSlot = call->GetLastSlot() - call->GetFirstSlot();
+                int meio;
+                if(qtdSlot > 0){
+                    if(qtdSlot % 2 == 0){
+                        meio = qtdSlot/2 + 1;
+                    }else{
+                        meio = qtdSlot/2;
+                    }
+                    for(unsigned int slot = call->GetFirstSlot();
+                        slot <= (call->GetFirstSlot() + meio); slot++){
+                        link->OccupySlot(core, slot, occupied);
+                        link->IncrementUse();
+                    }
+                    for(unsigned int slot = (call->GetFirstSlot() + meio + 1);
+                        slot <= call->GetLastSlot(); slot++){
+                        link->OccupySlot(core, slot, reserved);
+                        link->IncrementUse();
+                    }
+                }else{
+                    for(unsigned int slot = call->GetFirstSlot();
+                        slot <= call->GetLastSlot(); slot++){
+                        link->OccupySlot(core, slot, occupied);
+                        link->IncrementUse();
+                    }
+                }
             }
         }
     }
