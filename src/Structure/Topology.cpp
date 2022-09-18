@@ -578,7 +578,7 @@ void Topology::ReleaseWithoutDevices(Call* call) {
             
             for(unsigned int slot = call->GetFirstSlot(); 
             slot <= call->GetLastSlot(); slot++){
-                link->ReleaseSlot(core, slot);
+                link->ReleaseSlot(core, slot, call->isProtected());
             }
         }
     }
