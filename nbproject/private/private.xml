@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <code-assistance-data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <code-model-enabled>true</code-model-enabled>
+    </code-assistance-data>
+    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <activeConfTypeElem>1</activeConfTypeElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
+    </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/GA.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/IndividualNumRoutesMSCL.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Data/Data.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/GA.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/SimulationType/SimulationType.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/GA/GA_1.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/ResourceAllocation/Routing.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/ResourceAllocation/Resources.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/GeneralClasses/Def.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/ResourceAllocation/ResourceAlloc.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/ResourceAllocation/Routing.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/Parameters_1.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Kernel.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Calls/Call.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/GA_MO.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/main.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/Individual.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/IndividualNumRoutesMSCL.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/GA_MO.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/SimulationType/SimulationType.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/IndividualPDPPBO.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Data/Data.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Data/Options.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Outputs/2/Log.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Calls/Event.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/GA_NumInterRoutesMSCL.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Data/InputOutput.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/Individual.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Algorithms/GA/GA_PDPPBO.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/SimulationType/SimulationGA.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/GA_PDPPBO.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/SimulationType/SimulationGA.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/IndividualPDPPBO.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Algorithms/GA/GA_NumInterRoutesMSCL.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/Parameters_2.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Data/Parameters.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/GA/GA_MO_1.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/ResourceAllocation/ProtectionSchemes/PartitioningDedicatedPathProtection.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/Options_2.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/ResourceAllocation/ProtectionSchemes/ProtectionScheme.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/Files/Inputs/Options_1.txt</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/Calls/Call.cpp</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/include/Data/InputOutput.h</file>
+            <file>file:/home/henrique/git/OpticalNetworkSimulator/src/ResourceAllocation/ResourceDeviceAlloc.cpp</file>
+        </group>
+    </open-files>
+</project-private>
