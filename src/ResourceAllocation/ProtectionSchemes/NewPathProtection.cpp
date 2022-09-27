@@ -440,6 +440,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
                                                       auxSlot + callWork0->GetNumberSlots() - 1, reutilized)) {
                     firstSlotIndexes.at(groupIndex).push_back(auxSlot);
                     sumFirstSlots = auxSlot;
+                    allocCallWork0Found = true;
                     break;
                 }
             }
