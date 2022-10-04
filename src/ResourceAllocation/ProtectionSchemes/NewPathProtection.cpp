@@ -238,12 +238,6 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
         if(callAllocated == false) {
             //Delete one route, recalculate Bit rate and try allocating with 2 routes
             callsVec.pop_back();
-            double callBitRate = call->GetBitRate();
-            double beta = parameters->GetBeta();
-            double partialBitRate = ceil(
-                    ((1 - beta) * callBitRate) / (numSchProtRoutes - 2));
-            callWork0->SetBitRate(partialBitRate);
-            callWork1->SetBitRate(partialBitRate);
             call->SetTranspSegments(callsVec);
             groupIndex = 0;
 
@@ -419,9 +413,6 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
                 nodePairIndex).front().size();
         firstSlotIndexes.resize(numGroups);
         firstSlotIndexesSum.resize(numGroups);
-        std::random_device rd;
-        std::srand(time(0));
-        int type = rand()%2;
 
         //computing the first slot indexes available of each group for current call and its sum
         for (auto &group3: resources->protectionAllRoutesGroups.at(
@@ -429,7 +420,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
 //                if(groupIndex == parameters->GetNumberRoutes())
 //                    break;
             sumFirstSlots = 0;
-            callWork0->SetRoute(group3.at(type));
+            callWork0->SetRoute(group3.at(2));
             callWork0->SetModulation(FixedModulation);
             this->modulation->SetModulationParam(callWork0.get());
             for (unsigned int s = 0; s < possibleSlots.size(); s++) {
@@ -462,7 +453,7 @@ void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
         for (auto index: firstSlotIndexesSum) {
             if (index == minSlotIndexSum && index != Def::Max_Int) {
                 callWork0->SetRoute(resources->protectionAllRoutesGroups.at(
-                        nodePairIndex).front().at(counterIndex).at(type));
+                        nodePairIndex).front().at(counterIndex).at(2));
                 callWork0->SetModulation(FixedModulation);
                 this->modulation->SetModulationParam(callWork0.get());
                 if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
