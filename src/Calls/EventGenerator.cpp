@@ -92,10 +92,15 @@ void EventGenerator::GenerateCall() {
 
     // generates number in the range 0..1
     // if 0 call is non-protected, if 1 call is protected
-    std::srand(time(0));
-    int type = rand()%2;
+    //para gerar números aleatórios reais.
+
+    std::random_device rd;   // non-deterministic generator
+    std::mt19937 gen(rd());  // to seed mersenne twister.
+    std::uniform_int_distribution<> dist(0,9);
+    int type = dist(gen);
     bool typeCall;
-    if(type == 0){
+
+    if(type < 3){
         typeCall = false;
     }else{
         typeCall = true;
