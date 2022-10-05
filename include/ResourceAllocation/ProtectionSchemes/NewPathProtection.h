@@ -38,8 +38,8 @@ public:
     * between routes.
     * @param call Call request the function will try to allocate.
     */
-    void RoutingSpecProtected(CallDevices* call);
-    void RoutingSpecUnprotected(CallDevices* call);
+    bool RoutingSpecProtected(CallDevices* call);
+    bool RoutingSpecUnprotected(CallDevices* call);
     /**
      * @brief Function which calculates the partial bit rate for each
      * partitioned routes based in incoming traffic demand. A vector
@@ -84,6 +84,8 @@ private:
     std::vector<std::vector<std::vector<double>>> BitRateNodePairsDist;
 
     void CreateUnprotectionCalls(CallDevices *call);
+
+    void RoutingSpec(CallDevices *call);
 };
 
 #endif //NEWPATHPROTECTION_H

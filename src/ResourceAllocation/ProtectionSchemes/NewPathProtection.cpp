@@ -60,13 +60,19 @@ void NewPathProtection::LoadBitRateNodePairDist(){
 void NewPathProtection::ResourceAlloc(CallDevices* call){
     bool callProtect = reinterpret_cast<bool *>(call->isProtected());
     if(callProtect == true){
-        this->RoutingSpecProtected(call);
+        bool requisitionProtected = this->RoutingSpecProtected(call);
+        if(requisitionProtected == false){
+            this->RoutingSpec(call);
+        }
     }else{
-        this->RoutingSpecUnprotected(call);
+        bool requisitionUnprotected = this->RoutingSpecUnprotected(call);
+        if(requisitionUnprotected == false){
+            this->RoutingSpec(call);
+        }
     }
 }
 
-void NewPathProtection::RoutingSpecProtected(CallDevices* call){
+bool NewPathProtection::RoutingSpecProtected(CallDevices* call){
     if(numSchProtRoutes == 3) {
         this->CreateProtectionCalls(call); //loading transpsegments with calls
 
@@ -235,9 +241,198 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
                 counterIndex++;
             }
         }
+
+        return callAllocated;
+    }
+}
+
+void NewPathProtection::CreateProtectionCalls(CallDevices* call){
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int nodePairIndex = orN * numNodes + deN;
+    call->GetTranspSegments().clear();
+    std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
+    double callBitRate = call->GetBitRate();
+    unsigned int trafficIndex;
+
+    for(unsigned int a = 0; a < VecTraffic.size(); a++){
+        if(callBitRate == VecTraffic.at(a))
+            trafficIndex = a;
+    }
+
+    std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
+
+    for(unsigned int a = 0; a < numSchProtRoutes; a++){
+        auxCall = std::make_shared<Call>(call->GetOrNode(),
+                                         call->GetDeNode(), BitRateNodePairsDist.at(nodePairIndex).at
+                        (trafficIndex).at(a), call->GetDeactivationTime());
+        auxVec.push_back(auxCall);
+    }
+    call->SetTranspSegments(auxVec);
+}
+
+bool NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
+
+    this->CreateUnprotectionCalls(call);
+    //setting 3 protection calls to allocation
+    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+    std::shared_ptr<Call> callWork0 = callsVec.at(0);
+
+    call->SetCore(0);
+    unsigned int auxSlot;
+    unsigned int sumFirstSlots = 0;
+    const unsigned int topNumSlots = topology->GetNumSlots();
+    std::vector<unsigned int> possibleSlots(0);
+    std::vector<int> firstSlotIndexesSum(0);
+    std::vector<std::vector<int>> firstSlotIndexes(0);
+    possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int nodePairIndex = orN * numNodes + deN;
+    bool callAllocated = false;
+    unsigned int groupIndex = 0;
+    bool allocCallWork0Found = false;
+
+    if (!resources->protectionAllRoutesGroups.at(nodePairIndex).front().empty()) {
+        unsigned int numGroups = resources->protectionAllRoutesGroups.at(
+                nodePairIndex).front().size();
+        firstSlotIndexes.resize(numGroups);
+        firstSlotIndexesSum.resize(numGroups);
+
+        //computing the first slot indexes available of each group for current call and its sum
+        for (auto &group3: resources->protectionAllRoutesGroups.at(
+                nodePairIndex).front()) {
+//                if(groupIndex == parameters->GetNumberRoutes())
+//                    break;
+            sumFirstSlots = 0;
+            callWork0->SetRoute(group3.at(2));
+            callWork0->SetModulation(FixedModulation);
+            this->modulation->SetModulationParam(callWork0.get());
+            for (unsigned int s = 0; s < possibleSlots.size(); s++) {
+                auxSlot = possibleSlots.at(s);
+                if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
+                    break;
+                if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
+                                                      auxSlot + callWork0->GetNumberSlots() - 1, reutilized)) {
+                    firstSlotIndexes.at(groupIndex).push_back(auxSlot);
+                    sumFirstSlots = auxSlot;
+                    allocCallWork0Found = true;
+                    break;
+                }
+            }
+            if (allocCallWork0Found == false) {
+                firstSlotIndexesSum.at(groupIndex) = Def::Max_Int;
+            }
+            groupIndex++;
+        }
+
+        //allocating call using minimum slot index group and minimum number of hops
+        //int minElementIndex = std::min_element(firstSlotIndexesSum.begin(),
+        //           firstSlotIndexesSum.end()) -firstSlotIndexesSum.begin();
+        int minSlotIndexSum = *std::min_element(firstSlotIndexesSum.begin(),
+                                                firstSlotIndexesSum.end());
+        unsigned int counterIndex = 0;
+        //unsigned int numHopSum = 0;
+        //std::pair<unsigned, unsigned> minSlotIndex;
+        //std::vector<std::pair<unsigned ,unsigned >> minSlotIndexVec;
+        for (auto index: firstSlotIndexesSum) {
+            if (index == minSlotIndexSum && index != Def::Max_Int) {
+                callWork0->SetRoute(resources->protectionAllRoutesGroups.at(
+                        nodePairIndex).front().at(counterIndex).at(2));
+                callWork0->SetModulation(FixedModulation);
+                this->modulation->SetModulationParam(callWork0.get());
+                if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
+                                                      firstSlotIndexes.at(counterIndex).at(0),
+                                                      firstSlotIndexes.at(counterIndex).at(0) +
+                                                      callWork0->GetNumberSlots() - 1, reutilized)) {
+                    callWork0->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(0));
+                    callWork0->SetLastSlot(firstSlotIndexes.at(counterIndex).at(0) +
+                                           callWork0->GetNumberSlots() - 1);
+                    callWork0->SetCore(0);
+                }
+                call->SetRoute(resources->protectionAllRoutesGroups.at(
+                        nodePairIndex).front().at(counterIndex).at(0));
+                call->SetModulation(FixedModulation);
+                call->SetFirstSlot(callWork0->GetFirstSlot());
+                call->SetLastSlot(callWork0->GetLastSlot());
+                call->SetStatus(Accepted);
+                CalcBetaAverage(call);
+                CalcAlpha(call);
+                callAllocated = true;
+                break;
+            }
+            counterIndex++;
+        }
+    }
+    return callAllocated;
+}
+
+void NewPathProtection::CreateUnprotectionCalls(CallDevices* call){
+    unsigned int orN = call->GetOrNode()->GetNodeId();
+    unsigned int deN = call->GetDeNode()->GetNodeId();
+    unsigned int numNodes = this->topology->GetNumNodes();
+    unsigned int nodePairIndex = orN * numNodes + deN;
+    call->GetTranspSegments().clear();
+    std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
+    double callBitRate = call->GetBitRate();
+    unsigned int trafficIndex;
+
+    std::shared_ptr<Call> auxCall;
+    std::vector<std::shared_ptr<Call>> auxVec(0);
+
+    auxCall = std::make_shared<Call>(call->GetOrNode(), call->GetDeNode(), callBitRate, call->GetDeactivationTime());
+    auxVec.push_back(auxCall);
+    call->SetTranspSegments(auxVec);
+}
+
+std::vector<std::vector<std::vector<double>>> NewPathProtection::
+GetBitRateNodePairsDist() const {
+    return BitRateNodePairsDist;
+
+}
+
+void NewPathProtection::SetBitRateNodePairsDist
+        (std::vector<std::vector<std::vector<double>>> BitRateNodePairsDist) {
+    this->BitRateNodePairsDist = BitRateNodePairsDist;
+}
+
+void NewPathProtection::RoutingSpec(CallDevices* call){
+    if(numSchProtRoutes == 3) {
+        this->CreateProtectionCalls(call); //loading transpsegments with calls
+
+        //seting 3 protection calls to allocation
+        std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
+        std::shared_ptr<Call> callWork0 = callsVec.at(0);
+        std::shared_ptr<Call> callWork1 = callsVec.at(1);
+        std::shared_ptr<Call> callWork2 = callsVec.at(2);
+
+        call->SetCore(0);
+        unsigned int auxSlot;
+        unsigned int sumFirstSlots = 0;
+        const unsigned int topNumSlots = topology->GetNumSlots();
+        std::vector<unsigned int> possibleSlots(0);
+        std::vector<int> firstSlotIndexesSum(0);
+        std::vector<std::vector<int>> firstSlotIndexes(0);
+        possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
+        unsigned int orN = call->GetOrNode()->GetNodeId();
+        unsigned int deN = call->GetDeNode()->GetNodeId();
+        unsigned int numNodes = this->topology->GetNumNodes();
+        unsigned int nodePairIndex = orN * numNodes + deN;
+        bool callAllocated = false;
+        unsigned int groupIndex = 0;
+
         if(callAllocated == false) {
             //Delete one route, recalculate Bit rate and try allocating with 2 routes
             callsVec.pop_back();
+            double callBitRate = call->GetBitRate();
+            double beta = parameters->GetBeta();
+            double partialBitRate = ceil(
+                    ((1 - beta) * callBitRate) / (numSchProtRoutes - 2));
+            callWork0->SetBitRate(partialBitRate);
+            callWork1->SetBitRate(partialBitRate);
             call->SetTranspSegments(callsVec);
             groupIndex = 0;
 
@@ -356,156 +551,4 @@ void NewPathProtection::RoutingSpecProtected(CallDevices* call){
             }
         }
     }
-}
-
-void NewPathProtection::CreateProtectionCalls(CallDevices* call){
-    unsigned int orN = call->GetOrNode()->GetNodeId();
-    unsigned int deN = call->GetDeNode()->GetNodeId();
-    unsigned int numNodes = this->topology->GetNumNodes();
-    unsigned int nodePairIndex = orN * numNodes + deN;
-    call->GetTranspSegments().clear();
-    std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
-    double callBitRate = call->GetBitRate();
-    unsigned int trafficIndex;
-
-    for(unsigned int a = 0; a < VecTraffic.size(); a++){
-        if(callBitRate == VecTraffic.at(a))
-            trafficIndex = a;
-    }
-
-    std::shared_ptr<Call> auxCall;
-    std::vector<std::shared_ptr<Call>> auxVec(0);
-
-    for(unsigned int a = 0; a < numSchProtRoutes; a++){
-        auxCall = std::make_shared<Call>(call->GetOrNode(),
-                                         call->GetDeNode(), BitRateNodePairsDist.at(nodePairIndex).at
-                        (trafficIndex).at(a), call->GetDeactivationTime());
-        auxVec.push_back(auxCall);
-    }
-    call->SetTranspSegments(auxVec);
-}
-
-void NewPathProtection::RoutingSpecUnprotected(CallDevices* call){
-
-    this->CreateUnprotectionCalls(call);
-    //setting 3 protection calls to allocation
-    std::vector<std::shared_ptr<Call>> callsVec = call->GetTranspSegmentsVec();
-    std::shared_ptr<Call> callWork0 = callsVec.at(0);
-
-    call->SetCore(0);
-    unsigned int auxSlot;
-    unsigned int sumFirstSlots = 0;
-    const unsigned int topNumSlots = topology->GetNumSlots();
-    std::vector<unsigned int> possibleSlots(0);
-    std::vector<int> firstSlotIndexesSum(0);
-    std::vector<std::vector<int>> firstSlotIndexes(0);
-    possibleSlots = this->resDevAlloc->specAlloc->SpecAllocation();
-    unsigned int orN = call->GetOrNode()->GetNodeId();
-    unsigned int deN = call->GetDeNode()->GetNodeId();
-    unsigned int numNodes = this->topology->GetNumNodes();
-    unsigned int nodePairIndex = orN * numNodes + deN;
-    bool callAllocated = false;
-    unsigned int groupIndex = 0;
-    bool allocCallWork0Found = false;
-
-    if (!resources->protectionAllRoutesGroups.at(nodePairIndex).front().empty()) {
-        unsigned int numGroups = resources->protectionAllRoutesGroups.at(
-                nodePairIndex).front().size();
-        firstSlotIndexes.resize(numGroups);
-        firstSlotIndexesSum.resize(numGroups);
-
-        //computing the first slot indexes available of each group for current call and its sum
-        for (auto &group3: resources->protectionAllRoutesGroups.at(
-                nodePairIndex).front()) {
-//                if(groupIndex == parameters->GetNumberRoutes())
-//                    break;
-            sumFirstSlots = 0;
-            callWork0->SetRoute(group3.at(2));
-            callWork0->SetModulation(FixedModulation);
-            this->modulation->SetModulationParam(callWork0.get());
-            for (unsigned int s = 0; s < possibleSlots.size(); s++) {
-                auxSlot = possibleSlots.at(s);
-                if (auxSlot + callWork0->GetNumberSlots() - 1 >= topNumSlots)
-                    break;
-                if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(), auxSlot,
-                                                      auxSlot + callWork0->GetNumberSlots() - 1, reutilized)) {
-                    firstSlotIndexes.at(groupIndex).push_back(auxSlot);
-                    sumFirstSlots = auxSlot;
-                    allocCallWork0Found = true;
-                    break;
-                }
-            }
-            if (allocCallWork0Found == false) {
-                firstSlotIndexesSum.at(groupIndex) = Def::Max_Int;
-            }
-            groupIndex++;
-        }
-
-        //allocating call using minimum slot index group and minimum number of hops
-        //int minElementIndex = std::min_element(firstSlotIndexesSum.begin(),
-        //           firstSlotIndexesSum.end()) -firstSlotIndexesSum.begin();
-        int minSlotIndexSum = *std::min_element(firstSlotIndexesSum.begin(),
-                                                firstSlotIndexesSum.end());
-        unsigned int counterIndex = 0;
-        //unsigned int numHopSum = 0;
-        //std::pair<unsigned, unsigned> minSlotIndex;
-        //std::vector<std::pair<unsigned ,unsigned >> minSlotIndexVec;
-        for (auto index: firstSlotIndexesSum) {
-            if (index == minSlotIndexSum && index != Def::Max_Int) {
-                callWork0->SetRoute(resources->protectionAllRoutesGroups.at(
-                        nodePairIndex).front().at(counterIndex).at(2));
-                callWork0->SetModulation(FixedModulation);
-                this->modulation->SetModulationParam(callWork0.get());
-                if (this->resDevAlloc->CheckSlotsDisp(callWork0->GetRoute(),
-                                                      firstSlotIndexes.at(counterIndex).at(0),
-                                                      firstSlotIndexes.at(counterIndex).at(0) +
-                                                      callWork0->GetNumberSlots() - 1, reutilized)) {
-                    callWork0->SetFirstSlot(firstSlotIndexes.at(counterIndex).at(0));
-                    callWork0->SetLastSlot(firstSlotIndexes.at(counterIndex).at(0) +
-                                           callWork0->GetNumberSlots() - 1);
-                    callWork0->SetCore(0);
-                }
-                call->SetRoute(resources->protectionAllRoutesGroups.at(
-                        nodePairIndex).front().at(counterIndex).at(0));
-                call->SetModulation(FixedModulation);
-                call->SetFirstSlot(callWork0->GetFirstSlot());
-                call->SetLastSlot(callWork0->GetLastSlot());
-                call->SetStatus(Accepted);
-                CalcBetaAverage(call);
-                CalcAlpha(call);
-                callAllocated = true;
-                break;
-            }
-            counterIndex++;
-        }
-    }
-}
-
-void NewPathProtection::CreateUnprotectionCalls(CallDevices* call){
-    unsigned int orN = call->GetOrNode()->GetNodeId();
-    unsigned int deN = call->GetDeNode()->GetNodeId();
-    unsigned int numNodes = this->topology->GetNumNodes();
-    unsigned int nodePairIndex = orN * numNodes + deN;
-    call->GetTranspSegments().clear();
-    std::vector<double> VecTraffic = resDevAlloc->traffic->GetVecTraffic();
-    double callBitRate = call->GetBitRate();
-    unsigned int trafficIndex;
-
-    std::shared_ptr<Call> auxCall;
-    std::vector<std::shared_ptr<Call>> auxVec(0);
-
-    auxCall = std::make_shared<Call>(call->GetOrNode(), call->GetDeNode(), callBitRate, call->GetDeactivationTime());
-    auxVec.push_back(auxCall);
-    call->SetTranspSegments(auxVec);
-}
-
-std::vector<std::vector<std::vector<double>>> NewPathProtection::
-GetBitRateNodePairsDist() const {
-    return BitRateNodePairsDist;
-
-}
-
-void NewPathProtection::SetBitRateNodePairsDist
-        (std::vector<std::vector<std::vector<double>>> BitRateNodePairsDist) {
-    this->BitRateNodePairsDist = BitRateNodePairsDist;
 }
