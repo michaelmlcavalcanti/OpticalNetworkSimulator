@@ -53,7 +53,7 @@ bool Core::IsSlotOccupied(SlotIndex sPosition, SlotState type){
             return true;
         }
     }else if(type == reutilized){
-        if(slotsStatus.at(sPosition) == free || slotsStatus.at(sPosition) == reserved){
+        if(slotsStatus.at(sPosition) == reserved){
             return false;
         }else{
             return true;
@@ -85,10 +85,7 @@ void Core::OccupySlot(SlotIndex sPosition, SlotState state){
         assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
         slotsStatus.at(sPosition) = reserved;
     }else if(state == reutilized){
-        if(slotsStatus.at(sPosition) == free){
-            assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == free);
-            slotsStatus.at(sPosition) = occupied;
-        }else if(slotsStatus.at(sPosition) == reserved){
+        if(slotsStatus.at(sPosition) == reserved){
             assert(sPosition < slotsStatus.size() && slotsStatus.at(sPosition) == reserved);
             slotsStatus.at(sPosition) = reutilized;
         }

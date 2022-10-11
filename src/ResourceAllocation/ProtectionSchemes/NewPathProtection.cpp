@@ -58,6 +58,7 @@ void NewPathProtection::LoadBitRateNodePairDist(){
 }
 
 void NewPathProtection::ResourceAlloc(CallDevices* call){
+
     bool callProtect = reinterpret_cast<bool *>(call->isProtected());
     if(callProtect == true){
         bool requisitionProtected = this->RoutingSpecProtected(call);
