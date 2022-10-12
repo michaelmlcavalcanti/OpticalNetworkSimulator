@@ -326,4 +326,11 @@ void Call::setProtected(bool protectType){
     protectionCall = protectType;
 }
 
+bool Call::getCallAllocatedType() const {
+    return callAllocatedType;
+}
+
+void Call::setCallAllocatedType(CallAllocatedType allocatedType) {
+    callAllocatedType = allocatedType;
+}
 

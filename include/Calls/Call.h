@@ -334,6 +334,10 @@ public:
 
     void setProtected(bool protectType);
 
+    bool getCallAllocatedType() const;
+
+    void setCallAllocatedType(CallAllocatedType callAllocatedType);
+
 private:
     /**
      * @brief Status of this Call.
@@ -430,6 +434,8 @@ private:
             std::string> mapCallStatus;
 
     bool protectionCall;
+
+    CallAllocatedType callAllocatedType;
 };
 
 #endif /* CALL_H */
