@@ -24,6 +24,11 @@ typedef int SlotState;
 #define reserved 2
 #define reutilized 3
 
+typedef int CallAllocatedType;
+#define reservada 0
+#define ocupada 1
+#define reutilizada 2
+
 typedef bool State;
 #define notWorking false
 #define working true
