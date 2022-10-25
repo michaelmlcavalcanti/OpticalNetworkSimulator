@@ -326,7 +326,7 @@ void Call::setProtected(bool protectType){
     protectionCall = protectType;
 }
 
-bool Call::getCallAllocatedType() const {
+bool Call::getCallAllocatedType() {
     return callAllocatedType;
 }
 

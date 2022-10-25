@@ -90,10 +90,6 @@ void EventGenerator::GenerateCall() {
     TIME arrivalTime = exponencialHDistribution(random_generator);
     TIME deactvationTime = exponencialMuDistribution(random_generator);
 
-    // generates number in the range 0..1
-    // if 0 call is non-protected, if 1 call is protected
-    //para gerar números aleatórios reais.
-
     std::random_device rd;   // non-deterministic generator
     std::mt19937 gen(rd());  // to seed mersenne twister.
     std::uniform_int_distribution<> dist(0,9);

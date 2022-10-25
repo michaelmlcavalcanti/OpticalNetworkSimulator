@@ -334,7 +334,7 @@ public:
 
     void setProtected(bool protectType);
 
-    bool getCallAllocatedType() const;
+    bool getCallAllocatedType() ;
 
     void setCallAllocatedType(CallAllocatedType callAllocatedType);
 
